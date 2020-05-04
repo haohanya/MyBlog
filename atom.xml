@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://haohanya.github.io</id>
     <title>浩瀚</title>
-    <updated>2020-05-04T04:15:56.750Z</updated>
+    <updated>2020-05-04T04:39:56.434Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://haohanya.github.io"/>
     <link rel="self" href="https://haohanya.github.io/atom.xml"/>
@@ -16,6 +16,32 @@
         <link href="https://haohanya.github.io/post/spring-security/">
         </link>
         <updated>2020-05-04T04:14:24.000Z</updated>
+        <summary type="html"><![CDATA[<h2 id="单机版">单机版</h2>
+<p>1.引入依赖</p>
+<pre><code class="language-xml"> &lt;!-- 身份验证 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-security-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-security-config&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+]]></summary>
+        <content type="html"><![CDATA[<h2 id="单机版">单机版</h2>
+<p>1.引入依赖</p>
+<pre><code class="language-xml"> &lt;!-- 身份验证 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-security-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-security-config&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+]]></content>
     </entry>
     <entry>
         <title type="html"><![CDATA[MyBatis]]></title>
