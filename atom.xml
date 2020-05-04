@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://haohanya.github.io</id>
     <title>浩瀚</title>
-    <updated>2020-05-04T06:36:54.647Z</updated>
+    <updated>2020-05-04T06:42:12.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://haohanya.github.io"/>
     <link rel="self" href="https://haohanya.github.io/atom.xml"/>
@@ -72,7 +72,7 @@
         <updated>2020-05-04T04:08:06.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
+        <title type="html"><![CDATA[Hello]]></title>
         <id>https://haohanya.github.io/post/hello/</id>
         <link href="https://haohanya.github.io/post/hello/">
         </link>
@@ -81,13 +81,17 @@
 前不久备案莫名其妙被注销,很无奈把数据库备份了,停止了解析😭<br>
 但后来越过越觉得生活中少了些什么😅<br>
 后来就恢复了这个博客,这次基于Gridea + GitHub 搭建的静态博客<br>
-这下放个十年八年的也没什么关系了 ~~~😁</p>
+这下放个十年八年的也没什么关系了 ~~~😁<br>
+安装这个程序的时候,在官网的模板市场找了好久的模板,感觉好像没有我喜欢的......<br>
+看来得抽空设计个模板套上啦😐😐😐</p>
 ]]></summary>
         <content type="html"><![CDATA[<p>又是一个新的开始!!!<br>
 前不久备案莫名其妙被注销,很无奈把数据库备份了,停止了解析😭<br>
 但后来越过越觉得生活中少了些什么😅<br>
 后来就恢复了这个博客,这次基于Gridea + GitHub 搭建的静态博客<br>
-这下放个十年八年的也没什么关系了 ~~~😁</p>
+这下放个十年八年的也没什么关系了 ~~~😁<br>
+安装这个程序的时候,在官网的模板市场找了好久的模板,感觉好像没有我喜欢的......<br>
+看来得抽空设计个模板套上啦😐😐😐</p>
 ]]></content>
     </entry>
 </feed>
