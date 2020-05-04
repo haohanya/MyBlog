@@ -8,7 +8,7 @@
 <meta name="keywords" content="浩瀚,浩瀚博客,java">
 <meta name="description" content="浩瀚-每天向往着外面的世界">
 <meta name="theme-color" content="#000">
-<title>浩瀚</title>
+<title>MyBatis | 浩瀚</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1588565726260">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -37,6 +37,8 @@
 
 
 
+  <meta name="description" content="MyBatis" />
+  <meta name="keywords" content="mybatis" />
 </head>
 
 <body>
@@ -72,7 +74,7 @@
             
               
             
-            <li class="nav-item nav-item-active">
+            <li class="nav-item ">
               
               
                 <a href="/" target="_self">
@@ -164,8 +166,24 @@
     <div
       class="section-layout gemini ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body gemini" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -213,93 +231,396 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li><a href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B">快速开始</a>
+<ul>
+<li><a href="#1-mybatis%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">1、MyBatis核心配置文件</a></li>
+<li><a href="#2-orm%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6mapperxml">2、ORM映射文件mapper.xml</a></li>
+<li><a href="#3-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6">3、日志文件</a></li>
+<li><a href="#4-%E6%B5%8B%E8%AF%95">4、测试</a></li>
+</ul>
+</li>
+<li><a href="#properties%E5%B1%9E%E6%80%A7">properties属性</a></li>
+<li><a href="#settings">settings</a></li>
+<li><a href="#typealiases%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D">typeAliases（类型别名）</a>
+<ul>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%AB%E5%90%8D">自定义别名</a></li>
+</ul>
+</li>
+<li><a href="#plugins%E6%8F%92%E4%BB%B6">plugins（插件）</a></li>
+<li><a href="#xml%E6%98%A0%E5%B0%84">XML映射</a>
+<ul>
+<li><a href="#select-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5">select 查询语句</a></li>
+<li><a href="#insert-updatea-delete">insert updatea delete</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8A%A8%E6%80%81sql">动态SQL</a>
+<ul>
+<li><a href="#if">if</a></li>
+<li><a href="#sql%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98">sql注入的问题</a></li>
+<li><a href="#when">when</a></li>
+<li><a href="#choose">choose</a></li>
+<li><a href="#set">set</a></li>
+<li><a href="#foreach">foreach</a></li>
+</ul>
+</li>
+<li><a href="#sql%E7%89%87%E6%AE%B5">SQL片段</a></li>
+<li><a href="#%E5%A4%9A%E8%A1%A8%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2">多表联合查询</a>
+<ul>
+<li><a href="#vo">VO</a>
+<ul>
+<li><a href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAvo">创建一个VO</a></li>
+<li><a href="#%E7%BC%96%E5%86%99mapper%E6%8E%A5%E5%8F%A3">编写mapper接口</a></li>
+<li><a href="#%E7%BC%96%E5%86%99mapperxml">编写mapper.xml</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%80%E5%AF%B9%E4%B8%80">一对一</a>
+<ul>
+<li><a href="#%E6%8C%89%E7%85%A7%E6%9F%A5%E8%AF%A2%E5%B5%8C%E5%A5%97%E5%A4%84%E7%90%86">按照查询嵌套处理</a></li>
+<li><a href="#%E6%8C%89%E7%85%A7%E7%BB%93%E6%9E%9C%E5%B5%8C%E5%A5%97%E5%A4%84%E7%90%86">按照结果嵌套处理</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%80%E5%AF%B9%E5%A4%9A">一对多</a>
+<ul>
+<li><a href="#%E5%A4%9A%E5%AF%B9%E5%A4%9A">多对多</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD">延迟加载</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8association%E5%AE%9E%E7%8E%B0%E6%87%92%E5%8A%A0%E8%BD%BD">使用<code>association</code>实现懒加载</a>
+<ul>
+<li><a href="#%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E5%BC%80%E5%90%AF%E6%87%92%E5%8A%A0%E8%BD%BD">核心配置开启懒加载</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BD%BF%E7%94%A8collection%E5%AE%9E%E7%8E%B0%E6%87%92%E5%8A%A0%E8%BD%BD">使用<code>collection</code>实现懒加载</a>
+<ul>
+<li><a href="#%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E5%BC%80%E5%90%AF%E6%87%92%E5%8A%A0%E8%BD%BD-2">核心配置开启懒加载</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#mybatis%E7%BC%93%E5%AD%98">mybatis缓存</a>
+<ul>
+<li><a href="#%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98">一级缓存</a></li>
+<li><a href="#%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98">二级缓存</a>
+<ul>
+<li><a href="#%E5%9C%A8%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E5%BC%80%E5%90%AF%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98">在核心配置文件中开启二级缓存</a></li>
+<li><a href="#%E5%9C%A8mappexml%E4%B8%AD%E5%BC%80%E5%90%AF%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98">在mappe.xml中开启二级缓存</a></li>
+<li><a href="#pojo%E9%9C%80%E8%A6%81%E5%AE%9E%E7%8E%B0%E5%BA%8F%E5%88%97%E5%8C%96%E6%8E%A5%E5%8F%A3">pojo需要实现序列化接口</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91%E5%85%A5%E9%97%A8">注解开发入门</a>
+<ul>
+<li><a href="#%E5%AF%BC%E5%85%A5jar%E5%8C%85">导入jar包</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">配置文件</a></li>
+<li><a href="#%E8%A7%A3%E5%86%B3%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E4%B8%AD%E7%9A%84%E5%88%97%E5%90%8D%E5%92%8Cpojo%E4%B8%AD%E5%B1%9E%E6%80%A7%E5%90%8D%E4%B8%8D%E4%B8%80%E8%87%B4">解决数据库表中的列名和pojo中属性名不一致</a>
+<ul>
+<li><a href="#%E7%AC%AC%E4%B8%80%E7%A7%8D">第一种</a></li>
+<li><a href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D">第二种</a></li>
+</ul>
+</li>
+<li><a href="#%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91%E4%B8%AD%E7%9A%84%E5%8A%A8%E6%80%81sql">注解开发中的动态sql</a>
+<ul>
+<li><a href="#%E8%BE%93%E5%85%A5%E6%98%A0%E5%B0%84%E7%B1%BB%E5%9E%8B%E4%B8%BA%E7%AE%80%E5%8D%95%E7%B1%BB%E5%9E%8B">输入映射类型为简单类型</a></li>
+<li><a href="#%E8%BE%93%E5%85%A5%E6%98%A0%E5%B0%84%E7%B1%BB%E5%9E%8B%E4%B8%BApojo">输入映射类型为pojo</a></li>
+</ul>
+</li>
+<li><a href="#%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91%E5%AE%9E%E7%8E%B0%E5%A4%8D%E6%9D%82%E7%9A%84%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB">注解开发实现复杂的映射关系</a>
+<ul>
+<li><a href="#%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E7%B3%BB">一对一关系</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%80%E5%AF%B9%E5%A4%9A%E7%9A%84%E5%85%B3%E7%B3%BB">一对多的关系</a></li>
+<li><a href="#mybatis%E5%9F%BA%E4%BA%8E%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98%E7%9A%84%E5%BC%80%E5%8F%91">mybatis基于二级缓存的开发</a>
+<ul>
+<li><a href="#4-1-%E5%9C%A8%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E5%BC%80%E5%90%AF%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98">4-1 在核心配置文件中开启二级缓存</a></li>
+<li><a href="#4-2-%E5%9C%A8mapper%E6%8E%A5%E5%8F%A3%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%B3%A8%E8%A7%A3%E9%85%8D%E7%BD%AE%E5%BC%80%E5%90%AF%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98">4-2 在mapper接口中使用注解配置开启二级缓存</a></li>
+<li><a href="#4-2-pojo%E9%9C%80%E8%A6%81%E5%AE%9E%E7%8E%B0%E5%BA%8F%E5%88%97%E5%8C%96-%E6%8E%A5%E5%8F%A3">4-2 <code>pojo</code>需要实现序列化 接口</a></li>
+<li><a href="#4-3-mapper%E5%BC%80%E5%90%AF%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98">4-3 mapper开启二级缓存</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2">分页查询</a>
+<ul>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6%E7%9A%84jar%E5%8C%85%E4%BE%9D%E8%B5%96">添加分页插件的jar包依赖</a></li>
+<li><a href="#%E5%9C%A8%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E9%85%8D%E7%BD%AE%E5%88%86%E9%A1%B5%E6%8B%A6%E6%88%AA%E5%99%A8">在核心配置文件中配置分页拦截器</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0%E5%88%86%E9%A1%B5%E6%93%8D%E4%BD%9C">实现分页操作</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'gemini';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box gemini">
-          <section class="section  posts-expand slide-down-in">
-            
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://haohanya.github.io/post/spring-security/">
-      Spring-Security
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2020-05-04</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://haohanya.github.io/tag/YYffL2EXa/">
-        <span>spring-security</span>
-      </a>、
-      
-      
-      
-      <a href="https://haohanya.github.io/tag/POgCfBu13Z/">
-        <span>spring</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>9分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>1547<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
           
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://haohanya.github.io/post/spring-security/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
         
       </div>
-      
     </div>
-  </article>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <header class="post-header">
   <h1 class="post-title">
     <a class="post-title-link" href="https://haohanya.github.io/post/mybatis/">
       MyBatis
@@ -337,288 +658,893 @@
       <span>6302<span class="pc-show">字数</span></span>
     </span>
     
-  </div>
-</header>
-      <div class="post-body">
-        
-        
-          
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://haohanya.github.io/post/mybatis/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-    </div>
-  </article>
-
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://haohanya.github.io/post/java-fan-she/">
-      Java反射
-    </a>
-  </h1>
-  <div class="post-meta">
     
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2020-05-04</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
     
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://haohanya.github.io/tag/CX9XCxDcJ/">
-        <span>java</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>4分钟</span>
-    </span>
-    <span class="meta-item">
+    <span id="/post/mybatis/" data-flag-title="MyBatis" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>703<span class="pc-show">字数</span></span>
+      <i class="fa fa-eye"></i>
+      <span>浏览量：<span class="leancloud-visitors-count"></span></span>
     </span>
     
   </div>
 </header>
-      <div class="post-body">
-        
-        
-          
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://haohanya.github.io/post/java-fan-she/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-    </div>
-  </article>
+            <div class="post-body next-md-body" id="post_body">
+              <h1 id="快速开始">快速开始</h1>
+<h2 id="1-mybatis核心配置文件">1、MyBatis核心配置文件</h2>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE configuration
+  PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
+&lt;configuration&gt;
+  &lt;!-- 配置数据源 --&gt;
+  &lt;environments default=&quot;development&quot;&gt;
+    &lt;environment id=&quot;development&quot;&gt;
+     &lt;!--事务处理方式--&gt;
+      &lt;transactionManager type=&quot;JDBC&quot;/&gt;
+      &lt;dataSource type=&quot;POOLED&quot;&gt;
+        &lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+        &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis&quot;/&gt;
+        &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
+        &lt;property name=&quot;password&quot; value=&quot;root&quot;/&gt;
+      &lt;/dataSource&gt;
+    &lt;/environment&gt;
+  &lt;/environments&gt;
+&lt;!--映射器：每一个Mapper接口都应该在核心配置文件&lt;mappers&gt;标签中注册--&gt;
+  &lt;mappers&gt;
+  	&lt;!--使用XML配置文件注册--&gt;
+    &lt;mapper resource=&quot;com/cn/mybatis/dao/IcpInfoMapper.xml&quot;/&gt;
+    &lt;!--使用类注册方式--&gt;
+    &lt;mapper class=&quot;com.cn.mybatis.dao.IcpInfoMapper&quot; /&gt;
+  &lt;/mappers&gt;
+&lt;/configuration&gt;
+</code></pre>
+<h2 id="2-orm映射文件mapperxml">2、ORM映射文件mapper.xml</h2>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+  PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;!-- 这个配置文件主要是配置实体类和数据库中的表映射关系 --&gt;
+&lt;!-- mapper：映射信息配置 namesapce:如果是在ibatis的开发中，名字可以随便取，但是在mybatis中将有特殊的意义 --&gt;
+&lt;mapper namespace=&quot;test&quot;&gt;
+	&lt;!-- 查询所有的书籍信息 select:专门用于查询的statement
+	     id:是statement的唯一标识符
+	     resultType:返回值得类型（跟返回的个数无关），将返回类型的全限定名写到这里
+	 --&gt;
+	&lt;select id=&quot;selectAllBooks&quot; resultType=&quot;cn.kgc.pojo.Book&quot;&gt;
+		select * from book
+	&lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+<h2 id="3-日志文件">3、日志文件</h2>
+<p><code>log4j.properties</code></p>
+<pre><code class="language-properties">log4j.rootLogger=DEBUG,A1
+log4j.logger.org.mybatis=DEBUG
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%-d{yyyy-MM-dd HH:mm:ss,SSS} [%t] [%c]-[%p] %m%n
+</code></pre>
+<h2 id="4-测试">4、测试</h2>
+<pre><code class="language-java">//查询全部
+@Test
+public void testFindAll() throws Exception{
+    //通过流的方式读取配置文件
+    InputStream inputStream = Resources.getResourceAsStream(&quot;mybatis-config.xml&quot;);
+    //1.读取配置文件,得到SqlSessionFactory
+    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream );
+    //2.创建SqlSession
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+    //3.查询所有(参数：是namespace.statementId)
+    List&lt;Book&gt; list = sqlSession.selectList(&quot;test.selectAllBooks&quot;);
+    System.out.println(list);
+}
+</code></pre>
+<h1 id="properties属性">properties属性</h1>
+<p>创建一个外部的properties文件</p>
+<pre><code class="language-properties">jdbc.dirver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;amp;characterEncoding=utf-8
+jdbc.username=root
+jdbc.password=root
+</code></pre>
+<p>在核心配置文件中引用properties文件</p>
+<pre><code class="language-xml">&lt;properties resource=&quot;jdbc.properties&quot;/&gt;
+</code></pre>
+<p>使用</p>
+<pre><code class="language-xml">${jdbc.dirver}
+${jdbc.url}
+${jdbc.username}
+</code></pre>
+<h1 id="settings">settings</h1>
+<p><code>mapUnderscoreToCamelCase</code>:开启驼峰命名，可以帮助我们完成数据库的经典命名规则，到java的经典命名规则（驼峰命名发）</p>
+<p>如：数据库叫user_name  到java类（<code>pojo</code>）中是<code>userName</code></p>
+<pre><code class="language-xml">&lt;settings&gt;
+    &lt;!-- 开启驼峰命名 --&gt;
+    &lt;setting name=&quot;mapUnderscoreToCamelCase&quot; value=&quot;true&quot;/&gt;
+    &lt;!--指定 MyBatis 所用日志的具体实现，未指定时将自动查找。
+	日志类型：
+	STDOUT_LOGGING 不需要导入jar包，因为是mybatis自带
+	NO_LOGGING 代表不需要日志输出
+	SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING | NO_LOGGING
+ 	--&gt;
+    &lt;setting name=&quot;logImpl&quot; value=&quot;STDOUT_LOGGING&quot;/&gt;
+&lt;/settings&gt;
+</code></pre>
+<p>分析日志输出</p>
+<figure data-type="image" tabindex="1"><img src="MyBatis.assets%5Cimage-20200307124719177.png" alt="image-20200307124719177" loading="lazy"></figure>
+<h1 id="typealiases类型别名">typeAliases（类型别名）</h1>
+<h2 id="自定义别名">自定义别名</h2>
+<pre><code class="language-xml">&lt;!--别名，用于简化--&gt;
+&lt;typeAliases&gt;
+    &lt;!--type：包+类名，alias：别名--&gt;
+    &lt;typeAlias type=&quot;com.cn.mybatis.entity.IcpInfo&quot; alias=&quot;Icp&quot; /&gt;
+    &lt;!--使用包的方式
+		每一个在包 domain.blog 中的 Java Bean，在没有注解的情况下
+		会使用 Bean 的首字母小写的非限定类名来作为它的别名
+		(这句话意思是：@Alias(&quot;author&quot;)
+		在使用包方式时，javaBean没有添加注解指定别名时自动使用类名{首字母小写})
+	--&gt;
+    &lt;package name=&quot;com.cn.mybatis.entity&quot;/&gt;
+&lt;/typeAliases&gt;
+</code></pre>
+<h1 id="plugins插件">plugins（插件）</h1>
+<h1 id="xml映射">XML映射</h1>
+<ul>
+<li><code>cache</code> – 对给定命名空间的缓存配置。</li>
+<li><code>cache-ref</code> – 对其他命名空间缓存配置的引用。</li>
+<li><code>resultMap</code> – 是最复杂也是最强大的元素，用来描述如何从数据库结果集中来加载对象。</li>
+<li><code>parameterMap</code> – 已被废弃！老式风格的参数映射。更好的办法是使用内联参数，此元素可能在将来被移除。文档中不会介绍此元素。</li>
+<li><code>sql</code> – 可被其他语句引用的可重用语句块。</li>
+<li><code>insert</code> – 映射插入语句</li>
+<li><code>update</code> – 映射更新语句</li>
+<li><code>delete</code> – 映射删除语句</li>
+<li><code>select</code> – 映射查询语句</li>
+</ul>
+<h2 id="select-查询语句">select 查询语句</h2>
+<pre><code class="language-xml">&lt;!--
+	id：一般和Mepper接口的方法名称相同，在命名空间中唯一的标识符，可以被用来引用这条语句。
+	parameterType：接收一个int类型的参数
+		接收参数使用#{ }包裹着，这个参数对应着接口的参数
+	resultType：返回一个hashmap 类型的数据
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://haohanya.github.io/post/FastDFS/">
-      FastDFS搭建
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2020-05-04</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://haohanya.github.io/tag/AowgROl25/">
-        <span>FastDFS</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>3分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>503<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
-          
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://haohanya.github.io/post/FastDFS/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-    </div>
-  </article>
+--&gt;
+&lt;select id=&quot;selectPerson&quot; parameterType=&quot;int&quot; resultType=&quot;hashmap&quot;&gt;
+  SELECT * FROM PERSON WHERE ID = #{id}
+&lt;/select&gt;
+</code></pre>
+<h2 id="insert-updatea-delete">insert updatea delete</h2>
+<p>在使用这些语句的时候需要提交事务：session.commit();</p>
+<pre><code class="language-xml">&lt;insert id=&quot;addIcpInfo&quot; parameterType=&quot;icpInfo&quot; &gt;
+    insert into icpinfo (icp, name, address, home, introduce, author, email, date, type) values (#{icp}, #{name}, #{address}, #{home}, #{introduce}, #{author}, #{email}, #{date}, #{type})
+&lt;/insert&gt;
+</code></pre>
+<p>获取插入数据后的主键id：useGeneratedKeys=&quot;true&quot; keyProperty=&quot;cip&quot;</p>
+<pre><code class="language-xml">&lt;insert id=&quot;addIcpInfo&quot; useGeneratedKeys=&quot;true&quot; keyProperty=&quot;cip&quot;&gt;
+    insert into icpinfo (icp, name, address, home, introduce, author, email, date, type) values (#{icp}, #{name}, #{address}, #{home}, #{introduce}, #{author}, #{email}, #{date}, #{type})
+&lt;/insert&gt;
+</code></pre>
+<p>插入多条数据：传入一个 数组或集合，并返回自动生成的主键。</p>
+<pre><code class="language-xml">&lt;insert id=&quot;addIcpInfoList&quot; useGeneratedKeys=&quot;true&quot; keyProperty=&quot;cip&quot;&gt;
+    insert into icpinfo (icp, name, address, home, introduce, author, email, date, type) values
+    &lt;foreach collection=&quot;list&quot; item=&quot;item&quot; separator=&quot;,&quot;&gt;
+        (#{item.icp}, #{item.name}, #{item.address}, #{item.home}, #{item.introduce}, #{item.author}, #{item.email}, #{item.date}, #{item.type})
+    &lt;/foreach&gt;
+&lt;/insert&gt;
+</code></pre>
+<h1 id="动态sql">动态SQL</h1>
+<h2 id="if">if</h2>
+<pre><code class="language-xml">对于输入映射类型为pojo类型：
+#{pojo中的属性名}   ${pojo中的属性名}
+&lt;if test=&quot;gradeId != null&quot;&gt;
+    and grade_id = #{gradeId}
+&lt;/if&gt;
+</code></pre>
+<h2 id="sql注入的问题">sql注入的问题</h2>
+<p>在使用${}会出现<code>sql</code>注入的问题（拼接字符串，没有使用预编译）</p>
+<pre><code class="language-xml">如果为简单数据类型需要把name换成_parameter
+&lt;bind name=&quot;n&quot; value=&quot;'%'+name+'%'&quot;/&gt;
+and name like #{n}
+</code></pre>
+<h2 id="when">when</h2>
+<p>应用场景：可能查询全部，有可能根据条件查询，并且如果第一个条件前面有and，where子句会自动把这个and删除再作为sql语句运行</p>
+<pre><code class="language-xml">&lt;select id=&quot;findStudentByLike&quot; resultType=&quot;student&quot; parameterType=&quot;student&quot;&gt;
+    select * from student
+    &lt;where&gt;
+        &lt;if test=&quot;name != null and name != ''&quot;&gt;
+            &lt;bind name=&quot;n&quot; value=&quot;'%'+name+'%'&quot;/&gt;
+            and name like #{n}
+        &lt;/if&gt;
+        &lt;if test=&quot;gradeId != null&quot;&gt;
+            and grade_id = #{gradeId}
+        &lt;/if&gt;
+    &lt;/where&gt;
+&lt;/select&gt;
+</code></pre>
+<h2 id="choose">choose</h2>
+<p>其实就是java中的switch  或者 if...else if ...else</p>
+<h2 id="set">set</h2>
+<p>set标签作用：能自动的判断是否在sql语句的结尾处是否要添加逗号，如果不需要逗号它自动帮我们删除</p>
+<p>(和where一样不会自动添加)</p>
+<pre><code class="language-xml">&lt;update id=&quot;updateStudentByById&quot; parameterType=&quot;student&quot;&gt;
+    update student
+    &lt;set&gt;
+        &lt;if test=&quot;name != null&quot;&gt;
+            name = #{name},
+        &lt;/if&gt;
+        &lt;if test=&quot;gradeId != null&quot;&gt;
+            grade_id = #{gradeId}
+        &lt;/if&gt;
+    &lt;/set&gt;
+    where id = #{id}
+&lt;/update&gt;
+</code></pre>
+<h2 id="foreach">foreach</h2>
+<pre><code class="language-xml">&lt;select id=&quot;findStudentsById&quot; parameterType=&quot;int&quot; resultType=&quot;student&quot;&gt;
+        select * from student where id in
+        &lt;foreach collection=&quot;list&quot; open=&quot;(&quot; separator=&quot;,&quot; close=&quot;)&quot; item=&quot;item&quot;&gt;
+            #{item}
+        &lt;/foreach&gt;
+    &lt;/select&gt;
+</code></pre>
+<h1 id="sql片段">SQL片段</h1>
+<pre><code class="language-xml">&lt;sql id=&quot;sql&quot;&gt;
+    select * from student
+&lt;/sql&gt;
+调用
+&lt;include refid=&quot;sql&quot;&gt;&lt;/include&gt;
+</code></pre>
+<h1 id="多表联合查询">多表联合查询</h1>
+<h2 id="vo">VO</h2>
+<p>解决思路：要求返回的是一个对象，如果<code>pojo</code>不能满足(要返回的列不存在<code>pojo</code>中)，那么创建一个VO对象，这个VO对象中包含了所有要返回的字段</p>
+<h3 id="创建一个vo">创建一个VO</h3>
+<pre><code class="language-java">package cn.kgc.vo;
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://haohanya.github.io/post/freemarker/">
-      freemarker
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2020-05-04</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://haohanya.github.io/tag/pV4gj9NcU/">
-        <span>freemarker</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>4分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>853<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
-          
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://haohanya.github.io/post/freemarker/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-    </div>
-  </article>
+import cn.kgc.pojo.Student;
+//继承的原则：要返回的字段哪个pojo中多，那么就继承哪个pojo
+public class StudentVO extends Student{
+	private String gradeName;
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://haohanya.github.io/post/hello-gridea/">
-      Hello Gridea
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span>发布于</span>
-      <span>2018-12-12</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show">分类于</span>
-      
-      
-      <a href="https://haohanya.github.io/tag/xi3C-nNGB/">
-        <span>Gridea</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>2分钟</span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>298<span class="pc-show">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
-          <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+	public String getGradeName() {
+		return gradeName;
+	}
 
-          
-            <img src="/post-images/hello-gridea.png" />
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn" href="https://haohanya.github.io/post/hello-gridea/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-    </div>
-  </article>
+	public void setGradeName(String gradeName) {
+		this.gradeName = gradeName;
+	}	
+}
+</code></pre>
+<h3 id="编写mapper接口">编写mapper接口</h3>
+<pre><code class="language-java">public interface StudentMapper {
+	/**
+	 * 查询学生信息，要求展示学生信息中年级名称(联合查询)
+	 */
+	List&lt;StudentVO&gt; getStudentVO();
+}
+</code></pre>
+<h3 id="编写mapperxml">编写mapper.xml</h3>
+<pre><code class="language-xml">&lt;select id=&quot;getStudentVO&quot; resultType=&quot;cn.kgc.vo.StudentVO&quot;&gt;
+	SELECT s.*,g.name gradeName FROM student s,grade g WHERE s.grade_id=g.id
+&lt;/select&gt;
+</code></pre>
+<h2 id="一对一">一对一</h2>
+<h3 id="按照查询嵌套处理">按照查询嵌套处理</h3>
+<pre><code class="language-xml">&lt;resultMap id=&quot;IcpInfoType&quot; type=&quot;icpInfo&quot;&gt;
+&lt;!-- property：实体类的对象属性名，
+	column：数据库中关联的列，
+	javaType：实体类对象，
+	select：一个sql语句查询的是实体对象的sql
+--&gt;
+    &lt;association property=&quot;type&quot; column=&quot;type&quot; javaType=&quot;type&quot; select=&quot;getTypeList&quot; /&gt;
+&lt;/resultMap&gt;
+&lt;select id=&quot;getList&quot; resultMap=&quot;IcpInfoType&quot;&gt;
+    select * from icpinfo
+&lt;/select&gt;
+&lt;!--这个typeID 获取的是 column=&quot;type&quot; 这个列的值--&gt;
+&lt;select id=&quot;getTypeList&quot; resultType=&quot;type&quot; &gt;
+    select * from type where tid = #{id}
+&lt;/select&gt;
+</code></pre>
+<h3 id="按照结果嵌套处理">按照结果嵌套处理</h3>
+<pre><code class="language-xml">&lt;select id=&quot;getList2&quot; resultMap=&quot;getList2&quot; &gt;
+    select icp, name, address, home, introduce, author, email, `date`, type, tid, tname from icpinfo i ,type t
+    where i.type = t.tid
+&lt;/select&gt;
+&lt;!--type = 要查询的对象--&gt;
+&lt;resultMap id=&quot;getList2&quot; type=&quot;icpInfo&quot; &gt;
+    &lt;!--property=实体类的属性名 column=列名or别名--&gt;
+    &lt;result property=&quot;icp&quot; column=&quot;icp&quot; /&gt;
+    &lt;result property=&quot;name&quot; column=&quot;name&quot; /&gt;
+    &lt;result property=&quot;address&quot; column=&quot;address&quot; /&gt;
+    &lt;result property=&quot;home&quot; column=&quot;home&quot; /&gt;
+    &lt;result property=&quot;introduce&quot; column=&quot;introduce&quot; /&gt;
+    &lt;result property=&quot;author&quot; column=&quot;author&quot; /&gt;
+    &lt;result property=&quot;email&quot; column=&quot;email&quot; /&gt;
+    &lt;result property=&quot;date&quot; column=&quot;date&quot; /&gt;
+    &lt;!--复杂类型
+		property=在icpInfo里的属性是type
+		javaType=type的对象
+	--&gt;
+    &lt;association property=&quot;type&quot; javaType=&quot;type&quot; &gt;
+        &lt;result property=&quot;tid&quot; column=&quot;tid&quot; /&gt;
+        &lt;result property=&quot;tname&quot; column=&quot;tname&quot; /&gt;
+    &lt;/association&gt;
+&lt;/resultMap&gt;
+</code></pre>
+<h2 id="一对多">一对多</h2>
+<p>一对多只需要把association换成</p>
+<pre><code class="language-xml">&lt;!--ofType=&quot;&quot;
+	集合中的泛型信息
+--&gt;
+&lt;collection property=&quot;&quot; ofType=&quot;&quot;&gt;&lt;/collection&gt;
+</code></pre>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+  PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;cn.kgc.mapper.GradeMapper&quot;&gt;
+	&lt;!-- 查询年级，把属于这个年级的所有学生查询出来 --&gt;
+	&lt;resultMap type=&quot;cn.kgc.pojo.Grade&quot; id=&quot;gradeStudentMap&quot;&gt;
+		&lt;id column=&quot;id&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+		&lt;result column=&quot;name&quot; property=&quot;name&quot; javaType=&quot;string&quot;/&gt;
+		&lt;!-- collection:一对多的映射关系
+			property:表示一对多映射关系在pojo中的属性名
+			ofType:表示该集合的泛型的全限定名
+		 --&gt;
+		&lt;collection property=&quot;studentList&quot; ofType=&quot;cn.kgc.pojo.Student&quot;&gt;
+			&lt;id column=&quot;sid&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+			&lt;result column=&quot;sname&quot; property=&quot;name&quot; javaType=&quot;string&quot;/&gt;
+			&lt;!-- gradeid因为在grade中已经有了，所以不需要再配置 --&gt;
+		&lt;/collection&gt;
+	&lt;/resultMap&gt;
+	
+	&lt;select id=&quot;getGradeById&quot; parameterType=&quot;int&quot; resultMap=&quot;gradeStudentMap&quot;&gt;
+		SELECT 
+		  g.*,
+		  s.id sid,
+		  s.name sname
+		FROM
+		  grade g,
+		  student s 
+		WHERE g.id = s.grade_id 
+		  AND g.id = #{id}
+	&lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+<h3 id="多对多">多对多</h3>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+  PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;cn.kgc.mapper.StudentMapper&quot;&gt;
+	&lt;resultMap type=&quot;cn.kgc.pojo.Student&quot; id=&quot;studentMap&quot;&gt;
+		&lt;id column=&quot;id&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+		&lt;result column=&quot;name&quot; property=&quot;name&quot; javaType=&quot;string&quot;/&gt;
+		&lt;result column=&quot;grade_id&quot; property=&quot;gradeId&quot; javaType=&quot;int&quot;/&gt;
+		&lt;!-- 一对多的映射关系 --&gt;
+		&lt;collection property=&quot;studentCourseList&quot; ofType=&quot;cn.kgc.pojo.StudentCourse&quot;&gt;
+			&lt;id column=&quot;scid&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+			&lt;!-- studentCourse和course是一对一的映射俄关系 --&gt;
+			&lt;association property=&quot;course&quot; javaType=&quot;cn.kgc.pojo.Course&quot;&gt;
+				&lt;id column=&quot;cid&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+				&lt;result column=&quot;cname&quot; property=&quot;name&quot; javaType=&quot;string&quot;/&gt;
+			&lt;/association&gt;
+		&lt;/collection&gt;
+	&lt;/resultMap&gt;
+
+	&lt;select id=&quot;getStudentById&quot; parameterType=&quot;int&quot; resultMap=&quot;studentMap&quot;&gt;
+	SELECT 
+	  s.*,
+	  sc.id scid,
+	  c.id cid,
+	  c.name cname 
+	FROM
+	  student s,
+	  student_course sc,
+	  course c 
+	WHERE s.id = sc.sid 
+	  AND c.id = sc.cid 
+	  AND s.id = #{id}
+	&lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+<h1 id="延迟加载">延迟加载</h1>
+<p>什么是懒加载</p>
+<pre><code class="language-java">懒加载：就是在需要数据的时候才加载，不需要数据的时候不加载，这样有利于系统性能的提升，这就是懒加载（也叫做延迟加载）
+
+好处：在关联查询的时候，根据需求进行关联查询，大大提高了数据库的查询性能。（单表的查询效率永远要比多表联合查询的效率高）
+
+坏处：因为需要用到数据的时候才去做查询，这样大批量的数据查询的时候等待时间会变得更长，造成用户的体验下降
+(select * from student)会把所有的学生的年级编号也在里面
+突然要查询年级信息，它底层操作是：根据年级id一个一个去执行查询
+</code></pre>
+<h2 id="使用association实现懒加载">使用<code>association</code>实现懒加载</h2>
+<h3 id="核心配置开启懒加载">核心配置开启懒加载</h3>
+<pre><code class="language-xml"> &lt;settings&gt;
+  	&lt;!-- 开启懒加载 --&gt;
+  	&lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;
+  	&lt;!-- mybatis3.4.1之前默认值是true，需要设置为false（将积极加载改为消息加载也就是按需加载） --&gt;
+  	&lt;setting name=&quot;aggressiveLazyLoading&quot; value=&quot;false&quot;/&gt;
+  	&lt;!-- 因为我这里为了打印对象里信息的方便，所以都重写了toString方法，mybatis中默认是如果使用(equals,clone,hashCode,toString任意一个方法)那么就不再延迟加载 --&gt;
+  	&lt;setting name=&quot;lazyLoadTriggerMethods&quot; value=&quot;&quot;/&gt;
+  &lt;/settings&gt;
+</code></pre>
+<p>GradeMapper.xml</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+  PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;cn.kgc.mapper.GradeMapper&quot;&gt;
+	&lt;!-- 根据id查询年级对象 --&gt;
+	&lt;select id=&quot;getGradeById&quot; parameterType=&quot;int&quot; resultType=&quot;cn.kgc.pojo.Grade&quot;&gt;
+		select * from grade where id=#{id}
+	&lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+<p>StudentMapper.xml</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+  PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;cn.kgc.mapper.StudentMapper&quot;&gt;
+	
+	&lt;resultMap type=&quot;cn.kgc.pojo.Student&quot; id=&quot;studentMap&quot;&gt;
+		&lt;id column=&quot;id&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+		&lt;result column=&quot;name&quot; property=&quot;name&quot; javaType=&quot;string&quot;/&gt;
+		&lt;!-- 一个学生对应一个年级：一对一的关系映射
+			对于association方式的懒加载：
+				select:此处要求是根据年级的id查询年级对象的mapper接口中方法的全限定名
+				column:在数据库中表与表之间关系的外键
+		 --&gt;
+		&lt;association property=&quot;grade&quot; javaType=&quot;cn.kgc.pojo.Grade&quot;
+			select=&quot;cn.kgc.mapper.GradeMapper.getGradeById&quot; column=&quot;grade_id&quot;&gt;&lt;/association&gt;
+	&lt;/resultMap&gt;
+	
+	&lt;select id=&quot;getAllStudents&quot; resultMap=&quot;studentMap&quot;&gt;
+		select * from student
+	&lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+<h2 id="使用collection实现懒加载">使用<code>collection</code>实现懒加载</h2>
+<h3 id="核心配置开启懒加载-2">核心配置开启懒加载</h3>
+<pre><code class="language-xml">&lt;settings&gt;
+&lt;!-- 开启懒加载 --&gt;
+&lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;
+&lt;!-- mybatis3.4.1之前默认值是true，需要设置为false（将积极加载改为消息加载也就是按需加载） --&gt;
+&lt;setting name=&quot;aggressiveLazyLoading&quot; value=&quot;false&quot;/&gt;
+&lt;!-- 因为我这里为了打印对象里信息的方便，所以都重写了toString方法，mybatis中默认是如果使用(equals,clone,hashCode,toString任意一个方法)那么就不再延迟加载 --&gt;
+&lt;setting name=&quot;lazyLoadTriggerMethods&quot; value=&quot;&quot;/&gt;
+&lt;/settings&gt;
+</code></pre>
+<p>StudentMapper.xml</p>
+<pre><code class="language-xml">&lt;select id=&quot;getStudentsByGradeId&quot; parameterType=&quot;int&quot; resultType=&quot;cn.kgc.pojo.Student&quot;&gt;
+    select * from student where grade_id=#{gradeId}
+&lt;/select&gt;
+</code></pre>
+<p>GradeMapper.xml</p>
+<pre><code class="language-xml">&lt;!-- 查询年级信息，有可能查询年级中所有的学生信息 --&gt;
+&lt;resultMap type=&quot;cn.kgc.pojo.Grade&quot; id=&quot;gradeMap&quot;&gt;
+    &lt;id column=&quot;id&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+    &lt;result column=&quot;name&quot; property=&quot;name&quot; javaType=&quot;string&quot;/&gt;
+    &lt;!-- 一对多的映射关系
+        select:根据年级编号查询学生列表的方法
+        column:就是grade的id（它就是grade表的主键）
+     --&gt;
+    &lt;collection property=&quot;studentList&quot; ofType=&quot;cn.kgc.pojo.Student&quot;
+        select=&quot;cn.kgc.mapper.StudentMapper.getStudentsByGradeId&quot; column=&quot;id&quot;&gt;&lt;/collection&gt;
+&lt;/resultMap&gt;
+&lt;select id=&quot;getAllGrades&quot; resultMap=&quot;gradeMap&quot;&gt;
+    select * from grade
+&lt;/select&gt;
+</code></pre>
+<h1 id="mybatis缓存">mybatis缓存</h1>
+<h2 id="一级缓存">一级缓存</h2>
+<p>它是<code>SqlSession</code>级别的，同一个<code>SqlSession</code>才涉及到一级缓存</p>
+<p>一级缓存是默认存在，它不需要去做任何的设置</p>
+<h2 id="二级缓存">二级缓存</h2>
+<p>它是mapper级别的，需要开启才能使用</p>
+<blockquote>
+<p>缓存在实际开发中是很有用的，它能大大的提升查询的效率，提高程序的性能</p>
+</blockquote>
+<h3 id="在核心配置文件中开启二级缓存">在核心配置文件中开启二级缓存</h3>
+<pre><code class="language-xml">&lt;!-- 开启二级缓存(默认值就是true，准备我们使用二级缓存，可以不用设置) --&gt;
+&lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot;/&gt;
+</code></pre>
+<h3 id="在mappexml中开启二级缓存">在mappe.xml中开启二级缓存</h3>
+<pre><code class="language-xml">&lt;mapper namespace=&quot;cn.kgc.mapper.StudentMapper&quot;&gt;
+	&lt;!-- 在StudentMapper.xml中开启二级缓存 ,因为mybatis中二级缓存的实现类只有一个，默认就是这个，type可以省略不写--&gt;
+	&lt;cache type=&quot;org.apache.ibatis.cache.impl.PerpetualCache&quot;&gt;&lt;/cache&gt;
+&lt;/mapper&gt;
+</code></pre>
+<h3 id="pojo需要实现序列化接口">pojo需要实现序列化接口</h3>
+<p>因为缓存的时候要将pojo流化然后存储在内存中，查询再取出</p>
+<pre><code class="language-java">public class Student implements Serializable{
+}
+</code></pre>
+<blockquote>
+<p>补充：在mapper应用二级缓存后，默认是所有的查询方法都开启二级缓存，如果要某个查询不使用二级缓存可以添加<code>useCache=&quot;false&quot;</code></p>
+</blockquote>
+<h1 id="注解开发入门">注解开发入门</h1>
+<p>在spring4.x开始就推荐我们使用注解，完全去取代xml的配置文件</p>
+<p>目前最主流的开发方式就是：只使用注解，不再使用xml配置</p>
+<p>mybatis注解方式的开发是一种未来的趋势,这种方式比传统的xml的开发要简单并且高效</p>
+<h2 id="导入jar包">导入jar包</h2>
+<pre><code class="language-xml">&lt;dependencies&gt;
+    &lt;!-- mysql驱动 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;mysql&lt;/groupId&gt;
+        &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+        &lt;version&gt;5.1.38&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- mybatis的核心包 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+        &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+        &lt;version&gt;3.4.6&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- junit单元测试 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;junit&lt;/groupId&gt;
+        &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;version&gt;4.12&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;!-- slf4j-log4j12  (slf4j:酸辣粉) --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+        &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt;
+        &lt;version&gt;1.7.25&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<h2 id="配置文件">配置文件</h2>
+<p>log4j.properties</p>
+<pre><code class="language-properties">log4j.rootLogger=DEBUG,A1
+log4j.logger.org.mybatis=DEBUG
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%-d{yyyy-MM-dd HH:mm:ss,SSS} [%t] [%c]-[%p] %m%n
+</code></pre>
+<p>jdbc.properties</p>
+<pre><code class="language-properties">jdbc.dirver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;amp;characterEncoding=utf-8
+jdbc.username=root
+jdbc.password=root
+</code></pre>
+<p>mybatis-config.xml</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE configuration
+  PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
+&lt;configuration&gt;
+  &lt;!-- 引入外部的属性文件 --&gt;
+  &lt;properties resource=&quot;jdbc.properties&quot;&gt;&lt;/properties&gt;
+  &lt;settings&gt;
+  	&lt;!-- 开启驼峰命名 --&gt;
+  	&lt;setting name=&quot;mapUnderscoreToCamelCase&quot; value=&quot;true&quot;/&gt;
+  &lt;/settings&gt;
+  &lt;!-- 配置数据源 --&gt;
+  &lt;environments default=&quot;development&quot;&gt;
+    &lt;environment id=&quot;development&quot;&gt;
+      &lt;transactionManager type=&quot;JDBC&quot;/&gt;
+      &lt;dataSource type=&quot;POOLED&quot;&gt;
+        &lt;property name=&quot;driver&quot; value=&quot;${jdbc.dirver}&quot;/&gt;
+        &lt;property name=&quot;url&quot; value=&quot;${jdbc.url}&quot;/&gt;
+        &lt;property name=&quot;username&quot; value=&quot;${jdbc.username}&quot;/&gt;
+        &lt;property name=&quot;password&quot; value=&quot;${jdbc.password}&quot;/&gt;
+      &lt;/dataSource&gt;
+    &lt;/environment&gt;
+  &lt;/environments&gt;
+  &lt;mappers&gt;
+    &lt;package name=&quot;cn.kgc.mapper&quot;/&gt;
+  &lt;/mappers&gt;
   
-            
-            
-<div class="page bg-color">
-  <ul class="pagination-ul">
-    
-    
-      
-        <li class="pagination-li pagination-active">
-            <a href="/page/../">
-              1
-            </a>
-        </li>
-      
-    
-    
+&lt;/configuration&gt;
+</code></pre>
+<p>@Select(&quot;SQL&quot;)</p>
+<p>@Insert(&quot;SQL&quot;)</p>
+<p>@Delete(&quot;SQL&quot;)</p>
+<p>@Update(&quot;SQL&quot;)</p>
+<h2 id="解决数据库表中的列名和pojo中属性名不一致">解决数据库表中的列名和pojo中属性名不一致</h2>
+<h3 id="第一种">第一种</h3>
+<p>给sql 语句起别名</p>
+<h3 id="第二种">第二种</h3>
+<p>@Results  相当于是<code>resultMap</code></p>
+<pre><code class="language-java">@Select(&quot;select * from book&quot;)
+@Results(id=&quot;bookMap&quot;,
+    value={
+        @Result(id=true,column=&quot;id&quot;,property=&quot;id&quot;),
+        @Result(column=&quot;book_name&quot;,property=&quot;name&quot;),
+        @Result(column=&quot;price&quot;,property=&quot;price&quot;)
+})
+List&lt;Book&gt; getAllBooks();
+</code></pre>
+<h2 id="注解开发中的动态sql">注解开发中的动态sql</h2>
+<h3 id="输入映射类型为简单类型">输入映射类型为简单类型</h3>
+<pre><code class="language-java">/**
+ * 有可能查询全部，有可能根据id查询
+ * 动态sql中输入映射为简单类型，输入映射为简单类型  test中变量名必须叫_parameter
+ */
+@Select(&quot;&lt;script&gt;SELECT * FROM book &lt;if test='_parameter != null'&gt;WHERE id=#{id}&lt;/if&gt;&lt;/script&gt;&quot;)
+List&lt;Book&gt; getBooksOrById(Integer id);
+</code></pre>
+<h3 id="输入映射类型为pojo">输入映射类型为pojo</h3>
+<p>开发产生SQL语句的类和方法</p>
+<pre><code class="language-java">package cn.kgc.sql.provider;
+
+import cn.kgc.pojo.Book;
+
+public class BookMapperProvider {
+	/**
+	 * 专门用来给BookMapper接口来提供动态sql语句的
+	 * @param book
+	 * @return
+	 */
+	public String getBooks(Book book){
+		String sql = &quot;select * from book&quot;;
+		if(book != null){
+			if(book.getId() != null){
+				//id有值
+				sql = &quot;select * from book where id=#{id}&quot;;
+			}
+			if(book.getName() != null &amp;&amp; !book.getName().equals(&quot;&quot;)){
+				sql = &quot;select * from book where name like #{name}&quot;;
+			}
+			if(book.getId() != null &amp;&amp; (book.getName() != null &amp;&amp; !book.getName().equals(&quot;&quot;))){
+				sql = &quot;select * from book where id=#{id} and name like #{name}&quot;;
+			}
+		}
+		return sql;
+	}
+}
+</code></pre>
+<p>接口</p>
+<pre><code class="language-java">/**
+ * 查询：有可能查询全部，有可能根据id查询，有可能根据name做模糊查询
+ * @param book
+ * @return
+ */
+@SelectProvider(type=BookMapperProvider.class,method=&quot;getBooks&quot;)
+List&lt;Book&gt; getBooks(Book book);
+</code></pre>
+<h2 id="注解开发实现复杂的映射关系">注解开发实现复杂的映射关系</h2>
+<p>复杂的映射开发本质是两种一对一、一对多</p>
+<p>注解就对应的是：@One(一对一)  @Many(一对多)</p>
+<p>要求我们使用懒加载</p>
+<h3 id="一对一关系">一对一关系</h3>
+<p>在核心配置文件中开启懒加载</p>
+<pre><code class="language-xml"> &lt;settings&gt;
+  	&lt;!-- 开启驼峰命名 --&gt;
+  	&lt;setting name=&quot;mapUnderscoreToCamelCase&quot; value=&quot;true&quot;/&gt;
+  	&lt;!-- 开启懒加载 --&gt;
+  	&lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;
+  	&lt;!-- mybatis3.4.1之前默认值是true，需要设置为false（将积极加载改为消息加载也就是按需加载） --&gt;
+  	&lt;setting name=&quot;aggressiveLazyLoading&quot; value=&quot;false&quot;/&gt;
+  	&lt;!-- 因为我这里为了打印对象里信息的方便，所以都重写了toString方法，mybatis中默认是如果使用(equals,clone,hashCode,toString任意一个方法)那么就不再延迟加载 --&gt;
+  	&lt;setting name=&quot;lazyLoadTriggerMethods&quot; value=&quot;&quot;/&gt;
+  &lt;/settings&gt;
+</code></pre>
+<pre><code class="language-java">public interface GradeMapper {
+	/**
+	 * 根据id查询对象
+	 * @param id
+	 * @return
+	 */
+	@Select(&quot;select * from grade where id=#{id}&quot;)
+	Grade getGradeById(Integer id);
+}
+
+</code></pre>
+<pre><code class="language-java">public interface StudentMapper {
+	/**
+	 * 查询学生顺便将学生所在的年级名称查询出来
+	 */
+	@Select(&quot;select * from student&quot;)
+	@Results(id=&quot;studentMap&quot;,
+			value={
+			@Result(id=true,column=&quot;id&quot;,property=&quot;id&quot;),
+			@Result(column=&quot;name&quot;,property=&quot;name&quot;),
+			@Result(column=&quot;grade_id&quot;,property=&quot;grade&quot;,
+					one=@One(select=&quot;cn.kgc.mapper.GradeMapper.getGradeById&quot;,fetchType=FetchType.LAZY))
+			
+	})
+	List&lt;Student&gt; getAllStudents();
+}
+</code></pre>
+<blockquote>
+<p>FetchType.LAZY表示加载的方式是懒加载,   FetchType.EAGER表示一定联合查询</p>
+<p>如果不添加fetchType，默认就是懒加载</p>
+</blockquote>
+<h2 id="一对多的关系">一对多的关系</h2>
+<pre><code class="language-java">public interface StudentMapper {
+	/**
+	 * 根据年级编号查询学生列表
+	 * @param id
+	 * @return
+	 */
+	@Select(&quot;select * from student where grade_id=#{gid}&quot;)
+	List&lt;Student&gt; findStudentsListByGradeId(Integer id);
+}
+</code></pre>
+<pre><code class="language-java">package cn.kgc.mapper;
+
+import java.util.List;
+
+import org.apache.ibatis.annotations.Many;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.mapping.FetchType;
+
+import cn.kgc.pojo.Grade;
+
+public interface GradeMapper {
+
+	@Select(&quot;select * from grade&quot;)
+	@Results(id=&quot;gradeMap&quot;,
+			value={
+				@Result(id=true,column=&quot;id&quot;,property=&quot;id&quot;),
+				@Result(column=&quot;name&quot;,property=&quot;name&quot;),
+				@Result(column=&quot;id&quot;,property=&quot;studentList&quot;,
+						many=@Many(select=&quot;cn.kgc.mapper.StudentMapper.findStudentsListByGradeId&quot;,fetchType=FetchType.LAZY))
+	})
+	List&lt;Grade&gt; getGrades();
+}
+</code></pre>
+<h2 id="mybatis基于二级缓存的开发">mybatis基于二级缓存的开发</h2>
+<p>一级缓存基于<code>sqlSession</code>的，默认就存在的，咱们可以不用管，它一定会存在</p>
+<h3 id="4-1-在核心配置文件中开启二级缓存">4-1 在核心配置文件中开启二级缓存</h3>
+<pre><code class="language-xml">&lt;!-- 开启二级缓存(新版本的mybatis默认就已经开启了，所以我们不用专门开) --&gt;
+&lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot;/&gt;
+</code></pre>
+<h3 id="4-2-在mapper接口中使用注解配置开启二级缓存">4-2 在mapper接口中使用注解配置开启二级缓存</h3>
+<pre><code class="language-xml">&lt;!-- 开启二级缓存(新版本的mybatis默认就已经开启了，所以我们不用专门开) --&gt;
+&lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot;/&gt;
+</code></pre>
+<h3 id="4-2-pojo需要实现序列化-接口">4-2 <code>pojo</code>需要实现序列化 接口</h3>
+<pre><code class="language-java">public class Book implements Serializable{
+}
+</code></pre>
+<h3 id="4-3-mapper开启二级缓存">4-3 mapper开启二级缓存</h3>
+<pre><code class="language-java">@CacheNamespace(blocking=true)		//在mapper接口中开启二级缓存，默认是所有的查询都使用二级缓存
+public interface BookMapper {
+    /**
+	 * 查询:根据主键查询
+	 * 同样准守：输入映射类型为简单类型 #{随便写}
+	 * 如果列名不一样,可以直接引用上面已经写好的@Results定义的列和pojo属性映射的关系，方式：@ResultMap(&quot;@Results的id&quot;)
+	 */
+	@Select(&quot;SELECT * FROM book WHERE id=#{id}&quot;)
+	@ResultMap(&quot;bookMap&quot;)
+	//@Options(useCache=true)   //默认就是开启二级缓存，可以不用添加该注解
+	Book getBookById(Integer id);
+}
+</code></pre>
+<h1 id="分页查询">分页查询</h1>
+<h2 id="添加分页插件的jar包依赖">添加分页插件的jar包依赖</h2>
+<pre><code class="language-xml">&lt;!-- pageHelper --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;
+    &lt;artifactId&gt;pagehelper&lt;/artifactId&gt;
+    &lt;version&gt;5.1.6&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h2 id="在核心配置文件中配置分页拦截器">在核心配置文件中配置分页拦截器</h2>
+<pre><code class="language-xml">&lt;!-- 添加分页插件 --&gt;
+&lt;plugins&gt;
+&lt;plugin interceptor=&quot;com.github.pagehelper.PageInterceptor&quot;&gt;&lt;/plugin&gt;
+&lt;/plugins&gt;
+</code></pre>
+<h2 id="实现分页操作">实现分页操作</h2>
+<pre><code class="language-java">/**
+ * 分页查询:在实际开发中我们都会去使用分页插件来完成
+ * pageHelper是国人做的分页插件，非常的优秀
+ */
+@Test
+public void testPage(){
+    //1.开始分页(参数一：当前要展示的页码(1,2..)，  参数二：每页显示的信息条数)
+    PageHelper.startPage(1, 3);
+    //2.执行查询(正常的执行)
+    BookExample example = new BookExample();
+    /*如果分页中有条件
+    Criteria criteria = example.createCriteria();
+    criteria.andNameLike(&quot;%龙%&quot;);
+    */
+    List&lt;Book&gt; list = bookMapper.selectByExample(example);
+    //3.分页就通过pageHelper拦截器来实现分页
+    PageInfo&lt;Book&gt; pageInfo = new PageInfo&lt;Book&gt;(list);
+    //一页信息
+    List&lt;Book&gt; bookList = pageInfo.getList();
+    for (Book book : bookList) {
+        System.out.println(book);
+    }
+    System.out.println(&quot;总的页数：&quot; + pageInfo.getPages());
+}
+</code></pre>
+
+            </div>
+            <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      浩瀚
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://haohanya.github.io/post/mybatis/" title="MyBatis">https://haohanya.github.io/post/mybatis/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
   </ul>
+  <div class="tags">
+    
+      <a href="https://haohanya.github.io/tag/6pWqw4cF3/"># mybatis</a>
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="Spring-Security" href="https://haohanya.github.io/post/spring-security/">Spring-Security</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="Spring-Security" href="https://haohanya.github.io/post/spring-security/">上一篇</a>
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="Java反射" href="https://haohanya.github.io/post/java-fan-she/">Java反射</a>
+        <a class="nav-mobile-next" title="Java反射" href="https://haohanya.github.io/post/java-fan-she/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
+      
+    </div>
+  </div>
 </div>
-          </section>
+            
+  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.4/dist/Valine.min.js"></script>
+<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
+
+<style>
+  .v .veditor {
+    min-height: 10rem;
+    background-image: url('https://upimage.alexhchu.com/2020/04/21/47eda59424daa.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: none;
+  }
+
+  .v .vwrap {
+    border: 1px solid #000 !important;
+  }
+
+  .v .vbtn {
+    padding: .4rem 1.2rem !important;
+    border-color: #fff !important;
+    background-color: #49b1f5 !important;
+    color: #fff !important;
+    font-size: .7rem !important;
+  }
+
+  .v .vcards .vcard .vh .vmeta .vat {
+    padding: 0 .8rem !important;
+    border: 1px solid #00c4b6 !important;
+    border-radius: 5px !important;
+    color: #00c4b6 !important;
+  }
+</style>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    avatar: 'identicon',
+    placeholder: '',
+    pageSize: '',
+    lang: 'zh-cn',
+    visitor: 'true' === 'true',
+    highlight: 'true' === 'true',
+    avatarForce: 'true' === 'false',
+  });
+</script>
+
+          </div>
         </div>
       </div>
     </div>
@@ -2379,6 +3305,5 @@ ${mytest!}
 
 
 <script src=" /media/js/cool.js"></script>
-
 
 </html>
