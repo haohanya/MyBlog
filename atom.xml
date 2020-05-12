@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://haohanya.github.io</id>
     <title>浩瀚</title>
-    <updated>2020-05-05T03:20:28.921Z</updated>
+    <updated>2020-05-12T10:57:27.634Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://haohanya.github.io"/>
     <link rel="self" href="https://haohanya.github.io/atom.xml"/>
@@ -10,6 +10,13 @@
     <logo>https://haohanya.github.io/images/avatar.png</logo>
     <icon>https://haohanya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 浩瀚</rights>
+    <entry>
+        <title type="html"><![CDATA[solr安装使用]]></title>
+        <id>https://haohanya.github.io/post/solr-an-zhuang-shi-yong/</id>
+        <link href="https://haohanya.github.io/post/solr-an-zhuang-shi-yong/">
+        </link>
+        <updated>2020-05-12T10:47:23.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Spring-Security]]></title>
         <id>https://haohanya.github.io/post/spring-security/</id>

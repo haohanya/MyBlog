@@ -8,7 +8,7 @@
 <meta name="keywords" content="浩瀚,浩瀚博客,java">
 <meta name="description" content="浩瀚-每天向往着外面的世界">
 <meta name="theme-color" content="#000">
-<title>关于 | 浩瀚</title>
+<title>solr安装使用 | 浩瀚</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1589281028596">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -37,7 +37,7 @@
 
 
 
-  <meta name="description" content="关于" />
+  <meta name="description" content="solr安装使用" />
   <meta name="keywords" content="" />
 </head>
 
@@ -239,10 +239,29 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
+<li><a href="#solr%E5%AE%89%E8%A3%85">solr安装</a>
+<ul>
+<li><a href="#1-%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6">1 上传文件</a></li>
+<li><a href="#2-%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95">2 创建目录</a></li>
+<li><a href="#3-%E8%A7%A3%E5%8E%8Btomcat%E5%B9%B6%E7%A7%BB%E5%8A%A8%E5%88%B0solr%E7%9B%AE%E5%BD%95">3 解压tomcat并移动到solr目录</a></li>
+<li><a href="#4-%E5%90%AF%E5%8A%A8tomcat">4 启动tomcat</a></li>
+<li><a href="#5-%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96jar%E5%8C%85">5 引入依赖jar包</a></li>
+<li><a href="#6-%E5%A4%8D%E5%88%B6%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">6 复制配置文件</a></li>
+<li><a href="#7-solr%E5%92%8Csolrhome%E5%BB%BA%E7%AB%8B%E8%81%94%E7%B3%BB">7 solr和solrhome建立联系</a></li>
+<li><a href="#8-%E9%87%8D%E5%90%AF-tomcat">8 重启 tomcat</a></li>
+<li><a href="#9-%E8%AE%BF%E9%97%AEsolr">9 访问solr</a></li>
+</ul>
+</li>
+<li><a href="#%E9%85%8D%E7%BD%AEik%E5%88%86%E8%AF%8D%E5%99%A8">配置IK分词器</a>
+<ul>
+<li><a href="#1-%E5%B0%86ik%E5%88%86%E8%AF%8D%E5%99%A8jar%E5%8C%85%E7%A7%BB%E5%8A%A8%E5%88%B0solr%E4%B8%AD">1 将ik分词器jar包移动到solr中</a></li>
+<li><a href="#2-%E5%9C%A8solr%E9%A1%B9%E7%9B%AE%E7%9A%84web-inf-%E7%9B%AE%E5%BD%95%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAclasses%E7%9B%AE%E5%BD%95">2 在solr项目的WEB-INF 目录创建一个classes目录</a></li>
+<li><a href="#3-%E7%A7%BB%E5%8A%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%B0classes%E7%9B%AE%E5%BD%95">3 移动配置文件到classes目录</a></li>
+<li><a href="#4-%E5%90%AF%E7%94%A8-%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">4 启用---编辑配置文件</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9F%9F">域</a></li>
+<li><a href="#spring-data-solr-demo">Spring Data Solr Demo</a></li>
 </ul>
 </li>
 </ul>
@@ -510,8 +529,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://haohanya.github.io/post/about/">
-      关于
+    <a class="post-title-link" href="https://haohanya.github.io/post/solr-an-zhuang-shi-yong/">
+      solr安装使用
     </a>
   </h1>
   <div class="post-meta">
@@ -519,23 +538,23 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2019-01-25</span>
+      <span>2020-05-12</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
+      <span>7分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>74<span class="pc-show">字数</span></span>
+      <span>1288<span class="pc-show">字数</span></span>
     </span>
     
     
     
-    <span id="/post/about/" data-flag-title="关于" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/solr-an-zhuang-shi-yong/" data-flag-title="solr安装使用" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span>浏览量：<span class="leancloud-visitors-count"></span></span>
@@ -544,17 +563,198 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<p>磕磕碰碰的小破站,前不久域名的备案被注销...后换到Gridea,托管在GitHub</p>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<p>一位正在努力成长的码农...</p>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<p>吃,睡,coding</p>
-<h2 id="联系我呀">📬 联系我呀</h2>
-<p>QQ : 2369710264</p>
+              <h2 id="solr安装">solr安装</h2>
+<h3 id="1-上传文件">1 上传文件</h3>
+<p>apache-tomcat-7.0.82.tar.gz</p>
+<p>solr-4.10.3.tgz.tgz</p>
+<p>IK Analyzer 2012FF_hf1</p>
+<h3 id="2-创建目录">2 创建目录</h3>
+<p>mkdir /usr/soft/solr</p>
+<h3 id="3-解压tomcat并移动到solr目录">3 解压tomcat并移动到solr目录</h3>
+<p>tar -zxvf apache-tomcat-7.0.82.tar.gz</p>
+<p>mv apache-tomcat-7.0.82 /usr/soft/solr/tomcat7</p>
+<p>tar -zxvf solr-4.10.3.tgz.tgz</p>
+<p>在solr-4.10.3/dist目录下有一个war包 需要把war包移动到tomcat里运行</p>
+<p>cp ~/solr-4.10.3/dist/solr-4.10.3.war /usr/soft/solr/tomcat7/webapps/solr.war</p>
+<h3 id="4-启动tomcat">4 启动tomcat</h3>
+<p>cd /usr/soft/solr/tomcat7</p>
+<p>./bin/startup.sh</p>
+<p>查看tomcat日志(可选)</p>
+<p>tail -f logs/catalina.out</p>
+<h3 id="5-引入依赖jar包">5 引入依赖jar包</h3>
+<p>cd ~/solr-4.10.3/example/lib/ext</p>
+<p>cp * /usr/soft/solr/tomcat7/webapps/solr/WEB-INF/lib</p>
+<h3 id="6-复制配置文件">6 复制配置文件</h3>
+<p>cd ~/solr-4.10.3/example</p>
+<p>cp -r solr /usr/soft/solr/solrhome</p>
+<h3 id="7-solr和solrhome建立联系">7 solr和solrhome建立联系</h3>
+<p>cd /usr/soft/solr/tomcat7/webapps/solr/WEB-INF</p>
+<p>vi web.xml</p>
+<p>/usr/soft/solr/solrhome</p>
+<pre><code class="language-xml">&lt;env-entry&gt;
+	&lt;env-entry-name&gt;solr/home&lt;/env-entry-name&gt;
+    &lt;!-- 这里设置为自己的solrhome路径 --&gt;
+    &lt;env-entry-value&gt;/usr/soft/solr/solrhome&lt;/env-entry-value&gt;
+    &lt;env-entry-type&gt;java.lang.String&lt;/env-entry-type&gt;
+&lt;/env-entry&gt;
+</code></pre>
+<p>:wq</p>
+<h3 id="8-重启-tomcat">8 重启 tomcat</h3>
+<p>cd /usr/soft/solr/tomcat7/bin</p>
+<p>./shutdown.sh</p>
+<p>./startup.sh</p>
+<h3 id="9-访问solr">9 访问solr</h3>
+<p>http://192.168.25.132:8080/solr/</p>
+<h2 id="配置ik分词器">配置IK分词器</h2>
+<h3 id="1-将ik分词器jar包移动到solr中">1 将ik分词器jar包移动到solr中</h3>
+<p>cp ~/IK\ Analyzer\ 2012FF_hf1/IKAnalyzer2012FF_u1.jar /usr/soft/solr/tomcat7/webapps/solr/WEB-INF/lib</p>
+<h3 id="2-在solr项目的web-inf-目录创建一个classes目录">2 在solr项目的WEB-INF 目录创建一个classes目录</h3>
+<p>mkdir /usr/soft/solr/tomcat7/webapps/solr/WEB-INF/classes</p>
+<h3 id="3-移动配置文件到classes目录">3 移动配置文件到classes目录</h3>
+<p>cp IKAnalyzer.cfg.xml ext_stopword.dic mydict.dic /usr/soft/solr/tomcat7/webapps/solr/WEB-INF/classes</p>
+<h3 id="4-启用-编辑配置文件">4 启用---编辑配置文件</h3>
+<p>使用npp编辑服务器上的文件</p>
+<p>1 安装npp (略)</p>
+<p>2  安装NppFTP(略)</p>
+<p>3 连接服务器 (虐)</p>
+<p>4 编辑xml文件 : /usr/soft/solr/solrhome/collection1/conf/schema.xml</p>
+<pre><code class="language-xml">&lt;!-- 配置IK分词器 --&gt;
+&lt;fieldType name=&quot;text_ik&quot; class=&quot;solr.TextField&quot;&gt;
+    &lt;analyzer class=&quot;org.wltea.analyzer.lucene.IKAnalyzer&quot;&gt;&lt;/analyzer&gt;
+&lt;/fieldType&gt;
+</code></pre>
+<p>5 重启tomcat</p>
+<p>cd /usr/soft/solr/tomcat7/bin</p>
+<p>./shutdown.sh</p>
+<p>./startup.sh</p>
+<p>6 访问url</p>
+<p>http://192.168.25.132:8080/solr/</p>
+<h2 id="域">域</h2>
+<p>域 : 相当于数据库表的字段</p>
+<pre><code class="language-xml">&lt;!--
+	name : 指定域的名称
+	type : 指定域的类型
+	indexed : 是否索引
+	stored : 是否存储
+	required : 是否必须
+	multiValued : 是否多值
+--&gt;
+&lt;field name=&quot;id&quot; type=&quot;string&quot; indexed=&quot;true&quot; stored=&quot;true&quot; required=&quot;true&quot; multiValued=&quot;false&quot; /&gt; 
+</code></pre>
+<h2 id="spring-data-solr-demo">Spring Data Solr Demo</h2>
+<p>1、引入依赖</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-data-solr&lt;/artifactId&gt;
+    &lt;version&gt;1.5.5.RELEASE&lt;/version&gt;
+&lt;/dependency&gt; 
+</code></pre>
+<p>2、applicationContext-solr.xml</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+	xmlns:solr=&quot;http://www.springframework.org/schema/data/solr&quot;
+	xsi:schemaLocation=&quot;http://www.springframework.org/schema/data/solr 
+  		http://www.springframework.org/schema/data/solr/spring-solr-1.0.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+	&lt;!-- solr服务器地址 --&gt;
+	&lt;solr:solr-server id=&quot;solrServer&quot; url=&quot;http://127.0.0.1:8080/solr&quot; /&gt;
+	&lt;!-- solr模板，使用solr模板可对索引库进行CRUD的操作 --&gt;
+	&lt;bean id=&quot;solrTemplate&quot; class=&quot;org.springframework.data.solr.core.SolrTemplate&quot;&gt;
+		&lt;constructor-arg ref=&quot;solrServer&quot; /&gt;
+	&lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+<p>3、@Field 注解</p>
+<p>作用：如果在pojo上添加了这个注解，那么这个属性会被引用到solr，value为指定solr中field定义的name，如果一样可以省略</p>
+<p>@Dynamic注解，在属性上定义就表示是一个动态域</p>
+<p>4、添加</p>
+<pre><code class="language-java">@Autowired
+private SolrTemplate solrTemplate;
+
+solrTemplate.saveBean(item);
+//添加多条数据可以使用saveBeans
+solrTemplate.commit();//提交事务
+</code></pre>
+<p>5、按主键查询</p>
+<pre><code class="language-java">//参数1 ：要查询的主键ID
+//参数2 ：返回的数据类型
+solrTemplate.getById(1,TbItem.class)
+</code></pre>
+<p>6、按主键删除</p>
+<pre><code class="language-java">solrTemplate.deleteById(&quot;1&quot;);
+</code></pre>
+<p>7、分页查询</p>
+<pre><code class="language-java">//条件
+Query query = newSimpleQuery(&quot;*:*&quot;);
+//查询条件
+Criteria criteria = new Criteria();
+//and ：查询的域
+//contains ：查询的关键字
+criteria.and(&quot;item_title&quot;).contains(&quot;手机&quot;);
+//将查询条件添加到queyr中
+query.addCriteria(criteria);
+query.setOffset(0);//开始索引，默认为0，翻页规则 (pageNow - 1) * pageSize
+query.setRows(20);//每页记录条数
+//ScoredPage ：solr的分页查询
+//参数1：查询条件
+//参数2：返回类型
+ScoredPage&lt;TbItem&gt; page = solrTemplate.queryForPage(query,TbItem.class)
+System.out.pringln(&quot;总记录数:&quot;+page.getTotalElements());
+List&lt;TbItem&gt; list = page.getContent();
+</code></pre>
+<p>8、高亮查询</p>
+<pre><code class="language-java">@Resource
+private SolrTemplate solrTemplate;
+
+@Override
+public Map&lt;String, Object&gt; search(Map&lt;String, Object&gt; searchMap) {
+
+    Map&lt;String,Object&gt; map = new HashMap&lt;String, Object&gt;();
+
+    //设置搜索高亮
+    HighlightQuery query = new SimpleHighlightQuery();
+
+    //设置高亮的域
+    HighlightOptions highlightOptions = new HighlightOptions().addField(&quot;item_title&quot;);
+
+    //设置高亮前缀
+    highlightOptions.setSimplePrefix(&quot;&lt;em style='color:red'&gt;&quot;);
+    //设置高亮后缀
+    highlightOptions.setSimplePostfix(&quot;&lt;/em&gt;&quot;);
+
+    //设置高亮选项
+    query.setHighlightOptions(highlightOptions);
+
+    //按照关键字查询
+    Criteria criteria = new Criteria(&quot;item_keywords&quot;).is(searchMap.get(&quot;keywords&quot;));
+
+    //添加条件
+    query.addCriteria(criteria);
+
+    //到solr中查询
+    HighlightPage&lt;TbItem&gt; page = solrTemplate.queryForHighlightPage(query,TbItem.class);
+
+    //循环高亮入口集合
+    for (HighlightEntry&lt;TbItem&gt; entry : page.getHighlighted()) {
+        //获取原实体类
+        TbItem tbItem = entry.getEntity();
+
+        //判断是否有高亮内容
+        if(entry.getHighlights().size() &gt; 0 &amp;&amp; entry.getHighlights().get(0).getSnipplets().size() &gt; 0 ){
+            //设置高亮的结果
+            tbItem.setTitle(entry.getHighlights().get(0).getSnipplets().get(0));
+        }
+    }
+    map.put(&quot;rows&quot;,page.getContent());
+
+    return map;
+}
+</code></pre>
 
             </div>
             <div class="post-footer">
@@ -565,7 +765,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://haohanya.github.io/post/about/" title="关于">https://haohanya.github.io/post/about/</a>
+      <a href="https://haohanya.github.io/post/solr-an-zhuang-shi-yong/" title="solr安装使用">https://haohanya.github.io/post/solr-an-zhuang-shi-yong/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -580,6 +780,10 @@
       
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="Spring-Security" href="https://haohanya.github.io/post/spring-security/">Spring-Security</a>
+        <a class="nav-mobile-next" title="Spring-Security" href="https://haohanya.github.io/post/spring-security/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
