@@ -8,7 +8,7 @@
 <meta name="keywords" content="浩瀚,浩瀚博客,java">
 <meta name="description" content="浩瀚-每天向往着外面的世界">
 <meta name="theme-color" content="#000">
-<title>浩瀚</title>
+<title>ActiveMQ | 浩瀚</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1589688178545">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -37,6 +37,8 @@
 
 
 
+  <meta name="description" content="ActiveMQ" />
+  <meta name="keywords" content="ActiveMQ" />
 </head>
 
 <body>
@@ -98,7 +100,7 @@
             
               
             
-            <li class="nav-item nav-item-active">
+            <li class="nav-item ">
               
               
                 <a href="/tags/" target="_self">
@@ -162,10 +164,26 @@
   <div class="main-continer">
     
     <div
-      class="section-layout  gemini">
+      class="section-layout gemini ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body gemini" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -213,522 +231,844 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFjms">什么是jms</a></li>
+<li><a href="#jms%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92%E7%B1%BB%E5%9E%8B">JMS消息传递类型</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a></li>
+<li><a href="#jms%E6%B5%8B%E8%AF%95">JMS测试</a>
+<ul>
+<li><a href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E6%A8%A1%E5%BC%8F">点对点模式</a></li>
+<li><a href="#%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F">发布/订阅模式</a></li>
+</ul>
+</li>
+<li><a href="#spring%E6%95%B4%E5%90%88jms">spring整合jms</a>
+<ul>
+<li><a href="#%E7%82%B9%E5%AF%B9%E7%82%B9%E6%A8%A1%E5%BC%8F-2">点对点模式</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E6%A8%A1%E5%BC%8F-2">发布/订阅模式</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'gemini';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box box-shadow-wrapper">
-          <section class="section tags-section bg-color posts-expand">
-            <div class="tags-box">
-  <div class="tag-cloud-title">
-    目前共计 10 个标签
-  </div>
-  <div class="tag-cloud-list" id="tags">
-    
-      
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/WWST57yMi/" rel="1">Redis</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/TJ1wkA5NP/" rel="1">ActiveMQ</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/D-nvo_2ol/" rel="1">solr</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/YYffL2EXa/" rel="1">spring-security</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/POgCfBu13Z/" rel="1">spring</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/6pWqw4cF3/" rel="1">mybatis</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/CX9XCxDcJ/" rel="1">java</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/AowgROl25/" rel="1">FastDFS</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/pV4gj9NcU/" rel="1">freemarker</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-            
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/xi3C-nNGB/" rel="1">Gridea</a>
-    
-  </div>
-</div>
-<script>
 
-  let fontStart = 12, fontEnd = 30, colorStart = '#666', colorEnd = '#000';
-  let tags = document.querySelector('#tags').children;
-  let counts = [];
-  for(let i = 0; i < tags.length; i++) {
-    counts.push(tags[i].rel);
-  }
-  let lowest = Math.min.apply(null,counts), highest = Math.max.apply(null,counts);;
-  let range = highest - lowest;
-  if (range === 0) {
-    range = 1;
-  }
-  let fontIncr, colorIncr;
-  fontIncr = (fontEnd - fontStart) / range;
-  
-  let sColorArr = toRGB(colorStart), eColorArr = toRGB(colorEnd);
-
-  for(let i = 0; i < tags.length; i++) {
-    let disCount = tags[i].rel - lowest;
-    let fontSize = fontStart + disCount * fontIncr;
-    let style = 'font-size: ' + fontSize + 'px;';
-    let arr = [];
-    for(let c = 0; c < sColorArr.length; c++) {
-      if (disCount === 0) {
-        disCount = 1;
-      }
-      let val = (sColorArr[c] - eColorArr[c]) / range * disCount;
-      if (val >= 100) {
-        val = eColorArr[c];
-      } else if (val <= 0) {
-        val = sColorArr[c];
-      }
-      arr[c] = Math.floor(val);
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
     }
-    style += 'color: ' + toHex(arr);
-    tags[i].style = style;
   }
 
-  function toRGB(code) {
-    if (code.length === 4) {
-      code = code.replace(/(\w)(\w)(\w)/gi, "\$1\$1\$2\$2\$3\$3");
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
     }
-    var hex = /(\w{2})(\w{2})(\w{2})/.exec(code);
-    return [parseInt(hex[1], 16), parseInt(hex[2], 16), parseInt(hex[3], 16)];
   }
 
-  function toHex(ary) {
-    return "#" + ((1 << 24) + (ary[0] << 16) + (ary[1] << 8) + ary[2]).toString(16).slice(1);
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
   }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
 
 </script>
-          </section>
+            </div>
+          
+        
+      </div>
+    </div>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <header class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://haohanya.github.io/post/activemq/">
+      ActiveMQ
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span>发布于</span>
+      <span>2020-05-17</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show">分类于</span>
+      
+      
+      <a href="https://haohanya.github.io/tag/TJ1wkA5NP/">
+        <span>ActiveMQ</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>13分钟</span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>2496<span class="pc-show">字数</span></span>
+    </span>
+    
+    
+    
+    <span id="/post/activemq/" data-flag-title="ActiveMQ" class="meta-item pc-show leancloud_visitors">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-eye"></i>
+      <span>浏览量：<span class="leancloud-visitors-count"></span></span>
+    </span>
+    
+  </div>
+</header>
+            <div class="post-body next-md-body" id="post_body">
+              <h2 id="什么是jms">什么是jms</h2>
+<blockquote>
+<p>JMS（java Messaging Service）是Java平台上有关面向消息中间件的技术规范，它便于消息系统中的Java应用程序进行消息交换,并且通过提供标准的产生、发送、接收消息的接口简化企业应用的开发。</p>
+<p>​    JMS本身只定义了一系列的接口规范，是一种与厂商无关的 API，用来访问消息收发系统。它类似于 JDBC(java Database Connectivity)：这里，JDBC 是可以用来访问许多不同关系数据库的 API，而 JMS 则提供同样与厂商无关的访问方法，以访问消息收发服务。许多厂商目前都支持 JMS，包括 IBM 的 MQSeries、BEA的 Weblogic JMS service和 Progress 的 SonicMQ，这只是几个例子。 JMS 使您能够通过消息收发服务（有时称为消息中介程序或路由器）从一个 JMS 客户机向另一个 JML 客户机发送消息。消息是 JMS 中的一种类型对象，由两部分组成：报头和消息主体。报头由路由信息以及有关该消息的元数据组成。消息主体则携带着应用程序的数据或有效负载。</p>
+<p>JMS 定义了五种不同的消息正文格式，以及调用的消息类型，允许你发送并接收以一</p>
+<p>些不同形式的数据，提供现有消息格式的一些级别的兼容性。</p>
+<p>TextMessage--一个字符串对象（应用最广泛的一种）</p>
+<p>MapMessage--一套名称-值对</p>
+<p>ObjectMessage--一个序列化的 Java 对象</p>
+<p>BytesMessage--一个字节的数据流</p>
+<p>StreamMessage -- Java 原始值的数据流</p>
+</blockquote>
+<h2 id="jms消息传递类型">JMS消息传递类型</h2>
+<p>对于消息的传递有两种类型：<br>
+一种是点对点的，即一个生产者和一个消费者一一对应；<br>
+<img src="https://haohanya.github.io/post-images/1589686388156.png" alt="" loading="lazy"><br>
+另一种是发布/ 订阅模式，即一个生产者产生消息并进行发送后，可以由多个消费者进<br>
+行接收。<br>
+<img src="https://haohanya.github.io/post-images/1589686418709.png" alt="" loading="lazy"></p>
+<h2 id="安装">安装</h2>
+<p>1、上传activeMQ到服务器</p>
+<p>2、解压 <code>tar -zxvf apache-activemq-5.12.0-bin.tar.gz</code></p>
+<p>3、移动文件 <code>mv apache-activemq-5.12.0 /usr/local/java/activemq-5.12.0</code></p>
+<p>4、进入bin <code>cd /usr/local/java/activemq-5.12.0/bin</code></p>
+<p>5、启动activeMQ <code>./activemq start</code></p>
+<p>6、访问：<code>ip:8161</code></p>
+<p>账号：admin</p>
+<p>密码：admin</p>
+<h2 id="jms测试">JMS测试</h2>
+<h3 id="点对点模式">点对点模式</h3>
+<p>1、引入依赖</p>
+<pre><code class="language-xml"> &lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.apache.activemq&lt;/groupId&gt;
+        &lt;artifactId&gt;activemq-client&lt;/artifactId&gt;
+        &lt;version&gt;5.13.4&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>2、创建消息生产者QueueProducer</p>
+<pre><code class="language-java">public static void main(String[] args) throws JMSException {
+    //1、创建工厂
+    ConnectionFactory connectionFactory  = new ActiveMQConnectionFactory(&quot;tcp://192.168.25.135:61616&quot;);
+    //2、获取连接
+    Connection connection = connectionFactory.createConnection();
+    //3、启动连接
+    connection.start();
+    /** 4、获取session  
+    	参数1：是否启用事务 
+    	参数2：消息确认模式
+            AUTO_ACKNOWLEDGE = 1    自动确认
+            CLIENT_ACKNOWLEDGE = 2    客户端手动确认   
+            DUPS_OK_ACKNOWLEDGE = 3    自动批量确认
+            SESSION_TRANSACTED = 0    事务提交并确认
+	*/
+    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+    //5、创建队列对象
+    Queue queue = session.createQueue(&quot;test-queue&quot;);
+    //6、创建消息生产着
+    MessageProducer messageProducer = session.createProducer(queue);
+    //7、创建消息
+    TextMessage textMessage = session.createTextMessage(&quot;测试文本内容&quot;);
+    //8、发送消息
+    messageProducer.send(textMessage);
+    //9、关闭资源
+    messageProducer.close();
+    session.close();
+    connection.close();
+}
+</code></pre>
+<p>3、创建消息消费者QueueConsumer</p>
+<pre><code class="language-java">public static void main(String[] args) throws JMSException, IOException {
+    //1、创建连接工厂
+    ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(&quot;tcp://192.168.25.135:61616&quot;);
+    //2、获取连接
+    Connection connection = connectionFactory.createConnection();
+    //3、启动连接
+    connection.start();
+    //4、获取session
+    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+    //5、创建队列对象
+    Queue queue = session.createQueue(&quot;test-queue&quot;);
+    //6、创建消息消费
+    MessageConsumer consumer = session.createConsumer(queue);
+    //7、监听消息
+    consumer.setMessageListener(new MessageListener() {
+        @Override
+        public void onMessage(Message message) {
+            TextMessage textMessage = (TextMessage) message;
+            try {
+                System.out.println(&quot;接收消息为：&quot;+textMessage.getText());
+            } catch (JMSException e) {
+                e.printStackTrace();
+            }
+        }
+    });
+    //8、等待键盘输入
+    System.in.read();
+    //9、关闭资源
+    consumer.close();
+    session.close();
+    connection.close();
+}
+</code></pre>
+<h3 id="发布订阅模式">发布/订阅模式</h3>
+<p>1、消息生产者TopicProducer</p>
+<pre><code class="language-java">public static void main(String[] args) throws JMSException, IOException {
+    //1、创建连接工厂
+    ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(&quot;tcp://192.168.25.135:61616&quot;);
+    //2、获取连接
+    Connection connection = connectionFactory.createConnection();
+    //3、启动连接
+    connection.start();
+    //4、获取session
+    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+    //5、创建主题对象
+    Topic topic = session.createTopic(&quot;test-topic&quot;);
+    //6、创建消息消费者
+    MessageConsumer consumer = session.createConsumer(topic);
+    //7、监听消息
+    consumer.setMessageListener(new MessageListener() {
+        @Override
+        public void onMessage(Message message) {
+            TextMessage textMessage = (TextMessage) message;
+            try {
+                System.out.println(&quot;接收消息：&quot;+textMessage.getText());
+            } catch (JMSException e) {
+                e.printStackTrace();
+            }
+        }
+    });
+    //8、等待键盘输入
+    System.in.read();
+    //9、关闭资源
+    consumer.close();
+    session.close();
+    connection.close();
+}
+</code></pre>
+<p>2、消息消费者TopicProducer</p>
+<pre><code class="language-java">public static void main(String[] args) throws JMSException {
+    //1、创建连接工厂
+    ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(&quot;tcp://192.168.25.135:61616&quot;);
+    //2、获取连接
+    Connection connection = connectionFactory.createConnection();
+    //3、启动连接
+    connection.start();
+    //4、获取session
+    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+    //5、创建主题对象
+    Topic topic = session.createTopic(&quot;test-topic&quot;);
+    //6、创建消息生产者
+    MessageProducer producer = session.createProducer(topic);
+    //7、创建消息
+    TextMessage topicTest = session.createTextMessage(&quot;topicTest&quot;);
+    //8、发送消息
+    producer.send(topicTest);
+    //9、关闭资源
+    producer.close();
+    session.close();
+    connection.close();
+}
+</code></pre>
+<h2 id="spring整合jms">spring整合jms</h2>
+<h3 id="点对点模式-2">点对点模式</h3>
+<p>1、引入依赖</p>
+<pre><code class="language-xml">&lt;!--spring-jms--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-jms&lt;/artifactId&gt;
+    &lt;version&gt;4.2.4.RELEASE&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;!-- activemq --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.activemq&lt;/groupId&gt;
+    &lt;artifactId&gt;activemq-all&lt;/artifactId&gt;
+    &lt;version&gt;5.11.2&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;!-- 单元测试 --&gt;
+&lt;!-- springJunit --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-test&lt;/artifactId&gt;
+    &lt;version&gt;4.2.4.RELEASE&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;junit&lt;/groupId&gt;
+    &lt;artifactId&gt;junit&lt;/artifactId&gt;
+    &lt;version&gt;4.12&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>2、创建生产者配置文件</p>
+<p>applicationContext-jms-producer-queue.xml</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+    &lt;!--消息生产者:点对点--&gt;
+
+    &lt;context:component-scan base-package=&quot;com.springjms&quot;/&gt;
+
+    &lt;!--jms服务厂商提供的连接工厂--&gt;
+    &lt;bean id=&quot;targetConnectionFactory&quot; class=&quot;org.apache.activemq.ActiveMQConnectionFactory&quot;&gt;
+        &lt;property name=&quot;brokerURL&quot; value=&quot;tcp://192.168.25.137:61616&quot;/&gt;
+    &lt;/bean&gt;
+    &lt;!--spring用于管理真正的ConnectionFactory--&gt;
+    &lt;bean id=&quot;connectionFactory&quot; class=&quot;org.springframework.jms.connection.SingleConnectionFactory&quot;&gt;
+        &lt;property name=&quot;targetConnectionFactory&quot; ref=&quot;targetConnectionFactory&quot;/&gt;
+    &lt;/bean&gt;
+    &lt;!--spring提供的工具类--&gt;
+    &lt;bean id=&quot;jmsTemplate&quot; class=&quot;org.springframework.jms.core.JmsTemplate&quot;&gt;
+        &lt;constructor-arg name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot;/&gt;
+    &lt;/bean&gt;
+
+    &lt;!--queue--&gt;
+    &lt;bean id=&quot;queueTextDestination&quot; class=&quot;org.apache.activemq.command.ActiveMQQueue&quot;&gt;
+        &lt;constructor-arg name=&quot;name&quot; value=&quot;queue_text&quot;/&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+<p>3、发送消息</p>
+<pre><code class="language-java">@Component
+public class QueueProducer {
+
+    @Resource
+    private JmsTemplate jmsTemplate;
+
+    @Resource
+    private Destination queueTextDestination;
+
+    /**
+     * 发送文本消息
+     * @param text  发送的文本内容
+     */
+    public void sendTextMessage(final String text){
+        jmsTemplate.send(queueTextDestination, new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                return session.createTextMessage(text);
+            }
+        });
+    }
+
+}
+</code></pre>
+<p>4、测试发送消息</p>
+<pre><code class="language-java">@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = &quot;classpath:applicationContext-jms-producer-queue.xml&quot;)
+public class MyTest {
+
+    @Resource
+    private QueueProducer queueProducer;
+
+    @Test
+    public void test(){
+        queueProducer.sendTextMessage(&quot;Hello! queue&quot;);
+    }
+
+}
+</code></pre>
+<p>5、创建消费者配置文件</p>
+<p>applicationContext-jms-consumer-queue.xml</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;!--服务消费者:点对点--&gt;
+
+    &lt;!--jsm服务厂商提供的连接工厂--&gt;
+    &lt;bean id=&quot;targetConnectionFactory&quot; class=&quot;org.apache.activemq.ActiveMQConnectionFactory&quot;&gt;
+        &lt;property name=&quot;brokerURL&quot; value=&quot;tcp://192.168.25.137:61616&quot;/&gt;
+    &lt;/bean&gt;
+    &lt;!--spring用于管理真正的ConnectionFactory--&gt;
+    &lt;bean id=&quot;connectionFactory&quot; class=&quot;org.springframework.jms.connection.SingleConnectionFactory&quot;&gt;
+        &lt;property name=&quot;targetConnectionFactory&quot; ref=&quot;targetConnectionFactory&quot;/&gt;
+    &lt;/bean&gt;
+    &lt;!--spring提供的工具类--&gt;
+    &lt;bean id=&quot;jmsTemplate&quot; class=&quot;org.springframework.jms.core.JmsTemplate&quot;&gt;
+        &lt;constructor-arg name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot;/&gt;
+    &lt;/bean&gt;
+
+    &lt;!--queue--&gt;
+    &lt;bean id=&quot;queueTextDestination&quot; class=&quot;org.apache.activemq.command.ActiveMQQueue&quot;&gt;
+        &lt;constructor-arg name=&quot;name&quot; value=&quot;queue_text&quot;/&gt;
+    &lt;/bean&gt;
+    &lt;!--监听类,用来监听mq中是否有消息--&gt;
+    &lt;bean id=&quot;myMessageListener&quot; class=&quot;com.springjms.MyMessageListener&quot;/&gt;
+    &lt;!--消息的监听器--&gt;
+    &lt;bean class=&quot;org.springframework.jms.listener.DefaultMessageListenerContainer&quot;&gt;
+        &lt;property name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot;/&gt;
+        &lt;property name=&quot;destination&quot; ref=&quot;queueTextDestination&quot;/&gt;
+        &lt;property name=&quot;messageListener&quot; ref=&quot;myMessageListener&quot;/&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+<p>6、编写监听类</p>
+<pre><code class="language-java">public class MyMessageListener implements MessageListener {
+    @Override
+    public void onMessage(Message message) {
+        TextMessage textMessage = (TextMessage) message;
+        try {
+            System.out.println(&quot;接收到消息：&quot;+textMessage.getText());
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+<p>7、测试</p>
+<pre><code class="language-java">@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations=&quot;classpath:applicationContext-jms-consumer-queue.xml&quot;)
+public class MyTest1 {
+    @Test
+    public void testQueue(){
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+<h2 id="发布订阅模式-2">发布/订阅模式</h2>
+<p>1、创建生产者，在applicationContext-jms-producer-queue.xml新增内容</p>
+<pre><code class="language-xml">&lt;!--这个是订阅模式  文本信息--&gt;  
+&lt;bean id=&quot;topicTextDestination&quot; class=&quot;org.apache.activemq.command.ActiveMQTopic&quot;&gt;  
+    &lt;constructor-arg value=&quot;topic_text&quot;/&gt;  
+&lt;/bean&gt;
+</code></pre>
+<p>2、发送消息</p>
+<pre><code class="language-java">@Component
+public class TopicProducer {
+
+    @Resource
+    private JmsTemplate jmsTemplate;
+    @Resource
+    private Destination topicTextDestination;
+
+    /**
+     * 发送消息
+     * @param text
+     */
+    public void sendMessage(final String text){
+        jmsTemplate.send(topicTextDestination, new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                return session.createTextMessage(text);
+            }
+        });
+    }
+
+}
+</code></pre>
+<p>3、测试</p>
+<pre><code class="language-java">@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = &quot;classpath:applicationContext-jms-producer-topic.xml&quot;)
+public class MyTest2 {
+
+    @Resource
+    private TopicProducer topicProducer;
+
+    @Test
+    public void test(){
+        topicProducer.sendMessage(&quot;Hello! topic&quot;);
+    }
+
+}
+</code></pre>
+<p>4、创建消费者，在applicationContext-jms-consumer-queue.xml新增内容</p>
+<pre><code class="language-xml">&lt;!--topic--&gt;
+&lt;bean id=&quot;topicTextDestination&quot; class=&quot;org.apache.activemq.command.ActiveMQTopic&quot;&gt;
+    &lt;constructor-arg name=&quot;name&quot; value=&quot;topic_text&quot;/&gt;
+&lt;/bean&gt;
+&lt;!--监听类,用来监听mq中是否有消息--&gt;
+&lt;bean id=&quot;topicMessageListener&quot; class=&quot;com.springjms.TopicMessageListener&quot;/&gt;
+&lt;!--消息的监听器--&gt;
+&lt;bean class=&quot;org.springframework.jms.listener.DefaultMessageListenerContainer&quot;&gt;
+    &lt;property name=&quot;connectionFactory&quot; ref=&quot;connectionFactory&quot;/&gt;
+    &lt;property name=&quot;destination&quot; ref=&quot;topicTextDestination&quot;/&gt;
+    &lt;property name=&quot;messageListener&quot; ref=&quot;topicMessageListener&quot;/&gt;
+&lt;/bean&gt;
+</code></pre>
+<p>5、编写监听类</p>
+<pre><code class="language-java">public class TopicMessageListener implements MessageListener {
+    @Override
+    public void onMessage(Message message) {
+        TextMessage textMessage = (TextMessage) message;
+        try {
+            System.out.println(&quot;接收到消息：&quot;+textMessage.getText());
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+<p>6、编写测试类</p>
+<pre><code class="language-java">@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations=&quot;classpath:applicationContext-jms-consumer-topic.xml&quot;)
+public class MyTest3 {
+    @Test
+    public void testQueue(){
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+
+            </div>
+            <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      浩瀚
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://haohanya.github.io/post/activemq/" title="ActiveMQ">https://haohanya.github.io/post/activemq/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+      <a href="https://haohanya.github.io/tag/TJ1wkA5NP/"># ActiveMQ</a>
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="Redis" href="https://haohanya.github.io/post/redis/">Redis</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="Redis" href="https://haohanya.github.io/post/redis/">上一篇</a>
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="solr安装使用" href="https://haohanya.github.io/post/solr-an-zhuang-shi-yong/">solr安装使用</a>
+        <a class="nav-mobile-next" title="solr安装使用" href="https://haohanya.github.io/post/solr-an-zhuang-shi-yong/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
+      
+    </div>
+  </div>
+</div>
+            
+  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.4/dist/Valine.min.js"></script>
+<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
+
+<style>
+  .v .veditor {
+    min-height: 10rem;
+    background-image: url('https://upimage.alexhchu.com/2020/04/21/47eda59424daa.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: none;
+  }
+
+  .v .vwrap {
+    border: 1px solid #000 !important;
+  }
+
+  .v .vbtn {
+    padding: .4rem 1.2rem !important;
+    border-color: #fff !important;
+    background-color: #49b1f5 !important;
+    color: #fff !important;
+    font-size: .7rem !important;
+  }
+
+  .v .vcards .vcard .vh .vmeta .vat {
+    padding: 0 .8rem !important;
+    border: 1px solid #00c4b6 !important;
+    border-radius: 5px !important;
+    color: #00c4b6 !important;
+  }
+</style>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    avatar: 'identicon',
+    placeholder: '',
+    pageSize: '',
+    lang: 'zh-cn',
+    visitor: 'true' === 'true',
+    highlight: 'true' === 'true',
+    avatarForce: 'true' === 'false',
+  });
+</script>
+
+          </div>
         </div>
       </div>
     </div>
@@ -903,6 +1243,36 @@
   // 代码高亮
   hljs.initHighlightingOnLoad();
 
+</script>
+    <div class="light-box" id="light_box"></div>
+<script>
+  let imgs = document.querySelectorAll('.post-body img');
+  let lightBox = document.querySelector('#light_box');
+  lightBox.addEventListener('mousedown', (e) => {
+    e.preventDefault()
+  })
+  lightBox.addEventListener('mousewheel', (e) => {
+    e.preventDefault()
+  })
+  let width = window.innerWidth * 0.8;
+  lightBox.onclick = () => {
+    let img = lightBox.querySelector('img');
+    lightBox.style = '';
+    img && img.remove();
+  }
+  imgs.forEach(item => {
+    item.onclick = function (e) {
+      let lightImg = document.createElement('img');
+      lightImg.src = this.src;
+      lightBox.style = `height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0.5);cursor: zoom-out;`;
+      lightImg.style = `width: ${width}px; border: 1px solid #fff; border-radius: 2px;`;
+      lightImg.onclick = function () {
+        lightBox.style = '';
+        this.remove();
+      }
+      lightBox.append(lightImg);
+    }
+  })
 </script>
   </div>
 </body>
@@ -3412,6 +3782,5 @@ ${mytest!}
 
 
 <script src=" /media/js/cool.js"></script>
-
 
 </html>

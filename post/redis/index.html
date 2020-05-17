@@ -8,7 +8,7 @@
 <meta name="keywords" content="浩瀚,浩瀚博客,java">
 <meta name="description" content="浩瀚-每天向往着外面的世界">
 <meta name="theme-color" content="#000">
-<title>浩瀚</title>
+<title>Redis | 浩瀚</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1589688178545">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -37,6 +37,8 @@
 
 
 
+  <meta name="description" content="Redis" />
+  <meta name="keywords" content="Redis" />
 </head>
 
 <body>
@@ -98,7 +100,7 @@
             
               
             
-            <li class="nav-item nav-item-active">
+            <li class="nav-item ">
               
               
                 <a href="/tags/" target="_self">
@@ -162,10 +164,26 @@
   <div class="main-continer">
     
     <div
-      class="section-layout  gemini">
+      class="section-layout gemini ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body gemini" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -213,522 +231,672 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#redis%E5%AE%89%E8%A3%85">redis安装</a></li>
+<li><a href="#springdataredis%E7%AE%80%E4%BB%8B">SpringDataRedis简介</a>
+<ul>
+<li><a href="#redis">Redis</a></li>
+<li><a href="#jedis">Jedis</a></li>
+</ul>
+</li>
+<li><a href="#spring-data-redis">Spring Data Redis</a></li>
+<li><a href="#spring-data-redis%E5%85%A5%E9%97%A8%E5%B0%8Fdemo">Spring Data Redis入门小Demo</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'gemini';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box box-shadow-wrapper">
-          <section class="section tags-section bg-color posts-expand">
-            <div class="tags-box">
-  <div class="tag-cloud-title">
-    目前共计 10 个标签
-  </div>
-  <div class="tag-cloud-list" id="tags">
-    
-      
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/WWST57yMi/" rel="1">Redis</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/TJ1wkA5NP/" rel="1">ActiveMQ</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/D-nvo_2ol/" rel="1">solr</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/YYffL2EXa/" rel="1">spring-security</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/POgCfBu13Z/" rel="1">spring</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/6pWqw4cF3/" rel="1">mybatis</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/CX9XCxDcJ/" rel="1">java</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-          
-        
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/AowgROl25/" rel="1">FastDFS</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-            
-      
-        
-      
-        
-          
-        
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/pV4gj9NcU/" rel="1">freemarker</a>
-    
-      
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-          
-        
-      
-        
-      
-        
-          
-            
-      
-      <a class="cloud-tag" href="https://haohanya.github.io/tag/xi3C-nNGB/" rel="1">Gridea</a>
-    
-  </div>
-</div>
-<script>
 
-  let fontStart = 12, fontEnd = 30, colorStart = '#666', colorEnd = '#000';
-  let tags = document.querySelector('#tags').children;
-  let counts = [];
-  for(let i = 0; i < tags.length; i++) {
-    counts.push(tags[i].rel);
-  }
-  let lowest = Math.min.apply(null,counts), highest = Math.max.apply(null,counts);;
-  let range = highest - lowest;
-  if (range === 0) {
-    range = 1;
-  }
-  let fontIncr, colorIncr;
-  fontIncr = (fontEnd - fontStart) / range;
-  
-  let sColorArr = toRGB(colorStart), eColorArr = toRGB(colorEnd);
-
-  for(let i = 0; i < tags.length; i++) {
-    let disCount = tags[i].rel - lowest;
-    let fontSize = fontStart + disCount * fontIncr;
-    let style = 'font-size: ' + fontSize + 'px;';
-    let arr = [];
-    for(let c = 0; c < sColorArr.length; c++) {
-      if (disCount === 0) {
-        disCount = 1;
-      }
-      let val = (sColorArr[c] - eColorArr[c]) / range * disCount;
-      if (val >= 100) {
-        val = eColorArr[c];
-      } else if (val <= 0) {
-        val = sColorArr[c];
-      }
-      arr[c] = Math.floor(val);
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
     }
-    style += 'color: ' + toHex(arr);
-    tags[i].style = style;
   }
 
-  function toRGB(code) {
-    if (code.length === 4) {
-      code = code.replace(/(\w)(\w)(\w)/gi, "\$1\$1\$2\$2\$3\$3");
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
     }
-    var hex = /(\w{2})(\w{2})(\w{2})/.exec(code);
-    return [parseInt(hex[1], 16), parseInt(hex[2], 16), parseInt(hex[3], 16)];
   }
 
-  function toHex(ary) {
-    return "#" + ((1 << 24) + (ary[0] << 16) + (ary[1] << 8) + ary[2]).toString(16).slice(1);
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
   }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
 
 </script>
-          </section>
+            </div>
+          
+        
+      </div>
+    </div>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <header class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://haohanya.github.io/post/redis/">
+      Redis
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span>发布于</span>
+      <span>2020-05-17</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show">分类于</span>
+      
+      
+      <a href="https://haohanya.github.io/tag/WWST57yMi/">
+        <span>Redis</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>7分钟</span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>1360<span class="pc-show">字数</span></span>
+    </span>
+    
+    
+    
+    <span id="/post/redis/" data-flag-title="Redis" class="meta-item pc-show leancloud_visitors">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-eye"></i>
+      <span>浏览量：<span class="leancloud-visitors-count"></span></span>
+    </span>
+    
+  </div>
+</header>
+            <div class="post-body next-md-body" id="post_body">
+              <h2 id="redis安装">redis安装</h2>
+<p>安装gcc</p>
+<pre><code class="language-bash">yum install gcc-c++
+</code></pre>
+<p>解压源码</p>
+<pre><code class="language-bash">tar -zxvf redis-3.0.0.tar.gz
+</code></pre>
+<p>进入解压后的目录进行编译</p>
+<pre><code class="language-bash">cd /usr/local/redis-3.0.0
+make PREFIX=/usr/local/redis install
+</code></pre>
+<p>拷贝配置文件到安装目录下</p>
+<pre><code class="language-bash">cd /usr/local/redis
+mkdir conf
+cp /usr/local/redis-3.0.0/redis.conf  /usr/local/redis/bin
+</code></pre>
+<p>运行</p>
+<pre><code class="language-bash">bin/redis-server
+</code></pre>
+<p>后端模式运行</p>
+<pre><code class="language-bash">修改redis.conf文件 : daemonize yes
+./bin/redis-server redis.conf
+</code></pre>
+<h2 id="springdataredis简介">SpringDataRedis简介</h2>
+<h3 id="redis">Redis</h3>
+<blockquote>
+<p><strong>redis</strong>是一款开源的Key-Value<strong>数据库</strong>，运行在内存中，由ANSI C编写。企业开发通常采用Redis来实现缓存。同类的产品还有memcache 、MongoDB等。</p>
+</blockquote>
+<h3 id="jedis">Jedis</h3>
+<blockquote>
+<p>Jedis是Redis官方推出的一款面向<strong>Java</strong>的客户端，提供了很多接口供Java语言调用。可以在Redis官网下载，当然还有一些开源爱好者提供的客户端，如Jredis、SRP等等，推荐使用Jedis。</p>
+</blockquote>
+<h2 id="spring-data-redis">Spring Data Redis</h2>
+<blockquote>
+<p>Spring-data-redis是spring大家族的一部分，提供了在srping应用中通过简单的配置访问redis服务，对reids底层开发包(Jedis,  JRedis, and RJC)进行了高度封装，RedisTemplate提供了redis各种操作、异常处理及序列化，支持发布订阅，并对spring 3.1 cache进行了实现。</p>
+<p>spring-data-redis针对jedis提供了如下功能：<br>
+1、连接池自动管理，提供了一个高度封装的“RedisTemplate”类</p>
+<p>​	2、针对jedis客户端中大量api进行了归类封装,将同一类型操作封装为operation接口</p>
+<p>​     ValueOperations：简单K-V操作</p>
+<p>​     SetOperations：set类型数据操作</p>
+<p>​     ZSetOperations：zset类型数据操作</p>
+<p>​     HashOperations：针对map类型的数据操作</p>
+<p>​     ListOperations：针对list类型的数据操作</p>
+</blockquote>
+<h2 id="spring-data-redis入门小demo">Spring Data Redis入门小Demo</h2>
+<p>1、引入依赖</p>
+<pre><code class="language-xml">&lt;!-- 缓存 --&gt;
+&lt;dependency&gt; 
+    &lt;groupId&gt;redis.clients&lt;/groupId&gt; 
+    &lt;artifactId&gt;jedis&lt;/artifactId&gt; 
+    &lt;version&gt;2.8.1&lt;/version&gt; 
+&lt;/dependency&gt; 
+&lt;dependency&gt; 
+    &lt;groupId&gt;org.springframework.data&lt;/groupId&gt; 
+    &lt;artifactId&gt;spring-data-redis&lt;/artifactId&gt; 
+    &lt;version&gt;1.7.2.RELEASE&lt;/version&gt; 
+&lt;/dependency&gt;
+</code></pre>
+<p>2、创建redis-config.properties</p>
+<pre><code class="language-properties">redis.host=127.0.0.1 
+redis.port=6379 
+redis.pass= 
+redis.database=0 
+redis.maxIdle=300 
+redis.maxWait=3000 
+redis.testOnBorrow=true 
+</code></pre>
+<p>3、编写redis配置文件</p>
+<p>applicationContext-redis.xml</p>
+<pre><code class="language-xml">&lt;context:property-placeholder location=&quot;classpath*:properties/*.properties&quot; /&gt;   
+&lt;!-- redis 相关配置 --&gt; 
+&lt;bean id=&quot;poolConfig&quot; class=&quot;redis.clients.jedis.JedisPoolConfig&quot;&gt;  
+ &lt;property name=&quot;maxIdle&quot; value=&quot;${redis.maxIdle}&quot; /&gt;   
+ &lt;property name=&quot;maxWaitMillis&quot; value=&quot;${redis.maxWait}&quot; /&gt;  
+ &lt;property name=&quot;testOnBorrow&quot; value=&quot;${redis.testOnBorrow}&quot; /&gt;  
+&lt;/bean&gt;  
+&lt;bean id=&quot;JedisConnectionFactory&quot; class=&quot;org.springframework.data.redis.connection.jedis.JedisConnectionFactory&quot; 
+   p:host-name=&quot;${redis.host}&quot; p:port=&quot;${redis.port}&quot; p:password=&quot;${redis.pass}&quot; p:pool-config-ref=&quot;poolConfig&quot;/&gt;  
+
+&lt;bean id=&quot;redisTemplate&quot; class=&quot;org.springframework.data.redis.core.RedisTemplate&quot;&gt;  
+ &lt;property name=&quot;connectionFactory&quot; ref=&quot;JedisConnectionFactory&quot; /&gt;  
+&lt;/bean&gt;  
+</code></pre>
+<blockquote>
+<p>maxIdle ：最大空闲数</p>
+<p>maxWaitMillis:连接时的最大等待毫秒数</p>
+<p>testOnBorrow：在提取一个jedis实例时，是否提前进行验证操作；如果为true，则得到的jedis实例均是可用的；</p>
+</blockquote>
+<p>4、值类型操作</p>
+<pre><code class="language-java">@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations=&quot;classpath:spring/applicationContext-redis.xml&quot;)
+public class TestValue {
+	@Autowired
+	private RedisTemplate redisTemplate;	
+	@Test
+	public void setValue(){
+		redisTemplate.boundValueOps(&quot;name&quot;).set(&quot;zhangsan&quot;);		
+	}	
+	@Test
+	public void getValue(){
+		String str = (String) redisTemplate.boundValueOps(&quot;name&quot;).get();
+		System.out.println(str);
+	}	
+	@Test
+	public void deleteValue(){
+		redisTemplate.delete(&quot;name&quot;);;
+	}	
+}
+</code></pre>
+<p>5、Set类型操作</p>
+<pre><code class="language-java">@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations=&quot;classpath:spring/applicationContext-redis.xml&quot;)
+public class TestSet {
+	@Autowired
+	private RedisTemplate redisTemplate;
+	/**
+	 * 存入值
+	 */
+	@Test
+	public void setValue(){
+		redisTemplate.boundSetOps(&quot;nameset&quot;).add(&quot;罗志祥&quot;);		
+		redisTemplate.boundSetOps(&quot;nameset&quot;).add(&quot;周扬青&quot;);	
+		redisTemplate.boundSetOps(&quot;nameset&quot;).add(&quot;蝴蝶姐&quot;);
+	}
+	/**
+	 * 提取值
+	 */
+	@Test
+	public void getValue(){
+		Set members = redisTemplate.boundSetOps(&quot;nameset&quot;).members();
+		System.out.println(members);
+	}
+    /**
+	 * 删除集合中的某一个值
+	 */
+	@Test
+	public void deleteValue(){
+		redisTemplate.boundSetOps(&quot;nameset&quot;).remove(&quot;蝴蝶姐&quot;);
+	}
+	
+	/**
+	 * 删除整个集合
+	 */
+	@Test
+	public void deleteAllValue(){
+		redisTemplate.delete(&quot;nameset&quot;);
+	}
+}
+</code></pre>
+<p>6、List类型操作</p>
+<p>6.1、右压栈</p>
+<pre><code class="language-java">/**
+ * 右压栈：后添加的对象排在后边
+ */
+@Test
+public void testSetValue1(){		
+    redisTemplate.boundListOps(&quot;namelist1&quot;).rightPush(&quot;刘备&quot;);
+    redisTemplate.boundListOps(&quot;namelist1&quot;).rightPush(&quot;关羽&quot;);
+    redisTemplate.boundListOps(&quot;namelist1&quot;).rightPush(&quot;张飞&quot;);		
+}
+/**
+ * 显示右压栈集合
+ */
+@Test
+public void testGetValue1(){
+    List list = redisTemplate.boundListOps(&quot;namelist1&quot;).range(0, 10);
+    System.out.println(list);
+}
+//运行结果：[刘备, 关羽, 张飞]
+</code></pre>
+<p>6.2、左压栈</p>
+<pre><code class="language-java">/**
+ * 左压栈：后添加的对象排在前边
+ */
+@Test
+public void testSetValue2(){		
+    redisTemplate.boundListOps(&quot;namelist2&quot;).leftPush(&quot;刘备&quot;);
+    redisTemplate.boundListOps(&quot;namelist2&quot;).leftPush(&quot;关羽&quot;);
+    redisTemplate.boundListOps(&quot;namelist2&quot;).leftPush(&quot;张飞&quot;);		
+}
+/**
+ * 显示左压栈集合
+ */
+@Test
+public void testGetValue2(){
+    List list = redisTemplate.boundListOps(&quot;namelist2&quot;).range(0, 10);
+    System.out.println(list);
+}
+//运行结果：[张飞, 关羽, 刘备]
+</code></pre>
+<p>6.3、根据索引查询元素</p>
+<pre><code class="language-java">/**
+ * 查询集合某个元素
+ */
+@Test
+public void testSearchByIndex(){
+    String s = (String) redisTemplate.boundListOps(&quot;namelist1&quot;).index(1);
+    System.out.println(s);
+}
+</code></pre>
+<p>6.4、移除某个元素的值</p>
+<pre><code class="language-java">/**
+ * 移除集合某个元素
+ */
+@Test
+public void testRemoveByIndex(){
+    redisTemplate.boundListOps(&quot;namelist1&quot;).remove(1, &quot;关羽&quot;);
+}
+</code></pre>
+<p>7、Hash类型操作</p>
+<p>7.1、存入值</p>
+<pre><code class="language-java">@Test
+public void testSetValue(){
+    redisTemplate.boundHashOps(&quot;namehash&quot;).put(&quot;a&quot;, &quot;唐僧&quot;);
+    redisTemplate.boundHashOps(&quot;namehash&quot;).put(&quot;b&quot;, &quot;悟空&quot;);
+    redisTemplate.boundHashOps(&quot;namehash&quot;).put(&quot;c&quot;, &quot;八戒&quot;);
+    redisTemplate.boundHashOps(&quot;namehash&quot;).put(&quot;d&quot;, &quot;沙僧&quot;);
+}
+</code></pre>
+<p>7.2、提取所有的KEY</p>
+<pre><code class="language-java">@Test
+public void testGetKeys(){
+    Set s = redisTemplate.boundHashOps(&quot;namehash&quot;).keys();		
+    System.out.println(s);		
+}
+//运行结果：[a, b, c, d]
+</code></pre>
+<p>7.3、提取所有的值</p>
+<pre><code class="language-java">@Test
+public void testGetValues(){
+    List values = redisTemplate.boundHashOps(&quot;namehash&quot;).values();
+    System.out.println(values);		
+}
+//运行结果：[唐僧, 悟空, 八戒, 沙僧]
+</code></pre>
+<p>7.4、根据KEY提取值</p>
+<pre><code class="language-java">@Test
+public void testGetValueByKey(){
+    Object object = redisTemplate.boundHashOps(&quot;namehash&quot;).get(&quot;b&quot;);
+    System.out.println(object);
+}
+//运行结果：悟空
+</code></pre>
+<p>7.5、根据KEY移除值</p>
+<pre><code class="language-java">@Test
+public void testRemoveValueByKey(){
+    redisTemplate.boundHashOps(&quot;namehash&quot;).delete(&quot;c&quot;);
+}
+//运行结果：[唐僧, 悟空, 沙僧]
+</code></pre>
+
+            </div>
+            <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      浩瀚
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://haohanya.github.io/post/redis/" title="Redis">https://haohanya.github.io/post/redis/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+      <a href="https://haohanya.github.io/tag/WWST57yMi/"># Redis</a>
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
+      
+    </div>
+    <div class="nav-next">
+      
+        <a class="nav-pc-next" title="ActiveMQ" href="https://haohanya.github.io/post/activemq/">ActiveMQ</a>
+        <a class="nav-mobile-next" title="ActiveMQ" href="https://haohanya.github.io/post/activemq/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
+      
+    </div>
+  </div>
+</div>
+            
+  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.4/dist/Valine.min.js"></script>
+<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
+
+<style>
+  .v .veditor {
+    min-height: 10rem;
+    background-image: url('https://upimage.alexhchu.com/2020/04/21/47eda59424daa.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: none;
+  }
+
+  .v .vwrap {
+    border: 1px solid #000 !important;
+  }
+
+  .v .vbtn {
+    padding: .4rem 1.2rem !important;
+    border-color: #fff !important;
+    background-color: #49b1f5 !important;
+    color: #fff !important;
+    font-size: .7rem !important;
+  }
+
+  .v .vcards .vcard .vh .vmeta .vat {
+    padding: 0 .8rem !important;
+    border: 1px solid #00c4b6 !important;
+    border-radius: 5px !important;
+    color: #00c4b6 !important;
+  }
+</style>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    avatar: 'identicon',
+    placeholder: '',
+    pageSize: '',
+    lang: 'zh-cn',
+    visitor: 'true' === 'true',
+    highlight: 'true' === 'true',
+    avatarForce: 'true' === 'false',
+  });
+</script>
+
+          </div>
         </div>
       </div>
     </div>
@@ -903,6 +1071,36 @@
   // 代码高亮
   hljs.initHighlightingOnLoad();
 
+</script>
+    <div class="light-box" id="light_box"></div>
+<script>
+  let imgs = document.querySelectorAll('.post-body img');
+  let lightBox = document.querySelector('#light_box');
+  lightBox.addEventListener('mousedown', (e) => {
+    e.preventDefault()
+  })
+  lightBox.addEventListener('mousewheel', (e) => {
+    e.preventDefault()
+  })
+  let width = window.innerWidth * 0.8;
+  lightBox.onclick = () => {
+    let img = lightBox.querySelector('img');
+    lightBox.style = '';
+    img && img.remove();
+  }
+  imgs.forEach(item => {
+    item.onclick = function (e) {
+      let lightImg = document.createElement('img');
+      lightImg.src = this.src;
+      lightBox.style = `height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0.5);cursor: zoom-out;`;
+      lightImg.style = `width: ${width}px; border: 1px solid #fff; border-radius: 2px;`;
+      lightImg.onclick = function () {
+        lightBox.style = '';
+        this.remove();
+      }
+      lightBox.append(lightImg);
+    }
+  })
 </script>
   </div>
 </body>
@@ -3412,6 +3610,5 @@ ${mytest!}
 
 
 <script src=" /media/js/cool.js"></script>
-
 
 </html>
