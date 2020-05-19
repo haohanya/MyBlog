@@ -8,7 +8,7 @@
 <meta name="keywords" content="浩瀚,浩瀚博客,java">
 <meta name="description" content="浩瀚-每天向往着外面的世界">
 <meta name="theme-color" content="#000">
-<title>浩瀚</title>
+<title>单点登陆-CAS | 浩瀚</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1589898117712">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -37,6 +37,8 @@
 
 
 
+  <meta name="description" content="单点登陆-CAS" />
+  <meta name="keywords" content="CAS,单点登陆" />
 </head>
 
 <body>
@@ -162,10 +164,26 @@
   <div class="main-continer">
     
     <div
-      class="section-layout  gemini">
+      class="section-layout gemini ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body gemini" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -213,94 +231,1164 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95">什么是单点登录</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFcas">什么是CAS</a></li>
+<li><a href="#cas%E6%9C%8D%E5%8A%A1%E7%AB%AF%E9%83%A8%E7%BD%B2">CAS服务端部署</a>
+<ul>
+<li><a href="#1-cas%E5%AE%89%E8%A3%85">1、cas安装</a></li>
+<li><a href="#2-%E4%BF%AE%E6%94%B9%E7%AB%AF%E5%8F%A3">2、修改端口</a></li>
+<li><a href="#3-%E5%8E%BB%E9%99%A4https%E8%AE%A4%E8%AF%81">3、去除https认证</a></li>
+</ul>
+</li>
+<li><a href="#cas%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%85%A5%E9%97%A8%E5%B0%8Fdemo">CAS客户端入门小Demo</a>
+<ul>
+<li><a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%B7%A5%E7%A8%8B1%E6%90%AD%E5%BB%BA">客户端工程1搭建</a>
+<ul>
+<li><a href="#1-%E6%90%AD%E5%BB%BA%E5%B7%A5%E7%A8%8B%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96">1、搭建工程引入依赖</a></li>
+<li><a href="#2-%E4%BF%AE%E6%94%B9webxml">2、修改web.xml</a></li>
+<li><a href="#3-%E7%BC%96%E5%86%99indexjsp">3、编写index.jsp</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%B7%A5%E7%A8%8B2%E6%90%AD%E5%BB%BA">客户端工程2搭建</a>
+<ul>
+<li><a href="#1-%E6%90%AD%E5%BB%BA%E5%B7%A5%E7%A8%8B">1、搭建工程</a></li>
+<li><a href="#2-%E4%BF%AE%E6%94%B9webxml-2">2、修改web.xml</a></li>
+<li><a href="#3-%E7%BC%96%E5%86%99indexjsp-2">3、编写index.jsp</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8D%95%E7%82%B9%E9%80%80%E5%87%BA%E7%99%BB%E5%BD%95">单点退出登录</a>
+<ul>
+<li><a href="#%E6%8C%87%E5%AE%9A%E9%80%80%E5%87%BA%E5%90%8E%E8%B7%B3%E8%BD%AC%E5%9C%B0%E5%9D%80">指定退出后跳转地址</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#cas%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%95%B0%E6%8D%AE%E6%BA%90%E8%AE%BE%E7%BD%AE">CAS服务端数据源设置</a>
+<ul>
+<li><a href="#1-%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E6%BA%90">1、配置数据源</a></li>
+<li><a href="#2-%E6%B7%BB%E5%8A%A0jar%E5%8C%85">2、添加jar包</a></li>
+<li><a href="#3-%E6%B5%8B%E8%AF%95">3、测试</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E9%BB%98%E8%AE%A4%E7%99%BB%E9%99%86%E9%A1%B5%E9%9D%A2">修改默认登陆页面</a>
+<ul>
+<li><a href="#1-%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6">1、上传文件</a></li>
+<li><a href="#2-%E7%BC%96%E8%BE%91casloginviewjsp-%E5%86%85%E5%AE%B9">2、<strong>编辑casLoginView.jsp</strong> 内容</a>
+<ul>
+<li><a href="#1-%E6%B7%BB%E5%8A%A0%E6%8C%87%E4%BB%A4">1、添加指令</a></li>
+<li><a href="#2-%E4%BF%AE%E6%94%B9form%E6%A0%87%E7%AD%BE">2、修改form标签</a></li>
+<li><a href="#3-%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%90%8D%E6%A1%86">3、修改用户名框</a></li>
+<li><a href="#4-%E4%BF%AE%E6%94%B9%E5%AF%86%E7%A0%81%E6%A1%86">4、修改密码框</a></li>
+<li><a href="#5-%E4%BF%AE%E6%94%B9%E7%99%BB%E9%99%86%E6%8C%89%E9%92%AE">5、修改登陆按钮</a></li>
+</ul>
+</li>
+<li><a href="#3-%E9%94%99%E8%AF%AF%E6%8F%90%E7%A4%BA">3、错误提示</a></li>
+</ul>
+</li>
+<li><a href="#cas%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8Espringsecurity%E9%9B%86%E6%88%90">CAS客户端与SpringSecurity集成</a>
+<ul>
+<li><a href="#1-%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B">1、创建工程</a></li>
+<li><a href="#2-%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96">2、引入依赖</a></li>
+<li><a href="#3-%E5%88%9B%E5%BB%BAspring-mvcxml">3、创建spring-mvc.xml</a></li>
+<li><a href="#4-%E5%88%9B%E5%BB%BAspring-securityxml">4、创建spring-security.xml</a></li>
+<li><a href="#5-%E5%88%9B%E5%BB%BA%E8%AE%A4%E8%AF%81%E7%B1%BB">5、创建认证类</a></li>
+<li><a href="#6-%E4%BF%AE%E6%94%B9webxml-%E6%B7%BB%E5%8A%A0%E8%BF%87%E6%BB%A4%E5%99%A8%E7%AD%89%E9%85%8D%E7%BD%AE">6、修改web.xml ,添加过滤器等配置</a></li>
+<li><a href="#7-%E5%88%9B%E5%BB%BAusercontroller">7、创建UserController</a></li>
+<li><a href="#8-%E9%80%80%E5%87%BA%E7%99%BB%E9%99%86">8、退出登陆</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'gemini';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box tag-line box-shadow-wrapper">
-          <section class="section tags-section posts-expand bg-color">
-            <div class="padding-wrapper">
-  <div class="tag-timeline-box">
-    <div class="tag-timeline-wrapper">
-      <div class="tag-timeline-title">
-        <h2>
-          freemarker
-          <small>标签</small>
-        </h2>
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
+          
+        
       </div>
+    </div>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <header class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://haohanya.github.io/post/dan-dian-deng-lu-cas/">
+      单点登陆-CAS
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span>发布于</span>
+      <span>2020-05-19</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show">分类于</span>
+      
+      
+      <a href="https://haohanya.github.io/tag/5wQcTelqx/">
+        <span>CAS</span>
+      </a>、
       
       
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      <a href="https://haohanya.github.io/post/freemarker/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              05-04
-              <small>freemarker</small>
-            </h1>
-          </div>
-        </div>
+      <a href="https://haohanya.github.io/tag/_AfHtpsMsE/">
+        <span>单点登陆</span>
       </a>
       
       
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>29分钟</span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>5384<span class="pc-show">字数</span></span>
+    </span>
+    
+    
+    
+    <span id="/post/dan-dian-deng-lu-cas/" data-flag-title="单点登陆-CAS" class="meta-item pc-show leancloud_visitors">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-eye"></i>
+      <span>浏览量：<span class="leancloud-visitors-count"></span></span>
+    </span>
+    
+  </div>
+</header>
+            <div class="post-body next-md-body" id="post_body">
+              <h2 id="什么是单点登录">什么是单点登录</h2>
+<blockquote>
+<p><a href="http://baike.baidu.com/item/%E5%8D%95%E7%82%B9%E7%99%BB%E5%BD%95">单点登录</a>（Single Sign On），简称为 SSO，是目前比较流行的企业业务整合的解决方案之一。SSO的定义是在多个应用系统中，用户只需要登录一次就可以访问所有相互信任的应用系统。</p>
+<p>我们目前的系统存在诸多子系统，而这些子系统是分别部署在不同的服务器中，那么使用传统方式的session是无法解决的，我们需要使用相关的单点登录技术来解决。<br>
+<img src="https://haohanya.github.io/post-images/1589897963520.jpg" alt="" loading="lazy"></p>
+</blockquote>
+<h2 id="什么是cas">什么是CAS</h2>
+<blockquote>
+<p>CAS 是 Yale 大学发起的一个开源项目，旨在为 Web 应用系统提供一种可靠的单点登录方法，CAS 在 2004 年 12 月正式成为 JA-SIG 的一个项目。CAS 具有以下特点：</p>
+<p>【1】开源的企业级单点登录解决方案。</p>
+<p>【2】CAS Server 为需要独立部署的 Web 应用。</p>
+<p>【3】CAS Client 支持非常多的客户端(这里指单点登录系统中的各个 Web 应用)，包括 Java, .Net, PHP, Perl, Apache, uPortal, Ruby 等。</p>
+<p>从结构上看，CAS 包含两个部分： CAS Server 和 CAS Client。CAS Server 需要独立部署，主要负责对用户的认证工作；CAS Client 负责处理对客户端受保护资源的访问请求，需要登录时，重定向到 CAS Server。下图是 CAS 最基本的协议过程：</p>
+<figure data-type="image" tabindex="1"><img src="https://haohanya.github.io/post-images/1589897985205.jpg" alt="" loading="lazy"></figure>
+<p>SSO单点登录访问流程主要有以下步骤：</p>
+<ol>
+<li>
+<p>访问服务：SSO客户端发送请求访问应用系统提供的服务资源。</p>
+</li>
+<li>
+<p>定向认证：SSO客户端会重定向用户请求到SSO服务器。</p>
+</li>
+<li>
+<p>用户认证：用户身份认证。</p>
+</li>
+<li>
+<p>发放票据：SSO服务器会产生一个随机的Service Ticket。</p>
+</li>
+<li>
+<p>验证票据：SSO服务器验证票据Service Ticket的合法性，验证通过后，允许客户端访问服务。</p>
+</li>
+<li>
+<p>传输用户信息：SSO服务器验证票据通过后，传输用户认证结果信息给客户端。</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="cas服务端部署">CAS服务端部署</h2>
+<h3 id="1-cas安装">1、cas安装</h3>
+<p>在资源\cas\source\cas-server-4.0.0-release\cas-server-4.0.0\modules目录下</p>
+<p>cas-server-webapp-4.0.0.war 将其改名为cas.war放入tomcat目录下的webapps下。启动tomcat自动解压war包。浏览器输入http://localhost:8080/cas/login ，可看到登录页面</p>
+<figure data-type="image" tabindex="2"><img src="https://haohanya.github.io/post-images/1589897998952.jpg" alt="" loading="lazy"></figure>
+<p>这里有个固定的用户名和密码  casuser/Mellon</p>
+<p>登录成功后会跳到登录成功的提示页面</p>
+<figure data-type="image" tabindex="3"><img src="https://haohanya.github.io/post-images/1589898004970.jpg" alt="" loading="lazy"></figure>
+<h3 id="2-修改端口">2、修改端口</h3>
+<ol>
+<li>
+<p>修改tomcat端口</p>
+<p>打开tomcat 目录 conf\server.xml 找到下面的配置</p>
+<pre><code class="language-xml">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;
+               connectionTimeout=&quot;20000&quot;
+               redirectPort=&quot;8443&quot; /&gt;
+&lt;!--修改port为9100--&gt;
+</code></pre>
+</li>
+<li>
+<p>修改CAS配置文件</p>
+<p>WEB-INF/cas.properties</p>
+<pre><code class="language-properties">server.name=http://localhost:9100
+</code></pre>
+</li>
+</ol>
+<h3 id="3-去除https认证">3、去除https认证</h3>
+<blockquote>
+<p>CAS默认使用的是HTTPS协议，如果使用HTTPS协议需要SSL安全证书（需向特定的机构申请和购买） 。如果对安全要求不高或是在开发测试阶段，可使用HTTP协议。我们这里讲解通过修改配置，让CAS使用HTTP协议。</p>
+</blockquote>
+<ol>
+<li>
+<p>修改cas的WEB-INF/deployerConfigContext.xml</p>
+<pre><code class="language-xml">&lt;bean class=&quot;org.jasig.cas.authentication.handler.support.HttpBasedServiceCredentialsAuthenticationHandler&quot;
+p:httpClient-ref=&quot;httpClient&quot;/&gt;
+&lt;!-- 
+	这里需要增加参数p:requireSecure=&quot;false&quot;
+	requireSecure属性意思为是否需要安全验证
+	即HTTPS，false为不采用
+ --&gt;
+</code></pre>
+</li>
+<li>
+<p>修改cas的/WEB-INF/<a href="http://lib.csdn.net/base/javaee"><strong>spring</strong></a>-configuration/ticketGrantingTicketCookieGenerator.xml</p>
+<pre><code class="language-xml">&lt;bean id=&quot;ticketGrantingTicketCookieGenerator&quot; class=&quot;org.jasig.cas.web.support.CookieRetrievingCookieGenerator&quot;
+      p:cookieSecure=&quot;true&quot;
+      p:cookieMaxAge=&quot;-1&quot;
+      p:cookieName=&quot;CASTGC&quot;
+      p:cookiePath=&quot;/cas&quot; /&gt;
+&lt;!--
+	参数p:cookieSecure=&quot;true&quot;，同理为HTTPS验证相关，TRUE为采用HTTPS验证，FALSE为不采用https验证。
+    参数p:cookieMaxAge=&quot;-1&quot;，是COOKIE的最大生命周期，-1为无生命周期，即只在当前打开的窗口有效，关闭或重新打开其它窗口，仍会要求验证。可以根据需要修改为大于0的数字，比如3600等，意思是在3600秒内，打开任意窗口，都不需要验证。
+    我们这里将cookieSecure改为false ,  cookieMaxAge 改为3600
+--&gt;
+</code></pre>
+</li>
+<li>
+<p>修改cas的WEB-INF/spring-configuration/warnCookieGenerator.xml</p>
+<pre><code class="language-xml">&lt;bean id=&quot;warnCookieGenerator&quot; class=&quot;org.jasig.cas.web.support.CookieRetrievingCookieGenerator&quot;
+    p:cookieSecure=&quot;true&quot;
+    p:cookieMaxAge=&quot;-1&quot;
+    p:cookieName=&quot;CASPRIVACY&quot;
+    p:cookiePath=&quot;/cas&quot; /&gt;
+&lt;!-- 将cookieSecure改为false ,  cookieMaxAge 改为3600 --&gt;
+</code></pre>
+</li>
+</ol>
+<h2 id="cas客户端入门小demo">CAS客户端入门小Demo</h2>
+<h3 id="客户端工程1搭建">客户端工程1搭建</h3>
+<h4 id="1-搭建工程引入依赖">1、搭建工程引入依赖</h4>
+<p>创建Maven工程 （war）casclient_demo1 引入cas客户端依赖并制定tomcat运行端口为9001</p>
+<pre><code class="language-xml">&lt;dependencies&gt;
+    &lt;!-- cas --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.jasig.cas.client&lt;/groupId&gt;
+        &lt;artifactId&gt;cas-client-core&lt;/artifactId&gt;
+        &lt;version&gt;3.3.3&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+        &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;
+        &lt;version&gt;2.5&lt;/version&gt;
+        &lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+
+&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;!-- 配置Tomcat插件 --&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.tomcat.maven&lt;/groupId&gt;
+            &lt;artifactId&gt;tomcat7-maven-plugin&lt;/artifactId&gt;
+            &lt;configuration&gt;
+                &lt;port&gt;9001&lt;/port&gt;
+                &lt;path&gt;/&lt;/path&gt;
+                &lt;uriEncoding&gt;utf-8&lt;/uriEncoding&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+&lt;/build&gt;
+</code></pre>
+<h4 id="2-修改webxml">2、修改web.xml</h4>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;
+         version=&quot;4.0&quot;&gt;
+
+    &lt;!-- 用于单点退出，该过滤器用于实现单点登出功能，可选配置 --&gt;
+    &lt;listener&gt;
+        &lt;listener-class&gt;org.jasig.cas.client.session.SingleSignOutHttpSessionListener&lt;/listener-class&gt;
+    &lt;/listener&gt;
+
+    &lt;!-- 该过滤器用于实现单点登出功能，可选配置。 --&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;CAS Single Sign Out Filter&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.jasig.cas.client.session.SingleSignOutFilter&lt;/filter-class&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;CAS Single Sign Out Filter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+
+    &lt;!-- 该过滤器负责用户的认证工作，必须启用它 --&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;CASFilter&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.jasig.cas.client.authentication.AuthenticationFilter&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;casServerLoginUrl&lt;/param-name&gt;
+            &lt;param-value&gt;http://localhost:9100/cas/login&lt;/param-value&gt;
+            &lt;!--这里的server是服务端的IP --&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;serverName&lt;/param-name&gt;
+            &lt;param-value&gt;http://localhost:9001&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;CASFilter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+
+    &lt;!-- 该过滤器负责对Ticket的校验工作，必须启用它 --&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;CAS Validation Filter&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;casServerUrlPrefix&lt;/param-name&gt;
+            &lt;param-value&gt;http://localhost:9100/cas&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;serverName&lt;/param-name&gt;
+            &lt;param-value&gt;http://localhost:9001&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;CAS Validation Filter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+
+    &lt;!-- 该过滤器负责实现HttpServletRequest请求的包裹， 比如允许开发者通过HttpServletRequest的getRemoteUser()方法获得SSO登录用户的登录名，可选配置。 --&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;CAS HttpServletRequest Wrapper Filter&lt;/filter-name&gt;
+        &lt;filter-class&gt;
+            org.jasig.cas.client.util.HttpServletRequestWrapperFilter&lt;/filter-class&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;CAS HttpServletRequest Wrapper Filter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+
+    &lt;!-- 该过滤器使得开发者可以通过org.jasig.cas.client.util.AssertionHolder来获取用户的登录名。 比如AssertionHolder.getAssertion().getPrincipal().getName()。 --&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;CAS Assertion Thread Local Filter&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.jasig.cas.client.util.AssertionThreadLocalFilter&lt;/filter-class&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;CAS Assertion Thread Local Filter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+
+&lt;/web-app&gt;
+</code></pre>
+<h4 id="3-编写indexjsp">3、编写index.jsp</h4>
+<pre><code class="language-jsp">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=utf-8&quot; pageEncoding=&quot;utf-8&quot;%&gt;
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;
+    &lt;title&gt;Hello&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+欢迎登陆一：
+&lt;%--为获取远程登录名--%&gt;
+&lt;%=request.getRemoteUser()%&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3 id="客户端工程2搭建">客户端工程2搭建</h3>
+<h4 id="1-搭建工程">1、搭建工程</h4>
+<blockquote>
+<p>创建Maven工程 （war）casclient_demo2 引入cas客户端依赖并制定tomcat运行端口为9002</p>
+</blockquote>
+<h4 id="2-修改webxml-2">2、修改web.xml</h4>
+<blockquote>
+<p>创建web.xml，参照casclient_demo1 ,将serverName的值改为http://localhost:9002，一共两处</p>
+</blockquote>
+<h4 id="3-编写indexjsp-2">3、编写index.jsp</h4>
+<pre><code class="language-jsp">创建index.jsp  ,内容显示“欢迎登陆二：”
+</code></pre>
+<h3 id="单点退出登录">单点退出登录</h3>
+<blockquote>
+<p>地址栏输入 <a href="http://localhost:9000/cas/logout">http://localhost:9100/cas/logout</a></p>
+<p>即可看到退出后的提示页面</p>
+</blockquote>
+<h4 id="指定退出后跳转地址">指定退出后跳转地址</h4>
+<p>1、修改cas系统的配置文件cas-servlet.xml（217行）</p>
+<pre><code class="language-xml"> &lt;bean id=&quot;logoutAction&quot; class=&quot;org.jasig.cas.web.flow.LogoutAction&quot;
+        p:servicesManager-ref=&quot;servicesManager&quot;
+        p:followServiceRedirects=&quot;${cas.logout.followServiceRedirects:false}&quot;/&gt;
+&lt;!-- 把p:followServiceRedirects的false修改为true --&gt;
+</code></pre>
+<p>2、填入跳转地址</p>
+<pre><code class="language-html">&lt;!-- service参数为退出后跳转的地址 --&gt;
+&lt;a href=&quot;http://localhost:9100/cas/logout?service=http://www.baidu.com&quot;&gt;退出登录&lt;/a&gt;
+</code></pre>
+<h2 id="cas服务端数据源设置">CAS服务端数据源设置</h2>
+<h3 id="1-配置数据源">1、配置数据源</h3>
+<p>修改cas服务端中web-inf下deployerConfigContext.xml ，添加如下配置</p>
+<pre><code class="language-xml">&lt;!-- 配置数据源c3p0连接池 --&gt;
+&lt;bean id=&quot;dataSource&quot; class=&quot;com.mchange.v2.c3p0.ComboPooledDataSource&quot;  
+			  p:driverClass=&quot;com.mysql.jdbc.Driver&quot;  
+			  p:jdbcUrl=&quot;jdbc:mysql://127.0.0.1:3306/jd?characterEncoding=utf8&quot;  
+			  p:user=&quot;root&quot;  
+			  p:password=&quot;root&quot; /&gt; 
+&lt;!-- 密码加密的方式为 md5,在登陆时先加密密码然后再去数据库比对 --&gt;
+&lt;bean id=&quot;passwordEncoder&quot; class=&quot;org.jasig.cas.authentication.handler.DefaultPasswordEncoder&quot;  
+		c:encodingAlgorithm=&quot;MD5&quot;  
+		p:characterEncoding=&quot;UTF-8&quot; /&gt; 
+&lt;!-- 数据校验 --&gt;
+&lt;bean id=&quot;dbAuthHandler&quot;  
+		  class=&quot;org.jasig.cas.adaptors.jdbc.QueryDatabaseAuthenticationHandler&quot;  
+		  p:dataSource-ref=&quot;dataSource&quot;  
+		  p:sql=&quot;select password from tb_user where username = ?&quot;  
+		  p:passwordEncoder-ref=&quot;passwordEncoder&quot;/&gt;  
+</code></pre>
+<p>然后在配置文件开始部分找到如下配置</p>
+<pre><code class="language-xml">&lt;bean id=&quot;authenticationManager&quot; class=&quot;org.jasig.cas.authentication.PolicyBasedAuthenticationManager&quot;&gt;
+    &lt;constructor-arg&gt;
+        &lt;map&gt;               
+            &lt;entry key-ref=&quot;proxyAuthenticationHandler&quot; value-ref=&quot;proxyPrincipalResolver&quot; /&gt;
+            &lt;entry key-ref=&quot;primaryAuthenticationHandler&quot; value-ref=&quot;primaryPrincipalResolver&quot; /&gt;
+        &lt;/map&gt;
+    &lt;/constructor-arg&gt;      
+    &lt;property name=&quot;authenticationPolicy&quot;&gt;
+        &lt;bean class=&quot;org.jasig.cas.authentication.AnyAuthenticationPolicy&quot; /&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+&lt;!--
+	其中&lt;entry key-ref=&quot;primaryAuthenticationHandler&quot; value-ref=&quot;primaryPrincipalResolver&quot; /&gt;
+	一句是使用固定的用户名和密码，我们在下面可以看到这两个bean ,如果我们使用数据库认证用户名和密码，需要将这句注释掉。
+	添加下面这一句配置(54行)
+	&lt;entry key-ref=&quot;dbAuthHandler&quot; value-ref=&quot;primaryPrincipalResolver&quot;/&gt;
+--&gt;
+</code></pre>
+<h3 id="2-添加jar包">2、添加jar包</h3>
+<blockquote>
+<p>将以下三个jar包放入webapps\cas\WEB-INF\lib下</p>
+<p>c3p0-0.9.1.2.jar</p>
+<p>cas-server-support-jdbc-4.0.0.jar</p>
+<p>mysql-connector-java-5.1.32.jar</p>
+</blockquote>
+<h3 id="3-测试">3、测试</h3>
+<blockquote>
+<p>用数据库中的用户名和密码进行测试</p>
+</blockquote>
+<h2 id="修改默认登陆页面">修改默认登陆页面</h2>
+<h3 id="1-上传文件">1、上传文件</h3>
+<blockquote>
+<p>上传自己的登陆页面到WEB-INF\view\jsp\default\ui\casLoginView.jsp</p>
+</blockquote>
+<h3 id="2-编辑casloginviewjsp-内容">2、<strong>编辑casLoginView.jsp</strong> 内容</h3>
+<h4 id="1-添加指令">1、添加指令</h4>
+<pre><code class="language-jsp">&lt;%@ page pageEncoding=&quot;UTF-8&quot; %&gt;
+&lt;%@ page contentType=&quot;text/html; charset=UTF-8&quot; %&gt;
+&lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot; %&gt;
+&lt;%@ taglib prefix=&quot;spring&quot; uri=&quot;http://www.springframework.org/tags&quot; %&gt;
+&lt;%@ taglib prefix=&quot;form&quot; uri=&quot;http://www.springframework.org/tags/form&quot; %&gt;
+&lt;%@ taglib prefix=&quot;fn&quot; uri=&quot;http://java.sun.com/jsp/jstl/functions&quot; %&gt;
+</code></pre>
+<h4 id="2-修改form标签">2、修改form标签</h4>
+<pre><code class="language-jsp">&lt;form:form method=&quot;post&quot; id=&quot;fm1&quot; commandName=&quot;${commandName}&quot; htmlEscape=&quot;true&quot; class=&quot;sui-form&quot;&gt;
+......
+&lt;/form:form&gt;
+</code></pre>
+<h4 id="3-修改用户名框">3、修改用户名框</h4>
+<pre><code class="language-jsp">&lt;form:input id=&quot;username&quot; tabindex=&quot;1&quot; 
+	accesskey=&quot;${userNameAccessKey}&quot; path=&quot;username&quot; autocomplete=&quot;off&quot; htmlEscape=&quot;true&quot; 
+	placeholder=&quot;邮箱/用户名/手机号&quot; class=&quot;span2 input-xfat&quot; /&gt;
+</code></pre>
+<h4 id="4-修改密码框">4、修改密码框</h4>
+<pre><code class="language-jsp">&lt;form:password  id=&quot;password&quot; tabindex=&quot;2&quot; path=&quot;password&quot; 
+      accesskey=&quot;${passwordAccessKey}&quot; htmlEscape=&quot;true&quot; autocomplete=&quot;off&quot; 
+	  placeholder=&quot;请输入密码&quot; class=&quot;span2 input-xfat&quot;   /&gt;
+</code></pre>
+<h4 id="5-修改登陆按钮">5、修改登陆按钮</h4>
+<pre><code class="language-jsp">&lt;input type=&quot;hidden&quot; name=&quot;lt&quot; value=&quot;${loginTicket}&quot; /&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;execution&quot; value=&quot;${flowExecutionKey}&quot; /&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;_eventId&quot; value=&quot;submit&quot; /&gt;
+&lt;input class=&quot;sui-btn btn-block btn-xlarge btn-danger&quot; accesskey=&quot;l&quot; value=&quot;登陆&quot; type=&quot;submit&quot; /&gt;
+</code></pre>
+<h3 id="3-错误提示">3、错误提示</h3>
+<p>在表单内加入错误提示框</p>
+<pre><code class="language-jsp">&lt;form:errors path=&quot;*&quot; id=&quot;msg&quot; cssClass=&quot;errors&quot; element=&quot;div&quot; htmlEscape=&quot;false&quot; /&gt;
+</code></pre>
+<p>设置登陆失败中文提示</p>
+<p>修改cas-servlet.xml中的en（61行）</p>
+<pre><code class="language-xml">&lt;bean id=&quot;localeResolver&quot; class=&quot;org.springframework.web.servlet.i18n.CookieLocaleResolver&quot; p:defaultLocale=&quot;zh_CN&quot; /&gt;
+</code></pre>
+<p>将此信息拷贝到WEB-INF\classes\messages_zh_CN.properties下，并改为中文提示（转码）</p>
+<pre><code class="language-properties">authenticationFailure.AccountNotFoundException=\u7528\u6237\u4E0D\u5B58\u5728.
+authenticationFailure.FailedLoginException=\u5BC6\u7801\u9519\u8BEF.
+</code></pre>
+<blockquote>
+<p>第一个是用户名不存在时的错误提示</p>
+<p>第二个是密码错误的提示</p>
+</blockquote>
+<h2 id="cas客户端与springsecurity集成">CAS客户端与SpringSecurity集成</h2>
+<h3 id="1-创建工程">1、创建工程</h3>
+<blockquote>
+<p>建立Maven项目casclient_demo3 ，引入spring依赖和spring secrity 相关依赖 ，tomcat端口设置为9003</p>
+</blockquote>
+<h3 id="2-引入依赖">2、引入依赖</h3>
+<pre><code class="language-xml">&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+        &lt;version&gt;4.2.4.RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+        &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+        &lt;version&gt;2.4.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+        &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;
+        &lt;version&gt;2.5&lt;/version&gt;
+        &lt;scope&gt;provided&lt;/scope&gt;
+    &lt;/dependency&gt;
+    &lt;!-- 身份验证 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-security-web&lt;/artifactId&gt;
+        &lt;version&gt;4.1.0.RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-security-config&lt;/artifactId&gt;
+        &lt;version&gt;4.1.0.RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.github.penggle&lt;/groupId&gt;
+        &lt;artifactId&gt;kaptcha&lt;/artifactId&gt;
+        &lt;version&gt;2.3.2&lt;/version&gt;
+        &lt;exclusions&gt;
+            &lt;exclusion&gt;
+                &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+                &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;
+            &lt;/exclusion&gt;
+        &lt;/exclusions&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-security-cas&lt;/artifactId&gt;
+        &lt;version&gt;4.1.0.RELEASE&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.jasig.cas.client&lt;/groupId&gt;
+        &lt;artifactId&gt;cas-client-core&lt;/artifactId&gt;
+        &lt;version&gt;3.3.3&lt;/version&gt;
+        &lt;!-- 排除log4j包冲突 --&gt;
+        &lt;exclusions&gt;
+            &lt;exclusion&gt;
+                &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+                &lt;artifactId&gt;log4j-over-slf4j&lt;/artifactId&gt;
+            &lt;/exclusion&gt;
+        &lt;/exclusions&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+
+&lt;build&gt;
+    &lt;plugins&gt;
+        &lt;!-- 配置Tomcat插件 --&gt;
+        &lt;plugin&gt;
+            &lt;groupId&gt;org.apache.tomcat.maven&lt;/groupId&gt;
+            &lt;artifactId&gt;tomcat7-maven-plugin&lt;/artifactId&gt;
+            &lt;configuration&gt;
+                &lt;port&gt;9003&lt;/port&gt;
+                &lt;path&gt;/&lt;/path&gt;
+                &lt;uriEncoding&gt;utf-8&lt;/uriEncoding&gt;
+            &lt;/configuration&gt;
+        &lt;/plugin&gt;
+    &lt;/plugins&gt;
+    &lt;resources&gt;
+        &lt;resource&gt;
+            &lt;directory&gt;src/main/java&lt;/directory&gt;
+            &lt;includes&gt;
+                &lt;include&gt;**/*.*&lt;/include&gt;
+            &lt;/includes&gt;
+        &lt;/resource&gt;
+        &lt;resource&gt;
+            &lt;directory&gt;src/main/resources&lt;/directory&gt;
+            &lt;includes&gt;
+                &lt;include&gt;**/*.*&lt;/include&gt;
+            &lt;/includes&gt;
+        &lt;/resource&gt;
+    &lt;/resources&gt;
+&lt;/build&gt;
+</code></pre>
+<h3 id="3-创建spring-mvcxml">3、创建spring-mvc.xml</h3>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+
+    &lt;!-- 扫描用@Controller注解的类，并且加载到spring中进行管理 --&gt;
+    &lt;context:component-scan base-package=&quot;com.cn.controller&quot;/&gt;
+    &lt;!-- 配置注解驱动 --&gt;
+    &lt;mvc:annotation-driven&gt;
+        &lt;!-- 添加转换器，添加对于对象的支持 --&gt;
+        &lt;mvc:message-converters&gt;
+            &lt;ref bean=&quot;stringHttpMessageConverter&quot;/&gt;
+            &lt;ref bean=&quot;mappingJackson2HttpMessageConverter&quot;/&gt;
+        &lt;/mvc:message-converters&gt;
+    &lt;/mvc:annotation-driven&gt;
+
+    &lt;bean id=&quot;stringHttpMessageConverter&quot; class=&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;/&gt;
+    &lt;!--解决IE浏览器json文件下载和json数据中午乱码的问题--&gt;
+    &lt;bean id=&quot;mappingJackson2HttpMessageConverter&quot;
+          class=&quot;org.springframework.http.converter.json.MappingJackson2HttpMessageConverter&quot;&gt;
+        &lt;property name=&quot;supportedMediaTypes&quot;&gt;
+            &lt;list&gt;
+                &lt;value&gt;text/html;charset=UTF-8&lt;/value&gt;
+            &lt;/list&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;mvc:default-servlet-handler/&gt;
+    &lt;!-- jackson --&gt;
+    &lt;mvc:annotation-driven&gt;
+        &lt;mvc:message-converters&gt;
+            &lt;bean class=&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;/&gt;
+            &lt;bean class=&quot;org.springframework.http.converter.json.MappingJackson2HttpMessageConverter&quot;/&gt;
+        &lt;/mvc:message-converters&gt;
+    &lt;/mvc:annotation-driven&gt;
+
+&lt;/beans&gt;
+</code></pre>
+<h3 id="4-创建spring-securityxml">4、创建spring-security.xml</h3>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans:beans xmlns=&quot;http://www.springframework.org/schema/security&quot;
+             xmlns:beans=&quot;http://www.springframework.org/schema/beans&quot;
+             xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+             xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd&quot;&gt;
+
+    &lt;!--   entry-point-ref  入口点引用 --&gt;
+    &lt;http use-expressions=&quot;false&quot; entry-point-ref=&quot;casProcessingFilterEntryPoint&quot;&gt;
+        &lt;intercept-url pattern=&quot;/**&quot; access=&quot;ROLE_USER&quot;/&gt;
+        &lt;csrf disabled=&quot;true&quot;/&gt;
+        &lt;!-- custom-filter为过滤器， position 表示将过滤器放在指定的位置上(参照位置表)，before表示放在指定位置之前  ，after表示放在指定的位置之后  --&gt;
+        &lt;custom-filter ref=&quot;casAuthenticationFilter&quot; position=&quot;CAS_FILTER&quot;/&gt;
+        &lt;custom-filter ref=&quot;requestSingleLogoutFilter&quot; before=&quot;LOGOUT_FILTER&quot;/&gt;
+        &lt;custom-filter ref=&quot;singleLogoutFilter&quot; before=&quot;CAS_FILTER&quot;/&gt;
+    &lt;/http&gt;
+
+    &lt;!-- CAS入口点 开始 --&gt;
+    &lt;beans:bean id=&quot;casProcessingFilterEntryPoint&quot;
+                class=&quot;org.springframework.security.cas.web.CasAuthenticationEntryPoint&quot;&gt;
+        &lt;!-- 单点登录服务器登录URL --&gt;
+        &lt;beans:property name=&quot;loginUrl&quot; value=&quot;http://localhost:9100/cas/login&quot;/&gt;
+        &lt;beans:property name=&quot;serviceProperties&quot; ref=&quot;serviceProperties&quot;/&gt;
+    &lt;/beans:bean&gt;
+    &lt;beans:bean id=&quot;serviceProperties&quot; class=&quot;org.springframework.security.cas.ServiceProperties&quot;&gt;
+        &lt;!--service 配置自身工程的根地址+/login/cas   --&gt;
+        &lt;beans:property name=&quot;service&quot; value=&quot;http://localhost:9003/login/cas&quot;/&gt;
+    &lt;/beans:bean&gt;
+    &lt;!-- CAS入口点 结束 --&gt;
+
+    &lt;!-- 认证过滤器 开始 --&gt;
+    &lt;beans:bean id=&quot;casAuthenticationFilter&quot; class=&quot;org.springframework.security.cas.web.CasAuthenticationFilter&quot;&gt;
+        &lt;beans:property name=&quot;authenticationManager&quot; ref=&quot;authenticationManager&quot;/&gt;
+    &lt;/beans:bean&gt;
+    &lt;!-- 认证管理器 --&gt;
+    &lt;authentication-manager alias=&quot;authenticationManager&quot;&gt;
+        &lt;authentication-provider ref=&quot;casAuthenticationProvider&quot;&gt;
+        &lt;/authentication-provider&gt;
+    &lt;/authentication-manager&gt;
+    &lt;!-- 认证提供者 --&gt;
+    &lt;beans:bean id=&quot;casAuthenticationProvider&quot;
+                class=&quot;org.springframework.security.cas.authentication.CasAuthenticationProvider&quot;&gt;
+        &lt;beans:property name=&quot;authenticationUserDetailsService&quot;&gt;
+            &lt;beans:bean class=&quot;org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper&quot;&gt;
+                &lt;beans:constructor-arg ref=&quot;userDetailsService&quot;/&gt;
+            &lt;/beans:bean&gt;
+        &lt;/beans:property&gt;
+        &lt;beans:property name=&quot;serviceProperties&quot; ref=&quot;serviceProperties&quot;/&gt;
+        &lt;!-- ticketValidator 为票据验证器 --&gt;
+        &lt;beans:property name=&quot;ticketValidator&quot;&gt;
+            &lt;beans:bean class=&quot;org.jasig.cas.client.validation.Cas20ServiceTicketValidator&quot;&gt;
+                &lt;beans:constructor-arg index=&quot;0&quot; value=&quot;http://localhost:9100/cas&quot;/&gt;
+            &lt;/beans:bean&gt;
+        &lt;/beans:property&gt;
+        &lt;beans:property name=&quot;key&quot; value=&quot;an_id_for_this_auth_provider_only&quot;/&gt;
+    &lt;/beans:bean&gt;
+    &lt;!-- 认证类 --&gt;
+    &lt;beans:bean id=&quot;userDetailsService&quot; class=&quot;com.cn.service.impl.UserDetailServiceImpl&quot;/&gt;
+
+    &lt;!-- 认证过滤器 结束 --&gt;
+    &lt;!-- 单点登出  开始  --&gt;
+    &lt;beans:bean id=&quot;singleLogoutFilter&quot; class=&quot;org.jasig.cas.client.session.SingleSignOutFilter&quot;/&gt;
+    &lt;beans:bean id=&quot;requestSingleLogoutFilter&quot;
+                class=&quot;org.springframework.security.web.authentication.logout.LogoutFilter&quot;&gt;
+        &lt;beans:constructor-arg value=&quot;http://localhost:9100/cas/logout?service=http://www.baidu.com&quot;/&gt;
+        &lt;beans:constructor-arg&gt;
+            &lt;beans:bean class=&quot;org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler&quot;/&gt;
+        &lt;/beans:constructor-arg&gt;
+        &lt;beans:property name=&quot;filterProcessesUrl&quot; value=&quot;/logout/cas&quot;/&gt;
+    &lt;/beans:bean&gt;
+    &lt;!-- 单点登出  结束 --&gt;
+
+&lt;/beans:beans&gt;
+</code></pre>
+<h3 id="5-创建认证类">5、创建认证类</h3>
+<pre><code class="language-java">public class UserDetailServiceImpl implements UserDetailsService {
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        //构建角色集合
+        List&lt;GrantedAuthority&gt; authorities=new ArrayList();
+        authorities.add(new SimpleGrantedAuthority(&quot;ROLE_USER&quot;));
+        return new User(username, &quot;&quot;  , authorities);
+    }
+
+}
+</code></pre>
+<h3 id="6-修改webxml-添加过滤器等配置">6、修改web.xml ,添加过滤器等配置</h3>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;
+         version=&quot;4.0&quot;&gt;
+    &lt;context-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;classpath:spring-security.xml&lt;/param-value&gt;
+    &lt;/context-param&gt;
+    &lt;listener&gt;
+        &lt;listener-class&gt;
+            org.springframework.web.context.ContextLoaderListener
+        &lt;/listener-class&gt;
+    &lt;/listener&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.springframework.web.filter.DelegatingFilterProxy&lt;/filter-class&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;springSecurityFilterChain&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+&lt;!--------------------------------------------------------------------------------&gt;
+    &lt;!-- 解决post乱码 --&gt;
+    &lt;filter&gt;
+        &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;
+        &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;encoding&lt;/param-name&gt;
+            &lt;param-value&gt;utf-8&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;forceEncoding&lt;/param-name&gt;
+            &lt;param-value&gt;true&lt;/param-value&gt;
+        &lt;/init-param&gt;
+    &lt;/filter&gt;
+    &lt;filter-mapping&gt;
+        &lt;filter-name&gt;CharacterEncodingFilter&lt;/filter-name&gt;
+        &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+    &lt;/filter-mapping&gt;
+
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+        &lt;!-- 指定加载的配置文件 ，通过参数contextConfigLocation加载--&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+            &lt;param-value&gt;classpath:spring-mvc.xml&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;
+</code></pre>
+<h3 id="7-创建usercontroller">7、创建UserController</h3>
+<pre><code class="language-java">@RestController
+public class UserController {
+
+    @RequestMapping(&quot;/findLoginUser&quot;)
+    public void  findLoginUser(){
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        System.out.println(name);
+    }
+}
+</code></pre>
+<h3 id="8-退出登陆">8、退出登陆</h3>
+<p>修改spring-security.xml</p>
+<blockquote>
+<p>http://localhost:9100/cas/logout?service=http://www.baidu.com</p>
+<p>service 等于登出后跳转的地址</p>
+</blockquote>
+<pre><code class="language-xml">&lt;!-- 单点登出  开始  --&gt;
+&lt;beans:bean id=&quot;singleLogoutFilter&quot; class=&quot;org.jasig.cas.client.session.SingleSignOutFilter&quot;/&gt;
+&lt;beans:bean id=&quot;requestSingleLogoutFilter&quot;
+            class=&quot;org.springframework.security.web.authentication.logout.LogoutFilter&quot;&gt;
+    &lt;beans:constructor-arg value=&quot;http://localhost:9100/cas/logout?service=http://www.baidu.com&quot;/&gt;
+    &lt;beans:constructor-arg&gt;
+        &lt;beans:bean class=&quot;org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler&quot;/&gt;
+    &lt;/beans:constructor-arg&gt;
+    &lt;beans:property name=&quot;filterProcessesUrl&quot; value=&quot;/logout/cas&quot;/&gt;
+&lt;/beans:bean&gt;
+&lt;!-- 单点登出  结束 --&gt;
+</code></pre>
+<p>在页面上添加</p>
+<pre><code class="language-html">&lt;a href=&quot;/logout/cas&quot;&gt;退出登录&lt;/a&gt;
+</code></pre>
+
+            </div>
+            <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      浩瀚
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://haohanya.github.io/post/dan-dian-deng-lu-cas/" title="单点登陆-CAS">https://haohanya.github.io/post/dan-dian-deng-lu-cas/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+      <a href="https://haohanya.github.io/tag/5wQcTelqx/"># CAS</a>
+    
+      <a href="https://haohanya.github.io/tag/_AfHtpsMsE/"># 单点登陆</a>
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
       
+    </div>
+    <div class="nav-next">
       
-      
-      
-      
-      
+        <a class="nav-pc-next" title="Redis" href="https://haohanya.github.io/post/redis/">Redis</a>
+        <a class="nav-mobile-next" title="Redis" href="https://haohanya.github.io/post/redis/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
 </div>
-          </section>
+            
+  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.4/dist/Valine.min.js"></script>
+<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
+
+<style>
+  .v .veditor {
+    min-height: 10rem;
+    background-image: url('https://upimage.alexhchu.com/2020/04/21/47eda59424daa.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: none;
+  }
+
+  .v .vwrap {
+    border: 1px solid #000 !important;
+  }
+
+  .v .vbtn {
+    padding: .4rem 1.2rem !important;
+    border-color: #fff !important;
+    background-color: #49b1f5 !important;
+    color: #fff !important;
+    font-size: .7rem !important;
+  }
+
+  .v .vcards .vcard .vh .vmeta .vat {
+    padding: 0 .8rem !important;
+    border: 1px solid #00c4b6 !important;
+    border-radius: 5px !important;
+    color: #00c4b6 !important;
+  }
+</style>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    avatar: 'identicon',
+    placeholder: '',
+    pageSize: '',
+    lang: 'zh-cn',
+    visitor: 'true' === 'true',
+    highlight: 'true' === 'true',
+    avatarForce: 'true' === 'false',
+  });
+</script>
+
+          </div>
         </div>
       </div>
     </div>
@@ -475,6 +1563,36 @@
   // 代码高亮
   hljs.initHighlightingOnLoad();
 
+</script>
+    <div class="light-box" id="light_box"></div>
+<script>
+  let imgs = document.querySelectorAll('.post-body img');
+  let lightBox = document.querySelector('#light_box');
+  lightBox.addEventListener('mousedown', (e) => {
+    e.preventDefault()
+  })
+  lightBox.addEventListener('mousewheel', (e) => {
+    e.preventDefault()
+  })
+  let width = window.innerWidth * 0.8;
+  lightBox.onclick = () => {
+    let img = lightBox.querySelector('img');
+    lightBox.style = '';
+    img && img.remove();
+  }
+  imgs.forEach(item => {
+    item.onclick = function (e) {
+      let lightImg = document.createElement('img');
+      lightImg.src = this.src;
+      lightBox.style = `height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0.5);cursor: zoom-out;`;
+      lightImg.style = `width: ${width}px; border: 1px solid #fff; border-radius: 2px;`;
+      lightImg.onclick = function () {
+        lightBox.style = '';
+        this.remove();
+      }
+      lightBox.append(lightImg);
+    }
+  })
 </script>
   </div>
 </body>
@@ -3661,6 +4779,5 @@ ${mytest!}
 
 
 <script src=" /media/js/cool.js"></script>
-
 
 </html>
