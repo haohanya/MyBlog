@@ -8,7 +8,7 @@
 <meta name="keywords" content="浩瀚,浩瀚博客,java">
 <meta name="description" content="浩瀚-每天向往着外面的世界">
 <meta name="theme-color" content="#000">
-<title>浩瀚</title>
+<title> Zookeeper-Cluster | 浩瀚</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1590427548496">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -37,6 +37,8 @@
 
 
 
+  <meta name="description" content=" Zookeeper-Cluster" />
+  <meta name="keywords" content="zookeeper,zookeeper-cluster" />
 </head>
 
 <body>
@@ -162,10 +164,26 @@
   <div class="main-continer">
     
     <div
-      class="section-layout  gemini">
+      class="section-layout gemini ">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper bg-color right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body gemini" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -213,106 +231,610 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#zookeeper%E5%AE%89%E8%A3%85">ZooKeeper安装</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E8%80%85">服务提供者</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9%E8%80%85">服务消费者</a></li>
+<li><a href="#zookeeper%E9%9B%86%E7%BE%A4%E7%AE%80%E4%BB%8B">Zookeeper集群简介</a>
+<ul>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%90%AD%E5%BB%BAzookeeper%E9%9B%86%E7%BE%A4">为什么搭建Zookeeper集群</a></li>
+<li><a href="#%E4%BA%86%E8%A7%A3leader%E9%80%89%E4%B8%BE">了解Leader选举</a></li>
+</ul>
+</li>
+<li><a href="#zookeeper%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA">ZooKeeper集群搭建</a>
+<ul>
+<li><a href="#1-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%9B%AE%E5%BD%95">1、创建一个目录</a></li>
+<li><a href="#2-%E4%B8%8A%E4%BC%A0zookeeper%E6%96%87%E4%BB%B6%E5%B9%B6%E8%A7%A3%E5%8E%8B">2、上传zookeeper文件并解压</a></li>
+<li><a href="#3-%E5%A4%8D%E5%88%B6zookeeper">3、复制zookeeper</a></li>
+<li><a href="#4-%E9%85%8D%E7%BD%AE%E6%AF%8F%E4%B8%80%E4%B8%AAzookeeper">4、配置每一个Zookeeper</a></li>
+<li><a href="#5-%E9%85%8D%E7%BD%AE%E9%9B%86%E7%BE%A4">5、配置集群</a></li>
+<li><a href="#6-%E5%90%AF%E5%8A%A8%E9%9B%86%E7%BE%A4">6、启动集群</a></li>
+</ul>
+</li>
+<li><a href="#7-%E6%A8%A1%E6%8B%9F%E9%9B%86%E7%BE%A4%E5%BC%82%E5%B8%B8">7、模拟集群异常</a></li>
+<li><a href="#dubbox%E8%BF%9E%E6%8E%A5zookeeper%E9%9B%86%E7%BE%A4">Dubbox连接zookeeper集群</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'gemini';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box tag-line box-shadow-wrapper">
-          <section class="section tags-section posts-expand bg-color">
-            <div class="padding-wrapper">
-  <div class="tag-timeline-box">
-    <div class="tag-timeline-wrapper">
-      <div class="tag-timeline-title">
-        <h2>
-          ActiveMQ
-          <small>标签</small>
-        </h2>
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
+          
+        
       </div>
+    </div>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
+
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <header class="post-header">
+  <h1 class="post-title">
+    <a class="post-title-link" href="https://haohanya.github.io/post/zookeeper-cluster/">
+       Zookeeper-Cluster
+    </a>
+  </h1>
+  <div class="post-meta">
+    
+    <span class="meta-item pc-show">
+      <i class="fa fa-calendar-o"></i>
+      <span>发布于</span>
+      <span>2020-05-25</span>
+      <span class="post-meta-divider pc-show">|</span>
+    </span>
+    
+    <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show">分类于</span>
+      
+      
+      <a href="https://haohanya.github.io/tag/vDJgew0mp/">
+        <span>zookeeper</span>
+      </a>、
       
       
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      <a href="https://haohanya.github.io/post/activemq/">
-        <div class="motion-warpper">
-          <div class="tag-post-node">
-            <h1>
-              05-17
-              <small>ActiveMQ</small>
-            </h1>
-          </div>
-        </div>
+      <a href="https://haohanya.github.io/tag/12Tyemx1Ht/">
+        <span>zookeeper-cluster</span>
       </a>
       
       
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
+      <i class="fa fa-clock-o"></i>
+      <span>9分钟</span>
+    </span>
+    <span class="meta-item">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-file-word-o"></i>
+      <span>2069<span class="pc-show">字数</span></span>
+    </span>
+    
+    
+    
+    <span id="/post/zookeeper-cluster/" data-flag-title=" Zookeeper-Cluster" class="meta-item pc-show leancloud_visitors">
+      <span class="post-meta-divider">|</span>
+      <i class="fa fa-eye"></i>
+      <span>浏览量：<span class="leancloud-visitors-count"></span></span>
+    </span>
+    
+  </div>
+</header>
+            <div class="post-body next-md-body" id="post_body">
+              <p>查看tomcat运行日志：tail -f logs/catalina.out</p>
+<h2 id="zookeeper安装">ZooKeeper安装</h2>
+<p>官网下载：http://zookeeper.apache.org/releases.html</p>
+<p>第一次启动会出现错误</p>
+<p>解决方案：把conf目录下的zoo_sample.cfg复制一份，并改名为zoo.cfg</p>
+<p>在zookeeper根目录新建一个data目录</p>
+<p>修改zoo.cfg里面的dataDir=/tmp/zookeeper</p>
+<p>修改为：../data</p>
+<h2 id="服务提供者">服务提供者</h2>
+<pre><code class="language-xml">&lt;!--使用dubbo暴漏服务--&gt;
+&lt;dubbo:protocol name=&quot;dubbo&quot; port=&quot;20881&quot;/&gt;
+&lt;!--将工程注册到dubbo中--&gt;
+&lt;dubbo:application name=&quot;jd-sellergoods-service&quot;/&gt;
+&lt;!--注册中心地址--&gt;
+&lt;dubbo:registry address=&quot;zookeeper://192.168.25.128:2181&quot;/&gt;
+&lt;!--开启注解开发--&gt;
+&lt;dubbo:annotation package=&quot;com.jd.service.impl&quot; /&gt;
+</code></pre>
+<h2 id="服务消费者">服务消费者</h2>
+<pre><code class="language-xml">&lt;!-- 引用dubbo 服务 --&gt;
+&lt;dubbo:application name=&quot;jd-sellergoods-web&quot; /&gt;
+&lt;dubbo:registry address=&quot;zookeeper://192.168.25.128:2181&quot; timeout=&quot;30000&quot;/&gt;
+&lt;dubbo:annotation package=&quot;com.jd.controller&quot; /&gt;
+</code></pre>
+<h2 id="zookeeper集群简介">Zookeeper集群简介</h2>
+<h3 id="为什么搭建zookeeper集群">为什么搭建Zookeeper集群</h3>
+<blockquote>
+<p>大部分分布式应用需要一个主控、协调器或者控制器来管理物理分布的子进程。目前，大多数都要开发私有的协调程序，缺乏一个通用机制，协调程序的反复编写浪费，且难以形成通用、伸缩性好的协调器，zookeeper提供通用的分布式锁服务，用以协调分布式应用。所以说zookeeper是分布式应用的协作服务。</p>
+<p>zookeeper作为注册中心，服务器和客户端都要访问，如果有大量的并发，肯定会有等待。所以可以通过zookeeper集群解决。</p>
+<p>下面是zookeeper集群部署结构图：</p>
+</blockquote>
+<figure data-type="image" tabindex="1"><img src="https://haohanya.github.io/post-images/1590380537479.jpg" alt="" loading="lazy"></figure>
+<h3 id="了解leader选举">了解Leader选举</h3>
+<blockquote>
+<p>Zookeeper的启动过程中leader选举是非常重要而且最复杂的一个环节。那么什么是leader选举呢？zookeeper为什么需要leader选举呢？zookeeper的leader选举的过程又是什么样子的？</p>
+<p>首先我们来看看什么是leader选举。其实这个很好理解，leader选举就像总统选举一样，每人一票，获得多数票的人就当选为总统了。在zookeeper集群中也是一样，每个节点都会投票，如果某个节点获得超过半数以上的节点的投票，则该节点就是leader节点了。</p>
+<p>以一个简单的例子来说明整个选举的过程.<br>
+假设有五台服务器组成的zookeeper集群,它们的id从1-5,同时它们都是最新启动的,也就是没有历史数据,在存放数据量这一点上,都是一样的.假设这些服务器依序启动,来看看会发生什么 。<br>
+1) 服务器1启动,此时只有它一台服务器启动了,它发出去的报没有任何响应,所以它的选举状态一直是LOOKING状态<br>
+2) 服务器2启动,它与最开始启动的服务器1进行通信,互相交换自己的选举结果,由于两者都没有历史数据,所以id值较大的服务器2胜出,但是由于没有达到超过半数以上的服务器都同意选举它(这个例子中的半数以上是3),所以服务器1,2还是继续保持LOOKING状态.<br>
+3) 服务器3启动,根据前面的理论分析,服务器3成为服务器1,2,3中的老大,而与上面不同的是,此时有三台服务器选举了它,所以它成为了这次选举的leader.<br>
+4) 服务器4启动,根据前面的分析,理论上服务器4应该是服务器1,2,3,4中最大的,但是由于前面已经有半数以上的服务器选举了服务器3,所以它只能接收当小弟的命了.<br>
+5) 服务器5启动,同4一样,当小弟</p>
+</blockquote>
+<h2 id="zookeeper集群搭建">ZooKeeper集群搭建</h2>
+<blockquote>
+<p>真实的集群是需要部署在不同的服务器上的，但是在我们测试时同时启动十几个虚拟机内存会吃不消，所以我们通常会搭建<strong>伪集群</strong>，也就是把所有的服务都搭建在一台虚拟机上，用端口进行区分。</p>
+<p>我们这里要求搭建一个三个节点的Zookeeper集群（伪集群）。</p>
+<p>测试环境</p>
+<p>​	jdk：1.7</p>
+<p>​	zookeeper：3.4.6</p>
+<p>​	centos ：6.x</p>
+</blockquote>
+<h3 id="1-创建一个目录">1、创建一个目录</h3>
+<pre><code class="language-bash"> mkdir /usr/local/zookeeper-cluster
+</code></pre>
+<h3 id="2-上传zookeeper文件并解压">2、上传zookeeper文件并解压</h3>
+<pre><code class="language-bash">tar -zxvf zookeeper-3.4.6.tar.gz
+# 新建文件夹
+mkdir zookeeper-3.4.6/data
+#修改coo.cfg名
+cd zookeeper-3.4.6/conf/
+mv zoo_sample.cfg zoo.cfg
+</code></pre>
+<h3 id="3-复制zookeeper">3、复制zookeeper</h3>
+<pre><code class="language-bash">cp -r  zookeeper-3.4.6 /usr/local/zookeeper-cluster/zookeeper-1
+cp -r  zookeeper-3.4.6 /usr/local/zookeeper-cluster/zookeeper-2
+cp -r  zookeeper-3.4.6 /usr/local/zookeeper-cluster/zookeeper-3
+</code></pre>
+<h3 id="4-配置每一个zookeeper">4、配置每一个Zookeeper</h3>
+<blockquote>
+<p>配置每一个Zookeeper 的dataDir（zoo.cfg） clientPort 分别为2181 2182 2183</p>
+<p>vi /usr/local/zookeeper-cluster/zookeeper-1/conf/zoo.cfg</p>
+<blockquote>
+<p>clientPort=2181</p>
+<p>dataDir=/usr/local/zookeeper-cluster/zookeeper-1/data</p>
+</blockquote>
+<p>vi /usr/local/zookeeper-cluster/zookeeper-2/conf/zoo.cfg</p>
+<blockquote>
+<p>clientPort=2182</p>
+<p>dataDir=/usr/local/zookeeper-cluster/zookeeper-2/data</p>
+</blockquote>
+<p>vi /usr/local/zookeeper-cluster/zookeeper-3/conf/zoo.cfg</p>
+<blockquote>
+<p>clientPort=2183</p>
+<p>dataDir=/usr/local/zookeeper-cluster/zookeeper-3/data</p>
+</blockquote>
+</blockquote>
+<h3 id="5-配置集群">5、配置集群</h3>
+<blockquote>
+<p>在每个zookeeper的 data 目录下创建一个 myid 文件，内容分别是1、2、3 。这个文件就是记录每个服务器的ID（内容为自定义，后面会用到，只要不重复即可）</p>
+</blockquote>
+<pre><code class="language-bash">cd /usr/local/zookeeper-cluster/
+echo 1 &gt;zookeeper-1/data/myid
+echo 2 &gt;zookeeper-2/data/myid
+echo 3 &gt;zookeeper-3/data/myid
+</code></pre>
+<blockquote>
+<p>在每一个zookeeper 的 zoo.cfg配置客户端访问端口（clientPort）和集群服务器IP列表。</p>
+<blockquote>
+<p>解释：server.服务器ID=服务器IP地址:服务器之间通信端口:服务器之间投票选举端口</p>
+<p>服务器ID为上面自定义的内容</p>
+</blockquote>
+</blockquote>
+<pre><code class="language-bash">server.1=192.168.25.143:2881:3881
+server.2=192.168.25.143:2882:3882
+server.3=192.168.25.143:2883:3883
+</code></pre>
+<pre><code class="language-bash">vi zookeeper-1/conf/zoo.cfg
+vi zookeeper-2/conf/zoo.cfg
+vi zookeeper-3/conf/zoo.cfg
+</code></pre>
+<h3 id="6-启动集群">6、启动集群</h3>
+<blockquote>
+<p>启动集群就是分别启动每个实例。</p>
+</blockquote>
+<pre><code class="language-bash">./zookeeper-1/bin/zkServer.sh start
+./zookeeper-2/bin/zkServer.sh start
+./zookeeper-3/bin/zkServer.sh start
+# 查看启动状态
+./zookeeper-1/bin/zkServer.sh status
+./zookeeper-2/bin/zkServer.sh status
+./zookeeper-3/bin/zkServer.sh status
+# 如果出现错误，则需要查看日志
+vi zookeeper.out
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://haohanya.github.io/post-images/1590380587607.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>Mode为follower表示是<strong>跟随者</strong>（从）</p>
+<p>Mod 为leader表示是<strong>领导者</strong>（主）</p>
+</blockquote>
+<h2 id="7-模拟集群异常">7、模拟集群异常</h2>
+<blockquote>
+<p>首先我们先测试如果是从服务器挂掉，会怎么样</p>
+<p>把3号服务器停掉，观察1号和2号，发现状态并没有变化</p>
+<p>由此得出结论，3个节点的集群，从服务器挂掉，集群正常</p>
+</blockquote>
+<figure data-type="image" tabindex="3"><img src="https://haohanya.github.io/post-images/1590380605531.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>我们再把1号服务器（从服务器）也停掉，查看2号（主服务器）的状态，发现已经停止运行了。</p>
+<p>由此得出结论，3个节点的集群，2个从服务器都挂掉，主服务器也无法运行。因为可运行的机器没有超过集群总数量的半数。</p>
+</blockquote>
+<figure data-type="image" tabindex="4"><img src="https://haohanya.github.io/post-images/1590380619018.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>我们再次把1号服务器启动起来，发现2号服务器又开始正常工作了。而且依然是领导者。</p>
+</blockquote>
+<figure data-type="image" tabindex="5"><img src="https://haohanya.github.io/post-images/1590380630247.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>我们把3号服务器也启动起来，把2号服务器停掉（汗~~干嘛？领导挂了？）停掉后观察1号和3号的状态。</p>
+<p>发现新的leader产生了~</p>
+<p>由此我们得出结论，当集群中的主服务器挂了，集群中的其他服务器会自动进行选举状态，然后产生新得leader</p>
+</blockquote>
+<figure data-type="image" tabindex="6"><img src="https://haohanya.github.io/post-images/1590380642196.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>我们再次测试，当我们把2号服务器重新启动起来（汗~~这是诈尸啊!）启动后，会发生什么？2号服务器会再次成为新的领导吗？我们看结果</p>
+<p>我们会发现，2号服务器启动后依然是跟随者（从服务器），3号服务器依然是领导者（主服务器），没有撼动3号服务器的领导地位。哎~退休了就是退休了，说了不算了，哈哈。</p>
+<p>由此我们得出结论，当领导者产生后，再次有新服务器加入集群，不会影响到现任领导者。</p>
+</blockquote>
+<figure data-type="image" tabindex="7"><img src="https://haohanya.github.io/post-images/1590380653854.png" alt="" loading="lazy"></figure>
+<h2 id="dubbox连接zookeeper集群">Dubbox连接zookeeper集群</h2>
+<p>修改服务提供者和服务调用者的spring 配置文件,多个节点使用“,”分割</p>
+<pre><code class="language-xml">&lt;!-- 指定注册中心地址 --&gt;
+&lt;dubbo:registry protocol=&quot;zookeeper&quot; address=&quot;192.168.25.129:2181,192.168.25.129:2182,192.168.25.129:2183&quot; /&gt;
+</code></pre>
+
+            </div>
+            <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      浩瀚
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://haohanya.github.io/post/zookeeper-cluster/" title=" Zookeeper-Cluster">https://haohanya.github.io/post/zookeeper-cluster/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
+    
+      <a href="https://haohanya.github.io/tag/vDJgew0mp/"># zookeeper</a>
+    
+      <a href="https://haohanya.github.io/tag/12Tyemx1Ht/"># zookeeper-cluster</a>
+    
+  </div>
+  <div class="nav">
+    <div class="nav-prev">
       
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="Redis-Cluster" href="https://haohanya.github.io/post/redis-cluster/">Redis-Cluster</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="Redis-Cluster" href="https://haohanya.github.io/post/redis-cluster/">上一篇</a>
       
+    </div>
+    <div class="nav-next">
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
+        <a class="nav-pc-next" title="单点登陆-CAS" href="https://haohanya.github.io/post/dan-dian-deng-lu-cas/">单点登陆-CAS</a>
+        <a class="nav-mobile-next" title="单点登陆-CAS" href="https://haohanya.github.io/post/dan-dian-deng-lu-cas/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
 </div>
-          </section>
+            
+  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.4/dist/Valine.min.js"></script>
+<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
+
+<style>
+  .v .veditor {
+    min-height: 10rem;
+    background-image: url('https://upimage.alexhchu.com/2020/04/21/47eda59424daa.gif');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: none;
+  }
+
+  .v .vwrap {
+    border: 1px solid #000 !important;
+  }
+
+  .v .vbtn {
+    padding: .4rem 1.2rem !important;
+    border-color: #fff !important;
+    background-color: #49b1f5 !important;
+    color: #fff !important;
+    font-size: .7rem !important;
+  }
+
+  .v .vcards .vcard .vh .vmeta .vat {
+    padding: 0 .8rem !important;
+    border: 1px solid #00c4b6 !important;
+    border-radius: 5px !important;
+    color: #00c4b6 !important;
+  }
+</style>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    avatar: 'identicon',
+    placeholder: '',
+    pageSize: '',
+    lang: 'zh-cn',
+    visitor: 'true' === 'true',
+    highlight: 'true' === 'true',
+    avatarForce: 'true' === 'false',
+  });
+</script>
+
+          </div>
         </div>
       </div>
     </div>
@@ -487,6 +1009,36 @@
   // 代码高亮
   hljs.initHighlightingOnLoad();
 
+</script>
+    <div class="light-box" id="light_box"></div>
+<script>
+  let imgs = document.querySelectorAll('.post-body img');
+  let lightBox = document.querySelector('#light_box');
+  lightBox.addEventListener('mousedown', (e) => {
+    e.preventDefault()
+  })
+  lightBox.addEventListener('mousewheel', (e) => {
+    e.preventDefault()
+  })
+  let width = window.innerWidth * 0.8;
+  lightBox.onclick = () => {
+    let img = lightBox.querySelector('img');
+    lightBox.style = '';
+    img && img.remove();
+  }
+  imgs.forEach(item => {
+    item.onclick = function (e) {
+      let lightImg = document.createElement('img');
+      lightImg.src = this.src;
+      lightBox.style = `height: 100%; opacity: 1; background-color: rgba(0, 0, 0, 0.5);cursor: zoom-out;`;
+      lightImg.style = `width: ${width}px; border: 1px solid #fff; border-radius: 2px;`;
+      lightImg.onclick = function () {
+        lightBox.style = '';
+        this.remove();
+      }
+      lightBox.append(lightImg);
+    }
+  })
 </script>
   </div>
 </body>
@@ -4007,6 +4559,5 @@ ${mytest!}
 
 
 <script src=" /media/js/cool.js"></script>
-
 
 </html>
