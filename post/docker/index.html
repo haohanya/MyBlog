@@ -8,7 +8,7 @@
 <meta name="keywords" content="浩瀚,浩瀚博客,java">
 <meta name="description" content="浩瀚-每天向往着外面的世界">
 <meta name="theme-color" content="#000">
-<title>关于 | 浩瀚</title>
+<title>Docker | 浩瀚</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1590650678212">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -37,8 +37,8 @@
 
 
 
-  <meta name="description" content="关于" />
-  <meta name="keywords" content="" />
+  <meta name="description" content="Docker" />
+  <meta name="keywords" content="Docker" />
 </head>
 
 <body>
@@ -237,12 +237,61 @@
   <div class="toc-wrapper auto-number auto"
     id="toc_wrapper">
     <ul class="markdownIt-TOC">
-<li>
+<li><a href="#docker">Docker</a>
 <ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85docker">安装Docker</a>
+<ul>
+<li><a href="#1-%E4%BD%BF%E7%94%A8yum%E5%91%BD%E4%BB%A4%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85">1、使用yum命令在线安装</a></li>
+<li><a href="#2-%E6%9F%A5%E7%9C%8Bdocker%E7%89%88%E6%9C%AC">2、查看docker版本</a></li>
+<li><a href="#3-%E5%90%AF%E5%8A%A8%E4%B8%8E%E5%81%9C%E6%AD%A2">3、启动与停止</a></li>
+</ul>
+</li>
+<li><a href="#docker-%E9%95%9C%E5%83%8F%E6%93%8D%E4%BD%9C">Docker 镜像操作</a>
+<ul>
+<li><a href="#1-%E5%88%97%E5%87%BA%E9%95%9C%E5%83%8F">1、列出镜像</a></li>
+<li><a href="#2-%E6%90%9C%E7%B4%A2%E9%95%9C%E5%83%8F">2、搜索镜像</a></li>
+<li><a href="#3-%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F">3、拉取镜像</a>
+<ul>
+<li><a href="#%E4%BB%8Edocker-hub%E4%B8%8A%E6%8B%89%E5%8F%96">从Docker Hub上拉取</a></li>
+<li><a href="#ustc%E7%9A%84%E9%95%9C%E5%83%8F">ustc的镜像</a></li>
+<li><a href="#%E9%98%BF%E9%87%8C%E4%BA%91%E9%95%9C%E5%83%8F">阿里云镜像</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9daemonjson">修改daemon.json</a></li>
+</ul>
+</li>
+<li><a href="#4-%E5%88%A0%E9%99%A4%E9%95%9C%E5%83%8F">4、删除镜像</a></li>
+</ul>
+</li>
+<li><a href="#docker%E5%AE%B9%E5%99%A8%E6%93%8D%E4%BD%9C">Docker容器操作</a>
+<ul>
+<li><a href="#1-%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8">1、查看容器</a></li>
+<li><a href="#2-%E5%88%9B%E5%BB%BA%E4%B8%8E%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8">2、创建与启动容器</a>
+<ul>
+<li><a href="#%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%AE%B9%E5%99%A8">交互式容器</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E5%AE%88%E6%8A%A4%E5%BC%8F%E5%AE%B9%E5%99%A8">创建守护式容器</a></li>
+</ul>
+</li>
+<li><a href="#3-%E5%81%9C%E6%AD%A2%E4%B8%8E%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8">3、停止与启动容器</a></li>
+<li><a href="#4-%E6%96%87%E4%BB%B6%E6%8B%B7%E8%B4%9D">4、文件拷贝</a></li>
+<li><a href="#5-%E7%9B%AE%E5%BD%95%E6%8C%82%E8%BD%BD">5、目录挂载</a></li>
+<li><a href="#6-%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8ip%E5%9C%B0%E5%9D%80">6、查看容器IP地址</a></li>
+<li><a href="#7-%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8">7、删除容器</a></li>
+</ul>
+</li>
+<li><a href="#%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8">部署应用</a>
+<ul>
+<li><a href="#mysql%E9%83%A8%E7%BD%B2">MySQL部署</a></li>
+<li><a href="#tomcat%E9%83%A8%E7%BD%B2">Tomcat部署</a></li>
+<li><a href="#nginx%E9%83%A8%E7%BD%B2">nginx部署</a></li>
+<li><a href="#redis%E9%83%A8%E7%BD%B2">Redis部署</a></li>
+</ul>
+</li>
+<li><a href="#%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB">备份与迁移</a>
+<ul>
+<li><a href="#1-%E5%B0%86%E5%AE%B9%E5%99%A8%E4%BF%9D%E5%AD%98%E4%B8%BA%E9%95%9C%E5%83%8F">1、将容器保存为镜像</a></li>
+<li><a href="#2-%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD">2、镜像备份</a></li>
+<li><a href="#3-%E9%95%9C%E5%83%8F%E6%81%A2%E5%A4%8D%E4%B8%8E%E8%BF%81%E7%A7%BB">3、镜像恢复与迁移</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -510,8 +559,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://haohanya.github.io/post/about/">
-      关于
+    <a class="post-title-link" href="https://haohanya.github.io/post/docker/">
+      Docker
     </a>
   </h1>
   <div class="post-meta">
@@ -519,23 +568,36 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2019-01-25</span>
+      <span>2020-05-28</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show">分类于</span>
+      
+      
+      <a href="https://haohanya.github.io/tag/2aIYOzt0W/">
+        <span>Docker</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
+      <span>7分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>74<span class="pc-show">字数</span></span>
+      <span>1595<span class="pc-show">字数</span></span>
     </span>
     
     
     
-    <span id="/post/about/" data-flag-title="关于" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/docker/" data-flag-title="Docker" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span>浏览量：<span class="leancloud-visitors-count"></span></span>
@@ -544,17 +606,244 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
+              <h1 id="docker">Docker</h1>
+<h2 id="安装docker">安装Docker</h2>
+<h3 id="1-使用yum命令在线安装">1、使用yum命令在线安装</h3>
+<pre><code class="language-bash">yum install docker
+# 遇事不决就选y
+</code></pre>
+<h3 id="2-查看docker版本">2、查看docker版本</h3>
+<pre><code class="language-bash">docker -v
+</code></pre>
+<h3 id="3-启动与停止">3、启动与停止</h3>
+<blockquote>
+<p>systemctl 命令是系统服务管理器指令，它是 service 和 chkconfig 两个命令组合</p>
 </blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<p>磕磕碰碰的小破站,前不久域名的备案被注销...后换到Gridea,托管在GitHub</p>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<p>一位正在努力成长的码农...</p>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<p>吃,睡,coding</p>
-<h2 id="联系我呀">📬 联系我呀</h2>
-<p>QQ : 2369710264</p>
+<pre><code class="language-bash"># 启动 docker
+systemctl start docker
+# 停止 docker
+systemctl stop docker
+# 重启 docker
+systemctl restart docker
+# 查看 docker 状态
+systemctl status docker
+# 开机自启
+systemctl enable docker
+# 查看 docker 概要信息
+docker info
+# 查看 docker 帮助文档
+docker --info
+</code></pre>
+<h2 id="docker-镜像操作">Docker 镜像操作</h2>
+<h3 id="1-列出镜像">1、列出镜像</h3>
+<pre><code class="language-bash">docker images
+# REPOSITORY   镜像所在的仓库名称 
+# TAG          镜像标签（版本号）
+# IMAGE ID     镜像ID
+# CREATE       镜像创建的时间（仓库中创建的时间）
+# SIZE         镜像大小
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://haohanya.github.io/post-images/1590650520863.png" alt="" loading="lazy"></figure>
+<h3 id="2-搜索镜像">2、搜索镜像</h3>
+<pre><code class="language-bash">docker search 镜像名称
+# INDEX 
+# NAME         仓库名称
+# DESCRIPTION  镜像描述
+# STARS        用户评价，反应一个镜像的受欢迎程度
+# OFFICIAL     是否是官方
+# AUTOMATED    自动构建，表示该镜像由Docker Hub自动构建流程创建的
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://haohanya.github.io/post-images/1590650561249.png" alt="" loading="lazy"></figure>
+<h3 id="3-拉取镜像">3、拉取镜像</h3>
+<h4 id="从docker-hub上拉取">从Docker Hub上拉取</h4>
+<pre><code class="language-bash">docker pull centos:7
+</code></pre>
+<h4 id="ustc的镜像">ustc的镜像</h4>
+<pre><code class="language-bash">https://lug.ustc.edu.cn/wiki/mirrors/help/docker
+</code></pre>
+<h4 id="阿里云镜像">阿里云镜像</h4>
+<p>1、进入阿里云</p>
+<p>https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors</p>
+<p>2、得到镜像URL并修改daemon.json</p>
+<p>3、重启daemon</p>
+<pre><code class="language-bash">systemctl daemon-reload
+</code></pre>
+<p>4、重启docker服务</p>
+<pre><code class="language-bash">systemctl restart docker
+</code></pre>
+<h4 id="修改daemonjson">修改daemon.json</h4>
+<p>1、编辑文件</p>
+<pre><code class="language-bash">vi /etc/docker/daemon.json
+</code></pre>
+<p>2、修改文件内容</p>
+<pre><code class="language-bash">{
+&quot;registry-mirrors&quot;: [&quot;https://docker.mirrors.ustc.edu.cn&quot;]
+}
+</code></pre>
+<p>3、重启</p>
+<h3 id="4-删除镜像">4、删除镜像</h3>
+<pre><code class="language-bash"># 删除指定镜像
+docker rmi $IMAGE_ID
+# 删除所有镜像
+docker rmi `docker images -q`
+</code></pre>
+<h2 id="docker容器操作">Docker容器操作</h2>
+<h3 id="1-查看容器">1、查看容器</h3>
+<pre><code class="language-bash"># 查看正在运行的容器
+docker ps
+# 查看运行过的容器
+docker ps -a
+# 查看最后一次运行的容器
+docker ps -i
+# 查看停止的容器
+docker ps -f status=exited
+</code></pre>
+<h3 id="2-创建与启动容器">2、创建与启动容器</h3>
+<p>创建容器常用的参数说明</p>
+<pre><code class="language-bash">docker run  创建容器命令
+-i          运行该容器
+-t          表示容器启动后会进入其命令行。加入这两个参数后，容器创建就能登录进去。即分配一个伪终端。
+--name      为创建的容器命名
+-v          表示目录映射关系（前者是宿主机目录，后者是映射到宿主机上的目录），可以使用多个－v做多个目录或文件映射。注意：最好做目录映射，在宿主机上做修改，然后共享到容器上。
+-d          在run后面加上-d参数则会创建一个守护式容器在后台运行（这样创建容器后不会自动登陆容器，如果只加-i-t两个参数，创建后就会自动进入容器）
+-p          端口映射，前者是宿主机端口，后者是容器内的映射端口，可以使用多个-p做多个端口映射
+</code></pre>
+<h4 id="交互式容器">交互式容器</h4>
+<p>创建一个交互式容器并命名为：mycentos</p>
+<pre><code class="language-bash">docker run -it --name=mycentos centos:7 /bin/bash
+</code></pre>
+<p>使用exit命令 退出当前容器</p>
+<h4 id="创建守护式容器">创建守护式容器</h4>
+<p>创建一个守护式容器：如果对于一个需要长期运行的容器来说，我们可以创建一个守护式容器。命令如下（容器名称不能重复）</p>
+<pre><code class="language-bash">docker run -id --name=mycentos2  centos:7
+</code></pre>
+<p>登陆守护式容器</p>
+<pre><code class="language-bash">docker exec -it container_name(或者container_id) /bin/bash (exit退出时容器不会停止)
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://haohanya.github.io/post-images/1590650581316.png" alt="" loading="lazy"></figure>
+<h3 id="3-停止与启动容器">3、停止与启动容器</h3>
+<pre><code class="language-bash"># 停止正在运行的容器
+docker stop $CONTAINER_NAME/ID
+# 运行已停止的容器
+docker start $CONTAINER_NAME/ID
+</code></pre>
+<h3 id="4-文件拷贝">4、文件拷贝</h3>
+<pre><code class="language-bash"># 将文件拷贝到容器内
+docker cp 宿主机内要拷贝的文件或目录 容器名称:拷贝到容器目录
+# 将容器内的文件拷贝出来
+docker cp 容器名称:容器要拷贝出开的文件或目录 拷贝到宿主机那个目录
+</code></pre>
+<h3 id="5-目录挂载">5、目录挂载</h3>
+<blockquote>
+<p>我们可以在创建容器的时候，将宿主机的目录与容器内的目录进行映射，这样我们就可以通过修改宿主机某个目录的文件从而去影响容器。</p>
+<p>创建容器 添加-v参数 后边为  宿主机目录:容器目录</p>
+<p>如果共享多级目录可能会出现权限不足的情况</p>
+<p>这是因为CentOS7中的安全模块selinux把权限禁掉了，我们需要添加参数 --privileged=true 来解决挂载的目录没有权限的问题</p>
+</blockquote>
+<pre><code class="language-bash">docker run -di -v /usr/test:/usr/test --name=mycentos centos:7
+</code></pre>
+<h3 id="6-查看容器ip地址">6、查看容器IP地址</h3>
+<pre><code class="language-bash"># 可以通过以下命令查看容器运行的各种数据
+docker inspect container_name
+# 也可以直接执行下面的命令直接输出IP地址
+docker inspect --format='{{.NetworkSettings.IPAddress}}' container_name
+</code></pre>
+<h3 id="7-删除容器">7、删除容器</h3>
+<pre><code class="language-bash"># 删除指定容器
+docker rm container_id/name
+# 删除所有容器（以停止运行的）
+docker rm `docker ps -a -q`
+</code></pre>
+<h2 id="部署应用">部署应用</h2>
+<h3 id="mysql部署">MySQL部署</h3>
+<p>1、拉取MySQL镜像</p>
+<pre><code class="language-bash">docker pull mysql
+</code></pre>
+<p>2、创建MySQL容器</p>
+<pre><code class="language-bash"># -p 宿主机映射端口:容器运行端口
+# -e 表示添加环境变量，MYSQL_ROOT_PASSWORD 为root用户的登陆密码
+docker run -di --name=jd_mysql -p 33306:3306 -e MYSQL_ROOT_PASSWORD=root mysql
+</code></pre>
+<p>3、进入MySQL容器</p>
+<pre><code class="language-bash">docker exec -it jd_mysql /bin/bash
+</code></pre>
+<p>4、登陆MySQL</p>
+<pre><code class="language-bash"># -u 用户名，-u后面需要打空格
+# -p密码，-p后面没有空格,加了空格会再输入一遍密码
+mysql -u root -proot
+</code></pre>
+<p>5、退出MySQL</p>
+<pre><code class="language-bash"># 退出mysql
+quit
+# 退出容器
+exit
+</code></pre>
+<h3 id="tomcat部署">Tomcat部署</h3>
+<p>1、拉取Tomcat镜像</p>
+<pre><code class="language-bash">docker pull tomcat:7-jre7
+</code></pre>
+<p>2、创建tomcat容器</p>
+<blockquote>
+<p>创建容器用于部署单点登录系统（CAS） -p表示地址映射</p>
+</blockquote>
+<pre><code class="language-bash">docker run -di --name=jd_tomcat -p 9100:8080 -v /usr/local/webapps:/usr/local/tomcat/webapps --privileged=true tomcat:7-jre7
+</code></pre>
+<p>3、访问ip:9100/cas</p>
+<blockquote>
+<p>登陆测试，如果出现Invalid credentials重启.</p>
+<p>docker restart jd_tomcat</p>
+</blockquote>
+<h3 id="nginx部署">nginx部署</h3>
+<p>1、拉取镜像</p>
+<pre><code class="language-bash">docker pull nginx
+</code></pre>
+<p>2、创建容器</p>
+<pre><code class="language-bash">docker run -di --name=mynginx -p 80:80 nginx /bin/bash
+</code></pre>
+<p>3、测试</p>
+<p>无法访问需要手动启动nginx</p>
+<pre><code class="language-bash">docker exec -it jd_nginx /bin/bash
+/etc/init.d/nginx start
+</code></pre>
+<p>4、编辑配置文件</p>
+<pre><code class="language-bash"># 将nginx配置文件复制出来
+docker cp jd_nginx:/etc/nginx/nginx.conf  nginx.conf
+# 修改nginx.conf
+.......
+# 将文件拷贝到容器
+docker cp nginx.conf jd_nginx:/etc/nginx/nginx.conf
+#重启容器
+docker restart jd_nginx
+</code></pre>
+<h3 id="redis部署">Redis部署</h3>
+<p>1、拉取镜像</p>
+<pre><code class="language-bash">docker pull redis
+</code></pre>
+<p>2、创建容器</p>
+<pre><code class="language-bash">docker run -di --name=jd_redis -p 6379:6379 redis
+</code></pre>
+<p>3、测试连接</p>
+<p><code>redis Desktop</code></p>
+<h2 id="备份与迁移">备份与迁移</h2>
+<h3 id="1-将容器保存为镜像">1、将容器保存为镜像</h3>
+<pre><code class="language-bash">docker commit jd_nginx mynginx
+</code></pre>
+<blockquote>
+<p>jd_nginx：容器名称</p>
+<p>mynginx：新镜像名称</p>
+</blockquote>
+<h3 id="2-镜像备份">2、镜像备份</h3>
+<pre><code class="language-bash">docker save -o mynginx.tar mynginx
+</code></pre>
+<blockquote>
+<p>-o ：输出到的文件</p>
+</blockquote>
+<h3 id="3-镜像恢复与迁移">3、镜像恢复与迁移</h3>
+<pre><code class="language-bash">docker load -i mynginx.tar
+</code></pre>
+<blockquote>
+<p>-i ：输入的文件</p>
+</blockquote>
 
             </div>
             <div class="post-footer">
@@ -565,7 +854,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://haohanya.github.io/post/about/" title="关于">https://haohanya.github.io/post/about/</a>
+      <a href="https://haohanya.github.io/post/docker/" title="Docker">https://haohanya.github.io/post/docker/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -574,12 +863,22 @@
   </ul>
   <div class="tags">
     
+      <a href="https://haohanya.github.io/tag/2aIYOzt0W/"># Docker</a>
+    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="MongoDB" href="https://haohanya.github.io/post/mongodb/">MongoDB</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="MongoDB" href="https://haohanya.github.io/post/mongodb/">上一篇</a>
+      
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="Redis-Cluster" href="https://haohanya.github.io/post/redis-cluster/">Redis-Cluster</a>
+        <a class="nav-mobile-next" title="Redis-Cluster" href="https://haohanya.github.io/post/redis-cluster/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>

@@ -8,7 +8,7 @@
 <meta name="keywords" content="浩瀚,浩瀚博客,java">
 <meta name="description" content="浩瀚-每天向往着外面的世界">
 <meta name="theme-color" content="#000">
-<title>关于 | 浩瀚</title>
+<title>MongoDB | 浩瀚</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1590650678212">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -37,8 +37,8 @@
 
 
 
-  <meta name="description" content="关于" />
-  <meta name="keywords" content="" />
+  <meta name="description" content="MongoDB" />
+  <meta name="keywords" content="MongoDB" />
 </head>
 
 <body>
@@ -239,10 +239,78 @@
     <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
+<li><a href="#mongo">Mongo</a>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFmongodb">什么是MongoDB</a></li>
+<li><a href="#mongodb%E7%89%B9%E7%82%B9">MongoDB特点</a></li>
+<li><a href="#mongodb%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84">MongoDB体系结构</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%89%E8%A3%85mongo">安装Mongo</a>
+<ul>
+<li><a href="#1-%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F">1、拉取镜像</a></li>
+<li><a href="#2-%E5%88%9B%E5%BB%BA%E5%AE%B9%E5%99%A8">2、创建容器</a></li>
+<li><a href="#3-%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7">3、创建用户</a></li>
+</ul>
+</li>
+<li><a href="#crud">CRUD</a>
+<ul>
+<li><a href="#%E6%B7%BB%E5%8A%A0">添加</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2">查询</a>
+<ul>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E5%85%A8%E9%83%A8">查询全部</a></li>
+<li><a href="#%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2">条件查询</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E5%8D%95%E4%B8%AA">查询单个</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BF%AE%E6%94%B9">修改</a>
+<ul>
+<li><a href="#%E5%AE%8C%E5%85%A8%E4%BF%AE%E6%94%B9">完全修改</a></li>
+<li><a href="#%E9%83%A8%E5%88%86%E4%BF%AE%E6%94%B9">部分修改</a></li>
+</ul>
+</li>
+<li><a href="#%E5%88%A0%E9%99%A4">删除</a></li>
+</ul>
+</li>
+<li><a href="#%E9%AB%98%E7%BA%A7%E6%9F%A5%E8%AF%A2">高级查询</a>
+<ul>
+<li><a href="#%E6%A8%A1%E7%B3%8A%E6%9F%A5%E8%AF%A2">模糊查询</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2null">查询NULL</a></li>
+<li><a href="#%E6%AF%94%E8%BE%83%E6%9F%A5%E8%AF%A2">比较查询</a></li>
+<li><a href="#%E5%88%A4%E6%96%AD%E5%9F%9F%E5%AD%97%E6%AE%B5%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8">判断域/字段是否存在</a></li>
+<li><a href="#%E5%8C%85%E5%90%AB">包含</a></li>
+<li><a href="#%E7%BB%9F%E8%AE%A1%E6%95%B0%E9%87%8F">统计数量</a></li>
+<li><a href="#%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97%E7%AC%A6">逻辑运算符</a>
+<ul>
+<li><a href="#%E5%B9%B6%E4%B8%94">并且</a></li>
+<li><a href="#%E6%88%96%E8%80%85">或者</a></li>
+<li><a href="#%E9%9D%9E">非</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#java%E6%93%8D%E4%BD%9Cmongo">JAVA操作Mongo</a>
+<ul>
+<li><a href="#1-%E6%B7%BB%E5%8A%A0%E4%BE%9D%E8%B5%96">1、添加依赖</a></li>
+<li><a href="#2-%E8%BF%9E%E6%8E%A5%E6%B5%8B%E8%AF%95">2、连接测试</a></li>
+<li><a href="#3-%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2-%E5%8C%B9%E9%85%8D">3、条件查询-匹配</a></li>
+<li><a href="#4-%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2-%E6%A8%A1%E7%B3%8A">4、条件查询-模糊</a>
+<ul>
+<li><a href="#%E5%AE%8C%E5%85%A8%E5%8C%B9%E9%85%8D">完全匹配</a></li>
+<li><a href="#%E5%8F%B3%E5%8C%B9%E9%85%8D">右匹配</a></li>
+<li><a href="#%E5%B7%A6%E5%8C%B9%E9%85%8D">左匹配</a></li>
+<li><a href="#%E6%A8%A1%E7%B3%8A%E5%8C%B9%E9%85%8D">模糊匹配</a></li>
+</ul>
+</li>
+<li><a href="#5-%E6%95%B0%E5%AD%97%E6%AF%94%E8%BE%83">5、数字比较</a></li>
+<li><a href="#6-%E6%9D%A1%E4%BB%B6%E8%BF%9E%E6%8E%A5-%E5%B9%B6%E4%B8%94">6、条件连接-并且</a></li>
+<li><a href="#7-%E6%9D%A1%E4%BB%B6%E8%BF%9E%E6%8E%A5-%E6%88%96%E8%80%85">7、条件连接-或者</a></li>
+<li><a href="#8-%E6%B7%BB%E5%8A%A0">8、添加</a></li>
+<li><a href="#9-%E4%BF%AE%E6%94%B9">9、修改</a></li>
+<li><a href="#10-%E5%88%A0%E9%99%A4%E6%96%87%E6%A1%A3">10、删除文档</a></li>
+</ul>
+</li>
+<li><a href="#mongodb%E5%B7%A5%E5%85%B7%E7%B1%BB">MongoDB工具类</a></li>
 </ul>
 </li>
 </ul>
@@ -510,8 +578,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://haohanya.github.io/post/about/">
-      关于
+    <a class="post-title-link" href="https://haohanya.github.io/post/mongodb/">
+      MongoDB
     </a>
   </h1>
   <div class="post-meta">
@@ -519,23 +587,36 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2019-01-25</span>
+      <span>2020-05-28</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
     <span class="meta-item">
+      <i class="fa fa-folder-o"></i>
+      <span class="pc-show">分类于</span>
+      
+      
+      <a href="https://haohanya.github.io/tag/iYO3GrMyx/">
+        <span>MongoDB</span>
+      </a>
+      
+      
+    </span>
+    <span class="post-meta-divider">|</span>
+    
+    <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>1分钟</span>
+      <span>13分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>74<span class="pc-show">字数</span></span>
+      <span>2695<span class="pc-show">字数</span></span>
     </span>
     
     
     
-    <span id="/post/about/" data-flag-title="关于" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/mongodb/" data-flag-title="MongoDB" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span>浏览量：<span class="leancloud-visitors-count"></span></span>
@@ -544,17 +625,395 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
+              <h2 id="mongo">Mongo</h2>
+<h3 id="什么是mongodb">什么是MongoDB</h3>
+<blockquote>
+<p>MongoDB是一个基于分布式文件存储的数据库。由C++语言编写。旨在为WEB应用提供可扩展的高性能数据存储解决方案。<br>
+MongoDB是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库当中功能最丰富，最像关系数据库的。它支持的数据结构非常松散，是类似json的bson格式，因此可以存储比较复杂的数据类型。Mongo最大的特点是它支持的查询语言非常强大，其语法有点类似于面向对象的查询语言，几乎可以实现类似关系数据库单表查询的绝大部分功能，而且还支持对数据建立索引。</p>
 </blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<p>磕磕碰碰的小破站,前不久域名的备案被注销...后换到Gridea,托管在GitHub</p>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<p>一位正在努力成长的码农...</p>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<p>吃,睡,coding</p>
-<h2 id="联系我呀">📬 联系我呀</h2>
-<p>QQ : 2369710264</p>
+<h3 id="mongodb特点">MongoDB特点</h3>
+<blockquote>
+<p>它的特点是高性能、易部署、易使用，存储数据非常方便。主要功能特性有：</p>
+<p>*面向集合存储的，易于存储对象类型的数据</p>
+<p>*模式自由。</p>
+<p>*支持动态[查询]</p>
+<p>*支持完全索引，包含内部对象。</p>
+<p>*支持查询。</p>
+<p>*支持复制和故障恢复。</p>
+<p>*使用高效的二进制数据存储，包括大型对象（如视频等）。</p>
+<p>*自动处理碎片，以支持云计算层次的扩展性。</p>
+<p>*支持 Golang，RUBY，PYTHON，JAVA，C++，PHP，C#等多种语言。</p>
+<p>*文件存储格式为BSON（一种JSON的扩展）。</p>
+<p>*可通过网络访问。</p>
+</blockquote>
+<h3 id="mongodb体系结构">MongoDB体系结构</h3>
+<blockquote>
+<p>mongo的逻辑结果是一种层次结构</p>
+<p>主要由如下几个东西组成：</p>
+<p>文档(document)、集合(collection)、数据库(database)这三部分组成，逻辑结构是面向用户的。</p>
+<p>用户就可以通过MongoDB开发应用程序使用的就是逻辑结构</p>
+<p>(1)MongoDB的document，相当于是MySQL（关系型数据库）中的一行记录</p>
+<p>(2)多个文档组成一个集合，在MySQL中多条记录组成的是表</p>
+<p>(3)多个集合，逻辑上组织在一起，就是一个数据库</p>
+<p>(4)一个MongoDB实例支持多个数据库</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">MongoDB</th>
+<th style="text-align:center">Mysql</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">数据库(database)</td>
+<td style="text-align:center">数据库(database)</td>
+</tr>
+<tr>
+<td style="text-align:center">集合(collection)</td>
+<td style="text-align:center">表(table)</td>
+</tr>
+<tr>
+<td style="text-align:center">文档(document)</td>
+<td style="text-align:center">行(row)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="安装mongo">安装Mongo</h2>
+<h3 id="1-拉取镜像">1、拉取镜像</h3>
+<pre><code class="language-bash">docker pull mongo:latest
+</code></pre>
+<h3 id="2-创建容器">2、创建容器</h3>
+<pre><code class="language-bash">docker run -di --name=mymongo -p 27017:27017 mongo --auth
+</code></pre>
+<blockquote>
+<p>27017 ：mongo默认的端口</p>
+<p>--auth：启用验证，默认关闭</p>
+</blockquote>
+<h3 id="3-创建用户">3、创建用户</h3>
+<pre><code class="language-bash"># 进入容器
+docker exec -it mymongo /bin/bash
+# 进入Mongo
+mongo
+# 选择数据库
+use admin
+# 创建用户
+db.createUser({user:&quot;root&quot;,pwd:&quot;root&quot;,roles:[{role:&quot;root&quot;,db:&quot;admin&quot;}]})
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://haohanya.github.io/post-images/1590650660588.png" alt="" loading="lazy"></figure>
+<h2 id="crud">CRUD</h2>
+<blockquote>
+<p>如果涉及到认证问题，必须在操作之前登陆</p>
+<p><code>db.auth(&quot;账号&quot;,&quot;密码&quot;)</code></p>
+</blockquote>
+<h3 id="添加">添加</h3>
+<p>语法：<code>db.collection.save(json)</code></p>
+<pre><code class="language-sql">db.student.save({name:&quot;张三&quot;,sex:&quot;男&quot;,address:&quot;湖北&quot;})
+</code></pre>
+<h3 id="查询">查询</h3>
+<h4 id="查询全部">查询全部</h4>
+<p>语法：<code>db.collection.find()</code></p>
+<pre><code class="language-sql">db.student.find()
+# 结果
+# { &quot;_id&quot; : ObjectId(&quot;5ece87413b6767c1aa235b37&quot;), &quot;name&quot; : &quot;张三&quot;, &quot;sex&quot; : &quot;女&quot;, &quot;address&quot; : &quot;湖北&quot; }
+</code></pre>
+<blockquote>
+<p>这里大家会发现每条文档都有一个叫 &quot;_id&quot;字段，这个相当于mysql数据库中表的主键，当你在插入记录的时候，没有指定该字段，mongo会自动创建，类型是ObjectId类型</p>
+<p>如果我们在插入文档记录的时候指定了该字段，其类型可以是ObjectId，也可以是mongo支持的任意数据类型</p>
+<p>如：<code>db.student.save({_id:1,name:&quot;张三&quot;,sex:15,address:&quot;湖北&quot;})</code></p>
+<p>如果_id 的值是一样的会覆盖原有的数据</p>
+</blockquote>
+<h4 id="条件查询">条件查询</h4>
+<p>语法：<code>db.collection.find({key:&quot;value&quot;})</code></p>
+<pre><code class="language-sql">db.student.find({name:&quot;李四&quot;})
+</code></pre>
+<h4 id="查询单个">查询单个</h4>
+<p>语法：<code>db.collection.findOne({key:value})</code></p>
+<h3 id="修改">修改</h3>
+<h4 id="完全修改">完全修改</h4>
+<p>语法：<code>db.collection.update(条件json,修改后的json)</code></p>
+<h4 id="部分修改">部分修改</h4>
+<p>语法：<code>db.collection.update(条件json,{$set:{key:value,key:value}})</code></p>
+<h3 id="删除">删除</h3>
+<p>语法：<code>db.collection.remove(json条件)</code></p>
+<h2 id="高级查询">高级查询</h2>
+<h3 id="模糊查询">模糊查询</h3>
+<p>语法：<code>db.collection.find({key:/value/})</code></p>
+<blockquote>
+<p>查询key中带有value的文档</p>
+</blockquote>
+<h3 id="查询null">查询NULL</h3>
+<p>语法：<code>db.collection.find({key:null})</code></p>
+<blockquote>
+<p>查询没有key的文档</p>
+</blockquote>
+<h3 id="比较查询">比较查询</h3>
+<pre><code class="language-sql"># 大于
+db.collection.find({key:{$gt:value}})
+# 小于
+db.collection.find({key:{$lt:value}})
+# 大于或等于
+db.collection.find({key:{$gte:value}})
+# 小于等于
+db.collection.find({key:{$lte:value}})
+# 不等于
+db.collection.find({key:{$ne:value}})
+</code></pre>
+<h3 id="判断域字段是否存在">判断域/字段是否存在</h3>
+<pre><code class="language-sql"># 语法
+db.collection.find({key:{$exists:true}})
+# 例子：查询带有address的文档
+db.student.find({address:{$exists:true}})
+# 例子：查询没有address的文档
+db.student.find({address:{$exists:false}})
+</code></pre>
+<h3 id="包含">包含</h3>
+<blockquote>
+<p>类似于mysql的in</p>
+</blockquote>
+<p>语法：<code>db.collection.find({key:{$in:[v1,v2,v3,.....]}})</code></p>
+<h3 id="统计数量">统计数量</h3>
+<p>语法：<code>db.collection.count()</code></p>
+<p>添加条件语法：<code>db.collection.count(json条件)</code></p>
+<h3 id="逻辑运算符">逻辑运算符</h3>
+<h4 id="并且">并且</h4>
+<pre><code class="language-sql"># 语法
+db.collection.find($and:[{k1:v1},{k2:{表达式:v2}}])
+# 例子：查询年龄大于10并且小于20
+db.student.find($and:[{age:{$gt:10}},{age:{$lt:20}}])
+</code></pre>
+<h4 id="或者">或者</h4>
+<pre><code class="language-sql"># 语法
+db.collection.find($or:[{k1:v1},{v2:{表达式:v2}}])
+# 例子：查询年龄大于18或者性别为女
+db.student.find($or:[{age:{$gt:18}},{sex:&quot;女&quot;}])
+</code></pre>
+<h4 id="非">非</h4>
+<pre><code class="language-sql">db.collection.find({key:{$ne:value}})
+</code></pre>
+<h2 id="java操作mongo">JAVA操作Mongo</h2>
+<h3 id="1-添加依赖">1、添加依赖</h3>
+<pre><code class="language-xml">&lt;!-- mongodb客户端 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.mongodb&lt;/groupId&gt;
+    &lt;artifactId&gt;mongo-java-driver&lt;/artifactId&gt;
+    &lt;version&gt;3.9.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3 id="2-连接测试">2、连接测试</h3>
+<pre><code class="language-java">@Test
+public void testConnection(){
+    //创建认证对象，参数1：用户名、参数2：数据库、参数3：密码
+    MongoCredential credential = MongoCredential.createCredential(&quot;root&quot;,&quot;admin&quot;,&quot;root&quot;.toCharArray());
+    //创建mongo客户端对象，参数1：服务器地址，参数2：mongodb的端口号
+    ServerAddress serverAddress = new ServerAddress(&quot;192.168.25.146&quot;,27017);
+    MongoClient client = new MongoClient(serverAddress, Arrays.asList(credential));
+    //获取到集合（数据库）
+    MongoDatabase database = client.getDatabase(&quot;admin&quot;);
+    //获取collection
+    MongoCollection&lt;Document&gt; student = database.getCollection(&quot;student&quot;);
+    //获取到document集合（一行记录）
+    FindIterable&lt;Document&gt; documents = student.find();
+    for (Document document : documents) {
+        System.out.println(document.getString(&quot;name&quot;));
+        System.out.println(document.getDouble(&quot;age&quot;));
+        System.out.println(document.getString(&quot;sex&quot;));
+    }
+}
+</code></pre>
+<h3 id="3-条件查询-匹配">3、条件查询-匹配</h3>
+<pre><code class="language-java">@Test
+public void testFindBasi(){
+    //创建认证对象，参数1：用户名、参数2：数据库、参数3：密码
+    MongoCredential credential = MongoCredential.createCredential(&quot;root&quot;,&quot;admin&quot;,&quot;root&quot;.toCharArray());
+    //创建mongo客户端对象，参数1：服务器地址，参数2：mongodb的端口号
+    ServerAddress serverAddress = new ServerAddress(&quot;192.168.25.146&quot;,27017);
+    MongoClient client = new MongoClient(serverAddress, Arrays.asList(credential));
+    //获取到集合（数据库）
+    MongoDatabase database = client.getDatabase(&quot;admin&quot;);
+    //获取collection
+    MongoCollection&lt;Document&gt; student = database.getCollection(&quot;student&quot;);
+
+    /*------------------------------------创建查询条件----------------------------------------------*/
+
+    Map&lt;String,Object&gt; map = new HashMap&lt;&gt;();
+    map.put(&quot;name&quot;,&quot;张三&quot;);
+    BasicDBObject basicDBObject = new BasicDBObject(map);
+
+    /*------------------------------------创建查询条件----------------------------------------------*/
+
+    //获取到document集合（一行记录）
+    FindIterable&lt;Document&gt; documents = student.find(basicDBObject);
+    for (Document document : documents) {
+        System.out.println(document.getString(&quot;name&quot;));
+        System.out.println(document.getDouble(&quot;age&quot;));
+        System.out.println(document.getString(&quot;sex&quot;));
+    }
+}
+</code></pre>
+<h3 id="4-条件查询-模糊">4、条件查询-模糊</h3>
+<h4 id="完全匹配">完全匹配</h4>
+<pre><code class="language-java">/*------------------------------------创建查询条件----------------------------------------------*/
+Pattern pattern = Pattern.compile(&quot;^张三$&quot;);
+
+Map&lt;String,Object&gt; map = new HashMap&lt;&gt;();
+map.put(&quot;name&quot;,pattern);
+BasicDBObject basicDBObject = new BasicDBObject(map);
+/*------------------------------------创建查询条件----------------------------------------------*/
+</code></pre>
+<h4 id="右匹配">右匹配</h4>
+<pre><code class="language-java">Pattern pattern = Pattern.compile(&quot;^张.*$&quot;);
+</code></pre>
+<h4 id="左匹配">左匹配</h4>
+<pre><code class="language-java">Pattern pattern = Pattern.compile(&quot;^.*张$&quot;);
+</code></pre>
+<h4 id="模糊匹配">模糊匹配</h4>
+<pre><code class="language-java">Pattern pattern = Pattern.compile(&quot;^.*张.*$&quot;);
+</code></pre>
+<h3 id="5-数字比较">5、数字比较</h3>
+<pre><code class="language-java">//查询年龄大于10
+/*------------------------------------创建查询条件----------------------------------------------*/
+BasicDBObject basicDBObject = new BasicDBObject(&quot;age&quot;,new BasicDBObject(&quot;$gt&quot;,10));
+/*------------------------------------创建查询条件----------------------------------------------*/
+</code></pre>
+<h3 id="6-条件连接-并且">6、条件连接-并且</h3>
+<pre><code class="language-java">//查询性别为男并且年龄大于10岁
+/*------------------------------------创建查询条件----------------------------------------------*/
+BasicDBObject basicDBObject1 = new BasicDBObject(&quot;sex&quot;,&quot;男&quot;);
+BasicDBObject basicDBObject2 = new BasicDBObject(&quot;age&quot;,new BasicDBObject(&quot;$gt&quot;,10));
+BasicDBObject basicDBObject = new BasicDBObject(&quot;$and&quot;,Arrays.asList(basicDBObject1,basicDBObject2));
+/*------------------------------------创建查询条件----------------------------------------------*/
+</code></pre>
+<h3 id="7-条件连接-或者">7、条件连接-或者</h3>
+<pre><code class="language-java">//查询性别为男或者年龄大于20
+/*------------------------------------创建查询条件----------------------------------------------*/
+BasicDBObject basicDBObject1 = new BasicDBObject(&quot;sex&quot;,&quot;男&quot;);
+BasicDBObject basicDBObject2 = new BasicDBObject(&quot;age&quot;,new BasicDBObject(&quot;$gt&quot;,20));
+BasicDBObject basicDBObject = new BasicDBObject(&quot;$or&quot;,Arrays.asList(basicDBObject1,basicDBObject2));
+/*------------------------------------创建查询条件----------------------------------------------*/
+</code></pre>
+<h3 id="8-添加">8、添加</h3>
+<pre><code class="language-java">//创建认证对象，参数1：用户名、参数2：数据库、参数3：密码
+MongoCredential credential = MongoCredential.createCredential(&quot;root&quot;,&quot;admin&quot;,&quot;root&quot;.toCharArray());
+//创建mongo客户端对象，参数1：服务器地址，参数2：mongodb的端口号
+ServerAddress serverAddress = new ServerAddress(&quot;192.168.25.146&quot;,27017);
+MongoClient client = new MongoClient(serverAddress, Arrays.asList(credential));
+//获取到集合（数据库）
+MongoDatabase database = client.getDatabase(&quot;admin&quot;);
+//获取collection
+MongoCollection&lt;Document&gt; student = database.getCollection(&quot;student&quot;);
+
+Map&lt;String,Object&gt; map = new HashMap&lt;&gt;();
+map.put(&quot;name&quot;,&quot;王五&quot;);
+map.put(&quot;sex&quot;,&quot;男&quot;);
+map.put(&quot;age&quot;,15);
+map.put(&quot;address&quot;,&quot;湖南&quot;);
+
+Document document = new Document(map);
+student.insertOne(document);
+</code></pre>
+<h3 id="9-修改">9、修改</h3>
+<pre><code class="language-java">//把_id为1的文档中age修改为55
+public void update(){
+    //创建认证对象，参数1：用户名、参数2：数据库、参数3：密码
+    MongoCredential credential = MongoCredential.createCredential(&quot;root&quot;,&quot;admin&quot;,&quot;root&quot;.toCharArray());
+    //创建mongo客户端对象，参数1：服务器地址，参数2：mongodb的端口号
+    ServerAddress serverAddress = new ServerAddress(&quot;192.168.25.146&quot;,27017);
+    MongoClient client = new MongoClient(serverAddress, Arrays.asList(credential));
+    //获取到集合（数据库）
+    MongoDatabase database = client.getDatabase(&quot;admin&quot;);
+    //获取collection
+    MongoCollection&lt;Document&gt; student = database.getCollection(&quot;student&quot;);
+	//修改的条件
+    BasicDBObject filter = new BasicDBObject(&quot;_id&quot;,1);
+    //修改后的域和值
+    BasicDBObject update = new BasicDBObject(&quot;$set&quot;,new BasicDBObject(&quot;age&quot;,55));
+
+    student.updateOne(filter,update);
+}
+</code></pre>
+<h3 id="10-删除文档">10、删除文档</h3>
+<pre><code class="language-java">public void delete(){
+    //创建认证对象，参数1：用户名、参数2：数据库、参数3：密码
+    MongoCredential credential = MongoCredential.createCredential(&quot;root&quot;,&quot;admin&quot;,&quot;root&quot;.toCharArray());
+    //创建mongo客户端对象，参数1：服务器地址，参数2：mongodb的端口号
+    ServerAddress serverAddress = new ServerAddress(&quot;192.168.25.146&quot;,27017);
+    MongoClient client = new MongoClient(serverAddress, Arrays.asList(credential));
+    //获取到集合（数据库）
+    MongoDatabase database = client.getDatabase(&quot;admin&quot;);
+    //获取collection
+    MongoCollection&lt;Document&gt; student = database.getCollection(&quot;student&quot;);
+
+    //删除条件
+    BasicDBObject basicDBObject = new BasicDBObject(&quot;_id&quot;,1);
+    student.deleteOne(basicDBObject);//删除一个
+    student.deleteMany(basicDBObject);//删除所有满足条件的
+}
+</code></pre>
+<h2 id="mongodb工具类">MongoDB工具类</h2>
+<blockquote>
+<p>MongoClient被设计成线程安全的类（单线程），也就是我们在使用该类的时候不用考虑并发的情况，这样我们就可以考虑将mongoClient做成一个静态变量，为所有的线程共用，不必每次都销毁，这样就可以极大的提高执行的效率，实际上mongodb提供了内置的连接池来实现</p>
+</blockquote>
+<pre><code class="language-java">package com.mongo.util;
+
+import com.mongodb.*;
+import com.mongodb.client.MongoDatabase;
+
+import java.util.Arrays;
+
+/**
+ * @program: mongodb
+ * @author: 潘
+ * @create: 2020-05-28 12:57
+ **/
+public class MongoManager {
+
+    private static MongoClient client = null;
+
+    private static void init(){
+        MongoCredential credential = MongoCredential.createCredential(&quot;root&quot;, &quot;admin&quot;, &quot;root&quot;.toCharArray());
+        ServerAddress serverAddress = new ServerAddress(&quot;192.168.25.146&quot;, 27017);
+        //选项构造者
+        MongoClientOptions.Builder builder = new MongoClientOptions.Builder();
+        //读取数据的超时时间
+        builder.socketTimeout(5000);
+        //每个地址最大请求数
+        builder.connectionsPerHost(30);
+        //写入的策略,仅仅抛出网络异常
+        builder.writeConcern(WriteConcern.NORMAL);
+        MongoClientOptions options = builder.build();
+        client = new MongoClient(serverAddress, Arrays.asList(credential), options);
+    }
+    public static MongoDatabase getDatabase(String db){
+
+        if(client == null){
+            init();
+        }
+
+        return client.getDatabase(db);
+    }
+
+}
+</code></pre>
+<p>dao</p>
+<pre><code class="language-java">public class StudentDao {
+	public void save(String name,String sex,double age,String address){
+		// 2.获取数据库(数据库)
+		MongoDatabase database = MongoManager.getDatabase(&quot;admin&quot;);
+		// 3.获取到collection(表)
+		MongoCollection&lt;Document&gt; collection = database.getCollection(&quot;student&quot;);
+		//4.准备要添加的数据
+		Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();
+		map.put(&quot;name&quot;, name);
+		map.put(&quot;sex&quot;, sex);
+		map.put(&quot;age&quot;, age);
+		map.put(&quot;address&quot;, address);
+		Document document = new Document(map);
+		//5.添加数据
+		collection.insertOne(document);
+	}
+}
+</code></pre>
 
             </div>
             <div class="post-footer">
@@ -565,7 +1024,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://haohanya.github.io/post/about/" title="关于">https://haohanya.github.io/post/about/</a>
+      <a href="https://haohanya.github.io/post/mongodb/" title="MongoDB">https://haohanya.github.io/post/mongodb/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -574,12 +1033,18 @@
   </ul>
   <div class="tags">
     
+      <a href="https://haohanya.github.io/tag/iYO3GrMyx/"># MongoDB</a>
+    
   </div>
   <div class="nav">
     <div class="nav-prev">
       
     </div>
     <div class="nav-next">
+      
+        <a class="nav-pc-next" title="Docker" href="https://haohanya.github.io/post/docker/">Docker</a>
+        <a class="nav-mobile-next" title="Docker" href="https://haohanya.github.io/post/docker/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
     </div>
   </div>
