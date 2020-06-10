@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://haohanya.github.io</id>
     <title>浩瀚</title>
-    <updated>2020-06-09T07:08:30.490Z</updated>
+    <updated>2020-06-10T16:26:54.539Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://haohanya.github.io"/>
     <link rel="self" href="https://haohanya.github.io/atom.xml"/>
@@ -10,6 +10,27 @@
     <logo>https://haohanya.github.io/images/avatar.png</logo>
     <icon>https://haohanya.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 浩瀚</rights>
+    <entry>
+        <title type="html"><![CDATA[Eureka]]></title>
+        <id>https://haohanya.github.io/post/eureka/</id>
+        <link href="https://haohanya.github.io/post/eureka/">
+        </link>
+        <updated>2020-06-10T16:21:09.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[初识SpringCloud]]></title>
+        <id>https://haohanya.github.io/post/chu-shi-springcloud/</id>
+        <link href="https://haohanya.github.io/post/chu-shi-springcloud/">
+        </link>
+        <updated>2020-06-10T13:57:42.000Z</updated>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Spring-Data-Jpa]]></title>
+        <id>https://haohanya.github.io/post/spring-data-jpa/</id>
+        <link href="https://haohanya.github.io/post/spring-data-jpa/">
+        </link>
+        <updated>2020-06-10T13:07:53.000Z</updated>
+    </entry>
     <entry>
         <title type="html"><![CDATA[MongoDB]]></title>
         <id>https://haohanya.github.io/post/mongodb/</id>
@@ -58,60 +79,5 @@
         <link href="https://haohanya.github.io/post/activemq/">
         </link>
         <updated>2020-05-17T03:28:44.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[solr安装使用]]></title>
-        <id>https://haohanya.github.io/post/solr-an-zhuang-shi-yong/</id>
-        <link href="https://haohanya.github.io/post/solr-an-zhuang-shi-yong/">
-        </link>
-        <updated>2020-05-12T10:47:23.000Z</updated>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Spring-Security]]></title>
-        <id>https://haohanya.github.io/post/spring-security/</id>
-        <link href="https://haohanya.github.io/post/spring-security/">
-        </link>
-        <updated>2020-05-04T04:14:24.000Z</updated>
-        <summary type="html"><![CDATA[<h2 id="spring-security简介">Spring Security简介</h2>
-<blockquote>
-<p>Spring Security是一个能够为基于Spring的企业应用系统提供声明式的安全访问控制解决方案的安全框架。它提供了一组可以在Spring应用上下文中配置的Bean，充分利用了Spring IoC，DI（控制反转Inversion of Control ,DI:Dependency Injection 依赖注入）和AOP（面向切面编程）功能，为应用系统提供声明式的安全访问控制功能，减少了为企业系统安全控制编写大量重复代码的工作。</p>
-</blockquote>
-<h2 id="单机版">单机版</h2>
-<p>1.引入依赖</p>
-<pre><code class="language-xml"> &lt;!-- 身份验证 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-security-web&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-security-config&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-]]></summary>
-        <content type="html"><![CDATA[<h2 id="spring-security简介">Spring Security简介</h2>
-<blockquote>
-<p>Spring Security是一个能够为基于Spring的企业应用系统提供声明式的安全访问控制解决方案的安全框架。它提供了一组可以在Spring应用上下文中配置的Bean，充分利用了Spring IoC，DI（控制反转Inversion of Control ,DI:Dependency Injection 依赖注入）和AOP（面向切面编程）功能，为应用系统提供声明式的安全访问控制功能，减少了为企业系统安全控制编写大量重复代码的工作。</p>
-</blockquote>
-<h2 id="单机版">单机版</h2>
-<p>1.引入依赖</p>
-<pre><code class="language-xml"> &lt;!-- 身份验证 --&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-security-web&lt;/artifactId&gt;
-&lt;/dependency&gt;
-&lt;dependency&gt;
-    &lt;groupId&gt;org.springframework.security&lt;/groupId&gt;
-    &lt;artifactId&gt;spring-security-config&lt;/artifactId&gt;
-&lt;/dependency&gt;
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[MyBatis]]></title>
-        <id>https://haohanya.github.io/post/mybatis/</id>
-        <link href="https://haohanya.github.io/post/mybatis/">
-        </link>
-        <updated>2020-05-04T04:13:12.000Z</updated>
     </entry>
 </feed>
