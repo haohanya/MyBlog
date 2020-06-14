@@ -8,7 +8,7 @@
 <meta name="keywords" content="浩瀚,浩瀚博客,java">
 <meta name="description" content="浩瀚-每天向往着外面的世界">
 <meta name="theme-color" content="#000">
-<title>Java反射 | 浩瀚</title>
+<title> 熔断器Hystrix | 浩瀚</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1592159036467">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -37,8 +37,8 @@
 
 
 
-  <meta name="description" content="Java反射" />
-  <meta name="keywords" content="java" />
+  <meta name="description" content=" 熔断器Hystrix" />
+  <meta name="keywords" content="hystrix,Spring-Cloud" />
 </head>
 
 <body>
@@ -237,21 +237,29 @@
   <div class="toc-wrapper auto-number auto"
     id="toc_wrapper">
     <ul class="markdownIt-TOC">
-<li>
+<li><a href="#%E7%86%94%E6%96%AD%E5%99%A8hystrix">熔断器Hystrix</a>
 <ul>
-<li><a href="#%E8%8E%B7%E5%8F%96class%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E5%BC%8F">获取Class对象的方式</a></li>
-<li><a href="#class%E5%AF%B9%E8%B1%A1%E5%8A%9F%E8%83%BD">Class对象功能</a>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E9%9B%AA%E5%B4%A9%E9%97%AE%E9%A2%98">雪崩问题</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B%E9%9A%94%E7%A6%BB%E6%9C%8D%E5%8A%A1%E9%99%8D%E7%BA%A7">线程隔离&amp;服务降级</a>
 <ul>
-<li><a href="#%E8%8E%B7%E5%8F%96%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F">获取成员变量</a></li>
-<li><a href="#%E8%8E%B7%E5%8F%96%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95">获取构造方法</a></li>
-<li><a href="#%E8%8E%B7%E5%8F%96%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95">获取成员方法</a></li>
-<li><a href="#field%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F">Field：成员变量</a></li>
-<li><a href="#constructor%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95">Constructor:构造方法</a></li>
-<li><a href="#method%E6%96%B9%E6%B3%95%E5%AF%B9%E8%B1%A1">Method：方法对象</a></li>
+<li><a href="#%E5%8E%9F%E7%90%86">原理</a></li>
+<li><a href="#%E6%A1%88%E4%BE%8B">案例</a>
+<ul>
+<li><a href="#%E5%9C%A8user-web%E5%B7%A5%E7%A8%8B%E4%B8%AD%E4%BE%9D%E8%B5%96hystrix">在user-web工程中依赖hystrix</a></li>
+<li><a href="#%E5%BC%80%E5%90%AF%E7%86%94%E6%96%AD">开启熔断</a></li>
+<li><a href="#%E7%BC%96%E5%86%99%E9%99%8D%E7%BA%A7%E9%80%BB%E8%BE%91">编写降级逻辑</a></li>
+<li><a href="#%E9%BB%98%E8%AE%A4%E7%9A%84fallback">默认的fallback</a></li>
+<li><a href="#%E8%B6%85%E6%97%B6%E8%AE%BE%E7%BD%AE">超时设置</a></li>
 </ul>
 </li>
-<li><a href="#%E5%8F%8D%E5%B0%84%E8%8E%B7%E5%8F%96%E6%B3%A8%E8%A7%A3">反射获取注解</a></li>
-<li><a href="#%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E8%B0%83%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%8A%E7%9A%84%E6%B3%A8%E8%A7%A3">获取当前调用的方法上的注解</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E7%86%94%E6%96%AD">服务熔断</a>
+<ul>
+<li><a href="#%E5%8E%9F%E7%90%86-2">原理</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -519,8 +527,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://haohanya.github.io/post/java-fan-she/">
-      Java反射
+    <a class="post-title-link" href="https://haohanya.github.io/post/rong-duan-qi-hystrix/">
+       熔断器Hystrix
     </a>
   </h1>
   <div class="post-meta">
@@ -528,7 +536,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2020-05-04</span>
+      <span>2020-06-14</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -537,8 +545,14 @@
       <span class="pc-show">分类于</span>
       
       
-      <a href="https://haohanya.github.io/tag/CX9XCxDcJ/">
-        <span>java</span>
+      <a href="https://haohanya.github.io/tag/nH8Xd-9Pr/">
+        <span>hystrix</span>
+      </a>、
+      
+      
+      
+      <a href="https://haohanya.github.io/tag/omgSh_ZiA/">
+        <span>Spring-Cloud</span>
       </a>
       
       
@@ -547,17 +561,17 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>4分钟</span>
+      <span>7分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>703<span class="pc-show">字数</span></span>
+      <span>1806<span class="pc-show">字数</span></span>
     </span>
     
     
     
-    <span id="/post/java-fan-she/" data-flag-title="Java反射" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/rong-duan-qi-hystrix/" data-flag-title=" 熔断器Hystrix" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span>浏览量：<span class="leancloud-visitors-count"></span></span>
@@ -566,91 +580,184 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <h2 id="获取class对象的方式">获取Class对象的方式</h2>
-<pre><code class="language-java">Class.forName(&quot;全类名&quot;);//将字节码文件加载进内存，返回Class对象
+              <h1 id="熔断器hystrix">熔断器Hystrix</h1>
+<h2 id="简介">简介</h2>
+<blockquote>
+<p>hystrix在英文里的意思是豪猪，它的logo就是一头豪猪，刺让我想到的是自我保护，hystrix它就是一款提供保护机制额组件，它和eureka一样也是Netflix公司开发的</p>
+</blockquote>
+<figure data-type="image" tabindex="1"><img src="https://haohanya.github.io/post-images/1592150422551.png" alt="" loading="lazy"></figure>
+<h2 id="雪崩问题">雪崩问题</h2>
+<blockquote>
+<p>微服务中，服务之间调用关系是错综复杂的，一个请求，可能需要调用多个微服务绝口才能实现，会形成非常复杂的调用链路</p>
+</blockquote>
+<figure data-type="image" tabindex="2"><img src="https://haohanya.github.io/post-images/1592150428504.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>如图：一次业务请求，需要调用A、P、H、I四个服务，这四个服务又有可能调用了其他的服务。</p>
+</blockquote>
+<p>如果此时，某个服务出现了异常：</p>
+<figure data-type="image" tabindex="3"><img src="https://haohanya.github.io/post-images/1592150432891.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>例如：微服务I出现了异常，请求就会阻塞，用球请求就会得不到响应，则tomcat的这个线程就不会释放，于是越来越多的用户请求到来，越来越多额线程会阻塞</p>
+</blockquote>
+<figure data-type="image" tabindex="4"><img src="https://haohanya.github.io/post-images/1592150437036.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>服务器支持的线程和并发数是有限的，请求一直阻塞，会导致服务器的资源耗尽，从而导致所有额其他服务都不可用，形成雪崩效应。</p>
+<p>这就好比：村里都用一个变压器，有一家用热得快烧水导致电路短路最终烧了电路，结果却导致村里所有家庭都无法用电（解决方案：每家每户都装一个保险丝，一家烧毁，不想赢其他家庭用电）</p>
+<p>这也好比：一个汽车生产线，生成不同的汽车，需要的是不同的零件，若果某个零件因为种种原因无法使用，那么就会早成整台车无法装配，陷入了等待零件的状态，知道零件到位，才能继续组装件，此时如果有很多的车型都需要这个零件，那么整个工厂就将陷入等待状态，导致所有的生成都瘫痪，一个零件的剥茧范围不断的扩大.这就是雪崩</p>
+</blockquote>
+<p>Hystrix解决的雪崩问题的手段主要是服务降级，包括：</p>
+<ul>
+<li>线程隔离</li>
+<li>服务熔断</li>
+</ul>
+<h2 id="线程隔离服务降级">线程隔离&amp;服务降级</h2>
+<h3 id="原理">原理</h3>
+<figure data-type="image" tabindex="5"><img src="https://haohanya.github.io/post-images/1592150445282.png" alt="" loading="lazy"></figure>
+<p>解读该图：</p>
+<p>Hystrix为每个依赖服务调用分配一个小的线程池，如果线程池已满调用就会被立即拒绝，默认不采用排队，加速失败判定时间。</p>
+<p>用户的请求将不再直接访问服务，而是通过线程池中的空闲线程来访问服务，如果线程池已经满了，或者是请求超时，则会进行降级处理</p>
+<blockquote>
+<p>（服务降级：有限保证核心服务，而非核心服务不可用或弱可用）</p>
+</blockquote>
+<p>用户的请求故障的时候，不会被阻塞，更不会无休止的等待或者是看到系统崩溃，至少可以看到一个执行的结果（一个友好的界面）</p>
+<p>服务降级虽然会导致请求失败，但是不会导致阻塞，而且最多会影响这个依赖服务对应的线程池中的资源，对其它服务完全没有影响。</p>
+<p>hysrix服务降级的情况</p>
+<ul>
+<li>线程池已满</li>
+<li>请求超时</li>
+</ul>
+<h3 id="案例">案例</h3>
+<h4 id="在user-web工程中依赖hystrix">在user-web工程中依赖hystrix</h4>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-netflix-hystrix&lt;/artifactId&gt;
+&lt;/dependency&gt;
 </code></pre>
-<p>多用于配置文件，将类名定义在配置文件中。读取文件，加载类<br>
-类名.class：通过类名的属性class获取<br>
-多用于参数的传递<br>
-对象.getClass()：getClass()方法在Object类中定义着。</p>
-<pre><code class="language-java">//多用于对象的获取字节码的方式
-Class clazz = News.class;
-Object obj = clazz.newInstance();           //实例化一个对象：等同于 new 一个对象
-System.out.println(clazz.getSimpleName());  //获取类名
-System.out.println(clazz.getName());        //获取完整的包名+类名
+<h4 id="开启熔断">开启熔断</h4>
+<p>在启动类上添加注解 <code>@EnableCircuitBreaker</code></p>
+<pre><code class="language-java">@SpringBootApplication
+@EnableDiscoveryClient  //开启发现服务
+@EnableCircuitBreaker
+public class UserWebApplication {
+    ...
+}
 </code></pre>
-<h2 id="class对象功能">Class对象功能</h2>
-<h3 id="获取成员变量">获取成员变量</h3>
-<p>​        Field[] getFields() ：获取所有public修饰的成员变量</p>
-<p>​		Field getField(String name)   获取指定名称的 public修饰的成员变量</p>
-<p>​		Field[] getDeclaredFields();  //获取所有的成员变量，不考虑修饰符</p>
-<p>​		Field getDeclaredField(String name); // 获取指定名称的成员变量，不考虑修饰符</p>
-<pre><code class="language-java">Class clazz = News.class;
-System.out.println(clazz.getSimpleName());//获取类名
-System.out.println(clazz.getName());//获取包名+类名
-Object obj = clazz.newInstance();//实例化News的这个对象
-Table table = obj.getClass().getAnnotation(Table.class);//获取obj对象的Table注解，没有返回null
-System.out.println(table.value());
-Field[] fields = clazz.getDeclaredFields();
-for (Field field : fields) {
-	field.setAccessible(true);//暴力反射,如果不写这个将会报错
-    //获取属性的注解
-    //Field field1 = obj.getClass().getDeclaredField(field.getName());//获取obj对象的指定属性
-    PK pk = field.getAnnotation(PK.class);//获取属性的注解
+<p>可以看到，类上面的注解越来越多了，在微服务中，经常引入上面的三个注解，学习一个组合注解<code>@SpringCloudApplication</code></p>
+<p>它的源码如下：</p>
+<pre><code class="language-java">@SpringBootApplication
+@EnableDiscoveryClient
+@EnableCircuitBreaker
+public @interface SpringCloudApplication {
+}
+</code></pre>
+<p>所以我们就可以直接使用该注解</p>
+<pre><code class="language-java">@SpringCloudApplication
+public class UserWebApplication {
+    ....
+}
+</code></pre>
+<h4 id="编写降级逻辑">编写降级逻辑</h4>
+<p>当目标服务的调用出现故障，我们希望快速失败，给用户一个友好的提示，因此需要提前编写好失败的时候的降级逻辑，使用HystrixCommand来完成</p>
+<p>对User-web中的controller进行改造</p>
+<pre><code class="language-java">@RestController
+@RequestMapping(&quot;/consumer&quot;)
+public class ConsumerController {
+    @Autowired
+    private RestTemplate restTemplate;
 
-	if(pk!=null){
-    	System.out.println(field.getName()+&quot;&gt;&gt;&gt;&quot;+pk);//获取属性名称
+    @Autowired
+    private DiscoveryClient discoveryClient;
+
+    @RequestMapping(&quot;/{id}&quot;)
+    @HystrixCommand(fallbackMethod = &quot;queryByIdFallback&quot;)
+    public User getByyid(@PathVariable(&quot;id&quot;) Long id){
+        //使用负载均衡（Ribbon）
+        String url = &quot;http://user-service/user/&quot; + id;
+        return restTemplate.getForObject(url,User.class);
     }
-        field.set(obj,null);//给当前clazz对象的field属性赋值为i
-        System.out.println(field.get(obj));//输出clazz对象的field的属性值
+    //熔断的方法：方法名和正常的方法名一致，参数一致
+    public User queryByIdFallback(Long id){
+        User user = new User();
+        user.setId(id);
+        user.setNote(&quot;对不起网络太用拥挤了！&quot;);
+        return user;
+    }
 }
 </code></pre>
-<h3 id="获取构造方法">获取构造方法</h3>
-<p>​	Constructor&lt;?&gt;[] getConstructors()</p>
-<p>​	Constructor<T> getConstructor(类&lt;?&gt;... parameterTypes)</p>
-<p>​	Constructor<T> getDeclaredConstructor(类&lt;?&gt;... parameterTypes)</p>
-<p>​	Constructor&lt;?&gt;[] getDeclaredConstructors()</p>
-<h3 id="获取成员方法">获取成员方法</h3>
-<p>​	Method[] getMethods()</p>
-<p>​	Method getMethod(String name, 类&lt;?&gt;... parameterTypes)</p>
-<p>​	Method[] getDeclaredMethods()</p>
-<p>​	Method getDeclaredMethod(String name, 类&lt;?&gt;... parameterTypes)</p>
-<h3 id="field成员变量">Field：成员变量</h3>
-<p>设置值</p>
-<pre><code class="language-java">void set(Object obj, Object value)
-</code></pre>
-<p>获取值，传的是对象</p>
-<pre><code class="language-java">get(Object obj) 
-</code></pre>
-<p>忽略访问权限修饰符的安全检查</p>
-<pre><code class="language-java">setAccessible(true)
-</code></pre>
-<h3 id="constructor构造方法">Constructor:构造方法</h3>
-<p>创建对象，如果使用空参数构造方法创建对象，操作可以简化：Class对象的newInstance方法</p>
-<pre><code class="language-java">T newInstance(Object... initargs)
-</code></pre>
-<h3 id="method方法对象">Method：方法对象</h3>
-<p>执行方法</p>
-<pre><code class="language-java">Object invoke(Object obj, Object... args)
-</code></pre>
-<p>获取方法名称</p>
-<pre><code class="language-java">String getName
-</code></pre>
-<h2 id="反射获取注解">反射获取注解</h2>
-<p>获取obj对象的Table注解，没有返回null，obj是要获取的对象</p>
-<pre><code class="language-java">Table table = obj.getClass().getAnnotation(Table.class);
-</code></pre>
-<p>获取属性的注解，获取obj对象的field.getName()的属性注解</p>
-<pre><code class="language-java">Field field1 = obj.getClass().getDeclaredField(field.getName());//获取obj对象的指定属性
-PK pk = field1.getAnnotation(PK.class);//获取属性的注解
-</code></pre>
-<h2 id="获取当前调用的方法上的注解">获取当前调用的方法上的注解</h2>
-<pre><code>StackTraceElement[] stack = new Throwable().getStackTrace();
-Method method = this.getClass().getMethod(stack[1].getMethodName());//这里0是当前方法的注解，1是调用者方法的注解
-for(Annotation an : method.getAnnotations()){
-    System.out.println(an);
+<p>可以停掉user-service服务，在进行use-web的访问测试</p>
+<p>说明：@HystrixCommand(fallbackMethod = &quot;queryByIdFallback&quot;)；用来声明一个降级逻辑的方法</p>
+<h4 id="默认的fallback">默认的fallback</h4>
+<p>刚才是吧fallback写在了某个业务的方法上，如果这样的方法多了，就会导致每个方法都写一个fallback，实际上可能意义不大，我们就可以写默认的fallback</p>
+<p>对controller改造</p>
+<pre><code class="language-java">@RestController
+@RequestMapping(&quot;/consumer&quot;)
+@DefaultProperties(defaultFallback = &quot;defaultFallback&quot;)
+public class ConsumerController {
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Autowired
+    private DiscoveryClient discoveryClient;
+
+    @RequestMapping(&quot;/{id}&quot;)
+    //@HystrixCommand(fallbackMethod = &quot;queryByIdFallback&quot;)
+    @HystrixCommand
+    public User getByyid(@PathVariable(&quot;id&quot;) Long id){
+        //使用负载均衡（Ribbon）
+        String url = &quot;http://user-service/user/&quot; + id;
+        return restTemplate.getForObject(url,User.class);
+    }
+    //熔断的方法：方法名和正常的方法名一致，参数一致
+    public User queryByIdFallback(Long id){
+        User user = new User();
+        user.setId(id);
+        user.setNote(&quot;对不起网络太用拥挤了！&quot;);
+        return user;
+    }
+
+    //默认服务熔断
+    public User defaultFallback(){
+        User user = new User();
+        user.setNote(&quot;默认提示：对不起,网络太用拥挤了！&quot;);
+        return user;
+    }
 }
 </code></pre>
+<h4 id="超时设置">超时设置</h4>
+<p>在案例中，请求在超过1秒后都会返回错误信息，这是因为Hystirx的默认超时时间是1秒</p>
+<pre><code class="language-yml">hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 2000
+</code></pre>
+<p>这个配置会作用于全局所有的方法</p>
+<p>为了演示这个效果，我先将上面的2000恢复到默认值是1000，然后修改了user-service中的service方法，给2秒的访问延迟</p>
+<pre><code class="language-java">@Service
+public class UserServiceImpl implements UserService {
+    @Autowired
+    private UserRepository userRepository;
+    @Override
+    public User getUserById(Long id) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return userRepository.findUserById(id);
+    }
+}
+</code></pre>
+<p>接着我们再访问user-web，发现即使user-service服务是能正常提供服务，但是他们的通讯时间超过了1秒还是会出现问题。接下来，将上面的配置改为3000毫秒，接下来就能正常访问了</p>
+<h2 id="服务熔断">服务熔断</h2>
+<h3 id="原理-2">原理</h3>
+<p>在服务熔断中，使用的是熔断器，也叫断路器，英文叫：Circuit Breaker</p>
+<p>熔断器跟家用的保险丝原理类似：当如果电路发生了短路的时候能够立即熔断电路，避免灾难的发生。在分布式系统的应用中应用服务熔断后，服务调用方可以自己进行判断哪些服务反应慢或者是存在大量的超时，可以针对这些服务进行主动熔断，防止整个系统被拖垮</p>
+<p>Hystrix的服务熔断机制，可以实现弹性容错，当服务请求情况好转之后，可以自动重连。通过短路的方式，将后续请求直接拒绝，一段时间（默认时间是5秒）之后允许部分请求通过，如果调用成功则回到断路器关闭状态，否则将继续打开，拒绝请求的服务。</p>
+<p>Hystirx的熔断状态模型：</p>
+<figure data-type="image" tabindex="6"><img src="https://haohanya.github.io/post-images/1592150460918.png" alt="" loading="lazy"></figure>
 
             </div>
             <div class="post-footer">
@@ -661,7 +768,7 @@ for(Annotation an : method.getAnnotations()){
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://haohanya.github.io/post/java-fan-she/" title="Java反射">https://haohanya.github.io/post/java-fan-she/</a>
+      <a href="https://haohanya.github.io/post/rong-duan-qi-hystrix/" title=" 熔断器Hystrix">https://haohanya.github.io/post/rong-duan-qi-hystrix/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -670,21 +777,23 @@ for(Annotation an : method.getAnnotations()){
   </ul>
   <div class="tags">
     
-      <a href="https://haohanya.github.io/tag/CX9XCxDcJ/"># java</a>
+      <a href="https://haohanya.github.io/tag/nH8Xd-9Pr/"># hystrix</a>
+    
+      <a href="https://haohanya.github.io/tag/omgSh_ZiA/"># Spring-Cloud</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
         <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="MyBatis" href="https://haohanya.github.io/post/mybatis/">MyBatis</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="MyBatis" href="https://haohanya.github.io/post/mybatis/">上一篇</a>
+        <a class="nav-pc-next" title="RabbitMQ（一）" href="https://haohanya.github.io/post/rabbitmqyi/">RabbitMQ（一）</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="RabbitMQ（一）" href="https://haohanya.github.io/post/rabbitmqyi/">上一篇</a>
       
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="FastDFS" href="https://haohanya.github.io/post/FastDFS/">FastDFS</a>
-        <a class="nav-mobile-next" title="FastDFS" href="https://haohanya.github.io/post/FastDFS/">下一篇</a>
+        <a class="nav-pc-next" title=" Ribbon负载均衡器" href="https://haohanya.github.io/post/ribbon-fu-zai-jun-heng-qi/"> Ribbon负载均衡器</a>
+        <a class="nav-mobile-next" title=" Ribbon负载均衡器" href="https://haohanya.github.io/post/ribbon-fu-zai-jun-heng-qi/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>

@@ -8,7 +8,7 @@
 <meta name="keywords" content="浩瀚,浩瀚博客,java">
 <meta name="description" content="浩瀚-每天向往着外面的世界">
 <meta name="theme-color" content="#000">
-<title>Java反射 | 浩瀚</title>
+<title> Ribbon负载均衡器 | 浩瀚</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1592159036467">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
@@ -37,8 +37,8 @@
 
 
 
-  <meta name="description" content="Java反射" />
-  <meta name="keywords" content="java" />
+  <meta name="description" content=" Ribbon负载均衡器" />
+  <meta name="keywords" content="Ribbon,Spring-Cloud" />
 </head>
 
 <body>
@@ -237,21 +237,17 @@
   <div class="toc-wrapper auto-number auto"
     id="toc_wrapper">
     <ul class="markdownIt-TOC">
-<li>
+<li><a href="#ribbon">Ribbon</a>
 <ul>
-<li><a href="#%E8%8E%B7%E5%8F%96class%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E5%BC%8F">获取Class对象的方式</a></li>
-<li><a href="#class%E5%AF%B9%E8%B1%A1%E5%8A%9F%E8%83%BD">Class对象功能</a>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFribbon">什么是Ribbon</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E8%AE%AF%E9%97%AE%E9%A2%98">服务之间的通讯问题</a></li>
+<li><a href="#%E5%AE%9E%E6%88%98">实战</a>
 <ul>
-<li><a href="#%E8%8E%B7%E5%8F%96%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F">获取成员变量</a></li>
-<li><a href="#%E8%8E%B7%E5%8F%96%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95">获取构造方法</a></li>
-<li><a href="#%E8%8E%B7%E5%8F%96%E6%88%90%E5%91%98%E6%96%B9%E6%B3%95">获取成员方法</a></li>
-<li><a href="#field%E6%88%90%E5%91%98%E5%8F%98%E9%87%8F">Field：成员变量</a></li>
-<li><a href="#constructor%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95">Constructor:构造方法</a></li>
-<li><a href="#method%E6%96%B9%E6%B3%95%E5%AF%B9%E8%B1%A1">Method：方法对象</a></li>
+<li><a href="#1-%E5%85%88%E5%90%AF%E5%8A%A82%E4%B8%AAuser-service%E5%AE%9E%E4%BE%8B">1、先启动2个user-service实例</a></li>
+<li><a href="#2-%E5%9C%A8user-web%E5%B7%A5%E7%A8%8B%E4%B8%AD%E5%BC%80%E5%90%AF%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">2、在user-web工程中开启负载均衡</a></li>
+<li><a href="#3-%E4%BF%AE%E6%94%B9controller%E4%B8%AD%E8%8E%B7%E5%8F%96%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95">3、修改controller中获取服务的方法</a></li>
 </ul>
 </li>
-<li><a href="#%E5%8F%8D%E5%B0%84%E8%8E%B7%E5%8F%96%E6%B3%A8%E8%A7%A3">反射获取注解</a></li>
-<li><a href="#%E8%8E%B7%E5%8F%96%E5%BD%93%E5%89%8D%E8%B0%83%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95%E4%B8%8A%E7%9A%84%E6%B3%A8%E8%A7%A3">获取当前调用的方法上的注解</a></li>
 </ul>
 </li>
 </ul>
@@ -519,8 +515,8 @@
           <div class="section bg-color post post-page">
             <header class="post-header">
   <h1 class="post-title">
-    <a class="post-title-link" href="https://haohanya.github.io/post/java-fan-she/">
-      Java反射
+    <a class="post-title-link" href="https://haohanya.github.io/post/ribbon-fu-zai-jun-heng-qi/">
+       Ribbon负载均衡器
     </a>
   </h1>
   <div class="post-meta">
@@ -528,7 +524,7 @@
     <span class="meta-item pc-show">
       <i class="fa fa-calendar-o"></i>
       <span>发布于</span>
-      <span>2020-05-04</span>
+      <span>2020-06-14</span>
       <span class="post-meta-divider pc-show">|</span>
     </span>
     
@@ -537,8 +533,14 @@
       <span class="pc-show">分类于</span>
       
       
-      <a href="https://haohanya.github.io/tag/CX9XCxDcJ/">
-        <span>java</span>
+      <a href="https://haohanya.github.io/tag/7HXRiZgDt/">
+        <span>Ribbon</span>
+      </a>、
+      
+      
+      
+      <a href="https://haohanya.github.io/tag/omgSh_ZiA/">
+        <span>Spring-Cloud</span>
       </a>
       
       
@@ -547,17 +549,17 @@
     
     <span class="meta-item">
       <i class="fa fa-clock-o"></i>
-      <span>4分钟</span>
+      <span>3分钟</span>
     </span>
     <span class="meta-item">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-file-word-o"></i>
-      <span>703<span class="pc-show">字数</span></span>
+      <span>526<span class="pc-show">字数</span></span>
     </span>
     
     
     
-    <span id="/post/java-fan-she/" data-flag-title="Java反射" class="meta-item pc-show leancloud_visitors">
+    <span id="/post/ribbon-fu-zai-jun-heng-qi/" data-flag-title=" Ribbon负载均衡器" class="meta-item pc-show leancloud_visitors">
       <span class="post-meta-divider">|</span>
       <i class="fa fa-eye"></i>
       <span>浏览量：<span class="leancloud-visitors-count"></span></span>
@@ -566,91 +568,63 @@
   </div>
 </header>
             <div class="post-body next-md-body" id="post_body">
-              <h2 id="获取class对象的方式">获取Class对象的方式</h2>
-<pre><code class="language-java">Class.forName(&quot;全类名&quot;);//将字节码文件加载进内存，返回Class对象
+              <h1 id="ribbon">Ribbon</h1>
+<h2 id="什么是ribbon">什么是Ribbon</h2>
+<blockquote>
+<p>Ribbon是Netflix发布的一个负载均衡器，它有助于控制Http和TCP客户端的行为。为Ribbon配置服务提供者列表后，Ribbon就可以基于某种负载均衡的算法，自动地帮助我们选择其中的一个服务给消费者。Ribbon默认负载均衡算法是轮询，除此之外还有随机等，当然实际开发中也可以自定义负载均衡的算法</p>
+</blockquote>
+<h2 id="服务之间的通讯问题">服务之间的通讯问题</h2>
+<blockquote>
+<p>永远是从eureka中拉取到了服务提供者的列表，但是永远只用第一个服务，其他的服务就都闲置着了</p>
+</blockquote>
+<pre><code class="language-java">@RequestMapping(&quot;/{id}&quot;)
+public User getByyid(@PathVariable(&quot;id&quot;) Long id){
+    //地址从eureka中获取
+    List&lt;ServiceInstance&gt; instancesList = discoveryClient.getInstances(&quot;user-service&quot;);
+    //有可能有多个服务，我只需要拿一个
+    ServiceInstance serviceInstance = instancesList.get(0);
+    //组装
+    String url = &quot;http://&quot;+ serviceInstance.getHost()+&quot;:&quot;+serviceInstance.getPort()+&quot;/user/&quot; + id;
+    //采用http的方式系统之间通讯
+    return restTemplate.getForObject(url,User.class);
+}
 </code></pre>
-<p>多用于配置文件，将类名定义在配置文件中。读取文件，加载类<br>
-类名.class：通过类名的属性class获取<br>
-多用于参数的传递<br>
-对象.getClass()：getClass()方法在Object类中定义着。</p>
-<pre><code class="language-java">//多用于对象的获取字节码的方式
-Class clazz = News.class;
-Object obj = clazz.newInstance();           //实例化一个对象：等同于 new 一个对象
-System.out.println(clazz.getSimpleName());  //获取类名
-System.out.println(clazz.getName());        //获取完整的包名+类名
-</code></pre>
-<h2 id="class对象功能">Class对象功能</h2>
-<h3 id="获取成员变量">获取成员变量</h3>
-<p>​        Field[] getFields() ：获取所有public修饰的成员变量</p>
-<p>​		Field getField(String name)   获取指定名称的 public修饰的成员变量</p>
-<p>​		Field[] getDeclaredFields();  //获取所有的成员变量，不考虑修饰符</p>
-<p>​		Field getDeclaredField(String name); // 获取指定名称的成员变量，不考虑修饰符</p>
-<pre><code class="language-java">Class clazz = News.class;
-System.out.println(clazz.getSimpleName());//获取类名
-System.out.println(clazz.getName());//获取包名+类名
-Object obj = clazz.newInstance();//实例化News的这个对象
-Table table = obj.getClass().getAnnotation(Table.class);//获取obj对象的Table注解，没有返回null
-System.out.println(table.value());
-Field[] fields = clazz.getDeclaredFields();
-for (Field field : fields) {
-	field.setAccessible(true);//暴力反射,如果不写这个将会报错
-    //获取属性的注解
-    //Field field1 = obj.getClass().getDeclaredField(field.getName());//获取obj对象的指定属性
-    PK pk = field.getAnnotation(PK.class);//获取属性的注解
+<blockquote>
+<p>解决方案：通过一种算法，合理的选择其中的一个服务。可以通过编写负载均衡的算法，在多个实例列表中选择一个服务</p>
+<p>不过Eurkea中已经集成了负载均衡组件：Ribbon（简单的修改代码即可使用）</p>
+</blockquote>
+<h2 id="实战">实战</h2>
+<h3 id="1-先启动2个user-service实例">1、先启动2个user-service实例</h3>
+<h3 id="2-在user-web工程中开启负载均衡">2、在user-web工程中开启负载均衡</h3>
+<p>在eureka-client的包中已经集成了Ribbon，所以不需要导入新的依赖</p>
+<p>直接修改启动类，添加开启的注解（在RestTemplate上面添加@LoadBalanced）</p>
+<pre><code class="language-java">@SpringBootApplication
+@EnableDiscoveryClient  //开启发现服务
+public class UserWebApplication {
 
-	if(pk!=null){
-    	System.out.println(field.getName()+&quot;&gt;&gt;&gt;&quot;+pk);//获取属性名称
+    public static void main(String[] args) {
+        SpringApplication.run(UserWebApplication.class, args);
     }
-        field.set(obj,null);//给当前clazz对象的field属性赋值为i
-        System.out.println(field.get(obj));//输出clazz对象的field的属性值
+    
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
+    }
 }
 </code></pre>
-<h3 id="获取构造方法">获取构造方法</h3>
-<p>​	Constructor&lt;?&gt;[] getConstructors()</p>
-<p>​	Constructor<T> getConstructor(类&lt;?&gt;... parameterTypes)</p>
-<p>​	Constructor<T> getDeclaredConstructor(类&lt;?&gt;... parameterTypes)</p>
-<p>​	Constructor&lt;?&gt;[] getDeclaredConstructors()</p>
-<h3 id="获取成员方法">获取成员方法</h3>
-<p>​	Method[] getMethods()</p>
-<p>​	Method getMethod(String name, 类&lt;?&gt;... parameterTypes)</p>
-<p>​	Method[] getDeclaredMethods()</p>
-<p>​	Method getDeclaredMethod(String name, 类&lt;?&gt;... parameterTypes)</p>
-<h3 id="field成员变量">Field：成员变量</h3>
-<p>设置值</p>
-<pre><code class="language-java">void set(Object obj, Object value)
-</code></pre>
-<p>获取值，传的是对象</p>
-<pre><code class="language-java">get(Object obj) 
-</code></pre>
-<p>忽略访问权限修饰符的安全检查</p>
-<pre><code class="language-java">setAccessible(true)
-</code></pre>
-<h3 id="constructor构造方法">Constructor:构造方法</h3>
-<p>创建对象，如果使用空参数构造方法创建对象，操作可以简化：Class对象的newInstance方法</p>
-<pre><code class="language-java">T newInstance(Object... initargs)
-</code></pre>
-<h3 id="method方法对象">Method：方法对象</h3>
-<p>执行方法</p>
-<pre><code class="language-java">Object invoke(Object obj, Object... args)
-</code></pre>
-<p>获取方法名称</p>
-<pre><code class="language-java">String getName
-</code></pre>
-<h2 id="反射获取注解">反射获取注解</h2>
-<p>获取obj对象的Table注解，没有返回null，obj是要获取的对象</p>
-<pre><code class="language-java">Table table = obj.getClass().getAnnotation(Table.class);
-</code></pre>
-<p>获取属性的注解，获取obj对象的field.getName()的属性注解</p>
-<pre><code class="language-java">Field field1 = obj.getClass().getDeclaredField(field.getName());//获取obj对象的指定属性
-PK pk = field1.getAnnotation(PK.class);//获取属性的注解
-</code></pre>
-<h2 id="获取当前调用的方法上的注解">获取当前调用的方法上的注解</h2>
-<pre><code>StackTraceElement[] stack = new Throwable().getStackTrace();
-Method method = this.getClass().getMethod(stack[1].getMethodName());//这里0是当前方法的注解，1是调用者方法的注解
-for(Annotation an : method.getAnnotations()){
-    System.out.println(an);
+<h3 id="3-修改controller中获取服务的方法">3、修改controller中获取服务的方法</h3>
+<pre><code class="language-java">@RequestMapping(&quot;/{id}&quot;)
+public User getByyid(@PathVariable(&quot;id&quot;) Long id){
+
+    //使用负载均衡（Ribbon）
+    String url = &quot;http://user-service/user/&quot; + id;
+    return restTemplate.getForObject(url,User.class);
 }
 </code></pre>
+<p>接下来测试就可以通了</p>
+<p>关掉一个user-service后测试是否可以正常获取到服务</p>
+<p>再启动关掉的那个user-service后关掉第二个user-service服务再测试。</p>
 
             </div>
             <div class="post-footer">
@@ -661,7 +635,7 @@ for(Annotation an : method.getAnnotations()){
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://haohanya.github.io/post/java-fan-she/" title="Java反射">https://haohanya.github.io/post/java-fan-she/</a>
+      <a href="https://haohanya.github.io/post/ribbon-fu-zai-jun-heng-qi/" title=" Ribbon负载均衡器">https://haohanya.github.io/post/ribbon-fu-zai-jun-heng-qi/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -670,21 +644,23 @@ for(Annotation an : method.getAnnotations()){
   </ul>
   <div class="tags">
     
-      <a href="https://haohanya.github.io/tag/CX9XCxDcJ/"># java</a>
+      <a href="https://haohanya.github.io/tag/7HXRiZgDt/"># Ribbon</a>
+    
+      <a href="https://haohanya.github.io/tag/omgSh_ZiA/"># Spring-Cloud</a>
     
   </div>
   <div class="nav">
     <div class="nav-prev">
       
         <i class="fa fa-chevron-left"></i>
-        <a class="nav-pc-next" title="MyBatis" href="https://haohanya.github.io/post/mybatis/">MyBatis</a class="nav-pc-next">
-        <a class="nav-mobile-prev" title="MyBatis" href="https://haohanya.github.io/post/mybatis/">上一篇</a>
+        <a class="nav-pc-next" title=" 熔断器Hystrix" href="https://haohanya.github.io/post/rong-duan-qi-hystrix/"> 熔断器Hystrix</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title=" 熔断器Hystrix" href="https://haohanya.github.io/post/rong-duan-qi-hystrix/">上一篇</a>
       
     </div>
     <div class="nav-next">
       
-        <a class="nav-pc-next" title="FastDFS" href="https://haohanya.github.io/post/FastDFS/">FastDFS</a>
-        <a class="nav-mobile-next" title="FastDFS" href="https://haohanya.github.io/post/FastDFS/">下一篇</a>
+        <a class="nav-pc-next" title="Eureka" href="https://haohanya.github.io/post/eureka/">Eureka</a>
+        <a class="nav-mobile-next" title="Eureka" href="https://haohanya.github.io/post/eureka/">下一篇</a>
         <i class="fa fa-chevron-right"></i>
       
     </div>
