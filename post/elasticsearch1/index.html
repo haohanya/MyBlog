@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="shortcut icon" href="https://haohanya.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="浩瀚-每天向往着外面的世界"><meta charset="UTF-8"><title> ElasticSearch（1） | 浩瀚</title>
+<link href="https://haohanya.github.io/styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://haohanya.github.io/media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://haohanya.github.io/media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+
+<link rel="canonical" href="https://haohanya.github.io/post/elasticsearch1/" />
+</head>
+<body>
+<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
+<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://haohanya.github.io"><img alt="logo" style="display:inline-block;" src="https://haohanya.github.io/images/avatar.png"/></a><h1 title="浩瀚" class="weaklink"><a  href="/">浩瀚</a></h1>
+
+<style>.santa-body{float:left;margin:10.5px 7.5px 0px 0px;font-size:20px;color:#f91047;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;width:1em;height:1em;background-color:currentColor;-webkit-box-shadow:inset 0 -0.25em rgba(0,0,0,0.1);box-shadow:inset 0 -0.25em rgba(0,0,0,0.1);border-radius:50%;-webkit-transform-origin:center bottom;-ms-transform-origin:center bottom;transform-origin:center bottom;-webkit-animation:balance alternate infinite 2s ease-in-out;animation:balance alternate infinite 2s ease-in-out;}.santa-head{font-size:.4em;width:1em;height:1.9em;background-color:white;border-radius:.5em;-webkit-transform:translateY(-1em);-ms-transform:translateY(-1em);transform:translateY(-1em);position:relative;}.santa-head::before{content:'';width:1em;height:.375em;display:block;background-color:#ff9876;position:absolute;left:0;top:.65em;}.santa-ear{background-color:#fc8363;width:.1em;height:.3em;position:absolute;top:.75em;}.santa-ear:nth-of-type(1){border-radius:.05em 0 0 .05em;left:-0.1em;}.santa-ear:nth-of-type(2){border-radius:0 .05em .05em 0;right:-0.1em;}.santa-hat{content:'';width:1em;height:.15em;position:absolute;-webkit-transform:scale(1.1);-ms-transform:scale(1.1);transform:scale(1.1);top:.5em;left:0;background-color:white;}.santa-hat::before{content:'';display:block;width:1em;height:.5em;background:#f91047;border-radius:.5em .5em 0 0;z-index:2;position:absolute;top:-0.5em;}.santa-hat::after{content:'';width:.25em;height:.25em;display:block;background-color:white;border-radius:50%;position:absolute;z-index:0;top:-0.72em;right:0;-webkit-box-shadow:-0.2em .2em 0 .12em rgba(0,0,0,0.2),-0.2em .2em 0 .12em #f91047;box-shadow:-0.2em .2em 0 .12em rgba(0,0,0,0.2),-0.2em .2em 0 .12em #f91047;}.santa-eye{width:.12em;height:.12em;background-color:black;border-radius:50%;position:absolute;top:.76em;left:.2em;}.santa-eye + .santa-eye{left:auto;right:.2em;}.santa-nose{width:.12em;height:.22em;background-color:#f24c4c;border-radius:0 0 .12em .12em;position:absolute;top:.84em;left:50%;-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%);}.santa-mouth{width:.18em;height:.1em;border-bottom-right-radius:5vw;border-bottom-left-radius:5vw;margin-top:.3em;background-color:black;position:absolute;left:50%;top:50%;-webkit-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%);-webkit-animation:hohoho 4s linear forwards infinite;animation:hohoho 4s linear forwards infinite;}@-webkit-keyframes hohoho{0%,10%,20%,40%,100%{width:.18em;height:.1em;border-bottom-right-radius:1vw;border-bottom-left-radius:1vw;}5%,15%,25%,35%{width:.15em;height:.2em;border-radius:50%;}}@keyframes hohoho{0%,10%,20%,40%,100%{width:.18em;height:.1em;border-bottom-right-radius:1vw;border-bottom-left-radius:1vw;}5%,15%,25%,35%{width:.15em;height:.2em;border-radius:50%;}}@-webkit-keyframes balance{from{-webkit-transform:rotate(-4deg);transform:rotate(-4deg);}to{-webkit-transform:rotate(4deg);transform:rotate(4deg);}}@keyframes balance{from{-webkit-transform:rotate(-4deg);transform:rotate(-4deg);}to{-webkit-transform:rotate(4deg);transform:rotate(4deg);}}</style>
+<div class="santa"><div class="santa-body"><div class="santa-head"><div class="santa-ear"></div><div class="santa-ear"></div><div class="santa-hat"></div><div class="santa-eye"></div><div class="santa-eye"></div><div class="santa-nose"></div><div class="santa-mouth"></div></div></div></div>
+
+<div class="navbar weaklink">
+<div class="normal_nav">
+<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://ucuser.cn/links/" class="selected active current nav__item" >友情链接</a></li></ul></nav>
+<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
+<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://ucuser.cn/links/" class="selected active current nav__item" >友情链接</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
+<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1594482641426" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
+</div></div>
+<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
+
+<style>.deng-box{position:fixed;top:-40px;left:-80px;z-index:9999}.deng-box1{position:fixed;top:-30px;left:-80px;z-index:9999}.deng-box1 .deng{position:relative;width:120px;height:90px;margin:50px;background:#d8000f;background:rgba(216,0,15,0.8);border-radius:50% 50%;-webkit-transform-origin:50% -100px;-webkit-animation:swing 5s infinite ease-in-out;box-shadow:-5px 5px 30px 4px rgba(252,144,61,1)}.deng{position:relative;width:120px;height:90px;margin:50px;background:#d8000f;background:rgba(216,0,15,0.8);border-radius:50% 50%;-webkit-transform-origin:50% -100px;-webkit-animation:swing 3s infinite ease-in-out;box-shadow:-5px 5px 50px 4px rgba(250,108,0,1)}.deng-a{width:100px;height:90px;background:#d8000f;background:rgba(216,0,15,0.1);margin:12px 8px 8px 8px;border-radius:50% 50%;border:2px solid #dc8f03}.deng-b{width:45px;height:90px;background:#d8000f;background:rgba(216,0,15,0.1);margin:-4px 8px 8px 26px;border-radius:50% 50%;border:2px solid #dc8f03}.xian{position:absolute;top:-20px;left:60px;width:2px;height:20px;background:#dc8f03}.shui-a{position:relative;width:5px;height:20px;margin:-5px 0 0 59px;-webkit-animation:swing 4s infinite ease-in-out;-webkit-transform-origin:50% -45px;background:#ffa500;border-radius:0 0 5px 5px}.shui-b{position:absolute;top:14px;left:-2px;width:10px;height:10px;background:#dc8f03;border-radius:50%}.shui-c{position:absolute;top:18px;left:-2px;width:10px;height:35px;background:#ffa500;border-radius:0 0 0 5px}.deng:before{position:absolute;top:-7px;left:29px;height:12px;width:60px;content:" ";display:block;z-index:999;border-radius:5px 5px 0 0;border:solid 1px #dc8f03;background:#ffa500;background:linear-gradient(to right,#dc8f03,#ffa500,#dc8f03,#ffa500,#dc8f03)}.deng:after{position:absolute;bottom:-7px;left:10px;height:12px;width:60px;content:" ";display:block;margin-left:20px;border-radius:0 0 5px 5px;border:solid 1px #dc8f03;background:#ffa500;background:linear-gradient(to right,#dc8f03,#ffa500,#dc8f03,#ffa500,#dc8f03)}.deng-t{font-family:华文行楷,Arial,Lucida Grande,Tahoma,sans-serif;color:#dc8f03;font-weight:bold;line-height:85px;text-align:center}.night .deng-t,.night .deng-box,.night .deng-box1{background:transparent !important}@-moz-keyframes swing{0%{-moz-transform:rotate(-10deg)}50%{-moz-transform:rotate(10deg)}100%{-moz-transform:rotate(-10deg)}}@-webkit-keyframes swing{0%{-webkit-transform:rotate(-10deg)}50%{-webkit-transform:rotate(10deg)}100%{-webkit-transform:rotate(-10deg)}}</style>
+<div class="deng-box"><div class="deng"><div class="xian"></div><div class="deng-a"><div class="deng-b"><div class="deng-t">节</div></div></div><div class="shui shui-a"><div class="shui-c"></div><div class="shui-b"></div></div></div></div> <div class="deng-box1"><div class="deng"><div class="xian"></div><div class="deng-a"><div class="deng-b"><div class="deng-t">春节</div></div></div><div class="shui shui-a"><div class="shui-c"></div><div class="shui-b"></div></div></div></div>
+
+<div class="main"><div class="main-inner"><div class="content">
+<article class="post">
+<h2 class="post_title sm_margin"><a> ElasticSearch（1）</a></h2>
+<script>function lan(){if(document.getElementById("lan").innerText=="繁"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_tw.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="简"}else{if(document.getElementById("lan").innerText=="簡"){var s=document.getElementById("tongwenlet_cn");if(s!=null){document.body.removeChild(s)}var s=document.createElement("script");s.language="javascript";s.type="text/javascript";s.src="https://cdn.jsdelivr.net/gh/qyxtim/Static@1.1/bookmarklet_cn.js";s.id="tongwenlet_cn";document.body.appendChild(s);document.getElementById("lan").innerHTML="繁"}}};</script>
+<section class="post_details"><i class="iconfont icon-calendar"></i><span style="margin-right:15px"> 2020-07-11</span><i class="iconfont icon-browse"></i><span style="margin-right:15px"> <span id="busuanzi_value_page_pv"></span> Views</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:15px">	<a href="https://haohanya.github.io/tag/cubgb1j5P/" class="tag">ElasticSearch</a></span><i class="iconfont icon-caret-down"></i><span style="margin-right:15px">8562字</span><i class="iconfont icon-naozhong"></i><span style="margin-right:15px">35 min read</span><a id="lan" href="javascript:void(0);"onclick="lan();"title="调整简繁体" style="margin-right:15px;">繁</a>
+</section>
+
+<div style="display:flex">
+<div class="md_block" id="md_block">
+<div class="round-shape-one"></div>
+<h2 id="elasticsearch简介">ElasticSearch简介</h2>
+<h3 id="什么是elasticsearch">什么是ElasticSearch</h3>
+<p>Elaticsearch，简称为es， es是一个开源的高扩展的分布式全文检索引擎，它可以近乎实时的存储、检索数据；本<br>
+身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。es也使用Java开发并使用Lucene作为其核心来实<br>
+现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得<br>
+简单。</p>
+<h3 id="elasticsearch的使用案例">ElasticSearch的使用案例</h3>
+<ul>
+<li>2013年初，GitHub抛弃了Solr，采取ElasticSearch 来做PB级的搜索。 “GitHub使用ElasticSearch搜索20TB<br>
+的数据，包括13亿文件和1300亿行代码”</li>
+<li>维基百科：启动以elasticsearch为基础的核心搜索架构</li>
+<li>SoundCloud：“SoundCloud使用ElasticSearch为1.8亿用户提供即时而精准的音乐搜索服务”</li>
+<li>百度：百度目前广泛使用ElasticSearch作为文本数据分析，采集百度所有服务器上的各类指标数据及用户自<br>
+定义数据，通过对各种数据进行多维分析展示，辅助定位分析实例异常或业务层面异常。目前覆盖百度内部<br>
+20多个业务线（包括casio、云分析、网盟、预测、文库、直达号、钱包、风控等），单集群最大100台机<br>
+器，200个ES节点，每天导入30TB+数据</li>
+<li>新浪使用ES 分析处理32亿条实时日志</li>
+<li>阿里使用ES 构建挖财自己的日志采集和分析体系</li>
+</ul>
+<h3 id="elasticsearch对比solr">ElasticSearch对比Solr</h3>
+<ul>
+<li>Solr 利用 Zookeeper 进行分布式管理，而 Elasticsearch 自身带有分布式协调管理功能;</li>
+<li>Solr 支持更多格式的数据，而 Elasticsearch 仅支持json文件格式；</li>
+<li>Solr 官方提供的功能更多，而 Elasticsearch 本身更注重于核心功能，高级功能多有第三方插件提供；</li>
+<li>Solr 在传统的搜索应用中表现好于 Elasticsearch，但在处理实时搜索应用时效率明显低于 Elasticsearch</li>
+</ul>
+<h2 id="elasticsearch安装与启动">ElasticSearch安装与启动</h2>
+<h3 id="下载es压缩包">下载ES压缩包</h3>
+<p>ElasticSearch分为Linux和Window版本，基于我们主要学习的是ElasticSearch的Java客户端的使用，所以我们课<br>
+程中使用的是安装较为简便的Window版本，项目上线后，公司的运维人员会安装Linux版的ES供我们连接使用。<br>
+ElasticSearch的官方地址： https://www.elastic.co/products/elasticsearch</p>
+<h3 id="安装es服务">安装ES服务</h3>
+<p>Window版的ElasticSearch的安装很简单，类似Window版的Tomcat，解压开即安装完毕，解压后的ElasticSearch<br>
+的目录结构如下：</p>
+<figure data-type="image" tabindex="1"><img src="https://haohanya.github.io/post-images/1594482264761.png" alt="" loading="lazy"></figure>
+<p>修改elasticsearch配置文件：config/elasticsearch.yml，增加以下两句命令：</p>
+<pre><code class="language-yaml">http.cors.enabled: true
+http.cors.allow‐origin: &quot;*&quot;
+</code></pre>
+<blockquote>
+<p>此步为允许elasticsearch跨越访问，如果不安装后面的elasticsearch-head是可以不修改，直接启动。</p>
+</blockquote>
+<h3 id="启动es服务">启动ES服务</h3>
+<p>点击ElasticSearch下的bin目录下的elasticsearch.bat启动</p>
+<figure data-type="image" tabindex="2"><img src="https://haohanya.github.io/post-images/1594482281436.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>注意：9300是tcp通讯端口，集群间和TCPClient都执行该端口，9200是http协议的RESTful接口 。<br>
+通过浏览器访问ElasticSearch服务器，看到如下返回的json信息，代表服务启动成功：</p>
+</blockquote>
+<figure data-type="image" tabindex="3"><img src="https://haohanya.github.io/post-images/1594482295427.png" alt="" loading="lazy"></figure>
+<blockquote>
+<p>注意：ElasticSearch是使用java开发的，且本版本的es需要的jdk版本要是1.8以上，所以安装ElasticSearch之前保<br>
+证JDK1.8+安装完毕，并正确的配置好JDK环境变量，否则启动ElasticSearch失败。</p>
+</blockquote>
+<h3 id="安装es的图形化界面插件">安装ES的图形化界面插件</h3>
+<p>ElasticSearch不同于Solr自带图形化界面，我们可以通过安装ElasticSearch的head插件，完成图形化界面的效<br>
+果，完成索引数据的查看。安装插件的方式有两种，在线安装和本地安装。本文档采用本地安装方式进行head插<br>
+件的安装。elasticsearch-5-*以上版本安装head需要安装node和grunt</p>
+<ol>
+<li>
+<p>下载head插件：https://github.com/mobz/elasticsearch-head</p>
+</li>
+<li>
+<p>将elasticsearch-head-master压缩包解压到任意目录，但是要和elasticsearch的安装目录区别开</p>
+</li>
+<li>
+<p>下载nodejs：https://nodejs.org/en/download/</p>
+</li>
+<li>
+<p>将grunt安装为全局命令 ，Grunt是基于Node.js的项目构建工具</p>
+<blockquote>
+<p>npm install ‐g grunt ‐cli</p>
+</blockquote>
+</li>
+<li>
+<p>进入elasticsearch-head-master目录启动head，在命令提示符下输入命令</p>
+<blockquote>
+<p>npm install</p>
+<p>grunt server</p>
+</blockquote>
+</li>
+<li>
+<p>打开浏览器，输入 http://localhost:9100，看到如下页面</p>
+</li>
+</ol>
+<figure data-type="image" tabindex="4"><img src="https://haohanya.github.io/post-images/1594482438142.png" alt="" loading="lazy"></figure>
+<h2 id="elasticsearch相关概念术语">ElasticSearch相关概念(术语)</h2>
+<h3 id="概述">概述</h3>
+<p>Elasticsearch是面向文档(document oriented)的，这意味着它可以存储整个对象或文档(document)。然而它不仅<br>
+仅是存储，还会索引(index)每个文档的内容使之可以被搜索。在Elasticsearch中，你可以对文档（而非成行成列的<br>
+数据）进行索引、搜索、排序、过滤。Elasticsearch比传统关系型数据库如下：</p>
+<blockquote>
+<p>Relational DB ‐&gt; Databases ‐&gt; Tables ‐&gt; Rows ‐&gt; Columns<br>
+Elasticsearch ‐&gt; Indices   ‐&gt; Types  ‐&gt; Documents ‐&gt; Fields</p>
+</blockquote>
+<h3 id="elasticsearch核心概念">Elasticsearch核心概念</h3>
+<h4 id="索引-index">索引 index</h4>
+<p>一个索引就是一个拥有几分相似特征的文档的集合。比如说，你可以有一个客户数据的索引，另一个产品目录的索<br>
+引，还有一个订单数据的索引。一个索引由一个名字来标识（必须全部是小写字母的），并且当我们要对对应于这<br>
+个索引中的文档进行索引、搜索、更新和删除的时候，都要使用到这个名字。在一个集群中，可以定义任意多的索<br>
+引</p>
+<h4 id="类型-type">类型 type</h4>
+<p>在一个索引中，你可以定义一种或多种类型。一个类型是你的索引的一个逻辑上的分类/分区，其语义完全由你来<br>
+定。通常，会为具有一组共同字段的文档定义一个类型。比如说，我们假设你运营一个博客平台并且将你所有的数<br>
+据存储到一个索引中。在这个索引中，你可以为用户数据定义一个类型，为博客数据定义另一个类型，当然，也可<br>
+以为评论数据定义另一个类型。</p>
+<h4 id="字段field">字段Field</h4>
+<p>相当于是数据表的字段，对文档数据根据不同属性进行的分类标识</p>
+<h4 id="映射-mapping">映射 mapping</h4>
+<p>mapping是处理数据的方式和规则方面做一些限制，如某个字段的数据类型、默认值、分析器、是否被索引等等，<br>
+这些都是映射里面可以设置的，其它就是处理es里面数据的一些使用规则设置也叫做映射，按着最优规则处理数据<br>
+对性能提高很大，因此才需要建立映射，并且需要思考如何建立映射才能对性能更好</p>
+<h4 id="文档-document">文档 document</h4>
+<p>一个文档是一个可被索引的基础信息单元。比如，你可以拥有某一个客户的文档，某一个产品的一个文档，当然，<br>
+也可以拥有某个订单的一个文档。文档以JSON（Javascript Object Notation）格式来表示，而JSON是一个到处存<br>
+在的互联网数据交互格式。</p>
+<p>在一个index/type里面，你可以存储任意多的文档。注意，尽管一个文档，物理上存在于一个索引之中，文档必须<br>
+被索引/赋予一个索引的type。</p>
+<h4 id="接近实时-nrt">接近实时 NRT</h4>
+<p>Elasticsearch是一个接近实时的搜索平台。这意味着，从索引一个文档直到这个文档能够被搜索到有一个轻微的延<br>
+迟（通常是1秒以内）</p>
+<h4 id="集群-cluster">集群 cluster</h4>
+<p>一个集群就是由一个或多个节点组织在一起，它们共同持有整个的数据，并一起提供索引和搜索功能。一个集群由<br>
+一个唯一的名字标识，这个名字默认就是“elasticsearch”。这个名字是重要的，因为一个节点只能通过指定某个集<br>
+群的名字，来加入这个集群</p>
+<h4 id="节点-node">节点 node</h4>
+<p>一个节点是集群中的一个服务器，作为集群的一部分，它存储数据，参与集群的索引和搜索功能。和集群类似，一<br>
+个节点也是由一个名字来标识的，默认情况下，这个名字是一个随机的漫威漫画角色的名字，这个名字会在启动的<br>
+时候赋予节点。这个名字对于管理工作来说挺重要的，因为在这个管理过程中，你会去确定网络中的哪些服务器对<br>
+应于Elasticsearch集群中的哪些节点。</p>
+<p>一个节点可以通过配置集群名称的方式来加入一个指定的集群。默认情况下，每个节点都会被安排加入到一个叫<br>
+做“elasticsearch”的集群中，这意味着，如果你在你的网络中启动了若干个节点，并假定它们能够相互发现彼此，<br>
+它们将会自动地形成并加入到一个叫做“elasticsearch”的集群中。</p>
+<p>在一个集群里，只要你想，可以拥有任意多个节点。而且，如果当前你的网络中没有运行任何Elasticsearch节点，<br>
+这时启动一个节点，会默认创建并加入一个叫做“elasticsearch”的集群</p>
+<h4 id="分片和复制-shardsreplicas">分片和复制 shards&amp;replicas</h4>
+<p>一个索引可以存储超出单个结点硬件限制的大量数据。比如，一个具有10亿文档的索引占据1TB的磁盘空间，而任<br>
+一节点都没有这样大的磁盘空间；或者单个节点处理搜索请求，响应太慢。为了解决这个问题，Elasticsearch提供<br>
+了将索引划分成多份的能力，这些份就叫做分片。当你创建一个索引的时候，你可以指定你想要的分片的数量。每<br>
+个分片本身也是一个功能完善并且独立的“索引”，这个“索引”可以被放置到集群中的任何节点上。分片很重要，主<br>
+要有两方面的原因：</p>
+<p>​	1）允许你水平分割/扩展你的内容容量。</p>
+<p>​	2）允许你在分片（潜在地，位于多个节点上）之上</p>
+<p>进行分布式的、并行的操作，进而提高性能/吞吐量。<br>
+至于一个分片怎样分布，它的文档怎样聚合回搜索请求，是完全由Elasticsearch管理的，对于作为用户的你来说，<br>
+这些都是透明的。</p>
+<p>在一个网络/云的环境里，失败随时都可能发生，在某个分片/节点不知怎么的就处于离线状态，或者由于任何原因<br>
+消失了，这种情况下，有一个故障转移机制是非常有用并且是强烈推荐的。为此目的，Elasticsearch允许你创建分<br>
+片的一份或多份拷贝，这些拷贝叫做复制分片，或者直接叫复制。</p>
+<p>复制之所以重要，有两个主要原因： 在分片/节点失败的情况下，提供了高可用性。因为这个原因，注意到复制分<br>
+片从不与原/主要（original/primary）分片置于同一节点上是非常重要的。扩展你的搜索量/吞吐量，因为搜索可以<br>
+在所有的复制上并行运行。总之，每个索引可以被分成多个分片。一个索引也可以被复制0次（意思是没有复制）<br>
+或多次。一旦复制了，每个索引就有了主分片（作为复制源的原来的分片）和复制分片（主分片的拷贝）之别。分<br>
+片和复制的数量可以在索引创建的时候指定。在索引创建之后，你可以在任何时候动态地改变复制的数量，但是你<br>
+事后不能改变分片的数量。</p>
+<p>默认情况下，Elasticsearch中的每个索引被分片5个主分片和1个复制，这意味着，如果你的集群中至少有两个节<br>
+点，你的索引将会有5个主分片和另外5个复制分片（1个完全拷贝），这样的话每个索引总共就有10个分片。</p>
+<h2 id="elasticsearch的客户端操作">ElasticSearch的客户端操作</h2>
+<h3 id="下载postman">下载PostMan</h3>
+<p>Postman官网：https://www.getpostman.com</p>
+<h3 id="使用postman工具进行restful接口访问">使用Postman工具进行Restful接口访问</h3>
+<h4 id="elasticsearch的接口语法">ElasticSearch的接口语法</h4>
+<blockquote>
+<p>curl ‐X<VERB> '<PROTOCOL>😕/<HOST>:<PORT>/<PATH>?&lt;QUERY_STRING&gt;' ‐d '<BODY>'</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">参数</th>
+<th style="text-align:center">解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">VERB</td>
+<td style="text-align:center">适当的 HTTP 方法 或 谓词 : GET 、 POST 、 PUT 、 HEAD 或者 DELETE</td>
+</tr>
+<tr>
+<td style="text-align:center">PROTOCOL</td>
+<td style="text-align:center">http 或者 https （如果你在 Elasticsearch 前面有一个 https 代理）</td>
+</tr>
+<tr>
+<td style="text-align:center">HOST</td>
+<td style="text-align:center">Elasticsearch 集群中任意节点的主机名，或者用 localhost 代表本地机器上的节点</td>
+</tr>
+<tr>
+<td style="text-align:center">PORT</td>
+<td style="text-align:center">运行 Elasticsearch HTTP 服务的端口号，默认是 9200</td>
+</tr>
+<tr>
+<td style="text-align:center">PATH</td>
+<td style="text-align:center">API 的终端路径（例如 _count 将返回集群中文档数量）。Path 可能包含多个组件，例如： _cluster/stats 和 _nodes/stats/jvm</td>
+</tr>
+<tr>
+<td style="text-align:center">QUERY_STRING</td>
+<td style="text-align:center">任意可选的查询字符串参数 (例如 ?pretty 将格式化地输出 JSON 返回值，使其更容易阅读)</td>
+</tr>
+<tr>
+<td style="text-align:center">BODY</td>
+<td style="text-align:center">一个 JSON 格式的请求体 (如果请求需要的话)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="创建索引index和映射mapping">创建索引index和映射mapping</h4>
+<pre><code class="language-url">curl  PUT   http://127.0.0.1:9200/blog1
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;mappings&quot;: {
+        &quot;article&quot;: {
+            &quot;properties&quot;: {
+                &quot;id&quot;: {
+                 &quot;type&quot;: &quot;long&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;not_analyzed&quot;
+                },
+                &quot;title&quot;: {
+                 &quot;type&quot;: &quot;text&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;analyzed&quot;,
+                    &quot;analyzer&quot;:&quot;standard&quot;
+                },
+                &quot;content&quot;: {
+                 &quot;type&quot;: &quot;text&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;analyzed&quot;,
+                    &quot;analyzer&quot;:&quot;standard&quot;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;acknowledged&quot;: true,
+    &quot;shards_acknowledged&quot;: true,
+    &quot;index&quot;: &quot;blog1&quot;
+}
+</code></pre>
+<h4 id="创建索引后设置mapping">创建索引后设置Mapping</h4>
+<blockquote>
+<p>可以在创建索引时设置mapping信息，当然也可以先创建索引然后再设置mapping。<br>
+在上一个步骤中不设置maping信息，直接使用put方法创建一个索引，然后设置mapping信息。</p>
+</blockquote>
+<pre><code class="language-url">curl  post  http://127.0.0.1:9200/blog2/hello/_mapping 
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;hello&quot;: {
+            &quot;properties&quot;: {
+                &quot;id&quot;:{
+                 &quot;type&quot;:&quot;long&quot;,    
+                 &quot;store&quot;:true    
+                },
+                &quot;title&quot;:{
+                 &quot;type&quot;:&quot;text&quot;,    
+                 &quot;store&quot;:true,    
+                 &quot;index&quot;:true,    
+                 &quot;analyzer&quot;:&quot;standard&quot;    
+                },
+                &quot;content&quot;:{
+                 &quot;type&quot;:&quot;text&quot;,
+                 &quot;store&quot;:true,  
+                 &quot;index&quot;:true,    
+                 &quot;analyzer&quot;:&quot;standard&quot;    
+                }
+            }
+        }
+  }
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;acknowledged&quot;: true
+}
+</code></pre>
+<h4 id="删除索引index">删除索引index</h4>
+<pre><code class="language-curl">curl  delete  http://127.0.0.1:9200/blog1
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;acknowledged&quot;: true
+}
+</code></pre>
+<h4 id="创建文档document">创建文档document</h4>
+<pre><code class="language-curl">curl  post  http://127.0.0.1:9200/blog1/article/1
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+	&quot;id&quot;:1,    
+	&quot;title&quot;:&quot;ElasticSearch是一个基于Lucene的搜索服务器&quot;,    
+	&quot;content&quot;:&quot;它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;_index&quot;: &quot;blog1&quot;,
+    &quot;_type&quot;: &quot;article&quot;,
+    &quot;_id&quot;: &quot;1&quot;,
+    &quot;_version&quot;: 1,
+    &quot;result&quot;: &quot;created&quot;,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 2,
+        &quot;successful&quot;: 1,
+        &quot;failed&quot;: 0
+    },
+    &quot;created&quot;: true
+}
+</code></pre>
+<h4 id="修改文档document">修改文档document</h4>
+<pre><code class="language-curl">curl  post  http://127.0.0.1:9200/blog1/article/1 
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+	&quot;id&quot;:1,    
+	&quot;title&quot;:&quot;[修改]ElasticSearch是一个基于Lucene的搜索服务器&quot;,    
+	&quot;content&quot;:&quot;[修改]它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;_index&quot;: &quot;blog1&quot;,
+    &quot;_type&quot;: &quot;article&quot;,
+    &quot;_id&quot;: &quot;1&quot;,
+    &quot;_version&quot;: 2,
+    &quot;result&quot;: &quot;updated&quot;,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 2,
+        &quot;successful&quot;: 1,
+        &quot;failed&quot;: 0
+    },
+    &quot;created&quot;: false
+}
+</code></pre>
+<h4 id="删除文档document">删除文档document</h4>
+<pre><code class="language-curl">curl  delete  http://127.0.0.1:9200/blog1/article/1 
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;found&quot;: true,
+    &quot;_index&quot;: &quot;blog1&quot;,
+    &quot;_type&quot;: &quot;article&quot;,
+    &quot;_id&quot;: &quot;1&quot;,
+    &quot;_version&quot;: 3,
+    &quot;result&quot;: &quot;deleted&quot;,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 2,
+        &quot;successful&quot;: 1,
+        &quot;failed&quot;: 0
+    }
+}
+</code></pre>
+<h4 id="查询文档-根据id查询">查询文档-根据id查询</h4>
+<pre><code class="language-curl">curl  get  http://127.0.0.1:9200/blog1/article/1 
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;_index&quot;: &quot;blog1&quot;,
+    &quot;_type&quot;: &quot;article&quot;,
+    &quot;_id&quot;: &quot;1&quot;,
+    &quot;_version&quot;: 1,
+    &quot;found&quot;: true,
+    &quot;_source&quot;: {
+        &quot;id&quot;: 1,
+        &quot;title&quot;: &quot;[修改]ElasticSearch是一个基于Lucene的搜索服务器&quot;,
+        &quot;content&quot;: &quot;[修改]它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+    }
+}
+</code></pre>
+<h4 id="查询文档-querystring查询">查询文档-querystring查询</h4>
+<pre><code class="language-curl">curl  post  http://127.0.0.1:9200/blog1/article/_search
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;query&quot;: {
+        &quot;query_string&quot;: {
+            &quot;default_field&quot;: &quot;title&quot;,
+            &quot;query&quot;: &quot;搜索服务器&quot;
+        }
+    }
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;took&quot;: 24,
+    &quot;timed_out&quot;: false,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 5,
+        &quot;successful&quot;: 5,
+        &quot;skipped&quot;: 0,
+        &quot;failed&quot;: 0
+    },
+    &quot;hits&quot;: {
+        &quot;total&quot;: 1,
+        &quot;max_score&quot;: 1.4002227,
+        &quot;hits&quot;: [
+            {
+                &quot;_index&quot;: &quot;blog1&quot;,
+                &quot;_type&quot;: &quot;article&quot;,
+                &quot;_id&quot;: &quot;1&quot;,
+                &quot;_score&quot;: 1.4002227,
+                &quot;_source&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;title&quot;: &quot;[修改]ElasticSearch是一个基于Lucene的搜索服务器&quot;,
+                    &quot;content&quot;: &quot;[修改]它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+                }
+            }
+        ]
+    }
+}
+</code></pre>
+<blockquote>
+<p>注意：将搜索内容&quot;搜索服务器&quot;修改为&quot;钢索&quot;，同样也能搜索到文档，这是因为ES是歪果仁开发的产品，所以对中文分词不友好，需要使用分词插件（IK分词器）来解决中文分词问题</p>
+</blockquote>
+<h4 id="查询文档-term查询">查询文档-term查询</h4>
+<pre><code class="language-curl">curl  post  http://127.0.0.1:9200/blog1/article/_search
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;query&quot;: {
+        &quot;term&quot;: {
+            &quot;title&quot;: &quot;搜索&quot;
+        }
+    }
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;took&quot;: 1,
+    &quot;timed_out&quot;: false,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 5,
+        &quot;successful&quot;: 5,
+        &quot;skipped&quot;: 0,
+        &quot;failed&quot;: 0
+    },
+    &quot;hits&quot;: {
+        &quot;total&quot;: 0,
+        &quot;max_score&quot;: null,
+        &quot;hits&quot;: []
+    }
+}
+</code></pre>
+<h2 id="elasticsearch集成ik-分词器">ElasticSearch集成IK 分词器</h2>
+<h3 id="上述查询存在问题分析">上述查询存在问题分析</h3>
+<p>在进行字符串查询时，我们发现去搜索&quot;搜索服务器&quot;和&quot;钢索&quot;都可以搜索到数据；</p>
+<p>而在进行词条查询时，我们搜索&quot;搜索&quot;却没有搜索到数据；</p>
+<p>究其原因是ElasticSearch的标准分词器导致的，当我们创建索引时，字段使用的是标准分词器：</p>
+<pre><code class="language-json">&quot;analyzer&quot;:&quot;standard&quot; //标准分词器
+</code></pre>
+<p>例如对 &quot;我是程序员&quot; 进行分词<br>
+标准分词器分词效果测试：</p>
+<pre><code class="language-curl">curl  get  http://127.0.0.1:9200/_analyze?analyzer=standard&amp;pretty=true&amp;text=我是程序员
+</code></pre>
+<p>分词结果</p>
+<pre><code class="language-json">{
+    &quot;tokens&quot;: [
+        {
+            &quot;token&quot;: &quot;我&quot;,
+            &quot;start_offset&quot;: 0,
+            &quot;end_offset&quot;: 1,
+            &quot;type&quot;: &quot;&lt;IDEOGRAPHIC&gt;&quot;,
+            &quot;position&quot;: 0
+        },
+        {
+            &quot;token&quot;: &quot;是&quot;,
+            &quot;start_offset&quot;: 1,
+            &quot;end_offset&quot;: 2,
+            &quot;type&quot;: &quot;&lt;IDEOGRAPHIC&gt;&quot;,
+            &quot;position&quot;: 1
+        },
+        {
+            &quot;token&quot;: &quot;程&quot;,
+            &quot;start_offset&quot;: 2,
+            &quot;end_offset&quot;: 3,
+            &quot;type&quot;: &quot;&lt;IDEOGRAPHIC&gt;&quot;,
+            &quot;position&quot;: 2
+        },
+        {
+            &quot;token&quot;: &quot;序&quot;,
+            &quot;start_offset&quot;: 3,
+            &quot;end_offset&quot;: 4,
+            &quot;type&quot;: &quot;&lt;IDEOGRAPHIC&gt;&quot;,
+            &quot;position&quot;: 3
+        },
+        {
+            &quot;token&quot;: &quot;员&quot;,
+            &quot;start_offset&quot;: 4,
+            &quot;end_offset&quot;: 5,
+            &quot;type&quot;: &quot;&lt;IDEOGRAPHIC&gt;&quot;,
+            &quot;position&quot;: 4
+        }
+    ]
+}
+</code></pre>
+<p>而我们需要的分词效果是：我、是、程序、程序员</p>
+<p>这样的话就需要对中文支持良好的分析器的支持，支持中文分词的分词器有很多，word分词器、庖丁解牛、盘古<br>
+分词、Ansj分词等，但我们常用的还是下面要介绍的IK分词器。</p>
+<h3 id="ik分词器简介">IK分词器简介</h3>
+<p>IKAnalyzer是一个开源的，基于java语言开发的轻量级的中文分词工具包。从2006年12月推出1.0版开始，<br>
+IKAnalyzer已经推出 了3个大版本。最初，它是以开源项目Lucene为应用主体的，结合词典分词和文法分析算法的<br>
+中文分词组件。新版本的IKAnalyzer3.0则发展为 面向Java的公用分词组件，独立于Lucene项目，同时提供了对<br>
+Lucene的默认优化实现。</p>
+<p>IK分词器3.0的特性如下：</p>
+<ol>
+<li>采用了特有的“正向迭代最细粒度切分算法“，具有60万字/秒的高速处理能力。</li>
+<li>采用了多子处理器分析模式，支持：英文字母（IP地址、Email、URL）、数字（日期，常用中文数量词，罗马数字，科学计数法），中文词汇（姓名、地名处理）等分词处理。</li>
+<li>对中英联合支持不是很好,在这方面的处理比较麻烦.需再做一次查询,同<br>
+时是支持个人词条的优化的词典存储，更小的内存占用。</li>
+<li>支持用户词典扩展定义。</li>
+<li>针对Lucene全文检索优化的查询分析器IKQueryParser；采用歧义分析算法优化查询关键字的搜索排列组合，能极大的提高Lucene检索的命中率。</li>
+</ol>
+<h3 id="elasticsearch集成ik分词器">ElasticSearch集成IK分词器</h3>
+<h4 id="ik分词器的安装">IK分词器的安装</h4>
+<p>1、下载地址：https://github.com/medcl/elasticsearch-analysis-ik/releases</p>
+<p>2、解压，将解压后的elasticsearch文件夹拷贝到elasticsearch-5.6.8\plugins下，并重命名文件夹为analysis-ik</p>
+<p>3、重新启动ElasticSearch，即可加载IK分词器</p>
+<h4 id="ik分词器测试">IK分词器测试</h4>
+<p>IK提供了两个分词算法ik_smart 和 ik_max_word</p>
+<p>其中 ik_smart 为最少切分，ik_max_word为最细粒度划分</p>
+<h5 id="1-最小切分">1、最小切分</h5>
+<pre><code class="language-curl">curl  get  http://127.0.0.1:9200/_analyze?analyzer=ik_smart&amp;pretty=true&amp;text=我是程序员
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;tokens&quot;: [
+        {
+            &quot;token&quot;: &quot;我&quot;,
+            &quot;start_offset&quot;: 0,
+            &quot;end_offset&quot;: 1,
+            &quot;type&quot;: &quot;CN_CHAR&quot;,
+            &quot;position&quot;: 0
+        },
+        {
+            &quot;token&quot;: &quot;是&quot;,
+            &quot;start_offset&quot;: 1,
+            &quot;end_offset&quot;: 2,
+            &quot;type&quot;: &quot;CN_CHAR&quot;,
+            &quot;position&quot;: 1
+        },
+        {
+            &quot;token&quot;: &quot;程序员&quot;,
+            &quot;start_offset&quot;: 2,
+            &quot;end_offset&quot;: 5,
+            &quot;type&quot;: &quot;CN_WORD&quot;,
+            &quot;position&quot;: 2
+        }
+    ]
+}
+</code></pre>
+<h5 id="2-最细切分">2、最细切分</h5>
+<pre><code class="language-curl">curl  get  http://127.0.0.1:9200/_analyze?analyzer=ik_max_word&amp;pretty=true&amp;text=我是程序员
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;tokens&quot;: [
+        {
+            &quot;token&quot;: &quot;我&quot;,
+            &quot;start_offset&quot;: 0,
+            &quot;end_offset&quot;: 1,
+            &quot;type&quot;: &quot;CN_CHAR&quot;,
+            &quot;position&quot;: 0
+        },
+        {
+            &quot;token&quot;: &quot;是&quot;,
+            &quot;start_offset&quot;: 1,
+            &quot;end_offset&quot;: 2,
+            &quot;type&quot;: &quot;CN_CHAR&quot;,
+            &quot;position&quot;: 1
+        },
+        {
+            &quot;token&quot;: &quot;程序员&quot;,
+            &quot;start_offset&quot;: 2,
+            &quot;end_offset&quot;: 5,
+            &quot;type&quot;: &quot;CN_WORD&quot;,
+            &quot;position&quot;: 2
+        },
+        {
+            &quot;token&quot;: &quot;程序&quot;,
+            &quot;start_offset&quot;: 2,
+            &quot;end_offset&quot;: 4,
+            &quot;type&quot;: &quot;CN_WORD&quot;,
+            &quot;position&quot;: 3
+        },
+        {
+            &quot;token&quot;: &quot;员&quot;,
+            &quot;start_offset&quot;: 4,
+            &quot;end_offset&quot;: 5,
+            &quot;type&quot;: &quot;CN_CHAR&quot;,
+            &quot;position&quot;: 4
+        }
+    ]
+}
+</code></pre>
+<h3 id="修改索引映射mapping">修改索引映射mapping</h3>
+<h4 id="重建索引">重建索引</h4>
+<p>删除原有blog1索引</p>
+<pre><code class="language-curl">curl  delete  http://127.0.0.1:9200/blog1
+</code></pre>
+<p>创建blog1索引，此时分词器使用ik_max_word</p>
+<pre><code class="language-curl">curl  put  http://127.0.0.1:9200/blog1
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;mappings&quot;: {
+        &quot;article&quot;: {
+            &quot;properties&quot;: {
+                &quot;id&quot;: {
+                 &quot;type&quot;: &quot;long&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;not_analyzed&quot;
+                },
+                &quot;title&quot;: {
+                 &quot;type&quot;: &quot;text&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;analyzed&quot;,
+                    &quot;analyzer&quot;:&quot;ik_max_word&quot;
+                },
+                &quot;content&quot;: {
+                 &quot;type&quot;: &quot;text&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;analyzed&quot;,
+                    &quot;analyzer&quot;:&quot;ik_max_word&quot;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h4 id="创建文档">创建文档</h4>
+<pre><code class="language-curl">curl  post http://127.0.0.1:9200/blog1/article/1
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+	&quot;id&quot;:1,    
+	&quot;title&quot;:&quot;ElasticSearch是一个基于Lucene的搜索服务器&quot;,    
+	&quot;content&quot;:&quot;它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+}
+</code></pre>
+<h4 id="测试querystring查询">测试queryString查询</h4>
+<pre><code class="language-curl">curl  post http://127.0.0.1:9200/blog1/article/_search
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;took&quot;: 101,
+    &quot;timed_out&quot;: false,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 5,
+        &quot;successful&quot;: 5,
+        &quot;skipped&quot;: 0,
+        &quot;failed&quot;: 0
+    },
+    &quot;hits&quot;: {
+        &quot;total&quot;: 1,
+        &quot;max_score&quot;: 1.012641,
+        &quot;hits&quot;: [
+            {
+                &quot;_index&quot;: &quot;blog1&quot;,
+                &quot;_type&quot;: &quot;article&quot;,
+                &quot;_id&quot;: &quot;1&quot;,
+                &quot;_score&quot;: 1.012641,
+                &quot;_source&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;title&quot;: &quot;ElasticSearch是一个基于Lucene的搜索服务器&quot;,
+                    &quot;content&quot;: &quot;它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+                }
+            }
+        ]
+    }
+}
+</code></pre>
+<blockquote>
+<p>这次再次测试钢索则无法搜索到内容</p>
+</blockquote>
+<h4 id="term测试">term测试</h4>
+<pre><code class="language-curl">curl  post http://127.0.0.1:9200/blog1/article/_search
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;query&quot;: {
+        &quot;term&quot;: {
+            &quot;title&quot;: &quot;搜索&quot;
+        }
+    }
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;took&quot;: 5,
+    &quot;timed_out&quot;: false,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 5,
+        &quot;successful&quot;: 5,
+        &quot;skipped&quot;: 0,
+        &quot;failed&quot;: 0
+    },
+    &quot;hits&quot;: {
+        &quot;total&quot;: 1,
+        &quot;max_score&quot;: 0.25316024,
+        &quot;hits&quot;: [
+            {
+                &quot;_index&quot;: &quot;blog1&quot;,
+                &quot;_type&quot;: &quot;article&quot;,
+                &quot;_id&quot;: &quot;1&quot;,
+                &quot;_score&quot;: 0.25316024,
+                &quot;_source&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;title&quot;: &quot;ElasticSearch是一个基于Lucene的搜索服务器&quot;,
+                    &quot;content&quot;: &quot;它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+                }
+            }
+        ]
+    }
+}
+</code></pre>
+<h2 id="elasticsearch集群">ElasticSearch集群</h2>
+<p>ES集群是一个 P2P类型(使用 gossip 协议)的分布式系统，除了集群状态管理以外，其他所有的请求都可以发送到<br>
+集群内任意一台节点上，这个节点可以自己找到需要转发给哪些节点，并且直接跟这些节点通信。所以，从网络架<br>
+构及服务配置上来说，构建集群所需要的配置极其简单。在 Elasticsearch 2.0 之前，无阻碍的网络下，所有配置了<br>
+相同 cluster.name 的节点都自动归属到一个集群中。2.0 版本之后，基于安全的考虑避免开发环境过于随便造成的<br>
+麻烦，从 2.0 版本开始，默认的自动发现方式改为了单播(unicast)方式。配置里提供几台节点的地址，ES 将其视作<br>
+gossip router 角色，借以完成集群的发现。由于这只是 ES 内一个很小的功能，所以 gossip router 角色并不需要<br>
+单独配置，每个 ES 节点都可以担任。所以，采用单播方式的集群，各节点都配置相同的几个节点列表作为 router<br>
+即可。</p>
+<p>集群中节点数量没有限制，一般大于等于2个节点就可以看做是集群了。一般处于高性能及高可用方面来考虑一般<br>
+集群中的节点数量都是3个及3个以上。</p>
+<h3 id="集群的相关概念">集群的相关概念</h3>
+<h4 id="集群-cluster-2">集群 cluster</h4>
+<p>一个集群就是由一个或多个节点组织在一起，它们共同持有整个的数据，并一起提供索引和搜索功能。一个集群由<br>
+一个唯一的名字标识，这个名字默认就是“elasticsearch”。这个名字是重要的，因为一个节点只能通过指定某个集<br>
+群的名字，来加入这个集群</p>
+<h4 id="节点-node-2">节点 node</h4>
+<p>一个节点是集群中的一个服务器，作为集群的一部分，它存储数据，参与集群的索引和搜索功能。和集群类似，一<br>
+个节点也是由一个名字来标识的，默认情况下，这个名字是一个随机的漫威漫画角色的名字，这个名字会在启动的<br>
+时候赋予节点。这个名字对于管理工作来说挺重要的，因为在这个管理过程中，你会去确定网络中的哪些服务器对<br>
+应于Elasticsearch集群中的哪些节点。</p>
+<p>一个节点可以通过配置集群名称的方式来加入一个指定的集群。默认情况下，每个节点都会被安排加入到一个叫<br>
+做“elasticsearch”的集群中，这意味着，如果你在你的网络中启动了若干个节点，并假定它们能够相互发现彼此，<br>
+它们将会自动地形成并加入到一个叫做“elasticsearch”的集群中。</p>
+<p>在一个集群里，只要你想，可以拥有任意多个节点。而且，如果当前你的网络中没有运行任何Elasticsearch节点，<br>
+这时启动一个节点，会默认创建并加入一个叫做“elasticsearch”的集群。</p>
+<h4 id="分片和复制-shardsreplicas-2">分片和复制 shards&amp;replicas</h4>
+<p>一个索引可以存储超出单个结点硬件限制的大量数据。比如，一个具有10亿文档的索引占据1TB的磁盘空间，而任<br>
+一节点都没有这样大的磁盘空间；或者单个节点处理搜索请求，响应太慢。为了解决这个问题，Elasticsearch提供<br>
+了将索引划分成多份的能力，这些份就叫做分片。当你创建一个索引的时候，你可以指定你想要的分片的数量。每<br>
+个分片本身也是一个功能完善并且独立的“索引”，这个“索引”可以被放置到集群中的任何节点上。分片很重要，主<br>
+要有两方面的原因： 1）允许你水平分割/扩展你的内容容量。 2）允许你在分片（潜在地，位于多个节点上）之上进行分布式的、并行的操作，进而提高性能/吞吐量。</p>
+<p>至于一个分片怎样分布，它的文档怎样聚合回搜索请求，是完全由Elasticsearch管理的，对于作为用户的你来说，<br>
+这些都是透明的。</p>
+<p>在一个网络/云的环境里，失败随时都可能发生，在某个分片/节点不知怎么的就处于离线状态，或者由于任何原因<br>
+消失了，这种情况下，有一个故障转移机制是非常有用并且是强烈推荐的。为此目的，Elasticsearch允许你创建分<br>
+片的一份或多份拷贝，这些拷贝叫做复制分片，或者直接叫复制。</p>
+<p>复制之所以重要，有两个主要原因： 在分片/节点失败的情况下，提供了高可用性。因为这个原因，注意到复制分<br>
+片从不与原/主要（original/primary）分片置于同一节点上是非常重要的。扩展你的搜索量/吞吐量，因为搜索可以<br>
+在所有的复制上并行运行。总之，每个索引可以被分成多个分片。一个索引也可以被复制0次（意思是没有复制）<br>
+或多次。一旦复制了，每个索引就有了主分片（作为复制源的原来的分片）和复制分片（主分片的拷贝）之别。分<br>
+片和复制的数量可以在索引创建的时候指定。在索引创建之后，你可以在任何时候动态地改变复制的数量，但是你<br>
+事后不能改变分片的数量。</p>
+<p>默认情况下，Elasticsearch中的每个索引被分片5个主分片和1个复制，这意味着，如果你的集群中至少有两个节<br>
+点，你的索引将会有5个主分片和另外5个复制分片（1个完全拷贝），这样的话每个索引总共就有10个分片。</p>
+<h3 id="集群的搭建">集群的搭建</h3>
+<h4 id="准备三台elasticsearch服务器">准备三台elasticsearch服务器</h4>
+<p>创建elasticsearch-cluster文件夹，在内部复制三个elasticsearch服务</p>
+<h4 id="修改每台服务器配置">修改每台服务器配置</h4>
+<p>修改elasticsearch-cluster\node*\config\elasticsearch.yml配置文件</p>
+<h5 id="node1节点">node1节点：</h5>
+<pre><code class="language-yaml">#节点3的配置信息：
+#集群名称，保证唯一
+cluster.name: my-elasticsearch
+#节点名称，必须不一样
+node.name: node-1
+#必须为本机的ip地址
+network.host: 127.0.0.1
+#服务端口号，在同一机器下必须不一样
+http.port: 9200
+#集群间通信端口号，在同一机器下必须不一样
+transport.tcp.port: 9300
+#设置集群自动发现机器ip集合
+discovery.zen.ping.unicast.hosts: [&quot;127.0.0.1:9300&quot;,&quot;127.0.0.1:9301&quot;,&quot;127.0.0.1:9302&quot;]
+</code></pre>
+<h5 id="node2节点">node2节点：</h5>
+<pre><code class="language-yaml">#节点3的配置信息：
+#集群名称，保证唯一
+cluster.name: my-elasticsearch
+#节点名称，必须不一样
+node.name: node-2
+#必须为本机的ip地址
+network.host: 127.0.0.1
+#服务端口号，在同一机器下必须不一样
+http.port: 9201
+#集群间通信端口号，在同一机器下必须不一样
+transport.tcp.port: 9301
+#设置集群自动发现机器ip集合
+discovery.zen.ping.unicast.hosts: [&quot;127.0.0.1:9300&quot;,&quot;127.0.0.1:9301&quot;,&quot;127.0.0.1:9302&quot;]
+</code></pre>
+<h5 id="node3节点">node3节点：</h5>
+<pre><code class="language-yaml">#节点3的配置信息：
+#集群名称，保证唯一
+cluster.name: my-elasticsearch
+#节点名称，必须不一样
+node.name: node-3
+#必须为本机的ip地址
+network.host: 127.0.0.1
+#服务端口号，在同一机器下必须不一样
+http.port: 9202
+#集群间通信端口号，在同一机器下必须不一样
+transport.tcp.port: 9302
+#设置集群自动发现机器ip集合
+discovery.zen.ping.unicast.hosts: [&quot;127.0.0.1:9300&quot;,&quot;127.0.0.1:9301&quot;,&quot;127.0.0.1:9302&quot;]
+</code></pre>
+<h4 id="启动各个节点服务器">启动各个节点服务器</h4>
+<p>双击elasticsearch-cluster\node*\bin\elasticsearch.bat</p>
+<h4 id="集群测试">集群测试</h4>
+<h5 id="添加索引和映射">添加索引和映射</h5>
+<pre><code class="language-curl">curl  put  http://127.0.0.1:9200/blog1
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;mappings&quot;: {
+        &quot;article&quot;: {
+            &quot;properties&quot;: {
+                &quot;id&quot;: {
+                 &quot;type&quot;: &quot;long&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;not_analyzed&quot;
+                },
+                &quot;title&quot;: {
+                 &quot;type&quot;: &quot;text&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;analyzed&quot;,
+                    &quot;analyzer&quot;:&quot;ik_max_word&quot;
+                },
+                &quot;content&quot;: {
+                 &quot;type&quot;: &quot;text&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;analyzed&quot;,
+                    &quot;analyzer&quot;:&quot;ik_max_word&quot;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h5 id="添加文档">添加文档</h5>
+<pre><code class="language-curl">curl  post  http://127.0.0.1:9200/blog1/article/1
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+	&quot;id&quot;:1,    
+	&quot;title&quot;:&quot;ElasticSearch是一个基于Lucene的搜索服务器&quot;,    
+	&quot;content&quot;:&quot;它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot; 
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;_index&quot;: &quot;blog1&quot;,
+    &quot;_type&quot;: &quot;article&quot;,
+    &quot;_id&quot;: &quot;1&quot;,
+    &quot;_version&quot;: 1,
+    &quot;result&quot;: &quot;created&quot;,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 2,
+        &quot;successful&quot;: 1,
+        &quot;failed&quot;: 0
+    },
+    &quot;created&quot;: true
+}
+</code></pre>
+<h4 id="使用elasticsearch-header查看集群情况">使用elasticsearch-header查看集群情况</h4>
+<figure data-type="image" tabindex="5"><img src="https://haohanya.github.io/post-images/1594482511226.png" alt="" loading="lazy"></figure>
+<p>如果分片副本出现UNASSIGNED可能原因是配置出错或者是硬盘使用率大于80%，可以调整使用率来解决</p>
+<pre><code class="language-curl">curl put http://127.0.0.1:9200/_cluster/settings
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;transient&quot;: {
+        &quot;cluster.routing.allocation.disk.watermark.low&quot;: &quot;95%&quot;
+    }
+}
+</code></pre>
+
+<span id="footnote"></span>
+<div id = "warn"></div>
+</div>
+<div class="toc-container"><ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#elasticsearch%E7%AE%80%E4%BB%8B">ElasticSearch简介</a>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFelasticsearch">什么是ElasticSearch</a></li>
+<li><a href="#elasticsearch%E7%9A%84%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B">ElasticSearch的使用案例</a></li>
+<li><a href="#elasticsearch%E5%AF%B9%E6%AF%94solr">ElasticSearch对比Solr</a></li>
+</ul>
+</li>
+<li><a href="#elasticsearch%E5%AE%89%E8%A3%85%E4%B8%8E%E5%90%AF%E5%8A%A8">ElasticSearch安装与启动</a>
+<ul>
+<li><a href="#%E4%B8%8B%E8%BD%BDes%E5%8E%8B%E7%BC%A9%E5%8C%85">下载ES压缩包</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85es%E6%9C%8D%E5%8A%A1">安装ES服务</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8es%E6%9C%8D%E5%8A%A1">启动ES服务</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85es%E7%9A%84%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2%E6%8F%92%E4%BB%B6">安装ES的图形化界面插件</a></li>
+</ul>
+</li>
+<li><a href="#elasticsearch%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5%E6%9C%AF%E8%AF%AD">ElasticSearch相关概念(术语)</a>
+<ul>
+<li><a href="#%E6%A6%82%E8%BF%B0">概述</a></li>
+<li><a href="#elasticsearch%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5">Elasticsearch核心概念</a>
+<ul>
+<li><a href="#%E7%B4%A2%E5%BC%95-index">索引 index</a></li>
+<li><a href="#%E7%B1%BB%E5%9E%8B-type">类型 type</a></li>
+<li><a href="#%E5%AD%97%E6%AE%B5field">字段Field</a></li>
+<li><a href="#%E6%98%A0%E5%B0%84-mapping">映射 mapping</a></li>
+<li><a href="#%E6%96%87%E6%A1%A3-document">文档 document</a></li>
+<li><a href="#%E6%8E%A5%E8%BF%91%E5%AE%9E%E6%97%B6-nrt">接近实时 NRT</a></li>
+<li><a href="#%E9%9B%86%E7%BE%A4-cluster">集群 cluster</a></li>
+<li><a href="#%E8%8A%82%E7%82%B9-node">节点 node</a></li>
+<li><a href="#%E5%88%86%E7%89%87%E5%92%8C%E5%A4%8D%E5%88%B6-shardsreplicas">分片和复制 shards&amp;replicas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#elasticsearch%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C">ElasticSearch的客户端操作</a>
+<ul>
+<li><a href="#%E4%B8%8B%E8%BD%BDpostman">下载PostMan</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8postman%E5%B7%A5%E5%85%B7%E8%BF%9B%E8%A1%8Crestful%E6%8E%A5%E5%8F%A3%E8%AE%BF%E9%97%AE">使用Postman工具进行Restful接口访问</a>
+<ul>
+<li><a href="#elasticsearch%E7%9A%84%E6%8E%A5%E5%8F%A3%E8%AF%AD%E6%B3%95">ElasticSearch的接口语法</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95index%E5%92%8C%E6%98%A0%E5%B0%84mapping">创建索引index和映射mapping</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95%E5%90%8E%E8%AE%BE%E7%BD%AEmapping">创建索引后设置Mapping</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95index">删除索引index</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E6%96%87%E6%A1%A3document">创建文档document</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E6%96%87%E6%A1%A3document">修改文档document</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E6%96%87%E6%A1%A3document">删除文档document</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E6%96%87%E6%A1%A3-%E6%A0%B9%E6%8D%AEid%E6%9F%A5%E8%AF%A2">查询文档-根据id查询</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E6%96%87%E6%A1%A3-querystring%E6%9F%A5%E8%AF%A2">查询文档-querystring查询</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E6%96%87%E6%A1%A3-term%E6%9F%A5%E8%AF%A2">查询文档-term查询</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#elasticsearch%E9%9B%86%E6%88%90ik-%E5%88%86%E8%AF%8D%E5%99%A8">ElasticSearch集成IK 分词器</a>
+<ul>
+<li><a href="#%E4%B8%8A%E8%BF%B0%E6%9F%A5%E8%AF%A2%E5%AD%98%E5%9C%A8%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90">上述查询存在问题分析</a></li>
+<li><a href="#ik%E5%88%86%E8%AF%8D%E5%99%A8%E7%AE%80%E4%BB%8B">IK分词器简介</a></li>
+<li><a href="#elasticsearch%E9%9B%86%E6%88%90ik%E5%88%86%E8%AF%8D%E5%99%A8">ElasticSearch集成IK分词器</a>
+<ul>
+<li><a href="#ik%E5%88%86%E8%AF%8D%E5%99%A8%E7%9A%84%E5%AE%89%E8%A3%85">IK分词器的安装</a></li>
+<li><a href="#ik%E5%88%86%E8%AF%8D%E5%99%A8%E6%B5%8B%E8%AF%95">IK分词器测试</a>
+<ul>
+<li><a href="#1-%E6%9C%80%E5%B0%8F%E5%88%87%E5%88%86">1、最小切分</a></li>
+<li><a href="#2-%E6%9C%80%E7%BB%86%E5%88%87%E5%88%86">2、最细切分</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E7%B4%A2%E5%BC%95%E6%98%A0%E5%B0%84mapping">修改索引映射mapping</a>
+<ul>
+<li><a href="#%E9%87%8D%E5%BB%BA%E7%B4%A2%E5%BC%95">重建索引</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E6%96%87%E6%A1%A3">创建文档</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95querystring%E6%9F%A5%E8%AF%A2">测试queryString查询</a></li>
+<li><a href="#term%E6%B5%8B%E8%AF%95">term测试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#elasticsearch%E9%9B%86%E7%BE%A4">ElasticSearch集群</a>
+<ul>
+<li><a href="#%E9%9B%86%E7%BE%A4%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5">集群的相关概念</a>
+<ul>
+<li><a href="#%E9%9B%86%E7%BE%A4-cluster-2">集群 cluster</a></li>
+<li><a href="#%E8%8A%82%E7%82%B9-node-2">节点 node</a></li>
+<li><a href="#%E5%88%86%E7%89%87%E5%92%8C%E5%A4%8D%E5%88%B6-shardsreplicas-2">分片和复制 shards&amp;replicas</a></li>
+</ul>
+</li>
+<li><a href="#%E9%9B%86%E7%BE%A4%E7%9A%84%E6%90%AD%E5%BB%BA">集群的搭建</a>
+<ul>
+<li><a href="#%E5%87%86%E5%A4%87%E4%B8%89%E5%8F%B0elasticsearch%E6%9C%8D%E5%8A%A1%E5%99%A8">准备三台elasticsearch服务器</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E6%AF%8F%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE">修改每台服务器配置</a>
+<ul>
+<li><a href="#node1%E8%8A%82%E7%82%B9">node1节点：</a></li>
+<li><a href="#node2%E8%8A%82%E7%82%B9">node2节点：</a></li>
+<li><a href="#node3%E8%8A%82%E7%82%B9">node3节点：</a></li>
+</ul>
+</li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E5%90%84%E4%B8%AA%E8%8A%82%E7%82%B9%E6%9C%8D%E5%8A%A1%E5%99%A8">启动各个节点服务器</a></li>
+<li><a href="#%E9%9B%86%E7%BE%A4%E6%B5%8B%E8%AF%95">集群测试</a>
+<ul>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E7%B4%A2%E5%BC%95%E5%92%8C%E6%98%A0%E5%B0%84">添加索引和映射</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E6%96%87%E6%A1%A3">添加文档</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BD%BF%E7%94%A8elasticsearch-header%E6%9F%A5%E7%9C%8B%E9%9B%86%E7%BE%A4%E6%83%85%E5%86%B5">使用elasticsearch-header查看集群情况</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="fullPage"><canvas id="canvas"></canvas></div>
+</article>
+<div id="eof"><span>EOF</span></div><div class="round-shape-one"></div>
+<section>
+<div class="doc_comments">
+
+</div></section>
+</div></div></div><script>
+"use strict";!function(){for(var n=document.getElementsByTagName("pre"),e=n.length,s=0;s<e;s++){n[s].innerHTML='<span class="line-number"></span>'+n[s].innerHTML+'<span class="cl"></span>';for(var a=n[s].innerHTML.split(/\n/).length,r=0;r<a-1;r++){n[s].getElementsByTagName("span")[0].innerHTML+="<span>"+(r+1)+"</span>"}}}();
+let mainNavLinks=document.querySelectorAll(".markdownIt-TOC a");window.addEventListener("scroll",event=>{let fromTop=window.scrollY;mainNavLinks.forEach((link,index)=>{let section=document.getElementById(decodeURI(link.hash).substring(1));let nextSection=null
+if(mainNavLinks[index+1]){nextSection=document.getElementById(decodeURI(mainNavLinks[index+1].hash).substring(1));}
+if(section.offsetTop<=fromTop){if(nextSection){if(nextSection.offsetTop>fromTop){link.classList.add("currentToc");}else{link.classList.remove("currentToc");}}else{link.classList.add("currentToc");}}else{link.classList.remove("currentToc");}});});
+var list=document.querySelectorAll(".katex");for(var i=0;i<list.length;i++){list[i].style.display="unset"};
+var h=document.documentElement,b=document.body,st="scrollTop",sh="scrollHeight",progress=document.querySelector(".progress"),scroll;document.addEventListener("scroll",function(){scroll=(h[st]||b[st])/((h[sh]||b[sh])-h.clientHeight)*100;progress.style.setProperty("--scroll",scroll+"%")});
+var wxScale=new WxScale({fullPage:document.querySelector("#fullPage"),canvas:document.querySelector("#canvas")});var imgBox=document.querySelectorAll("#md_block img");for(var i=0;i<imgBox.length;i++){imgBox[i].onclick=function(e){wxScale.start(this)}};
+content="本文最后更新于2020-07-11，已超过 1 年没有更新，涉及的内容可能已经失效！";var date1="2020-07-11 23:43:04";date1=date1.replace("-","/");var date2=new Date();var date3=date2.getTime()-new Date(date1).getTime();var days=Math.floor(date3/(24*3600*1000));if(days>=365){document.getElementById("warn").innerHTML=content};
+</script>
+<style>#magnifyImg{position:fixed;left:0;top:0;text-align:center;width:100%;display:none;z-index:9999}#magnifyImg img{object-fit:contain;background:#eaecef;padding:15px;border-radius:10px;height:auto;width:auto;vertical-align:middle}</style>
+<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a>
+<div class="footer animated fadeInDown">
+    <div class="site_footer">
+        <div class="mysocials">
+            <div class="my_socials">
+                <a
+                    href="admin@soweat.cn" title="envelope"><i
+                        class="iconfont icon-envelope"></i></a></div>
+        </div>
+        <div class="copyright" id="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>Copyright © 2018-2020 <a
+                href="https://haohanya.github.io" style="margin:0;">浩瀚</a>.</div>
+        <span style="display: inline;margin-right:15px;">👁<strong><span
+                    id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv"
+            style="display: inline;"><span>📚<strong>23</strong> posts</span>
+    </div>
+</div>
+<script>
+    console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;",);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+<script type="text/javascript" async src="https://haohanya.github.io/media/js/prism.js"></script>
+</body>
+</html>
