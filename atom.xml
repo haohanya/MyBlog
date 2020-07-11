@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://haohanya.github.io</id>
     <title>浩瀚</title>
-    <updated>2020-07-11T15:52:38.300Z</updated>
+    <updated>2020-07-11T15:59:29.579Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://haohanya.github.io"/>
     <link rel="self" href="https://haohanya.github.io/atom.xml"/>
@@ -18,7 +18,7 @@
         <updated>2020-07-11T15:49:44.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[ ElasticSearch（1）]]></title>
+        <title type="html"><![CDATA[ ElasticSearch（一）]]></title>
         <id>https://haohanya.github.io/post/elasticsearch1/</id>
         <link href="https://haohanya.github.io/post/elasticsearch1/">
         </link>
