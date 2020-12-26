@@ -4,46 +4,34 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>友人 - 浩瀚</title>
+<title>Ribbon负载均衡器 - 浩瀚</title>
 <link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
 <link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
 <link rel="stylesheet" href="http://mvvm.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="友人 - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Ribbon负载均衡器 - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
 
     
 
-  <meta name="description" content="
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-o..." />
-  <meta property="og:title" content="友人 - 浩瀚">
-  <meta property="og:description" content="
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-o..." />
+  <meta name="description" content="什么是Ribbon
+
+Ribbon是Netflix发布的一个负载均衡器，它有助于控制Http和TCP客户端的行为。为Ribbon配置服务提供者列表后，Ribbon就可以基于某种负载均衡的算法，自动地帮助我们选择其中的一个服务给消费者。Rib..." />
+  <meta property="og:title" content="Ribbon负载均衡器 - 浩瀚">
+  <meta property="og:description" content="什么是Ribbon
+
+Ribbon是Netflix发布的一个负载均衡器，它有助于控制Http和TCP客户端的行为。为Ribbon配置服务提供者列表后，Ribbon就可以基于某种负载均衡的算法，自动地帮助我们选择其中的一个服务给消费者。Rib..." />
   <meta property="og:type" content="articles">
-  <meta property="og:url" content="http://mvvm.io/links/" />
+  <meta property="og:url" content="http://mvvm.io/ribbon-fu-zai-jun-heng-qi/" />
   <meta property="og:image" content="http://mvvm.io/images/avatar.png">
   <meta property="og:image:height" content="630">
   <meta property="og:image:width" content="1200">
-  <meta name="twitter:title" content="友人 - 浩瀚">
-  <meta name="twitter:description" content="
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-o...">
+  <meta name="twitter:title" content="Ribbon负载均衡器 - 浩瀚">
+  <meta name="twitter:description" content="什么是Ribbon
+
+Ribbon是Netflix发布的一个负载均衡器，它有助于控制Http和TCP客户端的行为。为Ribbon配置服务提供者列表后，Ribbon就可以基于某种负载均衡的算法，自动地帮助我们选择其中的一个服务给消费者。Rib...">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="http://mvvm.io/links/">
+  <link rel="canonical" href="http://mvvm.io/ribbon-fu-zai-jun-heng-qi/">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
@@ -63,68 +51,71 @@
     <div class="max-w-4xl w-full mx-auto">
       <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
         <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
-          友人
+          Ribbon负载均衡器
         </h1>
         
         <div class="mb-8 flex flex-wrap">
-          <div class="text-gray-400 text-sm mr-4">2020-12-26 · 1 min read</div>
+          <div class="text-gray-400 text-sm mr-4">2020-08-05 · 3 min read</div>
           
         </div>
         <div class="markdown mb-8" v-pre>
-          <style>
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin-bottom: 1rem;
+          <h2 id="什么是ribbon">什么是Ribbon</h2>
+<blockquote>
+<p>Ribbon是Netflix发布的一个负载均衡器，它有助于控制Http和TCP客户端的行为。为Ribbon配置服务提供者列表后，Ribbon就可以基于某种负载均衡的算法，自动地帮助我们选择其中的一个服务给消费者。Ribbon默认负载均衡算法是轮询，除此之外还有随机等，当然实际开发中也可以自定义负载均衡的算法</p>
+</blockquote>
+<h2 id="服务之间的通讯问题">服务之间的通讯问题</h2>
+<blockquote>
+<p>永远是从eureka中拉取到了服务提供者的列表，但是永远只用第一个服务，其他的服务就都闲置着了</p>
+</blockquote>
+<pre><code class="language-java">@RequestMapping(&quot;/{id}&quot;)
+public User getByyid(@PathVariable(&quot;id&quot;) Long id){
+    //地址从eureka中获取
+    List&lt;ServiceInstance&gt; instancesList = discoveryClient.getInstances(&quot;user-service&quot;);
+    //有可能有多个服务，我只需要拿一个
+    ServiceInstance serviceInstance = instancesList.get(0);
+    //组装
+    String url = &quot;http://&quot;+ serviceInstance.getHost()+&quot;:&quot;+serviceInstance.getPort()+&quot;/user/&quot; + id;
+    //采用http的方式系统之间通讯
+    return restTemplate.getForObject(url,User.class);
 }
-</style>
-<section class="link after">
-    <article class="link-item">
-        <a href="http://cnm1.cn/" title="" target="_blank">1梦</a>
-    </article>
-    <article class="link-item">
-        <a href="https://nekodeng.gitee.io" title="十万伏特皮卡丘，梦想是世界和平，想要发光发热" target="_blank">itsNekoDeng</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.kylin.show/" title="" target="_blank">Kylin</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.npmrundev.com/" title="" target="_blank">Mozzie</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.piscme.com/" title="" target="_blank">PiscMe</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.uquq.cn/" title="" target="_blank">UQUQ</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.wuxf.cn/" title="" target="_blank">walkerの小窝</a>
-    </article>
-    <article class="link-item">
-        <a href="https://yremp.live" title="流年，谁给过的倾城" target="_blank">Yremp</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.usuuu.com/" title="" target="_blank">悠悠</a>
-    </article>
-    <article class="link-item">
-        <a href="https://proprogrammar.com/" title="" target="_blank">晴雨</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.200011.net" title="" target="_blank">油油</a>
-    </article>
-    <article class="link-item">
-        <a href="http://susa.club/" title="" target="_blank">苏</a>
-    </article>
-    <article class="link-item">
-        <a href="https://ayayy.cn/" title="" target="_blank">苏三说</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.mqllin.cn/" title="" target="_blank">雨林笔记</a>
-    </article>
-</section>
+</code></pre>
+<blockquote>
+<p>解决方案：通过一种算法，合理的选择其中的一个服务。可以通过编写负载均衡的算法，在多个实例列表中选择一个服务</p>
+<p>不过Eurkea中已经集成了负载均衡组件：Ribbon（简单的修改代码即可使用）</p>
+</blockquote>
+<h2 id="实战">实战</h2>
+<h3 id="1-先启动2个user-service实例">1、先启动2个user-service实例</h3>
+<h3 id="2-在user-web工程中开启负载均衡">2、在user-web工程中开启负载均衡</h3>
+<p>在eureka-client的包中已经集成了Ribbon，所以不需要导入新的依赖</p>
+<p>直接修改启动类，添加开启的注解（在RestTemplate上面添加@LoadBalanced）</p>
+<pre><code class="language-java">@SpringBootApplication
+@EnableDiscoveryClient  //开启发现服务
+public class UserWebApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(UserWebApplication.class, args);
+    }
+    
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
+    }
+}
+</code></pre>
+<h3 id="3-修改controller中获取服务的方法">3、修改controller中获取服务的方法</h3>
+<pre><code class="language-java">@RequestMapping(&quot;/{id}&quot;)
+public User getByyid(@PathVariable(&quot;id&quot;) Long id){
+
+    //使用负载均衡（Ribbon）
+    String url = &quot;http://user-service/user/&quot; + id;
+    return restTemplate.getForObject(url,User.class);
+}
+</code></pre>
+<p>接下来测试就可以通了</p>
+<p>关掉一个user-service后测试是否可以正常获取到服务</p>
+<p>再启动关掉的那个user-service后关掉第二个user-service服务再测试。</p>
+
         </div>
         <!-- Share to Twitter, Weibo, Telegram -->
         <div class="flex items-center">
@@ -166,7 +157,22 @@
         </div>
       </div>
       <div class="post-toc-container">
-        
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFribbon">什么是Ribbon</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E8%AE%AF%E9%97%AE%E9%A2%98">服务之间的通讯问题</a></li>
+<li><a href="#%E5%AE%9E%E6%88%98">实战</a>
+<ul>
+<li><a href="#1-%E5%85%88%E5%90%AF%E5%8A%A82%E4%B8%AAuser-service%E5%AE%9E%E4%BE%8B">1、先启动2个user-service实例</a></li>
+<li><a href="#2-%E5%9C%A8user-web%E5%B7%A5%E7%A8%8B%E4%B8%AD%E5%BC%80%E5%90%AF%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">2、在user-web工程中开启负载均衡</a></li>
+<li><a href="#3-%E4%BF%AE%E6%94%B9controller%E4%B8%AD%E8%8E%B7%E5%8F%96%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%96%B9%E6%B3%95">3、修改controller中获取服务的方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
       </div>
     </div>
 

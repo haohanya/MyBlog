@@ -4,46 +4,37 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>友人 - 浩瀚</title>
+<title>Spring Data Solr - 浩瀚</title>
 <link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
 <link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
 <link rel="stylesheet" href="http://mvvm.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="友人 - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Spring Data Solr - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
 
     
 
-  <meta name="description" content="
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-o..." />
-  <meta property="og:title" content="友人 - 浩瀚">
-  <meta property="og:description" content="
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-o..." />
+  <meta name="description" content="1、引入依赖
+&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.springframework.data&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;spring-data-..." />
+  <meta property="og:title" content="Spring Data Solr - 浩瀚">
+  <meta property="og:description" content="1、引入依赖
+&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.springframework.data&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;spring-data-..." />
   <meta property="og:type" content="articles">
-  <meta property="og:url" content="http://mvvm.io/links/" />
+  <meta property="og:url" content="http://mvvm.io/spring-data-solr/" />
   <meta property="og:image" content="http://mvvm.io/images/avatar.png">
   <meta property="og:image:height" content="630">
   <meta property="og:image:width" content="1200">
-  <meta name="twitter:title" content="友人 - 浩瀚">
-  <meta name="twitter:description" content="
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-o...">
+  <meta name="twitter:title" content="Spring Data Solr - 浩瀚">
+  <meta name="twitter:description" content="1、引入依赖
+&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.springframework.data&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;gt;spring-data-...">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="http://mvvm.io/links/">
+  <link rel="canonical" href="http://mvvm.io/spring-data-solr/">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
@@ -63,68 +54,128 @@
     <div class="max-w-4xl w-full mx-auto">
       <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
         <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
-          友人
+          Spring Data Solr
         </h1>
         
         <div class="mb-8 flex flex-wrap">
-          <div class="text-gray-400 text-sm mr-4">2020-12-26 · 1 min read</div>
+          <div class="text-gray-400 text-sm mr-4">2020-05-17 · 4 min read</div>
           
         </div>
         <div class="markdown mb-8" v-pre>
-          <style>
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin-bottom: 1rem;
+          <h2 id="1-引入依赖">1、引入依赖</h2>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-data-solr&lt;/artifactId&gt;
+    &lt;version&gt;1.5.5.RELEASE&lt;/version&gt;
+&lt;/dependency&gt; 
+</code></pre>
+<h2 id="2-applicationcontext-solrxml">2、applicationContext-solr.xml</h2>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+	xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+	xmlns:solr=&quot;http://www.springframework.org/schema/data/solr&quot;
+	xsi:schemaLocation=&quot;http://www.springframework.org/schema/data/solr 
+  		http://www.springframework.org/schema/data/solr/spring-solr-1.0.xsd
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+	&lt;!-- solr服务器地址 --&gt;
+	&lt;solr:solr-server id=&quot;solrServer&quot; url=&quot;http://127.0.0.1:8080/solr&quot; /&gt;
+	&lt;!-- solr模板，使用solr模板可对索引库进行CRUD的操作 --&gt;
+	&lt;bean id=&quot;solrTemplate&quot; class=&quot;org.springframework.data.solr.core.SolrTemplate&quot;&gt;
+		&lt;constructor-arg ref=&quot;solrServer&quot; /&gt;
+	&lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre>
+<h2 id="3-field-注解">3、@Field 注解</h2>
+<p>作用：如果在pojo上添加了这个注解，那么这个属性会被引用到solr，value为指定solr中field定义的name，如果一样可以省略</p>
+<p>@Dynamic注解，在属性上定义就表示是一个动态域</p>
+<h2 id="4-添加">4、添加</h2>
+<pre><code class="language-java">@Autowired
+private SolrTemplate solrTemplate;
+
+solrTemplate.saveBean(item);
+//添加多条数据可以使用saveBeans
+solrTemplate.commit();//提交事务
+</code></pre>
+<h2 id="5-按主键查询">5、按主键查询</h2>
+<pre><code class="language-java">//参数1 ：要查询的主键ID
+//参数2 ：返回的数据类型
+solrTemplate.getById(1,TbItem.class)
+</code></pre>
+<h2 id="6-按主键删除">6、按主键删除</h2>
+<pre><code class="language-java">solrTemplate.deleteById(&quot;1&quot;);
+</code></pre>
+<h2 id="7-分页查询">7、分页查询</h2>
+<pre><code class="language-java">//条件
+Query query = newSimpleQuery(&quot;*:*&quot;);
+//查询条件
+Criteria criteria = new Criteria();
+//and ：查询的域
+//contains ：查询的关键字
+criteria.and(&quot;item_title&quot;).contains(&quot;手机&quot;);
+//将查询条件添加到queyr中
+query.addCriteria(criteria);
+query.setOffset(0);//开始索引，默认为0，翻页规则 (pageNow - 1) * pageSize
+query.setRows(20);//每页记录条数
+//ScoredPage ：solr的分页查询
+//参数1：查询条件
+//参数2：返回类型
+ScoredPage&lt;TbItem&gt; page = solrTemplate.queryForPage(query,TbItem.class)
+System.out.pringln(&quot;总记录数:&quot;+page.getTotalElements());
+List&lt;TbItem&gt; list = page.getContent();
+</code></pre>
+<h2 id="8-高亮查询">8、高亮查询</h2>
+<pre><code class="language-java">@Resource
+private SolrTemplate solrTemplate;
+
+@Override
+public Map&lt;String, Object&gt; search(Map&lt;String, Object&gt; searchMap) {
+
+    Map&lt;String,Object&gt; map = new HashMap&lt;String, Object&gt;();
+
+    //设置搜索高亮
+    HighlightQuery query = new SimpleHighlightQuery();
+
+    //设置高亮的域
+    HighlightOptions highlightOptions = new HighlightOptions().addField(&quot;item_title&quot;);
+
+    //设置高亮前缀
+    highlightOptions.setSimplePrefix(&quot;&lt;em style='color:red'&gt;&quot;);
+    //设置高亮后缀
+    highlightOptions.setSimplePostfix(&quot;&lt;/em&gt;&quot;);
+
+    //设置高亮选项
+    query.setHighlightOptions(highlightOptions);
+
+    //按照关键字查询
+    Criteria criteria = new Criteria(&quot;item_keywords&quot;).is(searchMap.get(&quot;keywords&quot;));
+
+    //添加条件
+    query.addCriteria(criteria);
+
+    //到solr中查询
+    HighlightPage&lt;TbItem&gt; page = solrTemplate.queryForHighlightPage(query,TbItem.class);
+
+    //循环高亮入口集合
+    for (HighlightEntry&lt;TbItem&gt; entry : page.getHighlighted()) {
+        //获取原实体类
+        TbItem tbItem = entry.getEntity();
+
+        //判断是否有高亮内容
+        if(entry.getHighlights().size() &gt; 0 &amp;&amp; entry.getHighlights().get(0).getSnipplets().size() &gt; 0 ){
+            //设置高亮的结果
+            tbItem.setTitle(entry.getHighlights().get(0).getSnipplets().get(0));
+        }
+    }
+    map.put(&quot;rows&quot;,page.getContent());
+
+    return map;
 }
-</style>
-<section class="link after">
-    <article class="link-item">
-        <a href="http://cnm1.cn/" title="" target="_blank">1梦</a>
-    </article>
-    <article class="link-item">
-        <a href="https://nekodeng.gitee.io" title="十万伏特皮卡丘，梦想是世界和平，想要发光发热" target="_blank">itsNekoDeng</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.kylin.show/" title="" target="_blank">Kylin</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.npmrundev.com/" title="" target="_blank">Mozzie</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.piscme.com/" title="" target="_blank">PiscMe</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.uquq.cn/" title="" target="_blank">UQUQ</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.wuxf.cn/" title="" target="_blank">walkerの小窝</a>
-    </article>
-    <article class="link-item">
-        <a href="https://yremp.live" title="流年，谁给过的倾城" target="_blank">Yremp</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.usuuu.com/" title="" target="_blank">悠悠</a>
-    </article>
-    <article class="link-item">
-        <a href="https://proprogrammar.com/" title="" target="_blank">晴雨</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.200011.net" title="" target="_blank">油油</a>
-    </article>
-    <article class="link-item">
-        <a href="http://susa.club/" title="" target="_blank">苏</a>
-    </article>
-    <article class="link-item">
-        <a href="https://ayayy.cn/" title="" target="_blank">苏三说</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.mqllin.cn/" title="" target="_blank">雨林笔记</a>
-    </article>
-</section>
+</code></pre>
+
         </div>
         <!-- Share to Twitter, Weibo, Telegram -->
         <div class="flex items-center">
@@ -166,7 +217,21 @@
         </div>
       </div>
       <div class="post-toc-container">
-        
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#1-%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96">1、引入依赖</a></li>
+<li><a href="#2-applicationcontext-solrxml">2、applicationContext-solr.xml</a></li>
+<li><a href="#3-field-%E6%B3%A8%E8%A7%A3">3、@Field 注解</a></li>
+<li><a href="#4-%E6%B7%BB%E5%8A%A0">4、添加</a></li>
+<li><a href="#5-%E6%8C%89%E4%B8%BB%E9%94%AE%E6%9F%A5%E8%AF%A2">5、按主键查询</a></li>
+<li><a href="#6-%E6%8C%89%E4%B8%BB%E9%94%AE%E5%88%A0%E9%99%A4">6、按主键删除</a></li>
+<li><a href="#7-%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2">7、分页查询</a></li>
+<li><a href="#8-%E9%AB%98%E4%BA%AE%E6%9F%A5%E8%AF%A2">8、高亮查询</a></li>
+</ul>
+</li>
+</ul>
+
       </div>
     </div>
 

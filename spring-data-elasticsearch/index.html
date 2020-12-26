@@ -1,0 +1,1163 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Spring Data ElasticSearch - 浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Spring Data ElasticSearch - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+
+    
+
+  <meta name="description" content="ElasticSearch编程操作
+创建工程，导入坐标
+&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.elasticsearch&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;g..." />
+  <meta property="og:title" content="Spring Data ElasticSearch - 浩瀚">
+  <meta property="og:description" content="ElasticSearch编程操作
+创建工程，导入坐标
+&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.elasticsearch&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;g..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="http://mvvm.io/spring-data-elasticsearch/" />
+  <meta property="og:image" content="http://mvvm.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="Spring Data ElasticSearch - 浩瀚">
+  <meta name="twitter:description" content="ElasticSearch编程操作
+创建工程，导入坐标
+&amp;lt;dependency&amp;gt;
+    &amp;lt;groupId&amp;gt;org.elasticsearch&amp;lt;/groupId&amp;gt;
+    &amp;lt;artifactId&amp;g...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="http://mvvm.io/spring-data-elasticsearch/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="http://mvvm.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="http://mvvm.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      浩瀚
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          Spring Data ElasticSearch
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-07-11 · 24 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h2 id="elasticsearch编程操作">ElasticSearch编程操作</h2>
+<h3 id="创建工程导入坐标">创建工程，导入坐标</h3>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.elasticsearch&lt;/groupId&gt;
+    &lt;artifactId&gt;elasticsearch&lt;/artifactId&gt;
+    &lt;version&gt;5.6.8&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.elasticsearch.client&lt;/groupId&gt;
+    &lt;artifactId&gt;transport&lt;/artifactId&gt;
+    &lt;version&gt;5.6.8&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
+    &lt;artifactId&gt;log4j-to-slf4j&lt;/artifactId&gt;
+    &lt;version&gt;2.9.1&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+    &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+    &lt;version&gt;1.7.24&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+    &lt;artifactId&gt;slf4j-simple&lt;/artifactId&gt;
+    &lt;version&gt;1.7.21&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;log4j&lt;/groupId&gt;
+    &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+    &lt;version&gt;1.2.12&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;junit&lt;/groupId&gt;
+    &lt;artifactId&gt;junit&lt;/artifactId&gt;
+    &lt;version&gt;4.12&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3 id="创建索引index">创建索引index</h3>
+<pre><code class="language-java">/**
+ * 创建索引
+ * @throws Exception
+ */
+@Test
+public void testCreateIndex() throws Exception{
+    // 创建Client连接对象
+    Settings settings = Settings.builder().put(&quot;cluster.name&quot;, &quot;elasticsearch&quot;).build();
+    TransportClient client = new PreBuiltTransportClient(settings)
+            .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(&quot;127.0.0.1&quot;), 9300));
+    //创建名称为blog2的索引
+    client.admin().indices().prepareCreate(&quot;blog2&quot;).get();
+    //释放资源
+    client.close();
+}
+</code></pre>
+<h3 id="创建映射mapping">创建映射mapping</h3>
+<pre><code class="language-java">/**
+ * 创建映射Mappings
+ * @throws Exception
+ */
+@Test
+public void testCreateMappings() throws Exception{
+    // 创建Client连接对象
+    Settings settings = Settings.builder().put(&quot;cluster.name&quot;, &quot;elasticsearch&quot;).build();
+    TransportClient client = new PreBuiltTransportClient(settings)
+            .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(&quot;127.0.0.1&quot;), 9300));
+
+    // 添加映射
+    /**
+     * 格式：
+     * &quot;mappings&quot; : {
+         &quot;article&quot; : {
+             &quot;dynamic&quot; : &quot;false&quot;,
+             &quot;properties&quot; : {
+                 &quot;id&quot; : { &quot;type&quot; : &quot;string&quot; },
+                 &quot;content&quot; : { &quot;type&quot; : &quot;string&quot; },
+                 &quot;author&quot; : { &quot;type&quot; : &quot;string&quot; }
+             }
+         }
+     }
+     */
+    /*XContentBuilder builder = XContentFactory.jsonBuilder();
+    builder.startObject()
+                .startObject(&quot;article&quot;)
+                    .startObject(&quot;properties&quot;)
+                        .startObject(&quot;id&quot;)
+                            .field(&quot;type&quot;,&quot;integer&quot;)
+                            .field(&quot;store&quot;,&quot;yes&quot;)
+                    .endObject()
+                        .startObject(&quot;title&quot;)
+                            .field(&quot;type&quot;,&quot;string&quot;)
+                            .field(&quot;store&quot;,&quot;yes&quot;)
+                            .field(&quot;analyzer&quot;,&quot;ik_smart&quot;)
+                    .endObject()
+                        .startObject(&quot;content&quot;)
+                            .field(&quot;type&quot;,&quot;string&quot;)
+                            .field(&quot;store&quot;,&quot;yes&quot;)
+                            .field(&quot;analyzer&quot;,&quot;ik_smart&quot;)
+                    .endObject()
+                .endObject()
+            .endObject()
+            .endObject();*/
+
+    Map&lt;String,String&gt; fieldType = new HashMap&lt;&gt;();
+    fieldType.put(&quot;type&quot;,&quot;integer&quot;);
+    fieldType.put(&quot;store&quot;,&quot;yes&quot;);
+
+    Map&lt;String,String&gt; field2Type = new HashMap&lt;&gt;();
+    field2Type.put(&quot;type&quot;,&quot;string&quot;);
+    field2Type.put(&quot;store&quot;,&quot;yes&quot;);
+    field2Type.put(&quot;analyzer&quot;,&quot;ik_smart&quot;);
+
+    Map&lt;String,Object&gt; fields = new HashMap&lt;&gt;();
+    fields.put(&quot;id&quot;,fieldType);
+    fields.put(&quot;title&quot;,field2Type);
+    fields.put(&quot;content&quot;,field2Type);
+
+    Map&lt;String,Object&gt; properties = new HashMap&lt;&gt;();
+    properties.put(&quot;properties&quot;,fields);
+
+    Map&lt;String,Object&gt; builder = new HashMap&lt;&gt;();
+    builder.put(&quot;article&quot;,properties);
+
+    // 创建映射
+    PutMappingRequest mappingRequest = Requests.putMappingRequest(&quot;blog2&quot;).type(&quot;article&quot;).source(builder);
+    client.admin().indices().putMapping(mappingRequest).get();
+
+    //释放资源
+    client.close();
+}
+</code></pre>
+<h3 id="建立文档document">建立文档document</h3>
+<h4 id="建立文档通过xcontentbuilder">建立文档（通过XContentBuilder）</h4>
+<pre><code class="language-java">/**
+ * 创建文档 通过XContentBuilder
+ */
+@Test
+public void testCreateDocument() throws Exception {
+    //创建Client连接对象
+    Settings settings = Settings.builder().put(&quot;cluster.name&quot;,&quot;elasticsearch&quot;).build();
+    TransportClient client = new PreBuiltTransportClient(settings);
+    client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(&quot;127.0.0.1&quot;),9300));
+
+    //创建文档信息
+    XContentBuilder builder = XContentFactory.jsonBuilder()
+            .startObject()
+                .field(&quot;id&quot;, 1)
+                .field(&quot;title&quot;, &quot;ElasticSearch是一个基于Lucene的搜索服务器&quot;)
+                .field(&quot;content&quot;, &quot;它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;)
+            .endObject();
+
+    //建立文档对象
+    /**
+     * 参数1：索引对象
+     * 参数2：类型
+     * 参数3：建立id
+     */
+    client.prepareIndex(&quot;blog2&quot;,&quot;article&quot;,&quot;1&quot;).setSource(builder);
+    //释放资源
+    client.close();
+}
+</code></pre>
+<h4 id="建立文档通过实体类转json">建立文档（通过实体类转json）</h4>
+<pre><code class="language-java">/**
+ * 创建文档 通过
+ * @throws Exception
+ */
+@Test
+public void testCreateDocumentByEntity() throws Exception {
+    //创建Client连接对象
+    Settings settings = Settings.builder().put(&quot;cluster.name&quot;, &quot;elasticsearch&quot;).build();
+    TransportClient client = new PreBuiltTransportClient(settings);
+    client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(&quot;127.0.0.1&quot;), 9300));
+
+    // 描述json 数据
+    Article article = new Article();
+    article.setId(2);
+    article.setTitle(&quot;2搜索工作其实很快乐&quot;);
+    article.setContent(&quot;2我们希望我们的搜索解决方案要快，我们希望有一个零配置和一个完全免费的搜索模式，我们希望能够简单地使用JSON通过HTTP的索引数据，我们希望我们的搜索服务器始终可用，我们希望能够一台开始并扩展到数百，我们要实时搜索，我们要简单的多租户，我们希望建立一个云的解决方案。Elasticsearch旨在解决所有这些问题和更多的问题。&quot;);
+
+    // 建立文档
+    //jackson
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        client.prepareIndex(&quot;blog2&quot;, &quot;article&quot;, article.getId().toString())
+//                .setSource(objectMapper.writeValueAsString(article).getBytes(), XContentType.JSON).get();
+    //fastjson
+    client.prepareIndex(&quot;blog2&quot;, &quot;article&quot;, article.getId().toString())
+            .setSource(JSON.toJSONBytes(article), XContentType.JSON).get();
+
+    //释放资源
+    client.close();
+}
+</code></pre>
+<h3 id="查询文档操作">查询文档操作</h3>
+<h4 id="关键词查询">关键词查询</h4>
+<pre><code class="language-java">/**
+ * 关键词查询
+ * @throws Exception
+ */
+@Test
+public void testTermQuery() throws Exception {
+    //1、创建Client连接对象
+    Settings settings = Settings.builder().put(&quot;cluster.name&quot;, &quot;elasticsearch&quot;).build();
+    TransportClient client = new PreBuiltTransportClient(settings);
+    client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(&quot;127.0.0.1&quot;), 9300));
+
+    //2、设置搜索条件
+    SearchResponse searchResponse = client.prepareSearch(&quot;blog2&quot;)
+            .setTypes(&quot;article&quot;)
+            .setQuery(QueryBuilders.termQuery(&quot;content&quot;, &quot;搜索&quot;)).get();
+
+    //3、遍历搜索结果数据
+    SearchHits hits = searchResponse.getHits(); // 获取命中次数，查询结果有多少对象
+    System.out.println(&quot;查询结果有：&quot; + hits.getTotalHits() + &quot;条&quot;);
+    Iterator&lt;SearchHit&gt; iterator = hits.iterator();
+    while (iterator.hasNext()) {
+        SearchHit searchHit = iterator.next(); // 每个查询对象
+        System.out.println(searchHit.getSourceAsString()); // 获取字符串格式打印
+        System.out.println(&quot;title:&quot; + searchHit.getSource().get(&quot;title&quot;));
+    }
+
+    //4、释放资源
+    client.close();
+}
+</code></pre>
+<h4 id="字符串查询">字符串查询</h4>
+<pre><code class="language-java">/**
+ * 字符串查询
+ * @throws Exception
+ */
+@Test
+public void testStringQuery() throws Exception{
+    //1、创建Client连接对象
+    Settings settings = Settings.builder().put(&quot;cluster.name&quot;, &quot;elasticsearch&quot;).build();
+    TransportClient client = new PreBuiltTransportClient(settings);
+    client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(&quot;127.0.0.1&quot;), 9300));
+
+    //2、设置搜索条件
+    SearchResponse searchResponse = client.prepareSearch(&quot;blog2&quot;)
+            .setTypes(&quot;article&quot;)
+            .setQuery(QueryBuilders.queryStringQuery(&quot;搜索&quot;)).get();
+
+    //3、遍历搜索结果数据
+    SearchHits hits = searchResponse.getHits(); // 获取命中次数，查询结果有多少对象
+    System.out.println(&quot;查询结果有：&quot; + hits.getTotalHits() + &quot;条&quot;);
+    Iterator&lt;SearchHit&gt; iterator = hits.iterator();
+    while (iterator.hasNext()) {
+        SearchHit searchHit = iterator.next(); // 每个查询对象
+        System.out.println(searchHit.getSourceAsString()); // 获取字符串格式打印
+        System.out.println(&quot;title:&quot; + searchHit.getSource().get(&quot;title&quot;));
+    }
+
+    //4、释放资源
+    client.close();
+}
+</code></pre>
+<h4 id="使用文档id查询文档">使用文档ID查询文档</h4>
+<pre><code class="language-java">/**
+ * 使用文档ID查询文档
+ * @throws Exception
+ */
+@Test
+public void testIdQuery() throws Exception {
+    //1、创建Client连接对象
+    Settings settings = Settings.builder().put(&quot;cluster.name&quot;, &quot;elasticsearch&quot;).build();
+    TransportClient client = new PreBuiltTransportClient(settings);
+    client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(&quot;127.0.0.1&quot;), 9300));
+
+    //client对象为TransportClient对象
+    SearchResponse response = client.prepareSearch(&quot;blog2&quot;)
+            .setTypes(&quot;article&quot;)
+            //设置要查询的id
+            .setQuery(QueryBuilders.idsQuery().addIds(&quot;1&quot;,&quot;2&quot;))
+            //执行查询
+            .get();
+    //取查询结果
+    SearchHits searchHits = response.getHits();
+    //取查询结果总记录数
+    System.out.println(searchHits.getTotalHits());
+    Iterator&lt;SearchHit&gt; hitIterator = searchHits.iterator();
+    while(hitIterator.hasNext()) {
+        SearchHit searchHit = hitIterator.next();
+        //打印整行数据
+        System.out.println(searchHit.getSourceAsString());
+    }
+}
+</code></pre>
+<h3 id="查询文档分页操作">查询文档分页操作</h3>
+<h4 id="批量插入数据">批量插入数据</h4>
+<pre><code class="language-java">/**
+ * 批量插入100条数据
+ * @throws Exception
+ */
+@Test
+public void testCreateDocument100() throws Exception{
+    //1、创建Client连接对象
+    Settings settings = Settings.builder().put(&quot;cluster.name&quot;, &quot;elasticsearch&quot;).build();
+    TransportClient client = new PreBuiltTransportClient(settings);
+    client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(&quot;127.0.0.1&quot;), 9300));
+
+    for (int i = 1; i &lt;= 100; i++) {
+        // 描述json 数据
+        Article article = new Article();
+        article.setId(i);
+        article.setTitle(i + &quot;搜索工作其实很快乐&quot;);
+        article.setContent(i
+                + &quot;我们希望我们的搜索解决方案要快，我们希望有一个零配置和一个完全免费的搜索模式，我们希望能够简单地使用JSON通过HTTP的索引数据，我们希望我们的搜索服务器始终可用，我们希望能够一台开始并扩展到数百，我们要实时搜索，我们要简单的多租户，我们希望建立一个云的解决方案。Elasticsearch旨在解决所有这些问题和更多的问题。&quot;);
+        // 建立文档
+        client.prepareIndex(&quot;blog2&quot;, &quot;article&quot;, article.getId().toString())
+                .setSource(JSON.toJSONBytes(article),XContentType.JSON).get();
+    }
+
+    //释放资源
+    client.close();
+}
+</code></pre>
+<h4 id="分页查询">分页查询</h4>
+<pre><code class="language-java">/**
+ * 分页查询
+ * @throws Exception
+ */
+@Test
+public void test10() throws Exception{
+    //1、创建Client连接对象
+    Settings settings = Settings.builder().put(&quot;cluster.name&quot;, &quot;elasticsearch&quot;).build();
+    TransportClient client = new PreBuiltTransportClient(settings);
+    client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(&quot;127.0.0.1&quot;), 9300));
+
+    // 搜索数据
+    SearchRequestBuilder searchRequestBuilder = client.prepareSearch(&quot;blog2&quot;).setTypes(&quot;article&quot;)
+            .setQuery(QueryBuilders.matchAllQuery());//默认每页10条记录
+
+    // 查询第1页数据，每页5条
+    //setFrom()：从第几条开始检索，默认是0。
+    //setSize():每页最多显示的记录数。
+    searchRequestBuilder.setFrom(0).setSize(5);
+    SearchResponse searchResponse = searchRequestBuilder.get();
+
+    SearchHits hits = searchResponse.getHits(); // 获取命中次数，查询结果有多少对象
+    System.out.println(&quot;查询结果有：&quot; + hits.getTotalHits() + &quot;条&quot;);
+    Iterator&lt;SearchHit&gt; iterator = hits.iterator();
+    while (iterator.hasNext()) {
+        SearchHit searchHit = iterator.next(); // 每个查询对象
+        System.out.println(searchHit.getSourceAsString()); // 获取字符串格式打印
+        System.out.println(&quot;id:&quot; + searchHit.getSource().get(&quot;id&quot;));
+        System.out.println(&quot;title:&quot; + searchHit.getSource().get(&quot;title&quot;));
+        System.out.println(&quot;content:&quot; + searchHit.getSource().get(&quot;content&quot;));
+        System.out.println(&quot;-----------------------------------------&quot;);
+    }
+
+    //释放资源
+    client.close();
+}
+</code></pre>
+<h3 id="查询结果高亮操作">查询结果高亮操作</h3>
+<pre><code class="language-java">/**
+ * 搜索高亮
+ * @throws Exception
+ */
+@Test
+public void test11() throws Exception{
+    //1、创建Client连接对象
+    Settings settings = Settings.builder().put(&quot;cluster.name&quot;, &quot;elasticsearch&quot;).build();
+    TransportClient client = new PreBuiltTransportClient(settings);
+    client.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(&quot;127.0.0.1&quot;), 9300));
+
+    // 搜索数据
+    SearchRequestBuilder searchRequestBuilder = client
+            .prepareSearch(&quot;blog2&quot;).setTypes(&quot;article&quot;)
+            .setQuery(QueryBuilders.termQuery(&quot;title&quot;, &quot;搜索&quot;));
+
+    //设置高亮数据
+    HighlightBuilder hiBuilder = new HighlightBuilder();
+    hiBuilder.preTags(&quot;&lt;font style='color:red'&gt;&quot;);
+    hiBuilder.postTags(&quot;&lt;/font&gt;&quot;);
+    hiBuilder.field(&quot;title&quot;);
+    searchRequestBuilder.highlighter(hiBuilder);
+
+    //获得查询结果数据
+    SearchResponse searchResponse = searchRequestBuilder.get();
+
+    //获取查询结果集
+    SearchHits searchHits = searchResponse.getHits();
+    System.out.println(&quot;共搜到:&quot;+searchHits.getTotalHits()+&quot;条结果!&quot;);
+    //遍历结果
+    for(SearchHit hit:searchHits){
+        System.out.println(&quot;String方式打印文档搜索内容:&quot;);
+        System.out.println(hit.getSourceAsString());
+        System.out.println(&quot;Map方式打印高亮内容&quot;);
+        System.out.println(hit.getHighlightFields());
+
+        System.out.println(&quot;遍历高亮集合，打印高亮片段:&quot;);
+        Text[] text = hit.getHighlightFields().get(&quot;title&quot;).getFragments();
+        for (Text str : text) {
+            System.out.println(str);
+        }
+    }
+
+    //释放资源
+    client.close();
+}
+</code></pre>
+<h2 id="spring-data-elasticsearch-使用">Spring Data ElasticSearch 使用</h2>
+<h3 id="spring-data-elasticsearch简介">Spring Data ElasticSearch简介</h3>
+<h4 id="什么是spring-data">什么是Spring Data</h4>
+<p>Spring Data是一个用于简化数据库访问，并支持云服务的开源框架。其主要目标是使得对数据的访问变得方便快捷，并支持map-reduce框架和云计算数据服务。 Spring Data可以极大的简化JPA的写法，可以在几乎不用写实现的情况下，实现对数据的访问和操作。除了CRUD外，还包括如分页、排序等一些常用的功能。</p>
+<p>Spring Data的官网：http://projects.spring.io/spring-data/</p>
+<h4 id="什么是spring-data-elasticsearch">什么是Spring Data ElasticSearch</h4>
+<p>Spring Data ElasticSearch 基于 spring data API 简化 elasticSearch操作，将原始操作elasticSearch的客户端API 进行封装 。Spring Data为Elasticsearch项目提供集成搜索引擎。Spring Data Elasticsearch POJO的关键功能区域为中心的模型与Elastichsearch交互文档和轻松地编写一个存储库数据访问层。</p>
+<p>官方网站：http://projects.spring.io/spring-data-elasticsearch/</p>
+<h3 id="spring-data-elasticsearch入门">Spring Data ElasticSearch入门</h3>
+<h4 id="1-导入依赖">1、导入依赖</h4>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.elasticsearch&lt;/groupId&gt;
+    &lt;artifactId&gt;elasticsearch&lt;/artifactId&gt;
+    &lt;version&gt;5.6.8&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.elasticsearch.client&lt;/groupId&gt;
+    &lt;artifactId&gt;transport&lt;/artifactId&gt;
+    &lt;version&gt;5.6.8&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.apache.logging.log4j&lt;/groupId&gt;
+    &lt;artifactId&gt;log4j-to-slf4j&lt;/artifactId&gt;
+    &lt;version&gt;2.9.1&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+    &lt;artifactId&gt;slf4j-api&lt;/artifactId&gt;
+    &lt;version&gt;1.7.24&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+    &lt;artifactId&gt;slf4j-simple&lt;/artifactId&gt;
+    &lt;version&gt;1.7.21&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;log4j&lt;/groupId&gt;
+    &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+    &lt;version&gt;1.2.12&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;junit&lt;/groupId&gt;
+    &lt;artifactId&gt;junit&lt;/artifactId&gt;
+    &lt;version&gt;4.12&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+    &lt;artifactId&gt;jackson-core&lt;/artifactId&gt;
+    &lt;version&gt;2.8.1&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+    &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+    &lt;version&gt;2.8.1&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+    &lt;artifactId&gt;jackson-annotations&lt;/artifactId&gt;
+    &lt;version&gt;2.8.1&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.data&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-data-elasticsearch&lt;/artifactId&gt;
+    &lt;version&gt;3.0.5.RELEASE&lt;/version&gt;
+    &lt;exclusions&gt;
+        &lt;exclusion&gt;
+            &lt;groupId&gt;org.elasticsearch.plugin&lt;/groupId&gt;
+            &lt;artifactId&gt;transport-netty4-client&lt;/artifactId&gt;
+        &lt;/exclusion&gt;
+    &lt;/exclusions&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-test&lt;/artifactId&gt;
+    &lt;version&gt;5.0.4.RELEASE&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+    &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+    &lt;version&gt;1.18.12&lt;/version&gt;
+    &lt;scope&gt;provided&lt;/scope&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+    &lt;artifactId&gt;fastjson&lt;/artifactId&gt;
+    &lt;version&gt;1.2.72&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4 id="2-写实体article">2、写实体Article</h4>
+<pre><code class="language-java">@lombok.Data
+public class Article {
+    private Integer id;
+    private String title;
+    private String content;
+}
+</code></pre>
+<h4 id="3-dao">3、Dao</h4>
+<pre><code class="language-java">import com.cn.entity.Article;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface ArticleRepository extends ElasticsearchRepository&lt;Article, Integer&gt; {
+
+}
+</code></pre>
+<h4 id="4-service">4、Service</h4>
+<pre><code class="language-java">import com.cn.entity.Article;
+
+public interface ArticleService {
+
+    void save(Article article);
+    
+}
+import com.cn.dao.ArticleRepository;
+import com.cn.entity.Article;
+import com.cn.service.ArticleService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+
+@Service
+public class ArticleServiceImpl implements ArticleService {
+
+    @Resource
+    private ArticleRepository articleRepository;
+
+    @Override
+    public void save(Article article) {
+        articleRepository.save(article);
+    }
+
+}
+</code></pre>
+<h4 id="5-配置applicationcontextxml">5、配置applicationContext.xml</h4>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:elasticsearch=&quot;http://www.springframework.org/schema/data/elasticsearch&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/data/elasticsearch
+		http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd&quot;&gt;
+
+    &lt;!-- 扫描Dao包，自动创建实例 --&gt;
+    &lt;elasticsearch:repositories base-package=&quot;com.cn.dao&quot;/&gt;
+
+    &lt;!-- 扫描Service包，创建Service的实体 --&gt;
+    &lt;context:component-scan base-package=&quot;com.cn.service&quot;/&gt;
+
+    &lt;!-- 配置elasticSearch的连接 --&gt;
+    &lt;!-- 配置elasticSearch的连接 --&gt;
+    &lt;elasticsearch:transport-client id=&quot;client&quot; cluster-nodes=&quot;localhost:9300&quot; cluster-name=&quot;elasticsearch&quot;/&gt;
+
+    &lt;!-- ElasticSearch模版对象 --&gt;
+    &lt;bean id=&quot;elasticsearchTemplate&quot; class=&quot;org.springframework.data.elasticsearch.core.ElasticsearchTemplate&quot;&gt;
+        &lt;constructor-arg name=&quot;client&quot; ref=&quot;client&quot;/&gt;
+    &lt;/bean&gt;
+
+&lt;/beans&gt;
+</code></pre>
+<h4 id="6-配置实体">6、配置实体</h4>
+<p>基于spring data elasticsearch注解配置索引、映射和实体的关系</p>
+<pre><code class="language-java">import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+
+@lombok.Data
+//@Document 文档对象 （索引信息、文档类型 ）
+@Document(indexName=&quot;blog3&quot;,type=&quot;article&quot;)
+public class Article {
+    //@Id 文档主键 唯一标识
+    @Id
+    //@Field 每个文档的字段配置（类型、是否分词、是否存储、分词器 ）
+    @Field(store=true, index = false,type = FieldType.Integer)
+    private Integer id;
+    @Field(index=true,analyzer=&quot;ik_smart&quot;,store=true,searchAnalyzer=&quot;ik_smart&quot;,type = FieldType.text)
+    private String title;
+    @Field(index=true,analyzer=&quot;ik_smart&quot;,store=true,searchAnalyzer=&quot;ik_smart&quot;,type = FieldType.text)
+    private String content;
+}
+其中，注解解释如下：
+@Document(indexName=&quot;blob3&quot;,type=&quot;article&quot;)：
+    indexName：索引的名称（必填项）
+    type：索引的类型
+@Id：主键的唯一标识
+@Field(index=true,analyzer=&quot;ik_smart&quot;,store=true,searchAnalyzer=&quot;ik_smart&quot;,type = FieldType.text)
+    index：是否设置分词
+    analyzer：存储时使用的分词器
+    searchAnalyze：搜索时使用的分词器
+    store：是否存储
+    type: 数据类型
+</code></pre>
+<h4 id="7-创建测试类springdataestest">7、创建测试类SpringDataESTest</h4>
+<pre><code class="language-java">package com.cn.test;
+
+import com.cn.entity.Article;
+import com.cn.service.ArticleService;
+import org.elasticsearch.client.transport.TransportClient;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.annotation.Resource;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations=&quot;classpath:applicationContext.xml&quot;)
+public class SpringDataESTest {
+
+    @Resource
+    private ArticleService articleService;
+    @Resource
+    private TransportClient client;
+    @Resource
+    private ElasticsearchTemplate elasticsearchTemplate;
+
+    /**创建索引和映射*/
+    @Test
+    public void createIndex(){
+        elasticsearchTemplate.createIndex(Article.class);
+        elasticsearchTemplate.putMapping(Article.class);
+    }
+
+    /**测试保存文档*/
+    @Test
+    public void saveArticle(){
+        Article article = new Article();
+        article.setId(100);
+        article.setTitle(&quot;测试SpringData ElasticSearch&quot;);
+        article.setContent(&quot;Spring Data ElasticSearch 基于 spring data API 简化 elasticSearch操作，将原始操作elasticSearch的客户端API 进行封装 \n&quot; +
+                &quot;    Spring Data为Elasticsearch Elasticsearch项目提供集成搜索引擎&quot;);
+        articleService.save(article);
+    }
+
+}
+</code></pre>
+<h3 id="spring-data-elasticsearch的常用操作">Spring Data ElasticSearch的常用操作</h3>
+<h4 id="增删改查方法测试">增删改查方法测试</h4>
+<pre><code class="language-java">package com.cn.test;
+
+import com.cn.entity.Article;
+import com.cn.service.ArticleService;
+import org.elasticsearch.client.transport.TransportClient;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import javax.annotation.Resource;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations=&quot;classpath:applicationContext.xml&quot;)
+public class SpringDataESTest {
+
+    @Resource
+    private ArticleService articleService;
+    @Resource
+    private TransportClient client;
+    @Resource
+    private ElasticsearchTemplate elasticsearchTemplate;
+
+    /**创建索引和映射*/
+    @Test
+    public void createIndex(){
+        elasticsearchTemplate.createIndex(Article.class);
+        elasticsearchTemplate.putMapping(Article.class);
+    }
+
+    /**测试保存文档*/
+    @Test
+    public void saveArticle(){
+        Article article = new Article();
+        article.setId(100);
+        article.setTitle(&quot;测试SpringData ElasticSearch&quot;);
+        article.setContent(&quot;Spring Data ElasticSearch 基于 spring data API 简化 elasticSearch操作，将原始操作elasticSearch的客户端API 进行封装 \n&quot; +
+                &quot;    Spring Data为Elasticsearch Elasticsearch项目提供集成搜索引擎&quot;);
+        articleService.save(article);
+    }
+
+    /**
+     * 测试更新
+     */
+    @Test
+    public void update(){
+        Article article = new Article();
+        article.setId(1001);
+        article.setTitle(&quot;elasticSearch 3.0版本发布...更新&quot;);
+        article.setContent(&quot;ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口&quot;);
+        articleService.save(article);
+    }
+
+    /**
+     * 测试删除
+     */
+    @Test
+    public void delete(){
+        Article article = new Article();
+        article.setId(1001);
+        articleService.delete(article);
+    }
+
+    /**
+     * 批量插入
+     */
+    @Test
+    public void save100(){
+        for(int i=1;i&lt;=100;i++){
+            Article article = new Article();
+            article.setId(i);
+            article.setTitle(i+&quot;elasticSearch 3.0版本发布..，更新&quot;);
+            article.setContent(i+&quot;ElasticSearch是一个基于Lucene的搜索服务器。它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口&quot;);
+            articleService.save(article);
+        }
+    }
+
+    /**
+     * 分页查询
+     */
+    @Test
+    public void findAllPage(){
+        Pageable pageable = PageRequest.of(1,10);
+        Page&lt;Article&gt; page = articleService.findAll(pageable);
+        for(Article article:page.getContent()){
+            System.out.println(article);
+        }
+    }
+
+}
+</code></pre>
+<h4 id="常用查询命名规则">常用查询命名规则</h4>
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>命名规则</th>
+<th>解释</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>and</td>
+<td>findByField1AndField2</td>
+<td>根据Field1和Field2获得数据</td>
+<td>findByTitleAndContent</td>
+</tr>
+<tr>
+<td>or</td>
+<td>findByField1OrField2</td>
+<td>根据Field1或Field2获得数据</td>
+<td>findByTitleOrContent</td>
+</tr>
+<tr>
+<td>is</td>
+<td>findByField</td>
+<td>根据Field获得数据</td>
+<td>findByTitle</td>
+</tr>
+<tr>
+<td>not</td>
+<td>findByFieldNot</td>
+<td>根据Field获得补集数据</td>
+<td>findByTitleNot</td>
+</tr>
+<tr>
+<td>between</td>
+<td>findByFieldBetween</td>
+<td>获得指定范围的数据</td>
+<td>findByPriceBetween</td>
+</tr>
+<tr>
+<td>lessThanEqual</td>
+<td>findByFieldLessThan</td>
+<td>获得小于等于指定值的数据</td>
+<td>findByPriceLessThan</td>
+</tr>
+</tbody>
+</table>
+<h4 id="使用elasticsearch的原生查询对象进行查询">使用Elasticsearch的原生查询对象进行查询。</h4>
+<pre><code class="language-java">@Test
+public void findByNativeQuery() {
+    //创建一个SearchQuery对象
+    SearchQuery searchQuery = new NativeSearchQueryBuilder()
+            //设置查询条件，此处可以使用QueryBuilders创建多种查询
+            .withQuery(QueryBuilders.queryStringQuery(&quot;备份节点上没有数据&quot;).defaultField(&quot;title&quot;))
+            //还可以设置分页信息
+            .withPageable(PageRequest.of(1, 5))
+            //创建SearchQuery对象
+            .build();
+
+    //使用模板对象执行查询
+    elasticsearchTemplate.queryForList(searchQuery, Article.class)
+            .forEach(a-&gt; System.out.println(a));
+}
+</code></pre>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#elasticsearch%E7%BC%96%E7%A8%8B%E6%93%8D%E4%BD%9C">ElasticSearch编程操作</a>
+<ul>
+<li><a href="#%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B%E5%AF%BC%E5%85%A5%E5%9D%90%E6%A0%87">创建工程，导入坐标</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95index">创建索引index</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E6%98%A0%E5%B0%84mapping">创建映射mapping</a></li>
+<li><a href="#%E5%BB%BA%E7%AB%8B%E6%96%87%E6%A1%A3document">建立文档document</a>
+<ul>
+<li><a href="#%E5%BB%BA%E7%AB%8B%E6%96%87%E6%A1%A3%E9%80%9A%E8%BF%87xcontentbuilder">建立文档（通过XContentBuilder）</a></li>
+<li><a href="#%E5%BB%BA%E7%AB%8B%E6%96%87%E6%A1%A3%E9%80%9A%E8%BF%87%E5%AE%9E%E4%BD%93%E7%B1%BB%E8%BD%ACjson">建立文档（通过实体类转json）</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E6%96%87%E6%A1%A3%E6%93%8D%E4%BD%9C">查询文档操作</a>
+<ul>
+<li><a href="#%E5%85%B3%E9%94%AE%E8%AF%8D%E6%9F%A5%E8%AF%A2">关键词查询</a></li>
+<li><a href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9F%A5%E8%AF%A2">字符串查询</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E6%96%87%E6%A1%A3id%E6%9F%A5%E8%AF%A2%E6%96%87%E6%A1%A3">使用文档ID查询文档</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E6%96%87%E6%A1%A3%E5%88%86%E9%A1%B5%E6%93%8D%E4%BD%9C">查询文档分页操作</a>
+<ul>
+<li><a href="#%E6%89%B9%E9%87%8F%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE">批量插入数据</a></li>
+<li><a href="#%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2">分页查询</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E9%AB%98%E4%BA%AE%E6%93%8D%E4%BD%9C">查询结果高亮操作</a></li>
+</ul>
+</li>
+<li><a href="#spring-data-elasticsearch-%E4%BD%BF%E7%94%A8">Spring Data ElasticSearch 使用</a>
+<ul>
+<li><a href="#spring-data-elasticsearch%E7%AE%80%E4%BB%8B">Spring Data ElasticSearch简介</a>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFspring-data">什么是Spring Data</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFspring-data-elasticsearch">什么是Spring Data ElasticSearch</a></li>
+</ul>
+</li>
+<li><a href="#spring-data-elasticsearch%E5%85%A5%E9%97%A8">Spring Data ElasticSearch入门</a>
+<ul>
+<li><a href="#1-%E5%AF%BC%E5%85%A5%E4%BE%9D%E8%B5%96">1、导入依赖</a></li>
+<li><a href="#2-%E5%86%99%E5%AE%9E%E4%BD%93article">2、写实体Article</a></li>
+<li><a href="#3-dao">3、Dao</a></li>
+<li><a href="#4-service">4、Service</a></li>
+<li><a href="#5-%E9%85%8D%E7%BD%AEapplicationcontextxml">5、配置applicationContext.xml</a></li>
+<li><a href="#6-%E9%85%8D%E7%BD%AE%E5%AE%9E%E4%BD%93">6、配置实体</a></li>
+<li><a href="#7-%E5%88%9B%E5%BB%BA%E6%B5%8B%E8%AF%95%E7%B1%BBspringdataestest">7、创建测试类SpringDataESTest</a></li>
+</ul>
+</li>
+<li><a href="#spring-data-elasticsearch%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C">Spring Data ElasticSearch的常用操作</a>
+<ul>
+<li><a href="#%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5%E6%96%B9%E6%B3%95%E6%B5%8B%E8%AF%95">增删改查方法测试</a></li>
+<li><a href="#%E5%B8%B8%E7%94%A8%E6%9F%A5%E8%AF%A2%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99">常用查询命名规则</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8elasticsearch%E7%9A%84%E5%8E%9F%E7%94%9F%E6%9F%A5%E8%AF%A2%E5%AF%B9%E8%B1%A1%E8%BF%9B%E8%A1%8C%E6%9F%A5%E8%AF%A2">使用Elasticsearch的原生查询对象进行查询。</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="http://mvvm.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>

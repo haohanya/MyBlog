@@ -1,0 +1,650 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>MQ的基本概念 - 浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="MQ的基本概念 - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+
+    
+
+  <meta name="description" content="MQ的基本概念
+MQ的概述
+MQ全称 ：Message Queue（消息队列），是在消息的传输过程中保持消息的容器，多用于分布式系统之间进行通信
+MQ的优点和缺点
+优点
+
+应用解耦
+异步提速
+削峰填谷
+
+缺点
+
+系统可用性降低
+系统复杂度提..." />
+  <meta property="og:title" content="MQ的基本概念 - 浩瀚">
+  <meta property="og:description" content="MQ的基本概念
+MQ的概述
+MQ全称 ：Message Queue（消息队列），是在消息的传输过程中保持消息的容器，多用于分布式系统之间进行通信
+MQ的优点和缺点
+优点
+
+应用解耦
+异步提速
+削峰填谷
+
+缺点
+
+系统可用性降低
+系统复杂度提..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="http://mvvm.io/mq-de-ji-ben-gai-nian/" />
+  <meta property="og:image" content="http://mvvm.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="MQ的基本概念 - 浩瀚">
+  <meta name="twitter:description" content="MQ的基本概念
+MQ的概述
+MQ全称 ：Message Queue（消息队列），是在消息的传输过程中保持消息的容器，多用于分布式系统之间进行通信
+MQ的优点和缺点
+优点
+
+应用解耦
+异步提速
+削峰填谷
+
+缺点
+
+系统可用性降低
+系统复杂度提...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="http://mvvm.io/mq-de-ji-ben-gai-nian/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="http://mvvm.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="http://mvvm.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      浩瀚
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          MQ的基本概念
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-06-15 · 9 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h1 id="mq的基本概念">MQ的基本概念</h1>
+<h2 id="mq的概述">MQ的概述</h2>
+<p>MQ全称 ：Message Queue（消息队列），是在消息的传输过程中保持消息的容器，多用于分布式系统之间进行通信</p>
+<h2 id="mq的优点和缺点">MQ的优点和缺点</h2>
+<h3 id="优点">优点</h3>
+<ul>
+<li>应用解耦</li>
+<li>异步提速</li>
+<li>削峰填谷</li>
+</ul>
+<h3 id="缺点">缺点</h3>
+<ul>
+<li>系统可用性降低</li>
+<li>系统复杂度提高</li>
+<li>一致性问题</li>
+</ul>
+<h2 id="应用解耦">应用解耦</h2>
+<blockquote>
+<p>系统的耦合性越高，容错性就越低可维护性就越低</p>
+</blockquote>
+<blockquote>
+<p>使用MQ使得应用解耦，提高了容错性和可维护性</p>
+</blockquote>
+<h2 id="异步提速">异步提速</h2>
+<blockquote>
+<p>一个订单操作耗时：20+300+300+300=920ms</p>
+<p>用户点击完成下单按钮后需要等待920ms才能得到下单成功的响应，太慢了！</p>
+</blockquote>
+<blockquote>
+<p>而使用了MQ用户点击下单按钮后只需要等待25ms就能得到下单的响应，提升用户体验和系统吞吐量</p>
+<p>（吞吐量:单位时间内处理请求的数目）</p>
+</blockquote>
+<h2 id="削峰填谷">削峰填谷</h2>
+<h4 id="削峰">削峰</h4>
+<blockquote>
+<p>为了提高营业额，在A系统中做了一个活动，叫：一元秒杀外星人，在活动开始后，用户反复刷新页面，并且新用户增多，请求瞬间增多每秒5000个请求</p>
+<p>而应用A系统能每秒能处理的请求数只能是1000个，现在请求数达到5000那么A系统将会直接宕机</p>
+</blockquote>
+<blockquote>
+<p>用户的请求先发送给MQ，5000个请求同时发给MQ（在MQ看来是小意思）A系统每秒从MQ中拉取1000个请求，处理完了之后再从MQ继续拉取，直到消息全部拉取完毕</p>
+</blockquote>
+<h4 id="填谷">填谷</h4>
+<blockquote>
+<p>使用了MQ之后，限制效非消息的速度为1000，这样依赖，高峰期产生的数据势必会被挤压在MQ中，高峰就被消掉了，但是因为消息积压，在高峰期过后的一段时间内，消费消息的速度还是会维持在1000，直到消息消费完积压的消息，这就叫做“填谷”</p>
+<p>使用了MQ后可以提高系统稳定性</p>
+</blockquote>
+<h3 id="小结">小结</h3>
+<h4 id="优点小结">优点小结</h4>
+<ul>
+<li>应用解耦：提高系统容错性和可维护性</li>
+<li>异步提速：提升用户体验和系统吞吐量</li>
+<li>削峰填谷：提高了系统的稳定性</li>
+</ul>
+<h2 id="mq的缺点">MQ的缺点</h2>
+<ul>
+<li>系统可用性降低
+<ul>
+<li>系统引入的外部依赖越多，系统稳定性越差，一旦MQ宕机，就会对业务造成影响，如何保证MQ的高可用？</li>
+</ul>
+</li>
+<li>系统复杂度提高
+<ul>
+<li>MQ的加入大大增加了系统的复杂度，以前系统之间同步的远程调用，现在是通过MQ进行异步调用，如何保证消息没有被重复消费？怎么处理消息丢失的情况，那么保证消息传递的顺序性？</li>
+</ul>
+</li>
+<li>一致性问题
+<ul>
+<li>A系统处理完业务，通过MQ给B、C、D系统三个系统发送消息数据，如果B系统、C系统处理成功，但是D系统处理失败，如何保证消息数据处理的一致性呢？</li>
+</ul>
+</li>
+</ul>
+<h2 id="常见的mq产品">常见的MQ产品</h2>
+<p>目前业界有很多的MQ产品，如：RabbitMQ、RocaketMQ、ActiveMQ、Kafaka、ZeroMQ、MetaMQ等等，也有公司直接使用Redis充当消息队列的案例，而这些消息队列产品各有偏重，在实际选型中，需要结合自身需求以及MQ产品的特性，综合考虑</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>RabbitMQ</th>
+<th>ActiveMQ</th>
+<th>RocketMQ</th>
+<th>Kafaka</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>公司/社区</td>
+<td>Rabbit</td>
+<td>Apache</td>
+<td>Alibaba</td>
+<td>Apache</td>
+</tr>
+<tr>
+<td>开发语言</td>
+<td>Erlang（二郎神）</td>
+<td>Java</td>
+<td>Java</td>
+<td>Java&amp;Scala</td>
+</tr>
+<tr>
+<td>协议支持</td>
+<td>AMQP、SMTP...</td>
+<td>REST、AMQP、STOMP...</td>
+<td>自定义</td>
+<td>自定义协议、社区封装了http协议支持</td>
+</tr>
+<tr>
+<td>客户端支持语言</td>
+<td>官方支持Erlang、java、Ruby等</td>
+<td>Java、C、C++、Python、PHP...</td>
+<td>Java、C++(不成熟)</td>
+<td>官方支持JAVA、社区产出了多种API，如PHP和Python等</td>
+</tr>
+<tr>
+<td>单机吞吐量</td>
+<td>万级（其次）</td>
+<td>万级（最差）</td>
+<td>十万级（最好）</td>
+<td>十万级（次之）</td>
+</tr>
+<tr>
+<td>消息延迟</td>
+<td>微秒级</td>
+<td>毫秒级</td>
+<td>毫秒级</td>
+<td>毫秒级以内</td>
+</tr>
+<tr>
+<td>功能特性</td>
+<td>并发能力强、性能极其好、延迟低、社区活跃、管理界面丰富</td>
+<td>老牌产品、成熟度高、文档较多</td>
+<td>MQ功能比较完备、扩展性佳</td>
+<td>支支持主要的MQ功能，毕竟是为大数据领域准备的</td>
+</tr>
+</tbody>
+</table>
+<h2 id="amqp简介">AMQP简介</h2>
+<blockquote>
+<p><code>AMQP</code>：Advanced Message Queuing Protocol (高级消息队列协议)，它是一个网路协议，是应用层协议的一个开发标准，为面向消息的中间件设计。基于此协议的客户端与消息中间件可传递消息，并不受客户端/中间件不同产品，不同的开发语言等条件限制</p>
+<p>AMQP是2006年SUN公司发布的一个规范</p>
+</blockquote>
+<h2 id="rabbitmq简介">RabbitMQ简介</h2>
+<blockquote>
+<p>Rabbit技术公司（美国）基于AMQP标准开发的RabbitMQ于2007年发布V1.0版，RabbitMQ采用Erlang语言开发。</p>
+<p>Erlang语言专门为高并发和分布式统设计的一种语言，在电信领域使用广泛</p>
+</blockquote>
+<ul>
+<li>Broker:就是RabbitMQ Server，用来接收和分发消息的应用</li>
+<li>Virtual Host:出于多租户和安全因素设计的，把AMQP的基本组件划分到一个虚拟的分组中，雷速与网络中的namesapce概念。当多个不同的用户使用一个RabbitMQ server提供服务的时候，可以划分出多个Virtual Host，每个用户都在自己的vhost创建exchange和queue等</li>
+<li>Connection：生产者/消费者 和broker之间的TCP连接</li>
+<li>Channel：（信道）如果每一次访问RabbitMQ都建立一个Connection，在消息量大的时候建立Tcp Connection的开销将是巨大的、效率也较低。Channel是在Connection内部建立的逻辑连接，如果应用程序支持多线程，通常每个thread创建单独的channel进行通信，AMQP method包含了channel id帮助客户端和message borker识别channel，所以channel之间是完全隔离的。Channel作为轻量级的Connection极大减少了操作系统建立TCP connection的开销</li>
+<li>Exchange：消息达到RabbitMQ的第一站，根据分发规则，匹配查询表中的<code>routing key</code>(路由键)，分发消息到queue中去，常有的类型有：direct (点对点和activeMQ中的queue是一样的)、topic、fanout（这个和activeMQ中的topic模式是一样的）</li>
+<li>Queue：消息最终被送到这里等待消费者取走</li>
+<li>Binding：Exchange和Queue之间的虚拟连接，binding中可以包含路由键<code>routing key</code>、Binding信息被保存到exchange中的查询表中，用于消息的分发依据</li>
+</ul>
+<h2 id="使用docker安装rabbitmq">使用Docker安装RabbitMQ</h2>
+<h4 id="拉取镜像">拉取镜像</h4>
+<pre><code class="language-powershell">docker pull rabbitmq:3.8.4-management
+</code></pre>
+<h4 id="通过容器启动rabbitmq">通过容器启动RabbitMQ</h4>
+<pre><code class="language-powershell">docker run -i -d --name=myrabbitmq -p 5672:5672 -p 15672:15672 imageid
+</code></pre>
+<h4 id="访问rabbitmq">访问RabbitMQ</h4>
+<blockquote>
+<p>IP:15672</p>
+<p>用户名和密码默认都是guest</p>
+</blockquote>
+<h2 id="通过springboot整合rabbitmq">通过SpringBoot整合RabbitMQ</h2>
+<h4 id="创建工程">创建工程</h4>
+<h4 id="配置文件">配置文件</h4>
+<pre><code class="language-yaml">#端口号
+server:
+  port: 8080
+#配置rabbitMQ
+spring:
+  rabbitmq:
+    host: 192.168.25.134
+    username: guest
+    password: guest
+    #port: 5672
+</code></pre>
+<h4 id="创建exchange">创建Exchange</h4>
+<pre><code class="language-java">@Autowired
+private AmqpAdmin amqpAdmin;
+/**
+ * 通过代码创建exchange
+ */
+@Test
+public void createExchange(){
+    amqpAdmin.declareExchange(new DirectExchange(&quot;amqp.exchange&quot;));
+}
+</code></pre>
+<blockquote>
+<p>创建不同的消息new不同的对象即可</p>
+</blockquote>
+<h4 id="常见queue">常见Queue</h4>
+<pre><code class="language-java">@Autowired
+private AmqpAdmin amqpAdmin;
+
+@Test
+public void createQueue(){
+    amqpAdmin.declareQueue(new Queue(&quot;amqp.queue&quot;));
+}
+</code></pre>
+<h4 id="绑定exchange和queue">绑定exchange和queue</h4>
+<pre><code class="language-java">@Autowired
+private AmqpAdmin amqpAdmin;
+
+@Test
+public void bindingQueueAndExchange(){
+    //参数一：queue
+    //参数二：是queue的类型
+    //参数三：交换器
+    //参数四：routing key  （路由键）
+    //参数五：绑定的时候给一个初始化的消息
+    amqpAdmin.declareBinding(new Binding(&quot;amqp.queue&quot;,Binding.DestinationType.QUEUE,&quot;amqp.exchange&quot;,&quot;amqp.test&quot;,null));
+}
+</code></pre>
+<h4 id="测试direct">测试direct</h4>
+<pre><code class="language-java">@Resource
+private RabbitTemplate rabbitTemplate;
+
+/**
+ * 测试direct发送消息
+ */
+@Test
+void testPublishDirect() {
+    Map&lt;String,Object&gt; map = new HashMap&lt;&gt;();
+    map.put(&quot;id&quot;,1);
+    map.put(&quot;list&quot;, Arrays.asList(&quot;张三&quot;,&quot;李四&quot;));
+    /**
+     * 参数1、exchange（交换器）通过交换器的类型，可以决定消息发送的方式，如：direct就是点对点，一个生产者对应一个消费者
+     * 参数2、routingKey（路由键）  表示消息到queues中哪个地方存储
+     * 参数3、路由试题
+     */
+    rabbitTemplate.convertAndSend(&quot;amqp.exchange&quot;,&quot;amqp.test&quot;,map);
+}
+
+/**
+ * 测试direct接收消息
+ */
+@Test
+public void testReceiveDirect(){
+    //参数：queue的name
+    Object convert = rabbitTemplate.receiveAndConvert(&quot;amqp.queue&quot;);
+    System.out.println(convert);
+    System.out.println(convert.getClass());
+}
+</code></pre>
+<h4 id="测试fanout">测试fanout</h4>
+<pre><code class="language-java">/**
+ * 测试fanout发送消息(和activeMQ中的topic一样的)
+ */
+@Test
+public void testPublishFanout(){
+    Map&lt;String,Object&gt; map = new HashMap&lt;&gt;();
+    map.put(&quot;id&quot;,1);
+    map.put(&quot;list&quot;, Arrays.asList(&quot;张三&quot;,&quot;李四&quot;));
+    rabbitTemplate.convertAndSend(&quot;amqp.exchange.fanout&quot;,&quot;amqp.exchange.fanout.test&quot;,map);
+}
+</code></pre>
+<h4 id="创建监听器">创建监听器</h4>
+<pre><code class="language-java">@Service
+public class MyListener {
+    @RabbitListener(queues = &quot;amqp.queue&quot;)
+    public void receive(Map&lt;String,Object&gt; map){
+        System.out.println(&quot;从监听器中取出消息：&quot; + map);
+    }
+}
+</code></pre>
+<h4 id="测试topic">测试topic</h4>
+<blockquote>
+<p>在RabbitMQ中 direct==activeMQ中的queue</p>
+<p>fanout==activeMQ中的topic</p>
+<p>topic 匹配模式</p>
+</blockquote>
+<blockquote>
+<p>.# (表示一个单词或多个单词)</p>
+<p>*. (表示匹配一个或多个单词)</p>
+</blockquote>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li><a href="#mq%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5">MQ的基本概念</a>
+<ul>
+<li><a href="#mq%E7%9A%84%E6%A6%82%E8%BF%B0">MQ的概述</a></li>
+<li><a href="#mq%E7%9A%84%E4%BC%98%E7%82%B9%E5%92%8C%E7%BC%BA%E7%82%B9">MQ的优点和缺点</a>
+<ul>
+<li><a href="#%E4%BC%98%E7%82%B9">优点</a></li>
+<li><a href="#%E7%BC%BA%E7%82%B9">缺点</a></li>
+</ul>
+</li>
+<li><a href="#%E5%BA%94%E7%94%A8%E8%A7%A3%E8%80%A6">应用解耦</a></li>
+<li><a href="#%E5%BC%82%E6%AD%A5%E6%8F%90%E9%80%9F">异步提速</a></li>
+<li><a href="#%E5%89%8A%E5%B3%B0%E5%A1%AB%E8%B0%B7">削峰填谷</a><br>
+*
+<ul>
+<li><a href="#%E5%89%8A%E5%B3%B0">削峰</a></li>
+<li><a href="#%E5%A1%AB%E8%B0%B7">填谷</a></li>
+<li><a href="#%E5%B0%8F%E7%BB%93">小结</a>
+<ul>
+<li><a href="#%E4%BC%98%E7%82%B9%E5%B0%8F%E7%BB%93">优点小结</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#mq%E7%9A%84%E7%BC%BA%E7%82%B9">MQ的缺点</a></li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E7%9A%84mq%E4%BA%A7%E5%93%81">常见的MQ产品</a></li>
+<li><a href="#amqp%E7%AE%80%E4%BB%8B">AMQP简介</a></li>
+<li><a href="#rabbitmq%E7%AE%80%E4%BB%8B">RabbitMQ简介</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8docker%E5%AE%89%E8%A3%85rabbitmq">使用Docker安装RabbitMQ</a><br>
+*
+<ul>
+<li><a href="#%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F">拉取镜像</a></li>
+<li><a href="#%E9%80%9A%E8%BF%87%E5%AE%B9%E5%99%A8%E5%90%AF%E5%8A%A8rabbitmq">通过容器启动RabbitMQ</a></li>
+<li><a href="#%E8%AE%BF%E9%97%AErabbitmq">访问RabbitMQ</a></li>
+</ul>
+</li>
+<li><a href="#%E9%80%9A%E8%BF%87springboot%E6%95%B4%E5%90%88rabbitmq">通过SpringBoot整合RabbitMQ</a><br>
+*
+<ul>
+<li><a href="#%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B">创建工程</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">配置文件</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BAexchange">创建Exchange</a></li>
+<li><a href="#%E5%B8%B8%E8%A7%81queue">常见Queue</a></li>
+<li><a href="#%E7%BB%91%E5%AE%9Aexchange%E5%92%8Cqueue">绑定exchange和queue</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95direct">测试direct</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95fanout">测试fanout</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E7%9B%91%E5%90%AC%E5%99%A8">创建监听器</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95topic">测试topic</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="http://mvvm.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>

@@ -1,85 +1,351 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<link rel="shortcut icon" href="https://haohanya.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="浩瀚-每天向往着外面的世界"><meta charset="UTF-8"><title>浩瀚</title>
-<link href="https://haohanya.github.io/styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://haohanya.github.io/media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://haohanya.github.io/media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
-<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
 
-<link rel="canonical" href="https://haohanya.github.io" /> 
+    
+
+  <meta name="description" content="浩瀚-每天向往着外面的世界" />
 </head>
 <body>
-<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
-<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://haohanya.github.io"><img alt="logo" style="display:inline-block;" src="https://haohanya.github.io/images/avatar.png"/></a><h1 title="浩瀚" class="weaklink"><a  href="/">浩瀚</a></h1>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
 
-<style>.santa-body{float:left;margin:10.5px 7.5px 0px 0px;font-size:20px;color:#f91047;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;width:1em;height:1em;background-color:currentColor;-webkit-box-shadow:inset 0 -0.25em rgba(0,0,0,0.1);box-shadow:inset 0 -0.25em rgba(0,0,0,0.1);border-radius:50%;-webkit-transform-origin:center bottom;-ms-transform-origin:center bottom;transform-origin:center bottom;-webkit-animation:balance alternate infinite 2s ease-in-out;animation:balance alternate infinite 2s ease-in-out;}.santa-head{font-size:.4em;width:1em;height:1.9em;background-color:white;border-radius:.5em;-webkit-transform:translateY(-1em);-ms-transform:translateY(-1em);transform:translateY(-1em);position:relative;}.santa-head::before{content:'';width:1em;height:.375em;display:block;background-color:#ff9876;position:absolute;left:0;top:.65em;}.santa-ear{background-color:#fc8363;width:.1em;height:.3em;position:absolute;top:.75em;}.santa-ear:nth-of-type(1){border-radius:.05em 0 0 .05em;left:-0.1em;}.santa-ear:nth-of-type(2){border-radius:0 .05em .05em 0;right:-0.1em;}.santa-hat{content:'';width:1em;height:.15em;position:absolute;-webkit-transform:scale(1.1);-ms-transform:scale(1.1);transform:scale(1.1);top:.5em;left:0;background-color:white;}.santa-hat::before{content:'';display:block;width:1em;height:.5em;background:#f91047;border-radius:.5em .5em 0 0;z-index:2;position:absolute;top:-0.5em;}.santa-hat::after{content:'';width:.25em;height:.25em;display:block;background-color:white;border-radius:50%;position:absolute;z-index:0;top:-0.72em;right:0;-webkit-box-shadow:-0.2em .2em 0 .12em rgba(0,0,0,0.2),-0.2em .2em 0 .12em #f91047;box-shadow:-0.2em .2em 0 .12em rgba(0,0,0,0.2),-0.2em .2em 0 .12em #f91047;}.santa-eye{width:.12em;height:.12em;background-color:black;border-radius:50%;position:absolute;top:.76em;left:.2em;}.santa-eye + .santa-eye{left:auto;right:.2em;}.santa-nose{width:.12em;height:.22em;background-color:#f24c4c;border-radius:0 0 .12em .12em;position:absolute;top:.84em;left:50%;-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%);}.santa-mouth{width:.18em;height:.1em;border-bottom-right-radius:5vw;border-bottom-left-radius:5vw;margin-top:.3em;background-color:black;position:absolute;left:50%;top:50%;-webkit-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%);-webkit-animation:hohoho 4s linear forwards infinite;animation:hohoho 4s linear forwards infinite;}@-webkit-keyframes hohoho{0%,10%,20%,40%,100%{width:.18em;height:.1em;border-bottom-right-radius:1vw;border-bottom-left-radius:1vw;}5%,15%,25%,35%{width:.15em;height:.2em;border-radius:50%;}}@keyframes hohoho{0%,10%,20%,40%,100%{width:.18em;height:.1em;border-bottom-right-radius:1vw;border-bottom-left-radius:1vw;}5%,15%,25%,35%{width:.15em;height:.2em;border-radius:50%;}}@-webkit-keyframes balance{from{-webkit-transform:rotate(-4deg);transform:rotate(-4deg);}to{-webkit-transform:rotate(4deg);transform:rotate(4deg);}}@keyframes balance{from{-webkit-transform:rotate(-4deg);transform:rotate(-4deg);}to{-webkit-transform:rotate(4deg);transform:rotate(4deg);}}</style>
-<div class="santa"><div class="santa-body"><div class="santa-head"><div class="santa-ear"></div><div class="santa-ear"></div><div class="santa-hat"></div><div class="santa-eye"></div><div class="santa-eye"></div><div class="santa-nose"></div><div class="santa-mouth"></div></div></div></div>
-
-<div class="navbar weaklink">
-<div class="normal_nav">
-<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://ucuser.cn/links/" class="selected active current nav__item" >友情链接</a></li></ul></nav>
-<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
-<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
-<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://ucuser.cn/links/" class="selected active current nav__item" >友情链接</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
-<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1594831539720" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
-</div></div>
-<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
-
-<div class="main">
-<div class="main-inner">
-<div class="content">
-<div class="post_list" ><div class="round-shape-one"></div>
-
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/java-fan-she/" >Java反射</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-05-04</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/CX9XCxDcJ/"class="tag">java</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">703字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">4 min read</span></section></div></div>
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/FastDFS/" >FastDFS</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-05-04</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/AowgROl25/"class="tag">FastDFS</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">1412字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">7 min read</span></section></div></div>
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/freemarker/" >freemarker</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-05-04</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/pV4gj9NcU/"class="tag">freemarker</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">853字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">4 min read</span></section></div></div>
-<div class="round-shape-one"></div><div class="paginator pager pagination"><div class="paginator_container pagination_container"><a href="https://haohanya.github.io/page/2/"class="btn pre newer-posts newer_posts">Newer Posts</a><div style="clear:both;height:0;"></div></div></div>
-</div>
-</div>
-</div>
-</div>
-<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a>
-<div class="footer animated fadeInDown">
-    <div class="site_footer">
-        <div class="mysocials">
-            <div class="my_socials">
-                <a
-                    href="admin@soweat.cn" title="envelope"><i
-                        class="iconfont icon-envelope"></i></a></div>
-        </div>
-        <div class="copyright" id="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>Copyright © 2018-2020 <a
-                href="https://haohanya.github.io" style="margin:0;">浩瀚</a>.</div>
-        <span style="display: inline;margin-right:15px;">👁<strong><span
-                    id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv"
-            style="display: inline;"><span>📚<strong>24</strong> posts</span>
+    <div class="nav py-3 md:py-8 fixed w-full z-10 bg-gray-50 dark:bg-gray-700 transition-all duration-300" :class="{ 'scroll': scrolled }">
+  <div class="flex justify-end px-4">
+    <div class="w-8 h-8 flex justify-center items-center rounded-full md:hidden" @click="showMenu = !showMenu">
+      <i class="ri-close-line" v-show="showMenu"></i>
+      <i class="ri-menu-3-line" v-show="!showMenu"></i>
     </div>
+  </div>
+  <nav class="max-w-4xl w-full mx-auto text-center flex flex-col md:flex-row justify-center md:block" :class="`${ showMenu ? 'block' : 'hidden' }`">
+    
+      <a href="/" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        首页
+      </a>
+    
+      <a href="/archives" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        归档
+      </a>
+    
+      <a href="/tags" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        标签
+      </a>
+    
+      <a href="/post/about" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        关于
+      </a>
+    
+      <a href="https://ucuser.cn/links/" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        友情链接
+      </a>
+    
+    <a href="http://mvvm.io/atom.xml" target="_blank" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+      RSS
+    </a>
+  </nav>
 </div>
-<script>
-    console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;",);
-</script>
-<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+
+    <div class="max-w-4xl w-full mx-auto pt-32">
+      
+
+      <div class="shadow-box bg-white dark:bg-gray-600 border-gray-300 rounded-none md:rounded-lg -mx-1 md:mx-0 md:px-0">
+        
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/elasticsearch-ji-qun/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          ElasticSearch集群
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-07-11</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        ElasticSearch集群
+ES集群是一个 P2P类型(使用 gossip 协议)的分布式系统，除了集群状态管理以外，其他所有的请求都可以发送到
+集群内任意一台节点上，这个节点可以自己找到需要转发给哪些节点，并且直接跟这些节点通信。所以...
+      </div>
+      <a href="http://mvvm.io/elasticsearch-ji-qun/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/elasticsearch-an-zhuang-ji-shi-yong/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          ElasticSearch安装及使用
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-07-11</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        ElasticSearch简介
+什么是ElasticSearch
+Elaticsearch，简称为es， es是一个开源的高扩展的分布式全文检索引擎，它可以近乎实时的存储、检索数据；
+本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数...
+      </div>
+      <a href="http://mvvm.io/elasticsearch-an-zhuang-ji-shi-yong/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/rabbitmq-gao-ji-te-xing/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          RabbitMQ高级特性
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-06-17</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        
+RabbitMQ高级特性
+
+消息可靠性投递
+Consumer ACK
+消费段限流
+TTL
+死信队列
+延迟队列
+日志与监控
+消息可靠性分析与追踪
+管理
+
+
+RabbitMQ实际应用问题
+
+消息可靠性
+消息幂等性
+
+
+
+RabbitMQ高级特...
+      </div>
+      <a href="http://mvvm.io/rabbitmq-gao-ji-te-xing/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/mq-de-ji-ben-gai-nian/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          MQ的基本概念
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-06-15</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        MQ的基本概念
+MQ的概述
+MQ全称 ：Message Queue（消息队列），是在消息的传输过程中保持消息的容器，多用于分布式系统之间进行通信
+MQ的优点和缺点
+优点
+
+应用解耦
+异步提速
+削峰填谷
+
+缺点
+
+系统可用性降低
+系统复杂度提...
+      </div>
+      <a href="http://mvvm.io/mq-de-ji-ben-gai-nian/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/spring-data-jpa/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Spring Data Jpa
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-06-10</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        什么是Jpa
+JPA是Java Persistence API的简称，中文名Java持久层API，是JDK 5.0注解或XML描述对象－关系表的映射关系，并将运行期的实体对象持久化到数据库中
+Sun引入新的JPA ORM规范出于两个原因：其...
+      </div>
+      <a href="http://mvvm.io/spring-data-jpa/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/mongodb-an-zhuang-yu-shi-yong/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          MongoDB安装与使用
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-05-28</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        什么是MongoDB
+MongoDB是一个基于分布式文件存储的数据库。由C++语言编写。旨在为WEB应用提供可扩展的高性能数据存储解决方案。
+MongoDB是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库当中功能最丰富，最像关系...
+      </div>
+      <a href="http://mvvm.io/mongodb-an-zhuang-yu-shi-yong/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/docker/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Docker
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-05-28</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        安装Docker
+1、使用yum命令在线安装
+yum install docker
+# 遇事不决就选y
+
+2、查看docker版本
+docker -v
+
+3、启动与停止
+
+systemctl 命令是系统服务管理器指令，它是 service ...
+      </div>
+      <a href="http://mvvm.io/docker/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/zookeeper-da-jian/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Zookeeper搭建
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-05-25</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        查看tomcat运行日志：tail -f logs/catalina.out
+ZooKeeper安装
+官网下载：http://zookeeper.apache.org/releases.html
+第一次启动会出现错误
+解决方案：把conf目...
+      </div>
+      <a href="http://mvvm.io/zookeeper-da-jian/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/redis-ji-qun-da-jian/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Redis集群搭建
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-05-17</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        搭建Redis-Cluster
+搭建要求
+
+需要 6 台 redis 服务器。搭建伪集群。
+需要 6 个 redis 实例。
+需要运行在不同的端口 7001-7006
+
+准备工作
+1、安装gcc
+yum install gcc-c++
+
+2...
+      </div>
+      <a href="http://mvvm.io/redis-ji-qun-da-jian/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/spring-ji-cheng-redis/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Spring集成Redis
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-05-17</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        SpringDataRedis简介
+Redis
+Redis是一款开源的Key-Value数据库，运行在内存中，由ANSI C编写。企业开发通常采用Redis来实现缓存。同类的产品还有memcache 、MongoDB等。
+Jedis
+Jed...
+      </div>
+      <a href="http://mvvm.io/spring-ji-cheng-redis/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+  
+      </div>
+
+      
+  <div class="my-4 flex justify-between px-4 md:px-0">
+    
+      <a href="http://mvvm.io/page/2/" class="btn btn-white">
+        <i class="ri-arrow-left-line mr-4"></i>
+        上一页
+      </a>
+    
+    
+      <a href="http://mvvm.io/page/4/" class="btn btn-white">
+        下一页
+        <i class="ri-arrow-right-line ml-4"></i>
+      </a>
+    
+  </div>
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
 </body>
+
 </html>

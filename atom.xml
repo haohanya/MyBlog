@@ -1,83 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://haohanya.github.io</id>
+    <id>http://mvvm.io</id>
     <title>浩瀚</title>
-    <updated>2020-07-15T16:46:11.808Z</updated>
+    <updated>2020-12-26T14:13:18.076Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://haohanya.github.io"/>
-    <link rel="self" href="https://haohanya.github.io/atom.xml"/>
+    <link rel="alternate" href="http://mvvm.io"/>
+    <link rel="self" href="http://mvvm.io/atom.xml"/>
     <subtitle>浩瀚-每天向往着外面的世界</subtitle>
-    <logo>https://haohanya.github.io/images/avatar.png</logo>
-    <icon>https://haohanya.github.io/favicon.ico</icon>
+    <logo>http://mvvm.io/images/avatar.png</logo>
+    <icon>http://mvvm.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 浩瀚</rights>
     <entry>
-        <title type="html"><![CDATA[Activiti7 工作流引擎]]></title>
-        <id>https://haohanya.github.io/post/activiti7-gong-zuo-liu-yin-qing/</id>
-        <link href="https://haohanya.github.io/post/activiti7-gong-zuo-liu-yin-qing/">
+        <title type="html"><![CDATA[使用Java实现C#的TrippleDES加密解密]]></title>
+        <id>http://mvvm.io/shi-yong-java-shi-xian-cde-trippledes-jia-mi-jie-mi/</id>
+        <link href="http://mvvm.io/shi-yong-java-shi-xian-cde-trippledes-jia-mi-jie-mi/">
         </link>
-        <updated>2020-07-15T16:41:02.000Z</updated>
+        <updated>2020-12-16T11:44:10.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[ElasticSearch（二）]]></title>
-        <id>https://haohanya.github.io/post/elasticsearch/</id>
-        <link href="https://haohanya.github.io/post/elasticsearch/">
+        <title type="html"><![CDATA[WordPress数据转移至Typecho工具]]></title>
+        <id>http://mvvm.io/wordpress-shu-ju-zhuan-yi-zhi-typecho-gong-ju/</id>
+        <link href="http://mvvm.io/wordpress-shu-ju-zhuan-yi-zhi-typecho-gong-ju/">
         </link>
-        <updated>2020-07-11T15:49:44.000Z</updated>
+        <updated>2020-11-07T11:42:04.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[ ElasticSearch（一）]]></title>
-        <id>https://haohanya.github.io/post/elasticsearch1/</id>
-        <link href="https://haohanya.github.io/post/elasticsearch1/">
+        <title type="html"><![CDATA[Apollo分布式配置中心]]></title>
+        <id>http://mvvm.io/apollo-fen-bu-shi-pei-zhi-zhong-xin/</id>
+        <link href="http://mvvm.io/apollo-fen-bu-shi-pei-zhi-zhong-xin/">
         </link>
-        <updated>2020-07-11T15:43:04.000Z</updated>
+        <updated>2020-10-10T11:40:27.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[RabbitMQ（二）]]></title>
-        <id>https://haohanya.github.io/post/rabbitmqer/</id>
-        <link href="https://haohanya.github.io/post/rabbitmqer/">
+        <title type="html"><![CDATA[Spring Cloud Consul]]></title>
+        <id>http://mvvm.io/spring-cloud-consul/</id>
+        <link href="http://mvvm.io/spring-cloud-consul/">
         </link>
-        <updated>2020-06-17T11:39:04.000Z</updated>
+        <updated>2020-10-08T11:34:15.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[RabbitMQ（一）]]></title>
-        <id>https://haohanya.github.io/post/rabbitmqyi/</id>
-        <link href="https://haohanya.github.io/post/rabbitmqyi/">
+        <title type="html"><![CDATA[Spring Cloud Alibaba Sentinel]]></title>
+        <id>http://mvvm.io/spring-cloud-alibaba-sentinel/</id>
+        <link href="http://mvvm.io/spring-cloud-alibaba-sentinel/">
         </link>
-        <updated>2020-06-14T18:14:28.000Z</updated>
+        <updated>2020-10-06T11:32:00.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[ 熔断器Hystrix]]></title>
-        <id>https://haohanya.github.io/post/rong-duan-qi-hystrix/</id>
-        <link href="https://haohanya.github.io/post/rong-duan-qi-hystrix/">
+        <title type="html"><![CDATA[Spring Cloud Alibaba Nacos]]></title>
+        <id>http://mvvm.io/spring-cloud-alibaba-nacos/</id>
+        <link href="http://mvvm.io/spring-cloud-alibaba-nacos/">
         </link>
-        <updated>2020-06-14T15:59:28.000Z</updated>
+        <updated>2020-10-05T11:28:40.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[ Ribbon负载均衡器]]></title>
-        <id>https://haohanya.github.io/post/ribbon-fu-zai-jun-heng-qi/</id>
-        <link href="https://haohanya.github.io/post/ribbon-fu-zai-jun-heng-qi/">
+        <title type="html"><![CDATA[简单配置即可自动生成简历]]></title>
+        <id>http://mvvm.io/jian-dan-pei-zhi-ji-ke-zi-dong-sheng-cheng-jian-li/</id>
+        <link href="http://mvvm.io/jian-dan-pei-zhi-ji-ke-zi-dong-sheng-cheng-jian-li/">
         </link>
-        <updated>2020-06-14T15:58:32.000Z</updated>
+        <updated>2020-09-09T11:25:29.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Eureka]]></title>
-        <id>https://haohanya.github.io/post/eureka/</id>
-        <link href="https://haohanya.github.io/post/eureka/">
+        <title type="html"><![CDATA[解决Windows10安装软件时提示更新设备]]></title>
+        <id>http://mvvm.io/jie-jue-windows10-an-zhuang-ruan-jian-shi-ti-shi-geng-xin-she-bei/</id>
+        <link href="http://mvvm.io/jie-jue-windows10-an-zhuang-ruan-jian-shi-ti-shi-geng-xin-she-bei/">
         </link>
-        <updated>2020-06-10T16:21:09.000Z</updated>
+        <updated>2020-09-06T11:24:02.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[初识SpringCloud]]></title>
-        <id>https://haohanya.github.io/post/chu-shi-springcloud/</id>
-        <link href="https://haohanya.github.io/post/chu-shi-springcloud/">
+        <title type="html"><![CDATA[Tomcat7性能优化]]></title>
+        <id>http://mvvm.io/tomcat7-xing-neng-you-hua/</id>
+        <link href="http://mvvm.io/tomcat7-xing-neng-you-hua/">
         </link>
-        <updated>2020-06-10T13:57:42.000Z</updated>
+        <updated>2020-08-31T11:21:47.000Z</updated>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Spring-Data-Jpa]]></title>
-        <id>https://haohanya.github.io/post/spring-data-jpa/</id>
-        <link href="https://haohanya.github.io/post/spring-data-jpa/">
+        <title type="html"><![CDATA[OpenFeign传输Header]]></title>
+        <id>http://mvvm.io/openfeign-chuan-shu-header/</id>
+        <link href="http://mvvm.io/openfeign-chuan-shu-header/">
         </link>
-        <updated>2020-06-10T13:07:53.000Z</updated>
+        <updated>2020-08-23T11:15:47.000Z</updated>
     </entry>
 </feed>

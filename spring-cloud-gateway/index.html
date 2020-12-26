@@ -1,0 +1,741 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Spring Cloud Gateway - 浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Spring Cloud Gateway - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+
+    
+
+  <meta name="description" content="介绍
+
+Spring Cloud Gateway是用来替代NetFlix Zull（目前Zull处于维护阶段）
+Spring Cloud Gateway是Spring官网基于Spring5.0、springBoot2.0等技术开发的网关服务..." />
+  <meta property="og:title" content="Spring Cloud Gateway - 浩瀚">
+  <meta property="og:description" content="介绍
+
+Spring Cloud Gateway是用来替代NetFlix Zull（目前Zull处于维护阶段）
+Spring Cloud Gateway是Spring官网基于Spring5.0、springBoot2.0等技术开发的网关服务..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="http://mvvm.io/spring-cloud-gateway/" />
+  <meta property="og:image" content="http://mvvm.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="Spring Cloud Gateway - 浩瀚">
+  <meta name="twitter:description" content="介绍
+
+Spring Cloud Gateway是用来替代NetFlix Zull（目前Zull处于维护阶段）
+Spring Cloud Gateway是Spring官网基于Spring5.0、springBoot2.0等技术开发的网关服务...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="http://mvvm.io/spring-cloud-gateway/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="http://mvvm.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="http://mvvm.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      浩瀚
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          Spring Cloud Gateway
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-08-05 · 14 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h2 id="介绍">介绍</h2>
+<ul>
+<li>Spring Cloud Gateway是用来替代NetFlix Zull（目前Zull处于维护阶段）</li>
+<li>Spring Cloud Gateway是Spring官网基于Spring5.0、springBoot2.0等技术开发的网关服务</li>
+<li>Spring Cloud Gateway基于Filter练提供网关基本功能：安全、监控/埋点、限流等</li>
+<li>Spring Cloud Gateway为微服务架构提供简单、有效且统一的API路由管理方式</li>
+</ul>
+<p>Spring Cloud Gateway 组件的核心是一系列的过滤器，通过这些过滤器可以将客户端发送的请求转发（路由）到对应的微服务。Spring Cloud Gateway是加载整个微服务的防火墙和代理器，隐藏微服务节点IP端口信息，从而加强安全保护，Spring Cloud Gateway本身也是一个微服务，需要注册到Eurkea服务注册中心</p>
+<blockquote>
+<p>网关的核心功能：过滤和路由</p>
+</blockquote>
+<h2 id="spring-cloud-gateway加入后的架构"><strong>Spring Cloud Gateway加入后的架构</strong></h2>
+<figure data-type="image" tabindex="1"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1.png" alt="img" loading="lazy"></figure>
+<p>不管来自于PC还是移动端的请求，还是服务内部调用。一切对服务的请求都可经过网关，然后再由网关来实现鉴权、动态路由等等操作。Gateway就是我们服务的统一入口</p>
+<h2 id="网关中的核心概念"><strong>网关中的核心概念</strong></h2>
+<ul>
+<li>路由（route）路由信息的组成：由一个ID，一个目的URL，一个断言工厂，一组Filter组成。如果路由断言为真，说明请求URL和配置路由匹配</li>
+<li>断言 ：网关中的断言函数输入类型是spring 5.0框架中的ServerWebExchange。Spring Cloud Gateway的断言函数允许开发者去定义匹配来自于Http Request中的任何信息比如请求头和参数</li>
+<li>过滤器（Filter）一个标准的Spring WebFilter。Spring Cloud Gateway中的Filter分为两种类型的filter，分别是Gateway Filter和Global Filter，过滤器Filter将会对请求和想I有那个进行修改处理</li>
+</ul>
+<h2 id="快速入门">快速入门</h2>
+<p><strong>创建一个新工程</strong></p>
+<p>项目名取名：mvvm-gateway</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-gateway&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p><strong>在工程的启动类中添加发现服务的注解</strong></p>
+<pre><code class="language-java">@SpringBootApplication
+@EnableDiscoveryClient          //发现服务
+public class GatewayApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(GatewayApplication.class, args);
+    }
+}
+</code></pre>
+<p><strong>编写配置</strong></p>
+<pre><code class="language-yml">server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+</code></pre>
+<p><strong>编写路由规则</strong></p>
+<p>需要用网关代理user-service服务，先看看服务的状态</p>
+<figure data-type="image" tabindex="2"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20200611150256637.png" alt="img" loading="lazy"></figure>
+<p>ip:127.0.0.1</p>
+<p>端口号：9091</p>
+<pre><code class="language-yml">server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # 路由的id，可以随便写
+        - id: user-service-route
+          #代理的服务地址
+          uri: http://127.0.0.1:9091
+          #路由断音，可以配置映射路径
+          predicates:
+            - Path=/user/**
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+</code></pre>
+<p>将符合Path规则的一切请求，都代理到uri参数指定的地址</p>
+<p><strong>启动测试</strong></p>
+<h2 id="面向服务的路由">面向服务的路由</h2>
+<p>在刚才的路由规则中，把路径对应的服务地址写死了！如果同一个服务有多个实例，这样显然是不合理的，应该根据服务的名称，去Eureka注册中心去查找服务对应的所有的实例列表，然后进行动态路由@</p>
+<p><strong>修改映射配置</strong></p>
+<pre><code class="language-yml">server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # 路由的id，可以随便写
+        - id: user-service-route
+          #代理的服务地址
+          #uri: http://127.0.0.1:9091
+          #通过代理的服务地址，根据loadbleance获取具体的服务
+          uri: lb://user-service
+          #路由断言，可以配置映射路径
+          predicates:
+            - Path=/user/**
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+</code></pre>
+<p>路由配置中的uri所用的协议为lb，gateway将使用loadBalancerClient把user-service通过eurkea解析为实际的主机和端口，并且进行ribbon负载均衡</p>
+<p><strong>启动测试</strong></p>
+<h2 id="路由前缀"><strong>路由前缀</strong></h2>
+<p>在gateway中可以通过配置路由的过滤器PrefixPath，实现映射路径中地址的添加:</p>
+<p><strong>添加前缀</strong></p>
+<pre><code class="language-yml">server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # 路由的id，可以随便写
+        - id: user-service-route
+          #代理的服务地址
+          #uri: http://127.0.0.1:9091
+          #通过代理的服务地址，根据loadbleance获取具体的服务
+          uri: lb://user-service
+          #路由断言，可以配置映射路径
+          predicates:
+            - Path=/**
+          filters:
+            #添加请求路径的前缀
+            - PrefixPath=/user
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+</code></pre>
+<p>通过PrefixPath=/xx来指定路由要添加的前缀</p>
+<p>PrefixPath=/user http://localhost:10010/2 ---&gt;等同于 http://localhost:10010/user/2</p>
+<p>PrefixPath=/user/abc http://localhost:10010/2 ---&gt;等同于 http://localhost:10010/user/abc/2</p>
+<p>依次类推</p>
+<p><strong>去除前缀</strong></p>
+<p>在gateway中可以通过配置路由的过滤器StripPrefix实现映射路径中地址的去除：</p>
+<pre><code class="language-yml">server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # 路由的id，可以随便写
+        - id: user-service-route
+          #代理的服务地址
+          #uri: http://127.0.0.1:9091
+          #通过代理的服务地址，根据loadbleance获取具体的服务
+          uri: lb://user-service
+          #路由断言，可以配置映射路径
+          predicates:
+            - Path=/api/user/**
+          filters:
+            #表示过滤1个路径，2表示两个路径，依次类推
+            - StripPrefix=1
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+</code></pre>
+<p>通过StripPrefix=1来指定了路由要去掉的前缀个数。如：- Path=/api/user/** 通过 - StripPrefix=1处理就去掉了1个路径</p>
+<p>也就是访问 http://localhost:10010/api/user/1 ---&gt; 将会被代理到 http://localhost:10010/user/1</p>
+<p>如：<br>
+StripPrefix=1 http://localhost:10010/api/user/1 --&gt; http://localhost:10010/user/1<br>
+StripPrefix=2 http://localhost:10010/api/user/1 --&gt; http://localhost:10010/1<br>
+依次类推</p>
+<h2 id="过滤器"><strong>过滤器</strong></h2>
+<h3 id="简介"><strong>简介</strong></h3>
+<p>Spring Cloud Gateway作为网关的其中一个重要功能，就是实现请求的鉴权。而这个动作往往通过网关提供的过滤器来实现的。前面的路由前缀章节中的共更难也是使用过滤器实现的。</p>
+<p>Spring Cloud Gateway自带的过滤器有几十个，常见的有：</p>
+<table>
+<thead>
+<tr>
+<th>过滤器名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AddRequestHeader</td>
+<td>对匹配上的请求加上Header</td>
+</tr>
+<tr>
+<td>AddRequestParameter</td>
+<td>对匹配上的请求路由添加参数</td>
+</tr>
+<tr>
+<td>AddResponseHeader</td>
+<td>对从网关返回的响应添加Header</td>
+</tr>
+<tr>
+<td>StripPrefix</td>
+<td>对匹配上的请求路径去除前缀</td>
+</tr>
+</tbody>
+</table>
+<h3 id="配置全局默认过滤器">配置全局默认过滤器</h3>
+<p>这些自带的过滤器可以和使用路由前缀章节中的用法类似，也可以将这些过滤器配置成不只是针对某个路由：而是可以对所有的路由生效，也就是配置默认过滤器:</p>
+<pre><code class="language-yml">server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # 路由的id，可以随便写
+        - id: user-service-route
+          #代理的服务地址
+          #uri: http://127.0.0.1:9091
+          #通过代理的服务地址，根据loadbleance获取具体的服务
+          uri: lb://user-service
+          #路由断言，可以配置映射路径
+          predicates:
+            - Path=/api/user/**
+          filters:
+            #表示过滤1个路径，2表示两个路径，依次类推
+            - StripPrefix=1
+      #默认的过滤器，对所有路由生效
+      default-filters:
+        - AddResponseHeader=X-Response-Default-MyName,HaoHan
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+</code></pre>
+<p>重启网关服务，访问：http://127.0.0.1:10010/api/user/1，那么可以从响应中查看到如下信息</p>
+<pre><code>X-Response-Default-MyName: HaoHan
+</code></pre>
+<p>过滤器类型:Gateway实现方式上，有两种过滤器:</p>
+<ul>
+<li>局部过滤器：通过<code>spring.cloud.gateway.routes.filters</code>配置在具体的路由下，只作用于当前路由上；自爱的过滤器都可以配置或者自定义按照自带过滤器的方式，如果配``spring.cloud.gateway.default-filters`上会对所有的路由生效也算是全局的过滤器；但是这些过滤器的实现上都是要实现GatewayFilterFactroy接口</li>
+<li>全局过滤器：不需要在配置文件中配置，作用在所有的路由上，实现GlobaFilter接口即可.</li>
+</ul>
+<h3 id="使用场景"><strong>使用场景</strong></h3>
+<ul>
+<li>请求鉴权：做访问权限控制。一般<code>GatewayFilterChain</code>执行filter方法前</li>
+<li>异常处理：记录异常并且返回。一般<code>GatewayFilterChain</code>执行filter方法后</li>
+<li>服务调用市场统计：<code>GatewayFilterChain</code>执行filter方法前后</li>
+</ul>
+<h3 id="自定义过滤器">自定义过滤器</h3>
+<h4 id="局部过滤器"><strong>局部过滤器</strong></h4>
+<p>在<code>mvvm-gateway</code>工程中编写过滤器工厂类</p>
+<pre><code class="language-java">import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.stereotype.Component;
+import java.util.Arrays;
+import java.util.List;
+@Component      //交给spring管理
+public class MyParamGatewayFilterFactory extends AbstractGatewayFilterFactory&lt;MyParamGatewayFilterFactroy.Config&gt; {
+    private static final String PARAM_NAME = &quot;param&quot;;
+
+    public MyParamGatewayFilterFactroy() {
+        super(Config.class);
+    }
+
+    @Override
+    public GatewayFilter apply(Config config) {
+        return (exchange, chain) -&gt; {
+            ServerHttpRequest request = exchange.getRequest();
+            if (request.getQueryParams().containsKey(config.param)) {
+
+                request.getQueryParams().get(config.param)
+                        .forEach(value -&gt; System.out.printf(&quot;-------------局部过滤器------------%s----------------%s-------&quot;,config.param,value));
+            }
+            return chain.filter(exchange);
+        };
+    }
+    @Override
+    public List&lt;String&gt; shortcutFieldOrder() {
+        return Arrays.asList(PARAM_NAME);
+    }
+    public static class Config{
+        private String param;
+
+        public String getParam() {
+            return param;
+        }
+        public void setParam(String param) {
+            this.param = param;
+        }
+    }
+}
+</code></pre>
+<p>注意：自定义过滤器的命名必须是： GatewayFilterFactory</p>
+<p>修改配置文件</p>
+<pre><code class="language-yml">server:
+  port: 10010
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # 路由的id，可以随便写
+        - id: user-service-route
+          #代理的服务地址
+          #uri: http://127.0.0.1:9091
+          #通过代理的服务地址，根据loadbleance获取具体的服务
+          uri: lb://user-service
+          #路由断言，可以配置映射路径
+          predicates:
+            - Path=/api/user/**
+          filters:
+            #表示过滤1个路径，2表示两个路径，依次类推
+            - StripPrefix=1
+            # 自定义过滤器
+            - MyParam=name
+      #默认的过滤器，对所有路由生效
+      default-filters:
+        - AddResponseHeader=X-Response-Default-MyName,HaoHan
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+</code></pre>
+<p>访问测试：</p>
+<p><a href="http://127.0.0.1:10010/api/user/1?name=yanmin">http://127.0.0.1:10010/api/user/1?name=HaoHan</a> 检查后台是否输出name 和HaoHan</p>
+<h4 id="自定义全局过滤器"><strong>自定义全局过滤器</strong></h4>
+<p>需求：模拟一个登录的校验。基本逻辑<code>如果请求中带有token参数，则认为请求有效，那么放行</code></p>
+<p>在kgc-gateway工程中编写全局过滤器类MyGlobalFilter</p>
+<pre><code class="language-java">@Component
+public class MyGlobalFilter implements GlobalFilter, Ordered {
+    @Override
+    public Mono&lt;Void&gt; filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        System.out.println(&quot;----------------------全局过滤器-----------------&quot;);
+        String token = exchange.getRequest().getQueryParams().getFirst(&quot;token&quot;);
+        //如果请求url中不带有token
+        if(StringUtils.isEmpty(token)){
+            exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+            return exchange.getResponse().setComplete();
+        }
+        //带有token，那么放行
+        return chain.filter(exchange);
+    }
+
+    @Override
+    public int getOrder() {
+        //值越小越是先执行
+        return 1;
+    }
+}
+</code></pre>
+<p>访问： http://127.0.0.1:10010/api/user/1</p>
+<p>访问：http://127.0.0.1:10010/api/user/1?token=123 （带了token）</p>
+<h2 id="负载均衡和熔断"><strong>负载均衡和熔断</strong></h2>
+<p>Spring Cloud Gateway中默认就已经集成了Ribbon负载君和和Hystrix熔断机制。但是所有的超时策略都是走的默认值，比如熔断超时时间只有1秒，很容就触发了，因此建议手动进行配置</p>
+<pre><code class="language-yml">hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000
+ribbon:
+  ConnectionTimeout: 1000
+  ReadTimeout: 2000
+  MaxAutoRetries: 3
+  MaxAutoRetriesNextServer: 3
+</code></pre>
+<h2 id="gateway跨域配置"><strong>Gateway跨域配置</strong></h2>
+<p>一般网关都是所有微服务的统一入口，必然在调用的时候会出现跨域问题</p>
+<p>跨域：在js请求访问中，如果访问的地址与当前服务器的域名、ip或者是端口号不一致则成为跨域请求。如果不解决则不能获取到对应地址的返回结果</p>
+<p>如：http://localhost:9091 中的js访问http://localhost:9090 的数据，则因为端口号不同，所以是跨域请求</p>
+<p>在访问spring cloud gateway网关服务的时候，出现跨域问题的化，可以在网关服务中通过配置解决，允许哪些服务是可以跨域请求的</p>
+<pre><code class="language-yml">spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        # 路由的id，可以随便写
+        - id: user-service-route
+          #代理的服务地址
+          #uri: http://127.0.0.1:9091
+          #通过代理的服务地址，根据loadbleance获取具体的服务
+          uri: lb://user-service
+          #路由断言，可以配置映射路径
+          predicates:
+            - Path=/api/user/**
+          filters:
+            #表示过滤1个路径，2表示两个路径，依次类推
+            - StripPrefix=1
+            # 自定义过滤器
+            - MyParam=name
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            # alloweOrigins:这种写法或就表示是跨域
+            alloweOrigins:
+              - &quot;http://docs.spring.io&quot;
+            allowdMethods:
+              - GET
+</code></pre>
+<p>上述配置表示：可以允许来自http://docs.spring.io的get请求方式获取服务数据</p>
+<p>alloweOrigins 指定允许访问的服务器地址，如：http://localhsot:100000也是可以的</p>
+<p>[/**]表示对所有的访问到网关服务器的请求地址</p>
+<h2 id="高可用">高可用</h2>
+<p>启动多个Gatway服务，自动注册到eureka中，形成集群，如果是服务内部访问，访问Gateway，自动负载均衡没问题</p>
+<p>但是，geteway更多的是外部访问,他们无法通过eureka进行负载均衡，怎么办？</p>
+<p>可以使用其他的服务网关，来对Gateway进行代理，比如：Nginx（可以通过ngxin搭建geteway集群）</p>
+<h2 id="gateway和feign区别">Gateway和feign区别</h2>
+<p>Gateway作为整个应用的流量入口，接受所有的请求，并且将不同的请求转发到不同的处理微服务模块中，大部分情况下用作：鉴权、服务端流量控制</p>
+<p>Feign则是将当前的微服务的部分服务接口暴漏出来，并且主要用于各个微服务之间的服务调用</p>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%BB%8B%E7%BB%8D">介绍</a></li>
+<li><a href="#spring-cloud-gateway%E5%8A%A0%E5%85%A5%E5%90%8E%E7%9A%84%E6%9E%B6%E6%9E%84"><strong>Spring Cloud Gateway加入后的架构</strong></a></li>
+<li><a href="#%E7%BD%91%E5%85%B3%E4%B8%AD%E7%9A%84%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><strong>网关中的核心概念</strong></a></li>
+<li><a href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8">快速入门</a></li>
+<li><a href="#%E9%9D%A2%E5%90%91%E6%9C%8D%E5%8A%A1%E7%9A%84%E8%B7%AF%E7%94%B1">面向服务的路由</a></li>
+<li><a href="#%E8%B7%AF%E7%94%B1%E5%89%8D%E7%BC%80"><strong>路由前缀</strong></a></li>
+<li><a href="#%E8%BF%87%E6%BB%A4%E5%99%A8"><strong>过滤器</strong></a>
+<ul>
+<li><a href="#%E7%AE%80%E4%BB%8B"><strong>简介</strong></a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E5%85%A8%E5%B1%80%E9%BB%98%E8%AE%A4%E8%BF%87%E6%BB%A4%E5%99%A8">配置全局默认过滤器</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><strong>使用场景</strong></a></li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E8%BF%87%E6%BB%A4%E5%99%A8">自定义过滤器</a>
+<ul>
+<li><a href="#%E5%B1%80%E9%83%A8%E8%BF%87%E6%BB%A4%E5%99%A8"><strong>局部过滤器</strong></a></li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%85%A8%E5%B1%80%E8%BF%87%E6%BB%A4%E5%99%A8"><strong>自定义全局过滤器</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E7%86%94%E6%96%AD"><strong>负载均衡和熔断</strong></a></li>
+<li><a href="#gateway%E8%B7%A8%E5%9F%9F%E9%85%8D%E7%BD%AE"><strong>Gateway跨域配置</strong></a></li>
+<li><a href="#%E9%AB%98%E5%8F%AF%E7%94%A8">高可用</a></li>
+<li><a href="#gateway%E5%92%8Cfeign%E5%8C%BA%E5%88%AB">Gateway和feign区别</a></li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="http://mvvm.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>

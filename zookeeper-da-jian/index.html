@@ -1,0 +1,485 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Zookeeper搭建 - 浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Zookeeper搭建 - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+
+    
+
+  <meta name="description" content="查看tomcat运行日志：tail -f logs/catalina.out
+ZooKeeper安装
+官网下载：http://zookeeper.apache.org/releases.html
+第一次启动会出现错误
+解决方案：把conf目..." />
+  <meta property="og:title" content="Zookeeper搭建 - 浩瀚">
+  <meta property="og:description" content="查看tomcat运行日志：tail -f logs/catalina.out
+ZooKeeper安装
+官网下载：http://zookeeper.apache.org/releases.html
+第一次启动会出现错误
+解决方案：把conf目..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="http://mvvm.io/zookeeper-da-jian/" />
+  <meta property="og:image" content="http://mvvm.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="Zookeeper搭建 - 浩瀚">
+  <meta name="twitter:description" content="查看tomcat运行日志：tail -f logs/catalina.out
+ZooKeeper安装
+官网下载：http://zookeeper.apache.org/releases.html
+第一次启动会出现错误
+解决方案：把conf目...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="http://mvvm.io/zookeeper-da-jian/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="http://mvvm.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="http://mvvm.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      浩瀚
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          Zookeeper搭建
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-05-25 · 9 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <p>查看tomcat运行日志：tail -f logs/catalina.out</p>
+<h2 id="zookeeper安装">ZooKeeper安装</h2>
+<p>官网下载：http://zookeeper.apache.org/releases.html</p>
+<p>第一次启动会出现错误</p>
+<p>解决方案：把conf目录下的zoo_sample.cfg复制一份，并改名为zoo.cfg</p>
+<p>在zookeeper根目录新建一个data目录</p>
+<p>修改zoo.cfg里面的dataDir=/tmp/zookeeper</p>
+<p>修改为：../data</p>
+<h2 id="服务提供者">服务提供者</h2>
+<pre><code class="language-xml">&lt;!--使用dubbo暴漏服务--&gt;
+&lt;dubbo:protocol name=&quot;dubbo&quot; port=&quot;20881&quot;/&gt;
+&lt;!--将工程注册到dubbo中--&gt;
+&lt;dubbo:application name=&quot;jd-sellergoods-service&quot;/&gt;
+&lt;!--注册中心地址--&gt;
+&lt;dubbo:registry address=&quot;zookeeper://192.168.25.128:2181&quot;/&gt;
+&lt;!--开启注解开发--&gt;
+&lt;dubbo:annotation package=&quot;com.jd.service.impl&quot; /&gt;
+</code></pre>
+<h2 id="服务消费者">服务消费者</h2>
+<pre><code class="language-xml">&lt;!-- 引用dubbo 服务 --&gt;
+&lt;dubbo:application name=&quot;jd-sellergoods-web&quot; /&gt;
+&lt;dubbo:registry address=&quot;zookeeper://192.168.25.128:2181&quot; timeout=&quot;30000&quot;/&gt;
+&lt;dubbo:annotation package=&quot;com.jd.controller&quot; /&gt;
+</code></pre>
+<h2 id="zookeeper集群简介">Zookeeper集群简介</h2>
+<h2 id="为什么搭建zookeeper集群">为什么搭建Zookeeper集群</h2>
+<blockquote>
+<p>大部分分布式应用需要一个主控、协调器或者控制器来管理物理分布的子进程。目前，大多数都要开发私有的协调程序，缺乏一个通用机制，协调程序的反复编写浪费，且难以形成通用、伸缩性好的协调器，zookeeper提供通用的分布式锁服务，用以协调分布式应用。所以说zookeeper是分布式应用的协作服务。</p>
+<p>zookeeper作为注册中心，服务器和客户端都要访问，如果有大量的并发，肯定会有等待。所以可以通过zookeeper集群解决。</p>
+<p>下面是zookeeper集群部署结构图：</p>
+</blockquote>
+<figure data-type="image" tabindex="1"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1590380537479.jpg" alt="img" loading="lazy"></figure>
+<h2 id="了解leader选举">了解Leader选举</h2>
+<blockquote>
+<p>Zookeeper的启动过程中leader选举是非常重要而且最复杂的一个环节。那么什么是leader选举呢？zookeeper为什么需要leader选举呢？zookeeper的leader选举的过程又是什么样子的？</p>
+<p>首先我们来看看什么是leader选举。其实这个很好理解，leader选举就像总统选举一样，每人一票，获得多数票的人就当选为总统了。在zookeeper集群中也是一样，每个节点都会投票，如果某个节点获得超过半数以上的节点的投票，则该节点就是leader节点了。</p>
+<p>以一个简单的例子来说明整个选举的过程.</p>
+<p>假设有五台服务器组成的zookeeper集群,它们的id从1-5,同时它们都是最新启动的,也就是没有历史数据,在存放数据量这一点上,都是一样的.假设这些服务器依序启动,来看看会发生什么 。</p>
+<ol>
+<li>
+<p>服务器1启动,此时只有它一台服务器启动了,它发出去的报没有任何响应,所以它的选举状态一直是LOOKING状态</p>
+</li>
+<li>
+<p>服务器2启动,它与最开始启动的服务器1进行通信,互相交换自己的选举结果,由于两者都没有历史数据,所以id值较大的服务器2胜出,但是由于没有达到超过半数以上的服务器都同意选举它(这个例子中的半数以上是3),所以服务器1,2还是继续保持LOOKING状态.</p>
+</li>
+<li>
+<p>服务器3启动,根据前面的理论分析,服务器3成为服务器1,2,3中的老大,而与上面不同的是,此时有三台服务器选举了它,所以它成为了这次选举的leader.</p>
+</li>
+<li>
+<p>服务器4启动,根据前面的分析,理论上服务器4应该是服务器1,2,3,4中最大的,但是由于前面已经有半数以上的服务器选举了服务器3,所以它只能接收当小弟的命了.</p>
+</li>
+<li>
+<p>服务器5启动,同4一样,当小弟</p>
+</li>
+</ol>
+</blockquote>
+<h2 id="zookeeper集群搭建">ZooKeeper集群搭建</h2>
+<blockquote>
+<p>真实的集群是需要部署在不同的服务器上的，但是在我们测试时同时启动十几个虚拟机内存会吃不消，所以我们通常会搭建<strong>伪集群</strong>，也就是把所有的服务都搭建在一台虚拟机上，用端口进行区分。</p>
+<p>我们这里要求搭建一个三个节点的Zookeeper集群（伪集群）。</p>
+<p>测试环境</p>
+<p>jdk：1.7</p>
+<p>zookeeper：3.4.6</p>
+<p>centos ：6.x</p>
+</blockquote>
+<h2 id="1-创建一个目录">1、创建一个目录</h2>
+<pre><code class="language-powershell"> mkdir /usr/local/zookeeper-cluster
+</code></pre>
+<h2 id="2-上传zookeeper文件并解压">2、上传zookeeper文件并解压</h2>
+<pre><code class="language-powershell">tar -zxvf zookeeper-3.4.6.tar.gz
+# 新建文件夹
+mkdir zookeeper-3.4.6/data
+#修改coo.cfg名
+cd zookeeper-3.4.6/conf/
+mv zoo_sample.cfg zoo.cfg
+</code></pre>
+<h2 id="3-复制zookeeper">3、复制zookeeper</h2>
+<pre><code class="language-powershell">cp -r  zookeeper-3.4.6 /usr/local/zookeeper-cluster/zookeeper-1
+cp -r  zookeeper-3.4.6 /usr/local/zookeeper-cluster/zookeeper-2
+cp -r  zookeeper-3.4.6 /usr/local/zookeeper-cluster/zookeeper-3
+</code></pre>
+<h2 id="4-配置每一个zookeeper">4、配置每一个Zookeeper</h2>
+<p>配置每一个Zookeeper 的dataDir（zoo.cfg） clientPort 分别为2181 2182 2183</p>
+<pre><code class="language-powershell">vi /usr/local/zookeeper-cluster/zookeeper-1/conf/zoo.cfg
+</code></pre>
+<blockquote>
+<p>clientPort=2181</p>
+<p>dataDir=/usr/local/zookeeper-cluster/zookeeper-1/data</p>
+</blockquote>
+<pre><code class="language-powershell">vi /usr/local/zookeeper-cluster/zookeeper-2/conf/zoo.cfg
+</code></pre>
+<blockquote>
+<p>clientPort=2182</p>
+<p>dataDir=/usr/local/zookeeper-cluster/zookeeper-2/data</p>
+</blockquote>
+<pre><code class="language-powershell">vi /usr/local/zookeeper-cluster/zookeeper-3/conf/zoo.cfg
+</code></pre>
+<blockquote>
+<p>clientPort=2183</p>
+<p>dataDir=/usr/local/zookeeper-cluster/zookeeper-3/data</p>
+</blockquote>
+<h2 id="5-配置集群">5、配置集群</h2>
+<blockquote>
+<p>在每个zookeeper的 data 目录下创建一个 myid 文件，内容分别是1、2、3 。这个文件就是记录每个服务器的ID（内容为自定义，后面会用到，只要不重复即可）</p>
+</blockquote>
+<pre><code class="language-powershell">cd /usr/local/zookeeper-cluster/
+echo 1 &gt;zookeeper-1/data/myid
+echo 2 &gt;zookeeper-2/data/myid
+echo 3 &gt;zookeeper-3/data/myid
+</code></pre>
+<p>在每一个zookeeper 的 zoo.cfg配置客户端访问端口（clientPort）和集群服务器IP列表。</p>
+<blockquote>
+<p>解释：server.服务器ID=服务器IP地址:服务器之间通信端口:服务器之间投票选举端口</p>
+<p>服务器ID为上面自定义的内容</p>
+</blockquote>
+<pre><code class="language-powershell">server.1=192.168.25.143:2881:3881
+server.2=192.168.25.143:2882:3882
+server.3=192.168.25.143:2883:3883
+vi zookeeper-1/conf/zoo.cfg
+vi zookeeper-2/conf/zoo.cfg
+vi zookeeper-3/conf/zoo.cfg
+</code></pre>
+<h2 id="6-启动集群">6、启动集群</h2>
+<blockquote>
+<p>启动集群就是分别启动每个实例。</p>
+</blockquote>
+<pre><code class="language-powershell">./zookeeper-1/bin/zkServer.sh start
+./zookeeper-2/bin/zkServer.sh start
+./zookeeper-3/bin/zkServer.sh start
+# 查看启动状态
+./zookeeper-1/bin/zkServer.sh status
+./zookeeper-2/bin/zkServer.sh status
+./zookeeper-3/bin/zkServer.sh status
+# 如果出现错误，则需要查看日志
+vi zookeeper.out
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1590380587607.png" alt="img" loading="lazy"></figure>
+<blockquote>
+<p>Mode为follower表示是<strong>跟随者</strong>（从）</p>
+<p>Mod 为leader表示是<strong>领导者</strong>（主）</p>
+</blockquote>
+<h2 id="7-模拟集群异常">7、模拟集群异常</h2>
+<blockquote>
+<p>首先我们先测试如果是从服务器挂掉，会怎么样</p>
+<p>把3号服务器停掉，观察1号和2号，发现状态并没有变化</p>
+<p>由此得出结论，3个节点的集群，从服务器挂掉，集群正常</p>
+</blockquote>
+<figure data-type="image" tabindex="3"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1590380605531.png" alt="img" loading="lazy"></figure>
+<blockquote>
+<p>我们再把1号服务器（从服务器）也停掉，查看2号（主服务器）的状态，发现已经停止运行了。</p>
+<p>由此得出结论，3个节点的集群，2个从服务器都挂掉，主服务器也无法运行。因为可运行的机器没有超过集群总数量的半数。</p>
+</blockquote>
+<figure data-type="image" tabindex="4"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1590380619018.png" alt="img" loading="lazy"></figure>
+<blockquote>
+<p>我们再次把1号服务器启动起来，发现2号服务器又开始正常工作了。而且依然是领导者。</p>
+</blockquote>
+<figure data-type="image" tabindex="5"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1590380630247.png" alt="img" loading="lazy"></figure>
+<blockquote>
+<p>我们把3号服务器也启动起来，把2号服务器停掉，停掉后观察1号和3号的状态。</p>
+<p>发现新的leader产生了~</p>
+<p>由此我们得出结论，当集群中的主服务器挂了，集群中的其他服务器会自动进行选举状态，然后产生新得leader</p>
+</blockquote>
+<figure data-type="image" tabindex="6"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1590380642196.png" alt="img" loading="lazy"></figure>
+<blockquote>
+<p>我们再次测试，当我们把2号服务器重新启动起来启动后，会发生什么？2号服务器会再次成为新的领导吗？我们看结果</p>
+<p>我们会发现，2号服务器启动后依然是跟随者（从服务器），3号服务器依然是领导者（主服务器），没有撼动3号服务器的领导地位。</p>
+<p>由此我们得出结论，当领导者产生后，再次有新服务器加入集群，不会影响到现任领导者。</p>
+</blockquote>
+<h2 id="dubbox连接zookeeper集群">Dubbox连接zookeeper集群</h2>
+<p>修改服务提供者和服务调用者的spring 配置文件,多个节点使用“,”分割</p>
+<pre><code class="language-xml">&lt;!-- 指定注册中心地址 --&gt;
+&lt;dubbo:registry protocol=&quot;zookeeper&quot; address=&quot;192.168.25.129:2181,192.168.25.129:2182,192.168.25.129
+</code></pre>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#zookeeper%E5%AE%89%E8%A3%85">ZooKeeper安装</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E8%80%85">服务提供者</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9%E8%80%85">服务消费者</a></li>
+<li><a href="#zookeeper%E9%9B%86%E7%BE%A4%E7%AE%80%E4%BB%8B">Zookeeper集群简介</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%90%AD%E5%BB%BAzookeeper%E9%9B%86%E7%BE%A4">为什么搭建Zookeeper集群</a></li>
+<li><a href="#%E4%BA%86%E8%A7%A3leader%E9%80%89%E4%B8%BE">了解Leader选举</a></li>
+<li><a href="#zookeeper%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA">ZooKeeper集群搭建</a></li>
+<li><a href="#1-%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%9B%AE%E5%BD%95">1、创建一个目录</a></li>
+<li><a href="#2-%E4%B8%8A%E4%BC%A0zookeeper%E6%96%87%E4%BB%B6%E5%B9%B6%E8%A7%A3%E5%8E%8B">2、上传zookeeper文件并解压</a></li>
+<li><a href="#3-%E5%A4%8D%E5%88%B6zookeeper">3、复制zookeeper</a></li>
+<li><a href="#4-%E9%85%8D%E7%BD%AE%E6%AF%8F%E4%B8%80%E4%B8%AAzookeeper">4、配置每一个Zookeeper</a></li>
+<li><a href="#5-%E9%85%8D%E7%BD%AE%E9%9B%86%E7%BE%A4">5、配置集群</a></li>
+<li><a href="#6-%E5%90%AF%E5%8A%A8%E9%9B%86%E7%BE%A4">6、启动集群</a></li>
+<li><a href="#7-%E6%A8%A1%E6%8B%9F%E9%9B%86%E7%BE%A4%E5%BC%82%E5%B8%B8">7、模拟集群异常</a></li>
+<li><a href="#dubbox%E8%BF%9E%E6%8E%A5zookeeper%E9%9B%86%E7%BE%A4">Dubbox连接zookeeper集群</a></li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="http://mvvm.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>

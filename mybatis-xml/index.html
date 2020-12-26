@@ -1,0 +1,864 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>MyBatis-XML - 浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="MyBatis-XML - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+
+    
+
+  <meta name="description" content="快速开始
+1、MyBatis核心配置文件
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; ?&amp;gt;
+&amp;lt;!DOCTYPE configuration
+  PUBL..." />
+  <meta property="og:title" content="MyBatis-XML - 浩瀚">
+  <meta property="og:description" content="快速开始
+1、MyBatis核心配置文件
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; ?&amp;gt;
+&amp;lt;!DOCTYPE configuration
+  PUBL..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="http://mvvm.io/mybatis-xml/" />
+  <meta property="og:image" content="http://mvvm.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="MyBatis-XML - 浩瀚">
+  <meta name="twitter:description" content="快速开始
+1、MyBatis核心配置文件
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; ?&amp;gt;
+&amp;lt;!DOCTYPE configuration
+  PUBL...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="http://mvvm.io/mybatis-xml/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="http://mvvm.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="http://mvvm.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      浩瀚
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          MyBatis-XML
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-05-04 · 22 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h1 id="快速开始">快速开始</h1>
+<h2 id="1-mybatis核心配置文件">1、MyBatis核心配置文件</h2>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE configuration
+  PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
+&lt;configuration&gt;
+  &lt;!-- 配置数据源 --&gt;
+  &lt;environments default=&quot;development&quot;&gt;
+    &lt;environment id=&quot;development&quot;&gt;
+     &lt;!--事务处理方式--&gt;
+      &lt;transactionManager type=&quot;JDBC&quot;/&gt;
+      &lt;dataSource type=&quot;POOLED&quot;&gt;
+        &lt;property name=&quot;driver&quot; value=&quot;com.mysql.jdbc.Driver&quot;/&gt;
+        &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://localhost:3306/mybatis&quot;/&gt;
+        &lt;property name=&quot;username&quot; value=&quot;root&quot;/&gt;
+        &lt;property name=&quot;password&quot; value=&quot;root&quot;/&gt;
+      &lt;/dataSource&gt;
+    &lt;/environment&gt;
+  &lt;/environments&gt;
+&lt;!--映射器：每一个Mapper接口都应该在核心配置文件&lt;mappers&gt;标签中注册--&gt;
+  &lt;mappers&gt;
+  	&lt;!--使用XML配置文件注册--&gt;
+    &lt;mapper resource=&quot;com/cn/mybatis/dao/IcpInfoMapper.xml&quot;/&gt;
+    &lt;!--使用类注册方式--&gt;
+    &lt;mapper class=&quot;com.cn.mybatis.dao.IcpInfoMapper&quot; /&gt;
+  &lt;/mappers&gt;
+&lt;/configuration&gt;
+</code></pre>
+<h2 id="2-orm映射文件mapperxml">2、ORM映射文件mapper.xml</h2>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+  PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;!-- 这个配置文件主要是配置实体类和数据库中的表映射关系 --&gt;
+&lt;!-- mapper：映射信息配置 namesapce:如果是在ibatis的开发中，名字可以随便取，但是在mybatis中将有特殊的意义 --&gt;
+&lt;mapper namespace=&quot;test&quot;&gt;
+	&lt;!-- 查询所有的书籍信息 select:专门用于查询的statement
+	     id:是statement的唯一标识符
+	     resultType:返回值得类型（跟返回的个数无关），将返回类型的全限定名写到这里
+	 --&gt;
+	&lt;select id=&quot;selectAllBooks&quot; resultType=&quot;cn.kgc.pojo.Book&quot;&gt;
+		select * from book
+	&lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+<h2 id="3-日志文件">3、日志文件</h2>
+<pre><code class="language-properties">log4j.properties
+log4j.rootLogger=DEBUG,A1
+log4j.logger.org.mybatis=DEBUG
+log4j.appender.A1=org.apache.log4j.ConsoleAppender
+log4j.appender.A1.layout=org.apache.log4j.PatternLayout
+log4j.appender.A1.layout.ConversionPattern=%-d{yyyy-MM-dd HH:mm:ss,SSS} [%t] [%c]-[%p] %m%n
+</code></pre>
+<h2 id="4-测试">4、测试</h2>
+<pre><code class="language-java">//查询全部
+@Test
+public void testFindAll() throws Exception{
+    //通过流的方式读取配置文件
+    InputStream inputStream = Resources.getResourceAsStream(&quot;mybatis-config.xml&quot;);
+    //1.读取配置文件,得到SqlSessionFactory
+    SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream );
+    //2.创建SqlSession
+    SqlSession sqlSession = sqlSessionFactory.openSession();
+    //3.查询所有(参数：是namespace.statementId)
+    List&lt;Book&gt; list = sqlSession.selectList(&quot;test.selectAllBooks&quot;);
+    System.out.println(list);
+}
+</code></pre>
+<h1 id="properties属性">properties属性</h1>
+<p>创建一个外部的properties文件</p>
+<pre><code class="language-properties">jdbc.dirver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;amp;characterEncoding=utf-8
+jdbc.username=root
+jdbc.password=root
+</code></pre>
+<p>在核心配置文件中引用properties文件</p>
+<pre><code class="language-xml">&lt;properties resource=&quot;jdbc.properties&quot;/&gt;
+</code></pre>
+<p>使用</p>
+<blockquote>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi><mi>d</mi><mi>b</mi><mi>c</mi><mi mathvariant="normal">.</mi><mi>d</mi><mi>i</mi><mi>r</mi><mi>v</mi><mi>e</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">{jdbc.dirver}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mord mathdefault">d</span><span class="mord mathdefault">b</span><span class="mord mathdefault">c</span><span class="mord">.</span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span></span>{jdbc.url}<br>
+${jdbc.username}</p>
+</blockquote>
+<h1 id="settings">settings</h1>
+<p><code>mapUnderscoreToCamelCase</code>:开启驼峰命名，可以帮助我们完成数据库的经典命名规则，到java的经典命名规则（驼峰命名发）</p>
+<p>如：数据库叫user_name 到java类（<code>pojo</code>）中是<code>userName</code></p>
+<pre><code class="language-xml">&lt;settings&gt;
+    &lt;!-- 开启驼峰命名 --&gt;
+    &lt;setting name=&quot;mapUnderscoreToCamelCase&quot; value=&quot;true&quot;/&gt;
+    &lt;!--指定 MyBatis 所用日志的具体实现，未指定时将自动查找。
+	日志类型：
+	STDOUT_LOGGING 不需要导入jar包，因为是mybatis自带
+	NO_LOGGING 代表不需要日志输出
+	SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING | STDOUT_LOGGING | NO_LOGGING
+ 	--&gt;
+    &lt;setting name=&quot;logImpl&quot; value=&quot;STDOUT_LOGGING&quot;/&gt;
+&lt;/settings&gt;
+</code></pre>
+<p>分析日志输出</p>
+<h1 id="typealiases类型别名">typeAliases（类型别名）</h1>
+<h2 id="自定义别名">自定义别名</h2>
+<pre><code class="language-xml">&lt;!--别名，用于简化--&gt;
+&lt;typeAliases&gt;
+    &lt;!--type：包+类名，alias：别名--&gt;
+    &lt;typeAlias type=&quot;com.cn.mybatis.entity.IcpInfo&quot; alias=&quot;Icp&quot; /&gt;
+    &lt;!--使用包的方式
+		每一个在包 domain.blog 中的 Java Bean，在没有注解的情况下
+		会使用 Bean 的首字母小写的非限定类名来作为它的别名
+		(这句话意思是：@Alias(&quot;author&quot;)
+		在使用包方式时，javaBean没有添加注解指定别名时自动使用类名{首字母小写})
+	--&gt;
+    &lt;package name=&quot;com.cn.mybatis.entity&quot;/&gt;
+&lt;/typeAliases&gt;
+</code></pre>
+<h1 id="plugins插件">plugins（插件）</h1>
+<h1 id="xml映射">XML映射</h1>
+<ul>
+<li><code>cache</code> – 对给定命名空间的缓存配置。</li>
+<li><code>cache-ref</code> – 对其他命名空间缓存配置的引用。</li>
+<li><code>resultMap</code> – 是最复杂也是最强大的元素，用来描述如何从数据库结果集中来加载对象。</li>
+<li><code>parameterMap</code> – 已被废弃！老式风格的参数映射。更好的办法是使用内联参数，此元素可能在将来被移除。文档中不会介绍此元素。</li>
+<li><code>sql</code> – 可被其他语句引用的可重用语句块。</li>
+<li><code>insert</code> – 映射插入语句</li>
+<li><code>update</code> – 映射更新语句</li>
+<li><code>delete</code> – 映射删除语句</li>
+<li><code>select</code> – 映射查询语句</li>
+</ul>
+<h2 id="select-查询语句">select 查询语句</h2>
+<pre><code class="language-xml">&lt;!--
+	id：一般和Mepper接口的方法名称相同，在命名空间中唯一的标识符，可以被用来引用这条语句。
+	parameterType：接收一个int类型的参数
+		接收参数使用#{ }包裹着，这个参数对应着接口的参数
+	resultType：返回一个hashmap 类型的数据
+
+--&gt;
+&lt;select id=&quot;selectPerson&quot; parameterType=&quot;int&quot; resultType=&quot;hashmap&quot;&gt;
+  SELECT * FROM PERSON WHERE ID = #{id}
+&lt;/select&gt;
+</code></pre>
+<h2 id="insert-updatea-delete">insert updatea delete</h2>
+<p>在使用这些语句的时候需要提交事务：session.commit();</p>
+<pre><code class="language-xml">&lt;insert id=&quot;addIcpInfo&quot; parameterType=&quot;icpInfo&quot; &gt;
+    insert into icpinfo (icp, name, address, home, introduce, author, email, date, type) values (#{icp}, #{name}, #{address}, #{home}, #{introduce}, #{author}, #{email}, #{date}, #{type})
+&lt;/insert&gt;
+</code></pre>
+<p>获取插入数据后的主键id：useGeneratedKeys=&quot;true&quot; keyProperty=&quot;cip&quot;</p>
+<pre><code class="language-xml">&lt;insert id=&quot;addIcpInfo&quot; useGeneratedKeys=&quot;true&quot; keyProperty=&quot;cip&quot;&gt;
+    insert into icpinfo (icp, name, address, home, introduce, author, email, date, type) values (#{icp}, #{name}, #{address}, #{home}, #{introduce}, #{author}, #{email}, #{date}, #{type})
+&lt;/insert&gt;
+</code></pre>
+<p>插入多条数据：传入一个 数组或集合，并返回自动生成的主键。</p>
+<pre><code class="language-xml">&lt;insert id=&quot;addIcpInfoList&quot; useGeneratedKeys=&quot;true&quot; keyProperty=&quot;cip&quot;&gt;
+    insert into icpinfo (icp, name, address, home, introduce, author, email, date, type) values
+    &lt;foreach collection=&quot;list&quot; item=&quot;item&quot; separator=&quot;,&quot;&gt;
+        (#{item.icp}, #{item.name}, #{item.address}, #{item.home}, #{item.introduce}, #{item.author}, #{item.email}, #{item.date}, #{item.type})
+    &lt;/foreach&gt;
+&lt;/insert&gt;
+</code></pre>
+<h1 id="动态sql">动态SQL</h1>
+<h2 id="if">if</h2>
+<pre><code class="language-xml">对于输入映射类型为pojo类型：
+#{pojo中的属性名}   ${pojo中的属性名}
+&lt;if test=&quot;gradeId != null&quot;&gt;
+    and grade_id = #{gradeId}
+&lt;/if&gt;
+</code></pre>
+<h2 id="sql注入的问题">sql注入的问题</h2>
+<p>在使用${}会出现<code>sql</code>注入的问题（拼接字符串，没有使用预编译）</p>
+<pre><code class="language-xml">如果为简单数据类型需要把name换成_parameter
+&lt;bind name=&quot;n&quot; value=&quot;'%'+name+'%'&quot;/&gt;
+and name like #{n}
+</code></pre>
+<h2 id="when">when</h2>
+<p>应用场景：可能查询全部，有可能根据条件查询，并且如果第一个条件前面有and，where子句会自动把这个and删除再作为sql语句运行</p>
+<pre><code class="language-xml">&lt;select id=&quot;findStudentByLike&quot; resultType=&quot;student&quot; parameterType=&quot;student&quot;&gt;
+    select * from student
+    &lt;where&gt;
+        &lt;if test=&quot;name != null and name != ''&quot;&gt;
+            &lt;bind name=&quot;n&quot; value=&quot;'%'+name+'%'&quot;/&gt;
+            and name like #{n}
+        &lt;/if&gt;
+        &lt;if test=&quot;gradeId != null&quot;&gt;
+            and grade_id = #{gradeId}
+        &lt;/if&gt;
+    &lt;/where&gt;
+&lt;/select&gt;
+</code></pre>
+<h2 id="choose">choose</h2>
+<p>其实就是java中的switch 或者 if...else if ...else</p>
+<h2 id="set">set</h2>
+<p>set标签作用：能自动的判断是否在sql语句的结尾处是否要添加逗号，如果不需要逗号它自动帮我们删除</p>
+<p>(和where一样不会自动添加)</p>
+<pre><code class="language-xml">&lt;update id=&quot;updateStudentByById&quot; parameterType=&quot;student&quot;&gt;
+    update student
+    &lt;set&gt;
+        &lt;if test=&quot;name != null&quot;&gt;
+            name = #{name},
+        &lt;/if&gt;
+        &lt;if test=&quot;gradeId != null&quot;&gt;
+            grade_id = #{gradeId}
+        &lt;/if&gt;
+    &lt;/set&gt;
+    where id = #{id}
+&lt;/update&gt;
+</code></pre>
+<h2 id="foreach">foreach</h2>
+<pre><code class="language-xml">&lt;select id=&quot;findStudentsById&quot; parameterType=&quot;int&quot; resultType=&quot;student&quot;&gt;
+        select * from student where id in
+        &lt;foreach collection=&quot;list&quot; open=&quot;(&quot; separator=&quot;,&quot; close=&quot;)&quot; item=&quot;item&quot;&gt;
+            #{item}
+        &lt;/foreach&gt;
+    &lt;/select&gt;
+</code></pre>
+<h1 id="sql片段">SQL片段</h1>
+<pre><code class="language-xml">&lt;sql id=&quot;sql&quot;&gt;
+    select * from student
+&lt;/sql&gt;
+调用
+&lt;include refid=&quot;sql&quot;&gt;&lt;/include&gt;
+</code></pre>
+<h1 id="多表联合查询">多表联合查询</h1>
+<h2 id="vo">VO</h2>
+<p>解决思路：要求返回的是一个对象，如果<code>pojo</code>不能满足(要返回的列不存在<code>pojo</code>中)，那么创建一个VO对象，这个VO对象中包含了所有要返回的字段</p>
+<h3 id="创建一个vo">创建一个VO</h3>
+<pre><code class="language-java">package cn.kgc.vo;
+
+import cn.kgc.pojo.Student;
+//继承的原则：要返回的字段哪个pojo中多，那么就继承哪个pojo
+public class StudentVO extends Student{
+	private String gradeName;
+
+	public String getGradeName() {
+		return gradeName;
+	}
+
+	public void setGradeName(String gradeName) {
+		this.gradeName = gradeName;
+	}	
+}
+</code></pre>
+<h3 id="编写mapper接口">编写mapper接口</h3>
+<pre><code class="language-java">public interface StudentMapper {
+	/**
+	 * 查询学生信息，要求展示学生信息中年级名称(联合查询)
+	 */
+	List&lt;StudentVO&gt; getStudentVO();
+}
+</code></pre>
+<h3 id="编写mapperxml">编写mapper.xml</h3>
+<pre><code class="language-xml">&lt;select id=&quot;getStudentVO&quot; resultType=&quot;cn.kgc.vo.StudentVO&quot;&gt;
+	SELECT s.*,g.name gradeName FROM student s,grade g WHERE s.grade_id=g.id
+&lt;/select&gt;
+</code></pre>
+<h2 id="一对一">一对一</h2>
+<h3 id="按照查询嵌套处理">按照查询嵌套处理</h3>
+<pre><code class="language-xml">&lt;resultMap id=&quot;IcpInfoType&quot; type=&quot;icpInfo&quot;&gt;
+&lt;!-- property：实体类的对象属性名，
+	column：数据库中关联的列，
+	javaType：实体类对象，
+	select：一个sql语句查询的是实体对象的sql
+--&gt;
+    &lt;association property=&quot;type&quot; column=&quot;type&quot; javaType=&quot;type&quot; select=&quot;getTypeList&quot; /&gt;
+&lt;/resultMap&gt;
+&lt;select id=&quot;getList&quot; resultMap=&quot;IcpInfoType&quot;&gt;
+    select * from icpinfo
+&lt;/select&gt;
+&lt;!--这个typeID 获取的是 column=&quot;type&quot; 这个列的值--&gt;
+&lt;select id=&quot;getTypeList&quot; resultType=&quot;type&quot; &gt;
+    select * from type where tid = #{id}
+&lt;/select&gt;
+</code></pre>
+<h3 id="按照结果嵌套处理">按照结果嵌套处理</h3>
+<pre><code class="language-xml">&lt;select id=&quot;getList2&quot; resultMap=&quot;getList2&quot; &gt;
+    select icp, name, address, home, introduce, author, email, `date`, type, tid, tname from icpinfo i ,type t
+    where i.type = t.tid
+&lt;/select&gt;
+&lt;!--type = 要查询的对象--&gt;
+&lt;resultMap id=&quot;getList2&quot; type=&quot;icpInfo&quot; &gt;
+    &lt;!--property=实体类的属性名 column=列名or别名--&gt;
+    &lt;result property=&quot;icp&quot; column=&quot;icp&quot; /&gt;
+    &lt;result property=&quot;name&quot; column=&quot;name&quot; /&gt;
+    &lt;result property=&quot;address&quot; column=&quot;address&quot; /&gt;
+    &lt;result property=&quot;home&quot; column=&quot;home&quot; /&gt;
+    &lt;result property=&quot;introduce&quot; column=&quot;introduce&quot; /&gt;
+    &lt;result property=&quot;author&quot; column=&quot;author&quot; /&gt;
+    &lt;result property=&quot;email&quot; column=&quot;email&quot; /&gt;
+    &lt;result property=&quot;date&quot; column=&quot;date&quot; /&gt;
+    &lt;!--复杂类型
+		property=在icpInfo里的属性是type
+		javaType=type的对象
+	--&gt;
+    &lt;association property=&quot;type&quot; javaType=&quot;type&quot; &gt;
+        &lt;result property=&quot;tid&quot; column=&quot;tid&quot; /&gt;
+        &lt;result property=&quot;tname&quot; column=&quot;tname&quot; /&gt;
+    &lt;/association&gt;
+&lt;/resultMap&gt;
+</code></pre>
+<h2 id="一对多">一对多</h2>
+<p>一对多只需要把association换成</p>
+<pre><code class="language-xml">&lt;!--ofType=&quot;&quot;
+	集合中的泛型信息
+--&gt;
+&lt;collection property=&quot;&quot; ofType=&quot;&quot;&gt;&lt;/collection&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+  PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;cn.kgc.mapper.GradeMapper&quot;&gt;
+	&lt;!-- 查询年级，把属于这个年级的所有学生查询出来 --&gt;
+	&lt;resultMap type=&quot;cn.kgc.pojo.Grade&quot; id=&quot;gradeStudentMap&quot;&gt;
+		&lt;id column=&quot;id&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+		&lt;result column=&quot;name&quot; property=&quot;name&quot; javaType=&quot;string&quot;/&gt;
+		&lt;!-- collection:一对多的映射关系
+			property:表示一对多映射关系在pojo中的属性名
+			ofType:表示该集合的泛型的全限定名
+		 --&gt;
+		&lt;collection property=&quot;studentList&quot; ofType=&quot;cn.kgc.pojo.Student&quot;&gt;
+			&lt;id column=&quot;sid&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+			&lt;result column=&quot;sname&quot; property=&quot;name&quot; javaType=&quot;string&quot;/&gt;
+			&lt;!-- gradeid因为在grade中已经有了，所以不需要再配置 --&gt;
+		&lt;/collection&gt;
+	&lt;/resultMap&gt;
+	
+	&lt;select id=&quot;getGradeById&quot; parameterType=&quot;int&quot; resultMap=&quot;gradeStudentMap&quot;&gt;
+		SELECT 
+		  g.*,
+		  s.id sid,
+		  s.name sname
+		FROM
+		  grade g,
+		  student s 
+		WHERE g.id = s.grade_id 
+		  AND g.id = #{id}
+	&lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+<h3 id="多对多">多对多</h3>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+  PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;cn.kgc.mapper.StudentMapper&quot;&gt;
+	&lt;resultMap type=&quot;cn.kgc.pojo.Student&quot; id=&quot;studentMap&quot;&gt;
+		&lt;id column=&quot;id&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+		&lt;result column=&quot;name&quot; property=&quot;name&quot; javaType=&quot;string&quot;/&gt;
+		&lt;result column=&quot;grade_id&quot; property=&quot;gradeId&quot; javaType=&quot;int&quot;/&gt;
+		&lt;!-- 一对多的映射关系 --&gt;
+		&lt;collection property=&quot;studentCourseList&quot; ofType=&quot;cn.kgc.pojo.StudentCourse&quot;&gt;
+			&lt;id column=&quot;scid&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+			&lt;!-- studentCourse和course是一对一的映射俄关系 --&gt;
+			&lt;association property=&quot;course&quot; javaType=&quot;cn.kgc.pojo.Course&quot;&gt;
+				&lt;id column=&quot;cid&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+				&lt;result column=&quot;cname&quot; property=&quot;name&quot; javaType=&quot;string&quot;/&gt;
+			&lt;/association&gt;
+		&lt;/collection&gt;
+	&lt;/resultMap&gt;
+
+	&lt;select id=&quot;getStudentById&quot; parameterType=&quot;int&quot; resultMap=&quot;studentMap&quot;&gt;
+	SELECT 
+	  s.*,
+	  sc.id scid,
+	  c.id cid,
+	  c.name cname 
+	FROM
+	  student s,
+	  student_course sc,
+	  course c 
+	WHERE s.id = sc.sid 
+	  AND c.id = sc.cid 
+	  AND s.id = #{id}
+	&lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+<h1 id="延迟加载">延迟加载</h1>
+<p>什么是懒加载</p>
+<blockquote>
+<p>懒加载：就是在需要数据的时候才加载，不需要数据的时候不加载，这样有利于系统性能的提升，这就是懒加载（也叫做延迟加载）</p>
+<p>好处：在关联查询的时候，根据需求进行关联查询，大大提高了数据库的查询性能。（单表的查询效率永远要比多表联合查询的效率高）</p>
+<p>坏处：因为需要用到数据的时候才去做查询，这样大批量的数据查询的时候等待时间会变得更长，造成用户的体验下降<br>
+(select * from student)会把所有的学生的年级编号也在里面<br>
+突然要查询年级信息，它底层操作是：根据年级id一个一个去执行查询</p>
+</blockquote>
+<h2 id="使用association实现懒加载">使用<code>association</code>实现懒加载</h2>
+<h3 id="核心配置开启懒加载">核心配置开启懒加载</h3>
+<pre><code class="language-xml"> &lt;settings&gt;
+  	&lt;!-- 开启懒加载 --&gt;
+  	&lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;
+  	&lt;!-- mybatis3.4.1之前默认值是true，需要设置为false（将积极加载改为消息加载也就是按需加载） --&gt;
+  	&lt;setting name=&quot;aggressiveLazyLoading&quot; value=&quot;false&quot;/&gt;
+  	&lt;!-- 因为我这里为了打印对象里信息的方便，所以都重写了toString方法，mybatis中默认是如果使用(equals,clone,hashCode,toString任意一个方法)那么就不再延迟加载 --&gt;
+  	&lt;setting name=&quot;lazyLoadTriggerMethods&quot; value=&quot;&quot;/&gt;
+  &lt;/settings&gt;
+</code></pre>
+<p>GradeMapper.xml</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+  PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;cn.kgc.mapper.GradeMapper&quot;&gt;
+	&lt;!-- 根据id查询年级对象 --&gt;
+	&lt;select id=&quot;getGradeById&quot; parameterType=&quot;int&quot; resultType=&quot;cn.kgc.pojo.Grade&quot;&gt;
+		select * from grade where id=#{id}
+	&lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+<p>StudentMapper.xml</p>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+  PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;cn.kgc.mapper.StudentMapper&quot;&gt;
+	
+	&lt;resultMap type=&quot;cn.kgc.pojo.Student&quot; id=&quot;studentMap&quot;&gt;
+		&lt;id column=&quot;id&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+		&lt;result column=&quot;name&quot; property=&quot;name&quot; javaType=&quot;string&quot;/&gt;
+		&lt;!-- 一个学生对应一个年级：一对一的关系映射
+			对于association方式的懒加载：
+				select:此处要求是根据年级的id查询年级对象的mapper接口中方法的全限定名
+				column:在数据库中表与表之间关系的外键
+		 --&gt;
+		&lt;association property=&quot;grade&quot; javaType=&quot;cn.kgc.pojo.Grade&quot;
+			select=&quot;cn.kgc.mapper.GradeMapper.getGradeById&quot; column=&quot;grade_id&quot;&gt;&lt;/association&gt;
+	&lt;/resultMap&gt;
+	
+	&lt;select id=&quot;getAllStudents&quot; resultMap=&quot;studentMap&quot;&gt;
+		select * from student
+	&lt;/select&gt;
+&lt;/mapper&gt;
+</code></pre>
+<h2 id="使用collection实现懒加载">使用<code>collection</code>实现懒加载</h2>
+<h3 id="核心配置开启懒加载-2">核心配置开启懒加载</h3>
+<pre><code class="language-xml">&lt;settings&gt;
+&lt;!-- 开启懒加载 --&gt;
+&lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;
+&lt;!-- mybatis3.4.1之前默认值是true，需要设置为false（将积极加载改为消息加载也就是按需加载） --&gt;
+&lt;setting name=&quot;aggressiveLazyLoading&quot; value=&quot;false&quot;/&gt;
+&lt;!-- 因为我这里为了打印对象里信息的方便，所以都重写了toString方法，mybatis中默认是如果使用(equals,clone,hashCode,toString任意一个方法)那么就不再延迟加载 --&gt;
+&lt;setting name=&quot;lazyLoadTriggerMethods&quot; value=&quot;&quot;/&gt;
+&lt;/settings&gt;
+</code></pre>
+<p>StudentMapper.xml</p>
+<pre><code class="language-xml">&lt;select id=&quot;getStudentsByGradeId&quot; parameterType=&quot;int&quot; resultType=&quot;cn.kgc.pojo.Student&quot;&gt;
+    select * from student where grade_id=#{gradeId}
+&lt;/select&gt;
+</code></pre>
+<p>GradeMapper.xml</p>
+<pre><code class="language-xml">&lt;!-- 查询年级信息，有可能查询年级中所有的学生信息 --&gt;
+&lt;resultMap type=&quot;cn.kgc.pojo.Grade&quot; id=&quot;gradeMap&quot;&gt;
+    &lt;id column=&quot;id&quot; property=&quot;id&quot; javaType=&quot;int&quot;/&gt;
+    &lt;result column=&quot;name&quot; property=&quot;name&quot; javaType=&quot;string&quot;/&gt;
+    &lt;!-- 一对多的映射关系
+        select:根据年级编号查询学生列表的方法
+        column:就是grade的id（它就是grade表的主键）
+     --&gt;
+    &lt;collection property=&quot;studentList&quot; ofType=&quot;cn.kgc.pojo.Student&quot;
+        select=&quot;cn.kgc.mapper.StudentMapper.getStudentsByGradeId&quot; column=&quot;id&quot;&gt;&lt;/collection&gt;
+&lt;/resultMap&gt;
+&lt;select id=&quot;getAllGrades&quot; resultMap=&quot;gradeMap&quot;&gt;
+    select * from grade
+&lt;/select&gt;
+</code></pre>
+<h1 id="mybatis缓存">mybatis缓存</h1>
+<h2 id="一级缓存">一级缓存</h2>
+<p>它是<code>SqlSession</code>级别的，同一个<code>SqlSession</code>才涉及到一级缓存</p>
+<p>一级缓存是默认存在，它不需要去做任何的设置</p>
+<h2 id="二级缓存">二级缓存</h2>
+<p>它是mapper级别的，需要开启才能使用</p>
+<blockquote>
+<p>缓存在实际开发中是很有用的，它能大大的提升查询的效率，提高程序的性能</p>
+</blockquote>
+<h3 id="在核心配置文件中开启二级缓存">在核心配置文件中开启二级缓存</h3>
+<pre><code class="language-xml">&lt;!-- 开启二级缓存(默认值就是true，准备我们使用二级缓存，可以不用设置) --&gt;
+&lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot;/&gt;
+</code></pre>
+<h3 id="在mappexml中开启二级缓存">在mappe.xml中开启二级缓存</h3>
+<pre><code class="language-xml">&lt;mapper namespace=&quot;cn.kgc.mapper.StudentMapper&quot;&gt;
+	&lt;!-- 在StudentMapper.xml中开启二级缓存 ,因为mybatis中二级缓存的实现类只有一个，默认就是这个，type可以省略不写--&gt;
+	&lt;cache type=&quot;org.apache.ibatis.cache.impl.PerpetualCache&quot;&gt;&lt;/cache&gt;
+&lt;/mapper&gt;
+</code></pre>
+<h3 id="pojo需要实现序列化接口">pojo需要实现序列化接口</h3>
+<p>因为缓存的时候要将pojo流化然后存储在内存中，查询再取出</p>
+<pre><code class="language-java">public class Student implements Serializable{
+}
+</code></pre>
+<blockquote>
+<p>补充：在mapper应用二级缓存后，默认是所有的查询方法都开启二级缓存，如果要某个查询不使用二级缓存可以添加<code>useCache=&quot;false&quot;</code></p>
+</blockquote>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li><a href="#%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B">快速开始</a>
+<ul>
+<li><a href="#1-mybatis%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">1、MyBatis核心配置文件</a></li>
+<li><a href="#2-orm%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6mapperxml">2、ORM映射文件mapper.xml</a></li>
+<li><a href="#3-%E6%97%A5%E5%BF%97%E6%96%87%E4%BB%B6">3、日志文件</a></li>
+<li><a href="#4-%E6%B5%8B%E8%AF%95">4、测试</a></li>
+</ul>
+</li>
+<li><a href="#properties%E5%B1%9E%E6%80%A7">properties属性</a></li>
+<li><a href="#settings">settings</a></li>
+<li><a href="#typealiases%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D">typeAliases（类型别名）</a>
+<ul>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%88%AB%E5%90%8D">自定义别名</a></li>
+</ul>
+</li>
+<li><a href="#plugins%E6%8F%92%E4%BB%B6">plugins（插件）</a></li>
+<li><a href="#xml%E6%98%A0%E5%B0%84">XML映射</a>
+<ul>
+<li><a href="#select-%E6%9F%A5%E8%AF%A2%E8%AF%AD%E5%8F%A5">select 查询语句</a></li>
+<li><a href="#insert-updatea-delete">insert updatea delete</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8A%A8%E6%80%81sql">动态SQL</a>
+<ul>
+<li><a href="#if">if</a></li>
+<li><a href="#sql%E6%B3%A8%E5%85%A5%E7%9A%84%E9%97%AE%E9%A2%98">sql注入的问题</a></li>
+<li><a href="#when">when</a></li>
+<li><a href="#choose">choose</a></li>
+<li><a href="#set">set</a></li>
+<li><a href="#foreach">foreach</a></li>
+</ul>
+</li>
+<li><a href="#sql%E7%89%87%E6%AE%B5">SQL片段</a></li>
+<li><a href="#%E5%A4%9A%E8%A1%A8%E8%81%94%E5%90%88%E6%9F%A5%E8%AF%A2">多表联合查询</a>
+<ul>
+<li><a href="#vo">VO</a>
+<ul>
+<li><a href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAvo">创建一个VO</a></li>
+<li><a href="#%E7%BC%96%E5%86%99mapper%E6%8E%A5%E5%8F%A3">编写mapper接口</a></li>
+<li><a href="#%E7%BC%96%E5%86%99mapperxml">编写mapper.xml</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%80%E5%AF%B9%E4%B8%80">一对一</a>
+<ul>
+<li><a href="#%E6%8C%89%E7%85%A7%E6%9F%A5%E8%AF%A2%E5%B5%8C%E5%A5%97%E5%A4%84%E7%90%86">按照查询嵌套处理</a></li>
+<li><a href="#%E6%8C%89%E7%85%A7%E7%BB%93%E6%9E%9C%E5%B5%8C%E5%A5%97%E5%A4%84%E7%90%86">按照结果嵌套处理</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%80%E5%AF%B9%E5%A4%9A">一对多</a>
+<ul>
+<li><a href="#%E5%A4%9A%E5%AF%B9%E5%A4%9A">多对多</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD">延迟加载</a>
+<ul>
+<li><a href="#%E4%BD%BF%E7%94%A8association%E5%AE%9E%E7%8E%B0%E6%87%92%E5%8A%A0%E8%BD%BD">使用<code>association</code>实现懒加载</a>
+<ul>
+<li><a href="#%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E5%BC%80%E5%90%AF%E6%87%92%E5%8A%A0%E8%BD%BD">核心配置开启懒加载</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BD%BF%E7%94%A8collection%E5%AE%9E%E7%8E%B0%E6%87%92%E5%8A%A0%E8%BD%BD">使用<code>collection</code>实现懒加载</a>
+<ul>
+<li><a href="#%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E5%BC%80%E5%90%AF%E6%87%92%E5%8A%A0%E8%BD%BD-2">核心配置开启懒加载</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#mybatis%E7%BC%93%E5%AD%98">mybatis缓存</a>
+<ul>
+<li><a href="#%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98">一级缓存</a></li>
+<li><a href="#%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98">二级缓存</a>
+<ul>
+<li><a href="#%E5%9C%A8%E6%A0%B8%E5%BF%83%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%AD%E5%BC%80%E5%90%AF%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98">在核心配置文件中开启二级缓存</a></li>
+<li><a href="#%E5%9C%A8mappexml%E4%B8%AD%E5%BC%80%E5%90%AF%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98">在mappe.xml中开启二级缓存</a></li>
+<li><a href="#pojo%E9%9C%80%E8%A6%81%E5%AE%9E%E7%8E%B0%E5%BA%8F%E5%88%97%E5%8C%96%E6%8E%A5%E5%8F%A3">pojo需要实现序列化接口</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="http://mvvm.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>

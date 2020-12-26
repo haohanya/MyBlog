@@ -4,46 +4,37 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>友人 - 浩瀚</title>
+<title>Solr搜索引擎安装配置 - 浩瀚</title>
 <link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
 <link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
 <link rel="stylesheet" href="http://mvvm.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="友人 - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Solr搜索引擎安装配置 - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
 
     
 
-  <meta name="description" content="
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-o..." />
-  <meta property="og:title" content="友人 - 浩瀚">
-  <meta property="og:description" content="
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-o..." />
+  <meta name="description" content="什么是Solr
+
+大多数搜索引擎应用都必须具有某种搜索功能，问题是搜索功能往往是巨大的资源消耗并且它们由于沉重的数据库加载而拖垮你的应用的性能。
+这就是为什么转移负载到一个外部的搜索服务器是一个不错的主意，Apache Solr是一个流行的..." />
+  <meta property="og:title" content="Solr搜索引擎安装配置 - 浩瀚">
+  <meta property="og:description" content="什么是Solr
+
+大多数搜索引擎应用都必须具有某种搜索功能，问题是搜索功能往往是巨大的资源消耗并且它们由于沉重的数据库加载而拖垮你的应用的性能。
+这就是为什么转移负载到一个外部的搜索服务器是一个不错的主意，Apache Solr是一个流行的..." />
   <meta property="og:type" content="articles">
-  <meta property="og:url" content="http://mvvm.io/links/" />
+  <meta property="og:url" content="http://mvvm.io/solr-sou-suo-yin-qing-an-zhuang-pei-zhi/" />
   <meta property="og:image" content="http://mvvm.io/images/avatar.png">
   <meta property="og:image:height" content="630">
   <meta property="og:image:width" content="1200">
-  <meta name="twitter:title" content="友人 - 浩瀚">
-  <meta name="twitter:description" content="
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-o...">
+  <meta name="twitter:title" content="Solr搜索引擎安装配置 - 浩瀚">
+  <meta name="twitter:description" content="什么是Solr
+
+大多数搜索引擎应用都必须具有某种搜索功能，问题是搜索功能往往是巨大的资源消耗并且它们由于沉重的数据库加载而拖垮你的应用的性能。
+这就是为什么转移负载到一个外部的搜索服务器是一个不错的主意，Apache Solr是一个流行的...">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="http://mvvm.io/links/">
+  <link rel="canonical" href="http://mvvm.io/solr-sou-suo-yin-qing-an-zhuang-pei-zhi/">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
@@ -63,68 +54,119 @@
     <div class="max-w-4xl w-full mx-auto">
       <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
         <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
-          友人
+          Solr搜索引擎安装配置
         </h1>
         
         <div class="mb-8 flex flex-wrap">
-          <div class="text-gray-400 text-sm mr-4">2020-12-26 · 1 min read</div>
+          <div class="text-gray-400 text-sm mr-4">2020-05-14 · 5 min read</div>
           
         </div>
         <div class="markdown mb-8" v-pre>
-          <style>
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin-bottom: 1rem;
-}
-</style>
-<section class="link after">
-    <article class="link-item">
-        <a href="http://cnm1.cn/" title="" target="_blank">1梦</a>
-    </article>
-    <article class="link-item">
-        <a href="https://nekodeng.gitee.io" title="十万伏特皮卡丘，梦想是世界和平，想要发光发热" target="_blank">itsNekoDeng</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.kylin.show/" title="" target="_blank">Kylin</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.npmrundev.com/" title="" target="_blank">Mozzie</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.piscme.com/" title="" target="_blank">PiscMe</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.uquq.cn/" title="" target="_blank">UQUQ</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.wuxf.cn/" title="" target="_blank">walkerの小窝</a>
-    </article>
-    <article class="link-item">
-        <a href="https://yremp.live" title="流年，谁给过的倾城" target="_blank">Yremp</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.usuuu.com/" title="" target="_blank">悠悠</a>
-    </article>
-    <article class="link-item">
-        <a href="https://proprogrammar.com/" title="" target="_blank">晴雨</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.200011.net" title="" target="_blank">油油</a>
-    </article>
-    <article class="link-item">
-        <a href="http://susa.club/" title="" target="_blank">苏</a>
-    </article>
-    <article class="link-item">
-        <a href="https://ayayy.cn/" title="" target="_blank">苏三说</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.mqllin.cn/" title="" target="_blank">雨林笔记</a>
-    </article>
-</section>
+          <h2 id="什么是solr">什么是Solr</h2>
+<blockquote>
+<p>大多数搜索引擎应用都必须具有某种搜索功能，问题是搜索功能往往是巨大的资源消耗并且它们由于沉重的数据库加载而拖垮你的应用的性能。</p>
+<p>这就是为什么转移负载到一个外部的搜索服务器是一个不错的主意，Apache Solr是一个流行的开源搜索服务器，它通过使用类似REST的HTTP API，这就确保你能从几乎任何编程语言来使用solr。</p>
+<p>Solr是一个开源搜索平台，用于构建搜索应用程序。 它建立在Lucene(全文搜索引擎)之上。 Solr是企业级的，快速的和高度可扩展的。 使用Solr构建的应用程序非常复杂，可提供高性能。</p>
+<p>为了在CNET网络的公司网站上添加搜索功能，Yonik Seely于2004年创建了Solr。并在2006年1月，它成为Apache软件基金会下的一个开源项目。并于2016年发布最新版本Solr 6.0，支持并行SQL查询的执行。</p>
+<p>Solr可以和Hadoop一起使用。由于Hadoop处理大量数据，Solr帮助我们从这么大的源中找到所需的信息。不仅限于搜索，Solr也可以用于存储目的。像其他NoSQL数据库一样，它是一种非关系数据存储和处理技术。</p>
+<p>总之，Solr是一个可扩展的，可部署，搜索/存储引擎，优化搜索大量以文本为中心的数据。</p>
+</blockquote>
+<h2 id="solr安装">solr安装</h2>
+<h3 id="1-上传文件">1 上传文件</h3>
+<pre><code class="language-powershell">apache-tomcat-7.0.82.tar.gz
+solr-4.10.3.tgz.tgz
+IK Analyzer 2012FF_hf1
+</code></pre>
+<h3 id="2-创建目录">2 创建目录</h3>
+<pre><code class="language-powershell">mkdir /usr/soft/solr
+</code></pre>
+<h3 id="3-解压tomcat并移动到solr目录">3 解压tomcat并移动到solr目录</h3>
+<pre><code class="language-powershell">tar -zxvf apache-tomcat-7.0.82.tar.gz
+mv apache-tomcat-7.0.82 /usr/soft/solr/tomcat7
+tar -zxvf solr-4.10.3.tgz.tgz
+</code></pre>
+<p>在solr-4.10.3/dist目录下有一个war包 需要把war包移动到tomcat里运行</p>
+<pre><code class="language-powershell">cp ~/solr-4.10.3/dist/solr-4.10.3.war /usr/soft/solr/tomcat7/webapps/solr.war
+</code></pre>
+<h3 id="4-启动tomcat">4 启动tomcat</h3>
+<pre><code class="language-powershell">cd /usr/soft/solr/tomcat7
+./bin/startup.sh
+</code></pre>
+<p>查看tomcat日志(可选)</p>
+<pre><code class="language-powershell">tail -f logs/catalina.out
+</code></pre>
+<h3 id="5-引入依赖jar包">5 引入依赖jar包</h3>
+<pre><code class="language-powershell">cd ~/solr-4.10.3/example/lib/ext
+cp * /usr/soft/solr/tomcat7/webapps/solr/WEB-INF/lib
+</code></pre>
+<h3 id="6-复制配置文件">6 复制配置文件</h3>
+<pre><code class="language-powershell">cd ~/solr-4.10.3/example
+cp -r solr /usr/soft/solr/solrhome
+</code></pre>
+<h3 id="7-solr和solrhome建立联系">7 solr和solrhome建立联系</h3>
+<pre><code class="language-powershell">cd /usr/soft/solr/tomcat7/webapps/solr/WEB-INF
+vi web.xml
+/usr/soft/solr/solrhome
+&lt;env-entry&gt;
+	&lt;env-entry-name&gt;solr/home&lt;/env-entry-name&gt;
+    &lt;!-- 这里设置为自己的solrhome路径 --&gt;
+    &lt;env-entry-value&gt;/usr/soft/solr/solrhome&lt;/env-entry-value&gt;
+    &lt;env-entry-type&gt;java.lang.String&lt;/env-entry-type&gt;
+&lt;/env-entry&gt;
+:wq
+</code></pre>
+<h3 id="8-重启-tomcat">8 重启 tomcat</h3>
+<pre><code class="language-powershell">cd /usr/soft/solr/tomcat7/bin
+./shutdown.sh
+./startup.sh
+</code></pre>
+<h3 id="9-访问solr">9 访问solr</h3>
+<p>http://192.168.25.132:8080/solr/</p>
+<h2 id="配置ik分词器">配置IK分词器</h2>
+<h3 id="ik-analyzer简介">IK Analyzer简介</h3>
+<blockquote>
+<p>IK Analyzer 是一个开源的，基亍 java 语言开发的轻量级的中文分词工具包。从 2006年 12 月推出 1.0 版开始， IKAnalyzer 已经推出了 4 个大版本。最初，它是以开源项目Luence 为应用主体的，结合词典分词和文法分析算法的中文分词组件。从 3.0 版本开始，IK 发展为面向 Java 的公用分词组件，独立亍 Lucene 项目，同时提供了对 Lucene 的默认优化实现。在 2012 版本中，IK 实现了简单的分词歧义排除算法，标志着 IK 分词器从单纯的词典分词向模拟语义分词衍化。</p>
+</blockquote>
+<h3 id="1-将ik分词器jar包移动到solr中">1 将ik分词器jar包移动到solr中</h3>
+<pre><code class="language-powershell">cp ~/IK\ Analyzer\ 2012FF_hf1/IKAnalyzer2012FF_u1.jar /usr/soft/solr/tomcat7/webapps/solr/WEB-INF/lib
+</code></pre>
+<h3 id="2-在solr项目的web-inf-目录创建一个classes目录">2 在solr项目的WEB-INF 目录创建一个classes目录</h3>
+<pre><code class="language-powershell">mkdir /usr/soft/solr/tomcat7/webapps/solr/WEB-INF/classes
+</code></pre>
+<h3 id="3-移动配置文件到classes目录">3 移动配置文件到classes目录</h3>
+<pre><code class="language-powershell">cp IKAnalyzer.cfg.xml ext_stopword.dic mydict.dic /usr/soft/solr/tomcat7/webapps/solr/WEB-INF/classes
+</code></pre>
+<h3 id="4-启用-编辑配置文件">4 启用---编辑配置文件</h3>
+<p>使用npp编辑服务器上的文件</p>
+<p>1 安装npp (略)</p>
+<p>2 安装NppFTP(略)</p>
+<p>3 连接服务器 (虐)</p>
+<p>4 编辑xml文件 : /usr/soft/solr/solrhome/collection1/conf/schema.xml</p>
+<pre><code class="language-xml">&lt;!-- 配置IK分词器 --&gt;
+&lt;fieldType name=&quot;text_ik&quot; class=&quot;solr.TextField&quot;&gt;
+    &lt;analyzer class=&quot;org.wltea.analyzer.lucene.IKAnalyzer&quot;&gt;&lt;/analyzer&gt;
+&lt;/fieldType&gt;
+</code></pre>
+<p>5 重启tomcat</p>
+<pre><code class="language-powershell">cd /usr/soft/solr/tomcat7/bin
+./shutdown.sh
+./startup.sh
+</code></pre>
+<p>6 访问url</p>
+<p>http://192.168.25.132:8080/solr/</p>
+<h2 id="域">域</h2>
+<p>域 : 相当于数据库表的字段</p>
+<pre><code class="language-xml">&lt;!--
+	name : 指定域的名称
+	type : 指定域的类型
+	indexed : 是否索引
+	stored : 是否存储
+	required : 是否必须
+	multiValued : 是否多值
+--&gt;
+&lt;field name=&quot;id&quot; type=&quot;string&quot; indexed=&quot;true&quot; stored=&quot;true&quot; required=&quot;true&quot; multiValued=&quot;false&quot; /&gt; 
+</code></pre>
+
         </div>
         <!-- Share to Twitter, Weibo, Telegram -->
         <div class="flex items-center">
@@ -166,7 +208,37 @@
         </div>
       </div>
       <div class="post-toc-container">
-        
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFsolr">什么是Solr</a></li>
+<li><a href="#solr%E5%AE%89%E8%A3%85">solr安装</a>
+<ul>
+<li><a href="#1-%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6">1 上传文件</a></li>
+<li><a href="#2-%E5%88%9B%E5%BB%BA%E7%9B%AE%E5%BD%95">2 创建目录</a></li>
+<li><a href="#3-%E8%A7%A3%E5%8E%8Btomcat%E5%B9%B6%E7%A7%BB%E5%8A%A8%E5%88%B0solr%E7%9B%AE%E5%BD%95">3 解压tomcat并移动到solr目录</a></li>
+<li><a href="#4-%E5%90%AF%E5%8A%A8tomcat">4 启动tomcat</a></li>
+<li><a href="#5-%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96jar%E5%8C%85">5 引入依赖jar包</a></li>
+<li><a href="#6-%E5%A4%8D%E5%88%B6%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">6 复制配置文件</a></li>
+<li><a href="#7-solr%E5%92%8Csolrhome%E5%BB%BA%E7%AB%8B%E8%81%94%E7%B3%BB">7 solr和solrhome建立联系</a></li>
+<li><a href="#8-%E9%87%8D%E5%90%AF-tomcat">8 重启 tomcat</a></li>
+<li><a href="#9-%E8%AE%BF%E9%97%AEsolr">9 访问solr</a></li>
+</ul>
+</li>
+<li><a href="#%E9%85%8D%E7%BD%AEik%E5%88%86%E8%AF%8D%E5%99%A8">配置IK分词器</a>
+<ul>
+<li><a href="#ik-analyzer%E7%AE%80%E4%BB%8B">IK Analyzer简介</a></li>
+<li><a href="#1-%E5%B0%86ik%E5%88%86%E8%AF%8D%E5%99%A8jar%E5%8C%85%E7%A7%BB%E5%8A%A8%E5%88%B0solr%E4%B8%AD">1 将ik分词器jar包移动到solr中</a></li>
+<li><a href="#2-%E5%9C%A8solr%E9%A1%B9%E7%9B%AE%E7%9A%84web-inf-%E7%9B%AE%E5%BD%95%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAclasses%E7%9B%AE%E5%BD%95">2 在solr项目的WEB-INF 目录创建一个classes目录</a></li>
+<li><a href="#3-%E7%A7%BB%E5%8A%A8%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%88%B0classes%E7%9B%AE%E5%BD%95">3 移动配置文件到classes目录</a></li>
+<li><a href="#4-%E5%90%AF%E7%94%A8-%E7%BC%96%E8%BE%91%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">4 启用---编辑配置文件</a></li>
+</ul>
+</li>
+<li><a href="#%E5%9F%9F">域</a></li>
+</ul>
+</li>
+</ul>
+
       </div>
     </div>
 

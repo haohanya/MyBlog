@@ -1,0 +1,663 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Spring Cloud Alibaba Nacos - 浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Spring Cloud Alibaba Nacos - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+
+    
+
+  <meta name="description" content="什么是Nacos
+Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。
+Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos..." />
+  <meta property="og:title" content="Spring Cloud Alibaba Nacos - 浩瀚">
+  <meta property="og:description" content="什么是Nacos
+Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。
+Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="http://mvvm.io/spring-cloud-alibaba-nacos/" />
+  <meta property="og:image" content="http://mvvm.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="Spring Cloud Alibaba Nacos - 浩瀚">
+  <meta name="twitter:description" content="什么是Nacos
+Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。
+Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="http://mvvm.io/spring-cloud-alibaba-nacos/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="http://mvvm.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="http://mvvm.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      浩瀚
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          Spring Cloud Alibaba Nacos
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-10-05 · 10 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h2 id="什么是nacos">什么是Nacos</h2>
+<p>Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。<br>
+Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos 是构建以“服务”为中心的现代应用架构 (例如微服务范式、云原生范式) 的服务基础设施。<br>
+简单来说，Nacos给我们提供了服务的注册与发现、配置中心、服务总线等，Nacos一个组件相当于Eureka、Config、Bus三个组件</p>
+<h2 id="nacos安装">Nacos安装</h2>
+<h3 id="版本选择">版本选择</h3>
+<p>进入https://github.com/alibaba/nacos/releases后选择相应的版本后下载。</p>
+<p>这里我采用的是1.3.1的Windows版本</p>
+<h3 id="修改配置">修改配置</h3>
+<h4 id="1-打开confapplicationproperties文件">1、打开conf/application.properties文件</h4>
+<p>将33-41行配置修改为自己的数据库配置</p>
+<pre><code class="language-properties">spring.datasource.platform=mysql
+### Count of DB:
+db.num=1
+### Connect URL of DB:
+db.url.0=jdbc:mysql://127.0.0.1:3306/nacos?characterEncoding=utf8&amp;connectTimeout=1000&amp;socketTimeout=3000&amp;autoReconnect=true&amp;useUnicode=true&amp;useSSL=false&amp;serverTimezone=UTC
+db.user=root
+db.password=root
+</code></pre>
+<h4 id="2-导入sql">2、导入SQL</h4>
+<p>将conf/nacos-mysql.sql的sql导入到上面配置的nacos数据库中</p>
+<h4 id="3-启动">3、启动</h4>
+<p>配置完成后，进入到bin/startup.cmd，双击运行</p>
+<figure data-type="image" tabindex="1"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201004142515675.png" alt="image-20201004142515675" loading="lazy"></figure>
+<p>出现这个界面，如果没有报错，说明启动成功</p>
+<p>我们访问Console的地址</p>
+<figure data-type="image" tabindex="2"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201004142550364.png" alt="image-20201004142550364" loading="lazy"></figure>
+<p>用户名和密码都是：nacos</p>
+<p>登陆成功后即可看到下图效果</p>
+<figure data-type="image" tabindex="3"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201004142623794.png" alt="image-20201004142623794" loading="lazy"></figure>
+<h2 id="注册服务">注册服务</h2>
+<h3 id="搭建工程">搭建工程</h3>
+<p>**搭建父工程：**spring-cloud</p>
+<p>pom</p>
+<pre><code class="language-xml">&lt;parent&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-parent&lt;/artifactId&gt;
+    &lt;version&gt;2.2.10.RELEASE&lt;/version&gt;
+&lt;/parent&gt;
+&lt;properties&gt;
+    &lt;spring-cloud-alibaba.version&gt;2.2.3.RELEASE&lt;/spring-cloud-alibaba.version&gt;
+    &lt;spring-cloud-gateway.version&gt;2.2.5.RELEASE&lt;/spring-cloud-gateway.version&gt;
+    &lt;spring-cloud-openfeign.version&gt;2.2.5.RELEASE&lt;/spring-cloud-openfeign.version&gt;
+&lt;/properties&gt;
+
+&lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+        &lt;!-- spring cloud alibaba --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-alibaba-dependencies&lt;/artifactId&gt;
+            &lt;version&gt;${spring-cloud-alibaba.version}&lt;/version&gt;
+            &lt;type&gt;pom&lt;/type&gt;
+            &lt;scope&gt;import&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- gateway 服务网关 --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-gateway-dependencies&lt;/artifactId&gt;
+            &lt;version&gt;${spring-cloud-gateway.version}&lt;/version&gt;
+            &lt;type&gt;pom&lt;/type&gt;
+            &lt;scope&gt;import&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;!-- openfeign --&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-cloud-openfeign-dependencies&lt;/artifactId&gt;
+            &lt;version&gt;${spring-cloud-openfeign.version}&lt;/version&gt;
+            &lt;type&gt;pom&lt;/type&gt;
+            &lt;scope&gt;import&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/dependencyManagement&gt;
+</code></pre>
+<p>**搭建provider工程：**spring-cloud-alibaba-nacos-discovery-provider</p>
+<p>pom</p>
+<pre><code class="language-xml">&lt;parent&gt;
+     &lt;artifactId&gt;spring-cloud-alibaba&lt;/artifactId&gt;
+     &lt;groupId&gt;io.mvvm&lt;/groupId&gt;
+     &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+ &lt;/parent&gt;
+ &lt;dependencies&gt;
+     &lt;dependency&gt;
+         &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+         &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+     &lt;/dependency&gt;
+ 
+     &lt;dependency&gt;
+         &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+         &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;/artifactId&gt;
+     &lt;/dependency&gt;
+ &lt;/dependencies&gt;
+</code></pre>
+<p>application.yml</p>
+<pre><code class="language-yml">spring:
+   application:
+     name: spring-cloud-alibaba-nacos-discovery-provider
+   cloud:
+     nacos:
+       discovery:
+         server-addr: 127.0.0.1:8848
+ server:
+   port: 8888
+</code></pre>
+<p>NacosDiscoveryProviderApplication.java</p>
+<pre><code class="language-java">package io.mvvm;
+ 
+ import org.springframework.boot.SpringApplication;
+ import org.springframework.boot.autoconfigure.SpringBootApplication;
+ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+ import org.springframework.web.bind.annotation.GetMapping;
+ import org.springframework.web.bind.annotation.PathVariable;
+ import org.springframework.web.bind.annotation.RestController;
+ 
+ @SpringBootApplication
+ @EnableDiscoveryClient  //开启服务注册与发现
+ public class NacosDiscoveryProviderApplication {
+     public static void main(String[] args) {
+         SpringApplication.run(NacosDiscoveryProviderApplication.class, args);
+     }
+ }
+</code></pre>
+<h3 id="测试启动">测试启动</h3>
+<p>启动后，我们查看Nacos中的服务列表</p>
+<figure data-type="image" tabindex="4"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201004152830644.png" alt="image-20201004152830644" loading="lazy"></figure>
+<h2 id="服务消费者">服务消费者</h2>
+<p>**搭建工程：**spring-cloud-alibaba-nacos-discovery-consumer</p>
+<p>pom</p>
+<pre><code class="language-xml">&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;!-- openfeign --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-cloud-starter-openfeign&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</code></pre>
+<p>application.yml</p>
+<pre><code class="language-yml">spring:
+  application:
+    name: spring-cloud-alibaba-nacos-discovery-consumer
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+server:
+  port: 8899
+</code></pre>
+<p>NacosDiscoveryConsumerApplication.java</p>
+<pre><code class="language-java">package io.mvvm;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+
+@SpringBootApplication
+@EnableDiscoveryClient  //开启服务注册与发现
+@EnableFeignClients     // 开启OpenFeign
+public class NacosDiscoveryConsumerApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(NacosDiscoveryConsumerApplication.class, args);
+    }
+}
+</code></pre>
+<p>ConsumerClient.java</p>
+<p>这里我们调用上面写的服务提供者的echo接口</p>
+<p>@FeignClient中的value填入${spring.application.name}即可，openfeign底层采用了ribbon做负载均衡</p>
+<pre><code class="language-java">package io.mvvm.client;
+
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
+@FeignClient(&quot;spring-cloud-alibaba-nacos-discovery-provider&quot;)
+public interface ConsumerClient {
+
+    @GetMapping(&quot;/echo/{string}&quot;)
+    String echo(@PathVariable String string);
+
+}
+</code></pre>
+<p>ConsumerController.java</p>
+<pre><code class="language-java">package io.mvvm.controller;
+
+import io.mvvm.client.ConsumerClient;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
+
+@RestController
+public class ConsumerController {
+
+    @Resource
+    private ConsumerClient consumerClient;
+
+    @GetMapping(&quot;/get/{str}&quot;)
+    public String echo(@PathVariable(&quot;str&quot;) String string){
+        return consumerClient.echo(string);
+    }
+
+}
+</code></pre>
+<p>测试</p>
+<p>访问localhost:8899/get/123</p>
+<h2 id="配置中心">配置中心</h2>
+<h3 id="搭建工程-2">搭建工程</h3>
+<p>**在父工程下搭建子工程：**spring-cloud-alibaba-nacos-config</p>
+<p>pom</p>
+<pre><code class="language-xml">&lt;dependencies&gt;
+     &lt;dependency&gt;
+         &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+         &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+     &lt;/dependency&gt;
+ 
+     &lt;!-- 服务注册 --&gt;
+     &lt;dependency&gt;
+         &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+         &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-discovery&lt;/artifactId&gt;
+     &lt;/dependency&gt;
+ 
+     &lt;!-- 配置中心 --&gt;
+     &lt;dependency&gt;
+         &lt;groupId&gt;com.alibaba.cloud&lt;/groupId&gt;
+         &lt;artifactId&gt;spring-cloud-starter-alibaba-nacos-config&lt;/artifactId&gt;
+     &lt;/dependency&gt;
+ &lt;/dependencies&gt;
+</code></pre>
+<p>bootstrap.yml</p>
+<pre><code class="language-yml"> server:
+   port: 9999
+ spring:
+   application:
+     name: spring-cloud-alibaba-nacos-config
+   profiles:
+     active: dev
+   cloud:
+     nacos:
+       config:
+         server-addr: 127.0.0.1:8848
+         file-extension: yaml
+# 配置中心文件名称拼接方式  # ${prefix}-${spring.profiles.active}.${file-extension}
+</code></pre>
+<p>NacosConfigApplication.java</p>
+<pre><code class="language-java">package io.mvvm;
+ 
+ import org.springframework.beans.factory.annotation.Value;
+ import org.springframework.boot.SpringApplication;
+ import org.springframework.boot.autoconfigure.SpringBootApplication;
+ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+ import org.springframework.cloud.context.config.annotation.RefreshScope;
+ import org.springframework.web.bind.annotation.RequestMapping;
+ import org.springframework.web.bind.annotation.RestController;
+ 
+ @SpringBootApplication
+ @EnableDiscoveryClient  //开启服务注册与发现
+ public class NacosConfigApplication {
+     public static void main(String[] args) {
+         SpringApplication.run(NacosConfigApplication.class, args);
+     }
+ 
+     @RestController
+     @RefreshScope       // 动态刷新配置信息
+     class ConfigController {
+         @Value(&quot;${config.version}&quot;)
+         private String configVersion;
+ 
+         @RequestMapping(&quot;/get&quot;)
+         public String get() {
+             return configVersion;
+         }
+     }
+ }
+</code></pre>
+<h3 id="添加配置">添加配置</h3>
+<p>访问Nacos面板，进入到：<code>配置管理-&gt;配置列表-&gt;+</code></p>
+<figure data-type="image" tabindex="5"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201004153509856.png" alt="image-20201004153509856" loading="lazy"></figure>
+<p>其中Data ID一般为<code>${prefix}-${spring.profiles.active}.${file-extension}</code></p>
+<p>后缀的yaml不要简写成yml，刚刚测试出错。</p>
+<p>配置格式一般根据${file-extension}决定</p>
+<p>设置完毕后点击发布即可</p>
+<h3 id="测试">测试</h3>
+<p>启动工程</p>
+<p>访问url（忽略数据不一样，这是之前测试的图）</p>
+<figure data-type="image" tabindex="6"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201004153737381.png" alt="image-20201004153737381" loading="lazy"></figure>
+<h3 id="namespace-group">NAMESPACE &amp; GROUP</h3>
+<p>在Nacos中有一个命名空间和分组的概念。</p>
+<p>其中命名空间帮助我们实现了多租户的隔离作用</p>
+<p>这里有很多种方案</p>
+<p>命名空间以不同的环境进行管理，而分组以项目区分管理，</p>
+<p>也可以将命名空间以项目作为管理，分组作为不同环境管理</p>
+<h4 id="添加命名空间">添加命名空间</h4>
+<p>添加一个新在命名空间</p>
+<p>其中ID一般留空即可，Nacos会使用UUID生成</p>
+<p>命名空间名：我这里就以不同环境作为隔离，所以添加一个dev</p>
+<p>描述：一些描述，避免一觉醒来忘记了</p>
+<figure data-type="image" tabindex="7"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201005232259456.png" alt="image-20201005232259456" loading="lazy"></figure>
+<h4 id="添加配置文件">添加配置文件</h4>
+<p>首先要选择上方的dev环境，然后点击加号</p>
+<figure data-type="image" tabindex="8"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201005232457767.png" alt="image-20201005232457767" loading="lazy"></figure>
+<p>这里的Group可以自定义，一般大写。</p>
+<p>其他参考上面写的配置添加Demo</p>
+<h4 id="修改工程配置">修改工程配置</h4>
+<p>namespace：这里是命名空间的ID，可以在命名空间列表中看到</p>
+<p>group：就是刚刚在添加的时候自定义的，填进去就好了</p>
+<pre><code class="language-yml"> server:
+   port: 9999
+ spring:
+   application:
+     name: spring-cloud-alibaba-nacos-config
+   profiles:
+     active: dev
+   cloud:
+     nacos:
+       config:
+         server-addr: 127.0.0.1:8848  # nacos address
+         file-extension: yaml
+         namespace: c686d204-8595-4bcb-acad-fad2693bc5ae
+         group: SPRINGCLOUDALIBABA_GROUP
+ # 以上配置表示：在${namespace}命名空间中找到${group}分组中的${prefix}-${spring.profiles.active}.${file-extension}配置文件
+</code></pre>
+<h4 id="测试-2">测试</h4>
+<p>启动测试。</p>
+<p>Git地址：https://gitee.com/aumu/spring-cloud-alibaba-demo</p>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFnacos">什么是Nacos</a></li>
+<li><a href="#nacos%E5%AE%89%E8%A3%85">Nacos安装</a>
+<ul>
+<li><a href="#%E7%89%88%E6%9C%AC%E9%80%89%E6%8B%A9">版本选择</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E9%85%8D%E7%BD%AE">修改配置</a>
+<ul>
+<li><a href="#1-%E6%89%93%E5%BC%80confapplicationproperties%E6%96%87%E4%BB%B6">1、打开conf/application.properties文件</a></li>
+<li><a href="#2-%E5%AF%BC%E5%85%A5sql">2、导入SQL</a></li>
+<li><a href="#3-%E5%90%AF%E5%8A%A8">3、启动</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E6%B3%A8%E5%86%8C%E6%9C%8D%E5%8A%A1">注册服务</a>
+<ul>
+<li><a href="#%E6%90%AD%E5%BB%BA%E5%B7%A5%E7%A8%8B">搭建工程</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95%E5%90%AF%E5%8A%A8">测试启动</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E6%B6%88%E8%B4%B9%E8%80%85">服务消费者</a></li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83">配置中心</a>
+<ul>
+<li><a href="#%E6%90%AD%E5%BB%BA%E5%B7%A5%E7%A8%8B-2">搭建工程</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E9%85%8D%E7%BD%AE">添加配置</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95">测试</a></li>
+<li><a href="#namespace-group">NAMESPACE &amp; GROUP</a>
+<ul>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4">添加命名空间</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">添加配置文件</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E5%B7%A5%E7%A8%8B%E9%85%8D%E7%BD%AE">修改工程配置</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95-2">测试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="http://mvvm.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>

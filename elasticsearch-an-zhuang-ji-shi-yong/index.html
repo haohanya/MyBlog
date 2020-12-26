@@ -1,0 +1,1069 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>ElasticSearch安装及使用 - 浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="ElasticSearch安装及使用 - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+
+    
+
+  <meta name="description" content="ElasticSearch简介
+什么是ElasticSearch
+Elaticsearch，简称为es， es是一个开源的高扩展的分布式全文检索引擎，它可以近乎实时的存储、检索数据；
+本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数..." />
+  <meta property="og:title" content="ElasticSearch安装及使用 - 浩瀚">
+  <meta property="og:description" content="ElasticSearch简介
+什么是ElasticSearch
+Elaticsearch，简称为es， es是一个开源的高扩展的分布式全文检索引擎，它可以近乎实时的存储、检索数据；
+本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="http://mvvm.io/elasticsearch-an-zhuang-ji-shi-yong/" />
+  <meta property="og:image" content="http://mvvm.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="ElasticSearch安装及使用 - 浩瀚">
+  <meta name="twitter:description" content="ElasticSearch简介
+什么是ElasticSearch
+Elaticsearch，简称为es， es是一个开源的高扩展的分布式全文检索引擎，它可以近乎实时的存储、检索数据；
+本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="http://mvvm.io/elasticsearch-an-zhuang-ji-shi-yong/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="http://mvvm.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="http://mvvm.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      浩瀚
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          ElasticSearch安装及使用
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-07-11 · 26 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h2 id="elasticsearch简介">ElasticSearch简介</h2>
+<h3 id="什么是elasticsearch">什么是ElasticSearch</h3>
+<p><code>Elaticsearch</code>，简称为es， es是一个开源的高扩展的分布式全文检索引擎，它可以近乎实时的存储、检索数据；</p>
+<p>本身扩展性很好，可以扩展到上百台服务器，处理PB级别的数据。es也使用Java开发并使用Lucene作为其核心来实</p>
+<p>现所有索引和搜索的功能，但是它的目的是通过简单的RESTful API来隐藏Lucene的复杂性，从而让全文搜索变得<br>
+简单。</p>
+<h3 id="elasticsearch的使用案例">ElasticSearch的使用案例</h3>
+<ul>
+<li>2013年初，GitHub抛弃了Solr，采取ElasticSearch 来做PB级的搜索。 “GitHub使用ElasticSearch搜索20TB<br>
+的数据，包括13亿文件和1300亿行代码”</li>
+<li>维基百科：启动以elasticsearch为基础的核心搜索架构</li>
+<li>SoundCloud：“SoundCloud使用ElasticSearch为1.8亿用户提供即时而精准的音乐搜索服务”</li>
+<li>百度：百度目前广泛使用ElasticSearch作为文本数据分析，采集百度所有服务器上的各类指标数据及用户自<br>
+定义数据，通过对各种数据进行多维分析展示，辅助定位分析实例异常或业务层面异常。目前覆盖百度内部<br>
+20多个业务线（包括casio、云分析、网盟、预测、文库、直达号、钱包、风控等），单集群最大100台机<br>
+器，200个ES节点，每天导入30TB+数据</li>
+<li>新浪使用ES 分析处理32亿条实时日志</li>
+<li>阿里使用ES 构建挖财自己的日志采集和分析体系</li>
+</ul>
+<h3 id="elasticsearch对比solr">ElasticSearch对比Solr</h3>
+<ul>
+<li>Solr 利用 Zookeeper 进行分布式管理，而 Elasticsearch 自身带有分布式协调管理功能;</li>
+<li>Solr 支持更多格式的数据，而 Elasticsearch 仅支持json文件格式；</li>
+<li>Solr 官方提供的功能更多，而 Elasticsearch 本身更注重于核心功能，高级功能多有第三方插件提供；</li>
+<li>Solr 在传统的搜索应用中表现好于 Elasticsearch，但在处理实时搜索应用时效率明显低于 Elasticsearch</li>
+</ul>
+<h2 id="elasticsearch安装与启动">ElasticSearch安装与启动</h2>
+<h3 id="下载es压缩包">下载ES压缩包</h3>
+<p>ElasticSearch分为Linux和Window版本，基于我们主要学习的是ElasticSearch的Java客户端的使用，所以我们课<br>
+程中使用的是安装较为简便的Window版本，项目上线后，公司的运维人员会安装Linux版的ES供我们连接使用。<br>
+ElasticSearch的官方地址： https://www.elastic.co/products/elasticsearch</p>
+<h3 id="安装es服务">安装ES服务</h3>
+<p>Window版的ElasticSearch的安装很简单，类似Window版的Tomcat，解压开即安装完毕，解压后的ElasticSearch<br>
+的目录结构如下：</p>
+<pre><code class="language-powershell">bin --------- 可执行二进制文件
+config ------ 配置信息
+lib --------- jar包存放目录
+logs -------- 日志存放目录
+modules ----- 模块存放目录
+plugins ----- 插件安装目录
+</code></pre>
+<p>修改elasticsearch配置文件：config/elasticsearch.yml，增加以下两句命令：</p>
+<pre><code class="language-yml">http.cors.enabled: true
+http.cors.allow‐origin: &quot;*&quot;
+</code></pre>
+<blockquote>
+<p>此步为允许elasticsearch跨越访问，如果不安装后面的elasticsearch-head是可以不修改，直接启动。</p>
+</blockquote>
+<h3 id="启动es服务">启动ES服务</h3>
+<p>点击ElasticSearch下的bin目录下的elasticsearch.bat启动</p>
+<blockquote>
+<p>注意：9300是tcp通讯端口，集群间和TCPClient都执行该端口，9200是http协议的RESTful接口 。<br>
+通过浏览器访问ElasticSearch服务器，返回es版本信息的json即为成功</p>
+</blockquote>
+<blockquote>
+<p>注意：ElasticSearch是使用java开发的，且本版本的es需要的jdk版本要是1.8以上，所以安装ElasticSearch之前保<br>
+证JDK1.8+安装完毕，并正确的配置好JDK环境变量，否则启动ElasticSearch失败。</p>
+</blockquote>
+<h3 id="安装es的图形化界面插件">安装ES的图形化界面插件</h3>
+<p>ElasticSearch不同于Solr自带图形化界面，我们可以通过安装ElasticSearch的head插件，完成图形化界面的效<br>
+果，完成索引数据的查看。安装插件的方式有两种，在线安装和本地安装。本文档采用本地安装方式进行head插<br>
+件的安装。elasticsearch-5-*以上版本安装head需要安装node和grunt</p>
+<ol>
+<li>下载head插件：https://github.com/mobz/elasticsearch-head</li>
+<li>将elasticsearch-head-master压缩包解压到任意目录，但是要和elasticsearch的安装目录区别开</li>
+<li>下载nodejs：https://nodejs.org/en/download/</li>
+<li>将grunt安装为全局命令 ，Grunt是基于Node.js的项目构建工具npm install ‐g grunt ‐cli</li>
+<li>进入elasticsearch-head-master目录启动head，在命令提示符下输入命令npm installgrunt server</li>
+<li>打开浏览器，输入 http://localhost:9100</li>
+</ol>
+<h2 id="elasticsearch相关概念">ElasticSearch相关概念</h2>
+<h3 id="概述">概述</h3>
+<p>Elasticsearch是面向文档(document oriented)的，这意味着它可以存储整个对象或文档(document)。然而它不仅<br>
+仅是存储，还会索引(index)每个文档的内容使之可以被搜索。在Elasticsearch中，你可以对文档（而非成行成列的<br>
+数据）进行索引、搜索、排序、过滤。Elasticsearch比传统关系型数据库如下：</p>
+<blockquote>
+<p>Relational DB ‐&gt; Databases ‐&gt; Tables ‐&gt; Rows ‐&gt; Columns<br>
+Elasticsearch ‐&gt; Indices ‐&gt; Types ‐&gt; Documents ‐&gt; Fields</p>
+</blockquote>
+<h3 id="elasticsearch核心概念">Elasticsearch核心概念</h3>
+<h4 id="索引-index">索引 index</h4>
+<p>一个索引就是一个拥有几分相似特征的文档的集合。比如说，你可以有一个客户数据的索引，另一个产品目录的索<br>
+引，还有一个订单数据的索引。一个索引由一个名字来标识（必须全部是小写字母的），并且当我们要对对应于这<br>
+个索引中的文档进行索引、搜索、更新和删除的时候，都要使用到这个名字。在一个集群中，可以定义任意多的索<br>
+引</p>
+<h4 id="类型-type">类型 type</h4>
+<p>在一个索引中，你可以定义一种或多种类型。一个类型是你的索引的一个逻辑上的分类/分区，其语义完全由你来<br>
+定。通常，会为具有一组共同字段的文档定义一个类型。比如说，我们假设你运营一个博客平台并且将你所有的数<br>
+据存储到一个索引中。在这个索引中，你可以为用户数据定义一个类型，为博客数据定义另一个类型，当然，也可<br>
+以为评论数据定义另一个类型。</p>
+<h4 id="字段field">字段Field</h4>
+<p>相当于是数据表的字段，对文档数据根据不同属性进行的分类标识</p>
+<h4 id="映射-mapping">映射 mapping</h4>
+<p>mapping是处理数据的方式和规则方面做一些限制，如某个字段的数据类型、默认值、分析器、是否被索引等等，<br>
+这些都是映射里面可以设置的，其它就是处理es里面数据的一些使用规则设置也叫做映射，按着最优规则处理数据<br>
+对性能提高很大，因此才需要建立映射，并且需要思考如何建立映射才能对性能更好</p>
+<h4 id="文档-document">文档 document</h4>
+<p>一个文档是一个可被索引的基础信息单元。比如，你可以拥有某一个客户的文档，某一个产品的一个文档，当然，<br>
+也可以拥有某个订单的一个文档。文档以JSON（Javascript Object Notation）格式来表示，而JSON是一个到处存<br>
+在的互联网数据交互格式。</p>
+<p>在一个index/type里面，你可以存储任意多的文档。注意，尽管一个文档，物理上存在于一个索引之中，文档必须<br>
+被索引/赋予一个索引的type。</p>
+<h4 id="接近实时-nrt">接近实时 NRT</h4>
+<p>Elasticsearch是一个接近实时的搜索平台。这意味着，从索引一个文档直到这个文档能够被搜索到有一个轻微的延<br>
+迟（通常是1秒以内）</p>
+<h4 id="集群-cluster">集群 cluster</h4>
+<p>一个集群就是由一个或多个节点组织在一起，它们共同持有整个的数据，并一起提供索引和搜索功能。一个集群由<br>
+一个唯一的名字标识，这个名字默认就是“elasticsearch”。这个名字是重要的，因为一个节点只能通过指定某个集<br>
+群的名字，来加入这个集群</p>
+<h4 id="节点-node">节点 node</h4>
+<p>一个节点是集群中的一个服务器，作为集群的一部分，它存储数据，参与集群的索引和搜索功能。和集群类似，一<br>
+个节点也是由一个名字来标识的，默认情况下，这个名字是一个随机的漫威漫画角色的名字，这个名字会在启动的<br>
+时候赋予节点。这个名字对于管理工作来说挺重要的，因为在这个管理过程中，你会去确定网络中的哪些服务器对<br>
+应于Elasticsearch集群中的哪些节点。</p>
+<p>一个节点可以通过配置集群名称的方式来加入一个指定的集群。默认情况下，每个节点都会被安排加入到一个叫<br>
+做“elasticsearch”的集群中，这意味着，如果你在你的网络中启动了若干个节点，并假定它们能够相互发现彼此，<br>
+它们将会自动地形成并加入到一个叫做“elasticsearch”的集群中。</p>
+<p>在一个集群里，只要你想，可以拥有任意多个节点。而且，如果当前你的网络中没有运行任何Elasticsearch节点，<br>
+这时启动一个节点，会默认创建并加入一个叫做“elasticsearch”的集群</p>
+<h4 id="分片和复制-shardsreplicas">分片和复制 shards&amp;replicas</h4>
+<p>一个索引可以存储超出单个结点硬件限制的大量数据。比如，一个具有10亿文档的索引占据1TB的磁盘空间，而任<br>
+一节点都没有这样大的磁盘空间；或者单个节点处理搜索请求，响应太慢。为了解决这个问题，Elasticsearch提供<br>
+了将索引划分成多份的能力，这些份就叫做分片。当你创建一个索引的时候，你可以指定你想要的分片的数量。每<br>
+个分片本身也是一个功能完善并且独立的“索引”，这个“索引”可以被放置到集群中的任何节点上。分片很重要，主<br>
+要有两方面的原因：</p>
+<p>1）允许你水平分割/扩展你的内容容量。</p>
+<p>2）允许你在分片（潜在地，位于多个节点上）之上</p>
+<p>进行分布式的、并行的操作，进而提高性能/吞吐量。<br>
+至于一个分片怎样分布，它的文档怎样聚合回搜索请求，是完全由Elasticsearch管理的，对于作为用户的你来说，<br>
+这些都是透明的。</p>
+<p>在一个网络/云的环境里，失败随时都可能发生，在某个分片/节点不知怎么的就处于离线状态，或者由于任何原因<br>
+消失了，这种情况下，有一个故障转移机制是非常有用并且是强烈推荐的。为此目的，Elasticsearch允许你创建分<br>
+片的一份或多份拷贝，这些拷贝叫做复制分片，或者直接叫复制。</p>
+<p>复制之所以重要，有两个主要原因： 在分片/节点失败的情况下，提供了高可用性。因为这个原因，注意到复制分<br>
+片从不与原/主要（original/primary）分片置于同一节点上是非常重要的。扩展你的搜索量/吞吐量，因为搜索可以<br>
+在所有的复制上并行运行。总之，每个索引可以被分成多个分片。一个索引也可以被复制0次（意思是没有复制）<br>
+或多次。一旦复制了，每个索引就有了主分片（作为复制源的原来的分片）和复制分片（主分片的拷贝）之别。分<br>
+片和复制的数量可以在索引创建的时候指定。在索引创建之后，你可以在任何时候动态地改变复制的数量，但是你<br>
+事后不能改变分片的数量。</p>
+<p>默认情况下，Elasticsearch中的每个索引被分片5个主分片和1个复制，这意味着，如果你的集群中至少有两个节<br>
+点，你的索引将会有5个主分片和另外5个复制分片（1个完全拷贝），这样的话每个索引总共就有10个分片。</p>
+<h2 id="elasticsearch的客户端操作">ElasticSearch的客户端操作</h2>
+<h3 id="下载postman">下载PostMan</h3>
+<p>Postman官网：https://www.getpostman.com</p>
+<h3 id="使用postman工具进行restful接口访问">使用Postman工具进行Restful接口访问</h3>
+<h4 id="elasticsearch的接口语法">ElasticSearch的接口语法</h4>
+<blockquote>
+<p>curl ‐X<VERB> '<PROTOCOL>😕/<HOST>:<PORT>/<PATH>?&lt;QUERY_STRING&gt;' ‐d '<BODY>'</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VERB</td>
+<td>适当的 HTTP 方法 或 谓词 : GET 、 POST 、 PUT 、 HEAD 或者 DELETE</td>
+</tr>
+<tr>
+<td>PROTOCOL</td>
+<td>http 或者 https （如果你在 Elasticsearch 前面有一个 https 代理）</td>
+</tr>
+<tr>
+<td>HOST</td>
+<td>Elasticsearch 集群中任意节点的主机名，或者用 localhost 代表本地机器上的节点</td>
+</tr>
+<tr>
+<td>PORT</td>
+<td>运行 Elasticsearch HTTP 服务的端口号，默认是 9200</td>
+</tr>
+<tr>
+<td>PATH</td>
+<td>API 的终端路径（例如 _count 将返回集群中文档数量）。Path 可能包含多个组件，例如： _cluster/stats 和 _nodes/stats/jvm</td>
+</tr>
+<tr>
+<td>QUERY_STRING</td>
+<td>任意可选的查询字符串参数 (例如 ?pretty 将格式化地输出 JSON 返回值，使其更容易阅读)</td>
+</tr>
+<tr>
+<td>BODY</td>
+<td>一个 JSON 格式的请求体 (如果请求需要的话)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="创建索引index和映射mapping">创建索引index和映射mapping</h4>
+<pre><code class="language-powershell">PUT   http://127.0.0.1:9200/blog1
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;mappings&quot;: {
+        &quot;article&quot;: {
+            &quot;properties&quot;: {
+                &quot;id&quot;: {
+                 &quot;type&quot;: &quot;long&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;not_analyzed&quot;
+                },
+                &quot;title&quot;: {
+                 &quot;type&quot;: &quot;text&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;analyzed&quot;,
+                    &quot;analyzer&quot;:&quot;standard&quot;
+                },
+                &quot;content&quot;: {
+                 &quot;type&quot;: &quot;text&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;analyzed&quot;,
+                    &quot;analyzer&quot;:&quot;standard&quot;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;acknowledged&quot;: true,
+    &quot;shards_acknowledged&quot;: true,
+    &quot;index&quot;: &quot;blog1&quot;
+}
+</code></pre>
+<h4 id="创建索引后设置mapping">创建索引后设置Mapping</h4>
+<blockquote>
+<p>可以在创建索引时设置mapping信息，当然也可以先创建索引然后再设置mapping。<br>
+在上一个步骤中不设置maping信息，直接使用put方法创建一个索引，然后设置mapping信息。</p>
+</blockquote>
+<pre><code>post  http://127.0.0.1:9200/blog2/hello/_mapping 
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;hello&quot;: {
+            &quot;properties&quot;: {
+                &quot;id&quot;:{
+                 &quot;type&quot;:&quot;long&quot;,    
+                 &quot;store&quot;:true    
+                },
+                &quot;title&quot;:{
+                 &quot;type&quot;:&quot;text&quot;,    
+                 &quot;store&quot;:true,    
+                 &quot;index&quot;:true,    
+                 &quot;analyzer&quot;:&quot;standard&quot;    
+                },
+                &quot;content&quot;:{
+                 &quot;type&quot;:&quot;text&quot;,
+                 &quot;store&quot;:true,  
+                 &quot;index&quot;:true,    
+                 &quot;analyzer&quot;:&quot;standard&quot;    
+                }
+            }
+        }
+  }
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;acknowledged&quot;: true
+}
+</code></pre>
+<h4 id="删除索引index">删除索引index</h4>
+<pre><code>delete  http://127.0.0.1:9200/blog1
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;acknowledged&quot;: true
+}
+</code></pre>
+<h4 id="创建文档document">创建文档document</h4>
+<pre><code>post  http://127.0.0.1:9200/blog1/article/1
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+	&quot;id&quot;:1,    
+	&quot;title&quot;:&quot;ElasticSearch是一个基于Lucene的搜索服务器&quot;,    
+	&quot;content&quot;:&quot;它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;_index&quot;: &quot;blog1&quot;,
+    &quot;_type&quot;: &quot;article&quot;,
+    &quot;_id&quot;: &quot;1&quot;,
+    &quot;_version&quot;: 1,
+    &quot;result&quot;: &quot;created&quot;,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 2,
+        &quot;successful&quot;: 1,
+        &quot;failed&quot;: 0
+    },
+    &quot;created&quot;: true
+}
+</code></pre>
+<h4 id="修改文档document">修改文档document</h4>
+<pre><code>post  http://127.0.0.1:9200/blog1/article/1 
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+	&quot;id&quot;:1,    
+	&quot;title&quot;:&quot;[修改]ElasticSearch是一个基于Lucene的搜索服务器&quot;,    
+	&quot;content&quot;:&quot;[修改]它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;_index&quot;: &quot;blog1&quot;,
+    &quot;_type&quot;: &quot;article&quot;,
+    &quot;_id&quot;: &quot;1&quot;,
+    &quot;_version&quot;: 2,
+    &quot;result&quot;: &quot;updated&quot;,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 2,
+        &quot;successful&quot;: 1,
+        &quot;failed&quot;: 0
+    },
+    &quot;created&quot;: false
+}
+</code></pre>
+<h4 id="删除文档document">删除文档document</h4>
+<pre><code>delete  http://127.0.0.1:9200/blog1/article/1 
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;found&quot;: true,
+    &quot;_index&quot;: &quot;blog1&quot;,
+    &quot;_type&quot;: &quot;article&quot;,
+    &quot;_id&quot;: &quot;1&quot;,
+    &quot;_version&quot;: 3,
+    &quot;result&quot;: &quot;deleted&quot;,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 2,
+        &quot;successful&quot;: 1,
+        &quot;failed&quot;: 0
+    }
+}
+</code></pre>
+<h4 id="查询文档-根据id查询">查询文档-根据id查询</h4>
+<pre><code>get  http://127.0.0.1:9200/blog1/article/1 
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;_index&quot;: &quot;blog1&quot;,
+    &quot;_type&quot;: &quot;article&quot;,
+    &quot;_id&quot;: &quot;1&quot;,
+    &quot;_version&quot;: 1,
+    &quot;found&quot;: true,
+    &quot;_source&quot;: {
+        &quot;id&quot;: 1,
+        &quot;title&quot;: &quot;[修改]ElasticSearch是一个基于Lucene的搜索服务器&quot;,
+        &quot;content&quot;: &quot;[修改]它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+    }
+}
+</code></pre>
+<h4 id="查询文档-querystring查询">查询文档-querystring查询</h4>
+<pre><code>post  http://127.0.0.1:9200/blog1/article/_search
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;query&quot;: {
+        &quot;query_string&quot;: {
+            &quot;default_field&quot;: &quot;title&quot;,
+            &quot;query&quot;: &quot;搜索服务器&quot;
+        }
+    }
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;took&quot;: 24,
+    &quot;timed_out&quot;: false,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 5,
+        &quot;successful&quot;: 5,
+        &quot;skipped&quot;: 0,
+        &quot;failed&quot;: 0
+    },
+    &quot;hits&quot;: {
+        &quot;total&quot;: 1,
+        &quot;max_score&quot;: 1.4002227,
+        &quot;hits&quot;: [
+            {
+                &quot;_index&quot;: &quot;blog1&quot;,
+                &quot;_type&quot;: &quot;article&quot;,
+                &quot;_id&quot;: &quot;1&quot;,
+                &quot;_score&quot;: 1.4002227,
+                &quot;_source&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;title&quot;: &quot;[修改]ElasticSearch是一个基于Lucene的搜索服务器&quot;,
+                    &quot;content&quot;: &quot;[修改]它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+                }
+            }
+        ]
+    }
+}
+</code></pre>
+<blockquote>
+<p>注意：将搜索内容&quot;搜索服务器&quot;修改为&quot;钢索&quot;，同样也能搜索到文档，这是因为ES是歪果仁开发的产品，所以对中文分词不友好，需要使用分词插件（IK分词器）来解决中文分词问题</p>
+</blockquote>
+<h4 id="查询文档-term查询">查询文档-term查询</h4>
+<pre><code>post  http://127.0.0.1:9200/blog1/article/_search
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;query&quot;: {
+        &quot;term&quot;: {
+            &quot;title&quot;: &quot;搜索&quot;
+        }
+    }
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;took&quot;: 1,
+    &quot;timed_out&quot;: false,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 5,
+        &quot;successful&quot;: 5,
+        &quot;skipped&quot;: 0,
+        &quot;failed&quot;: 0
+    },
+    &quot;hits&quot;: {
+        &quot;total&quot;: 0,
+        &quot;max_score&quot;: null,
+        &quot;hits&quot;: []
+    }
+}
+</code></pre>
+<h2 id="elasticsearch集成ik-分词器">ElasticSearch集成IK 分词器</h2>
+<h3 id="上述查询存在问题分析">上述查询存在问题分析</h3>
+<p>在进行字符串查询时，我们发现去搜索&quot;搜索服务器&quot;和&quot;钢索&quot;都可以搜索到数据；</p>
+<p>而在进行词条查询时，我们搜索&quot;搜索&quot;却没有搜索到数据；</p>
+<p>究其原因是ElasticSearch的标准分词器导致的，当我们创建索引时，字段使用的是标准分词器：</p>
+<pre><code class="language-json">&quot;analyzer&quot;:&quot;standard&quot; //标准分词器
+</code></pre>
+<p>例如对 &quot;我是程序员&quot; 进行分词<br>
+标准分词器分词效果测试：</p>
+<pre><code>get  http://127.0.0.1:9200/_analyze?analyzer=standard&amp;pretty=true&amp;text=我是程序员
+</code></pre>
+<p>分词结果</p>
+<pre><code class="language-json">{
+    &quot;tokens&quot;: [
+        {
+            &quot;token&quot;: &quot;我&quot;,
+            &quot;start_offset&quot;: 0,
+            &quot;end_offset&quot;: 1,
+            &quot;type&quot;: &quot;&lt;IDEOGRAPHIC&gt;&quot;,
+            &quot;position&quot;: 0
+        },
+        {
+            &quot;token&quot;: &quot;是&quot;,
+            &quot;start_offset&quot;: 1,
+            &quot;end_offset&quot;: 2,
+            &quot;type&quot;: &quot;&lt;IDEOGRAPHIC&gt;&quot;,
+            &quot;position&quot;: 1
+        },
+        {
+            &quot;token&quot;: &quot;程&quot;,
+            &quot;start_offset&quot;: 2,
+            &quot;end_offset&quot;: 3,
+            &quot;type&quot;: &quot;&lt;IDEOGRAPHIC&gt;&quot;,
+            &quot;position&quot;: 2
+        },
+        {
+            &quot;token&quot;: &quot;序&quot;,
+            &quot;start_offset&quot;: 3,
+            &quot;end_offset&quot;: 4,
+            &quot;type&quot;: &quot;&lt;IDEOGRAPHIC&gt;&quot;,
+            &quot;position&quot;: 3
+        },
+        {
+            &quot;token&quot;: &quot;员&quot;,
+            &quot;start_offset&quot;: 4,
+            &quot;end_offset&quot;: 5,
+            &quot;type&quot;: &quot;&lt;IDEOGRAPHIC&gt;&quot;,
+            &quot;position&quot;: 4
+        }
+    ]
+}
+</code></pre>
+<p>而我们需要的分词效果是：我、是、程序、程序员</p>
+<p>这样的话就需要对中文支持良好的分析器的支持，支持中文分词的分词器有很多，word分词器、庖丁解牛、盘古<br>
+分词、Ansj分词等，但我们常用的还是下面要介绍的IK分词器。</p>
+<h3 id="ik分词器简介">IK分词器简介</h3>
+<p>IKAnalyzer是一个开源的，基于java语言开发的轻量级的中文分词工具包。</p>
+<p>从2006年12月推出1.0版开始，IKAnalyzer已经推出 了3个大版本。最初，它是以开源项目Lucene为应用主体的，结合词典分词和文法分析算法的中文分词组件。</p>
+<p>新版本的IKAnalyzer3.0则发展为 面向Java的公用分词组件，独立于Lucene项目，同时提供了对Lucene的默认优化实现。</p>
+<p>IK分词器3.0的特性如下：</p>
+<ol>
+<li>采用了特有的“正向迭代最细粒度切分算法“，具有60万字/秒的高速处理能力。</li>
+<li>采用了多子处理器分析模式，支持：英文字母（IP地址、Email、URL）、数字（日期，常用中文数量词，罗马数字，科学计数法），中文词汇（姓名、地名处理）等分词处理。</li>
+<li>对中英联合支持不是很好,在这方面的处理比较麻烦.需再做一次查询,同<br>
+时是支持个人词条的优化的词典存储，更小的内存占用。</li>
+<li>支持用户词典扩展定义。</li>
+<li>针对Lucene全文检索优化的查询分析器IKQueryParser；采用歧义分析算法优化查询关键字的搜索排列组合，能极大的提高Lucene检索的命中率。</li>
+</ol>
+<h3 id="elasticsearch集成ik分词器">ElasticSearch集成IK分词器</h3>
+<h4 id="ik分词器的安装">IK分词器的安装</h4>
+<p>1、下载地址：https://github.com/medcl/elasticsearch-analysis-ik/releases</p>
+<p>2、解压，将解压后的elasticsearch文件夹拷贝到elasticsearch-5.6.8\plugins下，并重命名文件夹为analysis-ik</p>
+<p>3、重新启动ElasticSearch，即可加载IK分词器</p>
+<h4 id="ik分词器测试">IK分词器测试</h4>
+<p>IK提供了两个分词算法ik_smart 和 ik_max_word</p>
+<p>其中 ik_smart 为最少切分，ik_max_word为最细粒度划分</p>
+<h5 id="1-最小切分">1、最小切分</h5>
+<pre><code>get  http://127.0.0.1:9200/_analyze?analyzer=ik_smart&amp;pretty=true&amp;text=我是程序员
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;tokens&quot;: [
+        {
+            &quot;token&quot;: &quot;我&quot;,
+            &quot;start_offset&quot;: 0,
+            &quot;end_offset&quot;: 1,
+            &quot;type&quot;: &quot;CN_CHAR&quot;,
+            &quot;position&quot;: 0
+        },
+        {
+            &quot;token&quot;: &quot;是&quot;,
+            &quot;start_offset&quot;: 1,
+            &quot;end_offset&quot;: 2,
+            &quot;type&quot;: &quot;CN_CHAR&quot;,
+            &quot;position&quot;: 1
+        },
+        {
+            &quot;token&quot;: &quot;程序员&quot;,
+            &quot;start_offset&quot;: 2,
+            &quot;end_offset&quot;: 5,
+            &quot;type&quot;: &quot;CN_WORD&quot;,
+            &quot;position&quot;: 2
+        }
+    ]
+}
+</code></pre>
+<h5 id="2-最细切分">2、最细切分</h5>
+<pre><code>get  http://127.0.0.1:9200/_analyze?analyzer=ik_max_word&amp;pretty=true&amp;text=我是程序员
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;tokens&quot;: [
+        {
+            &quot;token&quot;: &quot;我&quot;,
+            &quot;start_offset&quot;: 0,
+            &quot;end_offset&quot;: 1,
+            &quot;type&quot;: &quot;CN_CHAR&quot;,
+            &quot;position&quot;: 0
+        },
+        {
+            &quot;token&quot;: &quot;是&quot;,
+            &quot;start_offset&quot;: 1,
+            &quot;end_offset&quot;: 2,
+            &quot;type&quot;: &quot;CN_CHAR&quot;,
+            &quot;position&quot;: 1
+        },
+        {
+            &quot;token&quot;: &quot;程序员&quot;,
+            &quot;start_offset&quot;: 2,
+            &quot;end_offset&quot;: 5,
+            &quot;type&quot;: &quot;CN_WORD&quot;,
+            &quot;position&quot;: 2
+        },
+        {
+            &quot;token&quot;: &quot;程序&quot;,
+            &quot;start_offset&quot;: 2,
+            &quot;end_offset&quot;: 4,
+            &quot;type&quot;: &quot;CN_WORD&quot;,
+            &quot;position&quot;: 3
+        },
+        {
+            &quot;token&quot;: &quot;员&quot;,
+            &quot;start_offset&quot;: 4,
+            &quot;end_offset&quot;: 5,
+            &quot;type&quot;: &quot;CN_CHAR&quot;,
+            &quot;position&quot;: 4
+        }
+    ]
+}
+</code></pre>
+<h3 id="修改索引映射mapping">修改索引映射mapping</h3>
+<h4 id="重建索引">重建索引</h4>
+<p>删除原有blog1索引</p>
+<pre><code>delete  http://127.0.0.1:9200/blog1
+</code></pre>
+<p>创建blog1索引，此时分词器使用ik_max_word</p>
+<pre><code>put  http://127.0.0.1:9200/blog1
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;mappings&quot;: {
+        &quot;article&quot;: {
+            &quot;properties&quot;: {
+                &quot;id&quot;: {
+                 &quot;type&quot;: &quot;long&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;not_analyzed&quot;
+                },
+                &quot;title&quot;: {
+                 &quot;type&quot;: &quot;text&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;analyzed&quot;,
+                    &quot;analyzer&quot;:&quot;ik_max_word&quot;
+                },
+                &quot;content&quot;: {
+                 &quot;type&quot;: &quot;text&quot;,    
+                    &quot;store&quot;: true,
+                    &quot;index&quot;:&quot;analyzed&quot;,
+                    &quot;analyzer&quot;:&quot;ik_max_word&quot;
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<h4 id="创建文档">创建文档</h4>
+<pre><code>post http://127.0.0.1:9200/blog1/article/1
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+	&quot;id&quot;:1,    
+	&quot;title&quot;:&quot;ElasticSearch是一个基于Lucene的搜索服务器&quot;,    
+	&quot;content&quot;:&quot;它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+}
+</code></pre>
+<h4 id="测试querystring查询">测试queryString查询</h4>
+<pre><code>post http://127.0.0.1:9200/blog1/article/_search
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;took&quot;: 101,
+    &quot;timed_out&quot;: false,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 5,
+        &quot;successful&quot;: 5,
+        &quot;skipped&quot;: 0,
+        &quot;failed&quot;: 0
+    },
+    &quot;hits&quot;: {
+        &quot;total&quot;: 1,
+        &quot;max_score&quot;: 1.012641,
+        &quot;hits&quot;: [
+            {
+                &quot;_index&quot;: &quot;blog1&quot;,
+                &quot;_type&quot;: &quot;article&quot;,
+                &quot;_id&quot;: &quot;1&quot;,
+                &quot;_score&quot;: 1.012641,
+                &quot;_source&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;title&quot;: &quot;ElasticSearch是一个基于Lucene的搜索服务器&quot;,
+                    &quot;content&quot;: &quot;它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+                }
+            }
+        ]
+    }
+}
+</code></pre>
+<blockquote>
+<p>这次再次测试钢索则无法搜索到内容</p>
+</blockquote>
+<h4 id="term测试">term测试</h4>
+<pre><code>post http://127.0.0.1:9200/blog1/article/_search
+</code></pre>
+<p>body</p>
+<pre><code class="language-json">{
+    &quot;query&quot;: {
+        &quot;term&quot;: {
+            &quot;title&quot;: &quot;搜索&quot;
+        }
+    }
+}
+</code></pre>
+<p>response</p>
+<pre><code class="language-json">{
+    &quot;took&quot;: 5,
+    &quot;timed_out&quot;: false,
+    &quot;_shards&quot;: {
+        &quot;total&quot;: 5,
+        &quot;successful&quot;: 5,
+        &quot;skipped&quot;: 0,
+        &quot;failed&quot;: 0
+    },
+    &quot;hits&quot;: {
+        &quot;total&quot;: 1,
+        &quot;max_score&quot;: 0.25316024,
+        &quot;hits&quot;: [
+            {
+                &quot;_index&quot;: &quot;blog1&quot;,
+                &quot;_type&quot;: &quot;article&quot;,
+                &quot;_id&quot;: &quot;1&quot;,
+                &quot;_score&quot;: 0.25316024,
+                &quot;_source&quot;: {
+                    &quot;id&quot;: 1,
+                    &quot;title&quot;: &quot;ElasticSearch是一个基于Lucene的搜索服务器&quot;,
+                    &quot;content&quot;: &quot;它提供了一个分布式多用户能力的全文搜索引擎，基于RESTful web接口。Elasticsearch是用Java开发的，并作为Apache许可条款下的开放源码发布，是当前流行的企业级搜索引擎。设计用于云计算中，能够达到实时搜索，稳定，可靠，快速，安装使用方便。&quot;
+                }
+            }
+        ]
+    }
+}
+</code></pre>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#elasticsearch%E7%AE%80%E4%BB%8B">ElasticSearch简介</a>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFelasticsearch">什么是ElasticSearch</a></li>
+<li><a href="#elasticsearch%E7%9A%84%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B">ElasticSearch的使用案例</a></li>
+<li><a href="#elasticsearch%E5%AF%B9%E6%AF%94solr">ElasticSearch对比Solr</a></li>
+</ul>
+</li>
+<li><a href="#elasticsearch%E5%AE%89%E8%A3%85%E4%B8%8E%E5%90%AF%E5%8A%A8">ElasticSearch安装与启动</a>
+<ul>
+<li><a href="#%E4%B8%8B%E8%BD%BDes%E5%8E%8B%E7%BC%A9%E5%8C%85">下载ES压缩包</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85es%E6%9C%8D%E5%8A%A1">安装ES服务</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8es%E6%9C%8D%E5%8A%A1">启动ES服务</a></li>
+<li><a href="#%E5%AE%89%E8%A3%85es%E7%9A%84%E5%9B%BE%E5%BD%A2%E5%8C%96%E7%95%8C%E9%9D%A2%E6%8F%92%E4%BB%B6">安装ES的图形化界面插件</a></li>
+</ul>
+</li>
+<li><a href="#elasticsearch%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5">ElasticSearch相关概念</a>
+<ul>
+<li><a href="#%E6%A6%82%E8%BF%B0">概述</a></li>
+<li><a href="#elasticsearch%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5">Elasticsearch核心概念</a>
+<ul>
+<li><a href="#%E7%B4%A2%E5%BC%95-index">索引 index</a></li>
+<li><a href="#%E7%B1%BB%E5%9E%8B-type">类型 type</a></li>
+<li><a href="#%E5%AD%97%E6%AE%B5field">字段Field</a></li>
+<li><a href="#%E6%98%A0%E5%B0%84-mapping">映射 mapping</a></li>
+<li><a href="#%E6%96%87%E6%A1%A3-document">文档 document</a></li>
+<li><a href="#%E6%8E%A5%E8%BF%91%E5%AE%9E%E6%97%B6-nrt">接近实时 NRT</a></li>
+<li><a href="#%E9%9B%86%E7%BE%A4-cluster">集群 cluster</a></li>
+<li><a href="#%E8%8A%82%E7%82%B9-node">节点 node</a></li>
+<li><a href="#%E5%88%86%E7%89%87%E5%92%8C%E5%A4%8D%E5%88%B6-shardsreplicas">分片和复制 shards&amp;replicas</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#elasticsearch%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%93%8D%E4%BD%9C">ElasticSearch的客户端操作</a>
+<ul>
+<li><a href="#%E4%B8%8B%E8%BD%BDpostman">下载PostMan</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8postman%E5%B7%A5%E5%85%B7%E8%BF%9B%E8%A1%8Crestful%E6%8E%A5%E5%8F%A3%E8%AE%BF%E9%97%AE">使用Postman工具进行Restful接口访问</a>
+<ul>
+<li><a href="#elasticsearch%E7%9A%84%E6%8E%A5%E5%8F%A3%E8%AF%AD%E6%B3%95">ElasticSearch的接口语法</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95index%E5%92%8C%E6%98%A0%E5%B0%84mapping">创建索引index和映射mapping</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E7%B4%A2%E5%BC%95%E5%90%8E%E8%AE%BE%E7%BD%AEmapping">创建索引后设置Mapping</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E7%B4%A2%E5%BC%95index">删除索引index</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E6%96%87%E6%A1%A3document">创建文档document</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E6%96%87%E6%A1%A3document">修改文档document</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E6%96%87%E6%A1%A3document">删除文档document</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E6%96%87%E6%A1%A3-%E6%A0%B9%E6%8D%AEid%E6%9F%A5%E8%AF%A2">查询文档-根据id查询</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E6%96%87%E6%A1%A3-querystring%E6%9F%A5%E8%AF%A2">查询文档-querystring查询</a></li>
+<li><a href="#%E6%9F%A5%E8%AF%A2%E6%96%87%E6%A1%A3-term%E6%9F%A5%E8%AF%A2">查询文档-term查询</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#elasticsearch%E9%9B%86%E6%88%90ik-%E5%88%86%E8%AF%8D%E5%99%A8">ElasticSearch集成IK 分词器</a>
+<ul>
+<li><a href="#%E4%B8%8A%E8%BF%B0%E6%9F%A5%E8%AF%A2%E5%AD%98%E5%9C%A8%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90">上述查询存在问题分析</a></li>
+<li><a href="#ik%E5%88%86%E8%AF%8D%E5%99%A8%E7%AE%80%E4%BB%8B">IK分词器简介</a></li>
+<li><a href="#elasticsearch%E9%9B%86%E6%88%90ik%E5%88%86%E8%AF%8D%E5%99%A8">ElasticSearch集成IK分词器</a>
+<ul>
+<li><a href="#ik%E5%88%86%E8%AF%8D%E5%99%A8%E7%9A%84%E5%AE%89%E8%A3%85">IK分词器的安装</a></li>
+<li><a href="#ik%E5%88%86%E8%AF%8D%E5%99%A8%E6%B5%8B%E8%AF%95">IK分词器测试</a>
+<ul>
+<li><a href="#1-%E6%9C%80%E5%B0%8F%E5%88%87%E5%88%86">1、最小切分</a></li>
+<li><a href="#2-%E6%9C%80%E7%BB%86%E5%88%87%E5%88%86">2、最细切分</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E4%BF%AE%E6%94%B9%E7%B4%A2%E5%BC%95%E6%98%A0%E5%B0%84mapping">修改索引映射mapping</a>
+<ul>
+<li><a href="#%E9%87%8D%E5%BB%BA%E7%B4%A2%E5%BC%95">重建索引</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E6%96%87%E6%A1%A3">创建文档</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95querystring%E6%9F%A5%E8%AF%A2">测试queryString查询</a></li>
+<li><a href="#term%E6%B5%8B%E8%AF%95">term测试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="http://mvvm.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>

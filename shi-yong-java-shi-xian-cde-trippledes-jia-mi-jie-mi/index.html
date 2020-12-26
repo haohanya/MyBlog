@@ -4,46 +4,40 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>友人 - 浩瀚</title>
+<title>使用Java实现C#的TrippleDES加密解密 - 浩瀚</title>
 <link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
 <link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
 <link rel="stylesheet" href="http://mvvm.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="友人 - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="使用Java实现C#的TrippleDES加密解密 - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
 
     
 
-  <meta name="description" content="
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-o..." />
-  <meta property="og:title" content="友人 - 浩瀚">
-  <meta property="og:description" content="
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-o..." />
+  <meta name="description" content="最近项目中有个需求，需要兼容老项目的数据，但是老项目登陆使用的是C#的TrippleDES加密，这里就需要用java还原出这个加密
+加密流程
+1、密钥通过MD5进行Hash摘要运算
+2、使用Hash值进行DES加密
+3、将最终加密的结果进行..." />
+  <meta property="og:title" content="使用Java实现C#的TrippleDES加密解密 - 浩瀚">
+  <meta property="og:description" content="最近项目中有个需求，需要兼容老项目的数据，但是老项目登陆使用的是C#的TrippleDES加密，这里就需要用java还原出这个加密
+加密流程
+1、密钥通过MD5进行Hash摘要运算
+2、使用Hash值进行DES加密
+3、将最终加密的结果进行..." />
   <meta property="og:type" content="articles">
-  <meta property="og:url" content="http://mvvm.io/links/" />
+  <meta property="og:url" content="http://mvvm.io/shi-yong-java-shi-xian-cde-trippledes-jia-mi-jie-mi/" />
   <meta property="og:image" content="http://mvvm.io/images/avatar.png">
   <meta property="og:image:height" content="630">
   <meta property="og:image:width" content="1200">
-  <meta name="twitter:title" content="友人 - 浩瀚">
-  <meta name="twitter:description" content="
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-o...">
+  <meta name="twitter:title" content="使用Java实现C#的TrippleDES加密解密 - 浩瀚">
+  <meta name="twitter:description" content="最近项目中有个需求，需要兼容老项目的数据，但是老项目登陆使用的是C#的TrippleDES加密，这里就需要用java还原出这个加密
+加密流程
+1、密钥通过MD5进行Hash摘要运算
+2、使用Hash值进行DES加密
+3、将最终加密的结果进行...">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="http://mvvm.io/links/">
+  <link rel="canonical" href="http://mvvm.io/shi-yong-java-shi-xian-cde-trippledes-jia-mi-jie-mi/">
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
@@ -63,68 +57,127 @@
     <div class="max-w-4xl w-full mx-auto">
       <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
         <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
-          友人
+          使用Java实现C#的TrippleDES加密解密
         </h1>
         
         <div class="mb-8 flex flex-wrap">
-          <div class="text-gray-400 text-sm mr-4">2020-12-26 · 1 min read</div>
+          <div class="text-gray-400 text-sm mr-4">2020-12-16 · 4 min read</div>
           
         </div>
         <div class="markdown mb-8" v-pre>
-          <style>
-.link .link-item {
-    display: inline-block;
-    overflow: hidden;
-    width: 32%;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    margin-bottom: 1rem;
+          <p>最近项目中有个需求，需要兼容老项目的数据，但是老项目登陆使用的是C#的TrippleDES加密，这里就需要用java还原出这个加密</p>
+<p><strong>加密流程</strong></p>
+<p>1、密钥通过MD5进行Hash摘要运算</p>
+<p>2、使用Hash值进行DES加密</p>
+<p>3、将最终加密的结果进行Base64编码</p>
+<p><strong>解密流程</strong></p>
+<p>1、密钥通过MD5进行Hash摘要运算</p>
+<p>2、将密文进行Base64解码</p>
+<p>3，进行DES解密</p>
+<p>下面放出C#的伪代码</p>
+<pre><code class="language-c#">static void Main(string[] args)
+{
+    byte[] key = System.Text.Encoding.Default.GetBytes(&quot;AB&quot;);
+    byte[] md5 = getMd5(key);
+
+    byte[] value = System.Text.Encoding.Default.GetBytes(&quot;admin&quot;);
+    byte[] encrypt = Encrypt(value, key);
+
+    string en = Convert.ToBase64String(encrypt);
+    Console.WriteLine(&quot;密文：&quot; + en);
+
+    byte[] de = Convert.FromBase64String(en);
+
+    Console.WriteLine(&quot;明文：&quot; + Encoding.Default.GetString(Decrypt(de, key)));
+    Console.ReadLine();
 }
-</style>
-<section class="link after">
-    <article class="link-item">
-        <a href="http://cnm1.cn/" title="" target="_blank">1梦</a>
-    </article>
-    <article class="link-item">
-        <a href="https://nekodeng.gitee.io" title="十万伏特皮卡丘，梦想是世界和平，想要发光发热" target="_blank">itsNekoDeng</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.kylin.show/" title="" target="_blank">Kylin</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.npmrundev.com/" title="" target="_blank">Mozzie</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.piscme.com/" title="" target="_blank">PiscMe</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.uquq.cn/" title="" target="_blank">UQUQ</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.wuxf.cn/" title="" target="_blank">walkerの小窝</a>
-    </article>
-    <article class="link-item">
-        <a href="https://yremp.live" title="流年，谁给过的倾城" target="_blank">Yremp</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.usuuu.com/" title="" target="_blank">悠悠</a>
-    </article>
-    <article class="link-item">
-        <a href="https://proprogrammar.com/" title="" target="_blank">晴雨</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.200011.net" title="" target="_blank">油油</a>
-    </article>
-    <article class="link-item">
-        <a href="http://susa.club/" title="" target="_blank">苏</a>
-    </article>
-    <article class="link-item">
-        <a href="https://ayayy.cn/" title="" target="_blank">苏三说</a>
-    </article>
-    <article class="link-item">
-        <a href="https://www.mqllin.cn/" title="" target="_blank">雨林笔记</a>
-    </article>
-</section>
+
+
+//创建getMd5方法以获得userPwd的Md5值
+public static byte[] getMd5(byte[] key)
+{
+    MD5CryptoServiceProvider myMd5 = new MD5CryptoServiceProvider();
+    byte[] byteMd5UserPwd = myMd5.ComputeHash(key);
+    return byteMd5UserPwd;
+}
+
+public static byte[] Encrypt(byte[] original, byte[] key)
+{
+    TripleDESCryptoServiceProvider des = new TripleDESCryptoServiceProvider();
+    des.Key = getMd5(key);
+    des.Mode = CipherMode.ECB;
+    return des.CreateEncryptor().TransformFinalBlock(original, 0, original.Length);
+}
+
+public static byte[] Decrypt(byte[] encrypted, byte[] key)
+{
+    TripleDESCryptoServiceProvider des = new TripleDESCryptoServiceProvider();
+
+    des.Key = getMd5(key);
+    des.Mode = CipherMode.ECB;
+
+    return des.CreateDecryptor().TransformFinalBlock(encrypted, 0, encrypted.Length);
+}
+</code></pre>
+<p>因为在Java中实现这个加密算法和C#中有些不同</p>
+<p>在Java中，密钥长度要求24个字节，但是这个密钥仅仅有2个字节，Hash后也才16个字节</p>
+<p>这里就需要通过补位来实现了</p>
+<p>我们可以将Hash值的前8位，补齐到剩余的后8位中，即可实现加解密</p>
+<p>Java伪代码如下：</p>
+<pre><code class="language-java">public static void main(String[] args) throws Exception {
+    // key
+    byte[] makeMd5 = makeMd5(&quot;AB&quot;.getBytes());
+    // content
+    byte[] content = &quot;admin&quot;.getBytes();
+
+    byte[] bytes = makeUpButes(makeMd5);
+
+    byte[] bytes1 = des3EncodeECB(bytes, content);
+    System.out.println(Base64.encodeBase64String(bytes1));
+    System.out.println(new String(ees3DecodeECB(bytes, bytes1)));
+}
+
+public static byte[] makeUpButes(byte[] key) {
+    byte[] bytes = new byte[24];
+
+    for (int i = 0; i &lt; key.length; i++) {
+        bytes[i] = key[i];
+    }
+    for (int i = 0; i &lt; 8; i++) {
+        bytes[key.length + i] = key[i];
+    }
+    return bytes;
+}
+
+public static byte[] makeMd5(byte[] original) throws NoSuchAlgorithmException {
+    // key md5后的值
+    java.security.MessageDigest md = java.security.MessageDigest.getInstance(&quot;MD5&quot;);
+    md.update(original);
+    byte[] digest = md.digest();
+    return digest;
+}
+
+public static byte[] des3EncodeECB(byte[] key, byte[] data)
+        throws Exception {
+    DESedeKeySpec spec = new DESedeKeySpec(key);
+    SecretKeyFactory keyfactory = SecretKeyFactory.getInstance(&quot;desede&quot;);
+    Key deskey = keyfactory.generateSecret(spec);
+    Cipher cipher = Cipher.getInstance(&quot;desede/ECB/PKCS5Padding&quot;);
+    cipher.init(Cipher.ENCRYPT_MODE, deskey);
+    return cipher.doFinal(data);
+}
+
+public static byte[] ees3DecodeECB(byte[] key, byte[] data)
+        throws Exception {
+    DESedeKeySpec spec = new DESedeKeySpec(key);
+    SecretKeyFactory keyfactory = SecretKeyFactory.getInstance(&quot;desede&quot;);
+    Key deskey = keyfactory.generateSecret(spec);
+    Cipher cipher = Cipher.getInstance(&quot;desede&quot; + &quot;/ECB/PKCS5Padding&quot;);
+    cipher.init(Cipher.DECRYPT_MODE, deskey);
+    return cipher.doFinal(data);
+}
+</code></pre>
+
         </div>
         <!-- Share to Twitter, Weibo, Telegram -->
         <div class="flex items-center">

@@ -1,0 +1,599 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Docker - 浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Docker - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+
+    
+
+  <meta name="description" content="安装Docker
+1、使用yum命令在线安装
+yum install docker
+# 遇事不决就选y
+
+2、查看docker版本
+docker -v
+
+3、启动与停止
+
+systemctl 命令是系统服务管理器指令，它是 service ..." />
+  <meta property="og:title" content="Docker - 浩瀚">
+  <meta property="og:description" content="安装Docker
+1、使用yum命令在线安装
+yum install docker
+# 遇事不决就选y
+
+2、查看docker版本
+docker -v
+
+3、启动与停止
+
+systemctl 命令是系统服务管理器指令，它是 service ..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="http://mvvm.io/docker/" />
+  <meta property="og:image" content="http://mvvm.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="Docker - 浩瀚">
+  <meta name="twitter:description" content="安装Docker
+1、使用yum命令在线安装
+yum install docker
+# 遇事不决就选y
+
+2、查看docker版本
+docker -v
+
+3、启动与停止
+
+systemctl 命令是系统服务管理器指令，它是 service ...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="http://mvvm.io/docker/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="http://mvvm.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="http://mvvm.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      浩瀚
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          Docker
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-05-28 · 7 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h1 id="安装docker">安装Docker</h1>
+<h2 id="1-使用yum命令在线安装">1、使用yum命令在线安装</h2>
+<pre><code class="language-powershell">yum install docker
+# 遇事不决就选y
+</code></pre>
+<h2 id="2-查看docker版本">2、查看docker版本</h2>
+<pre><code class="language-powershell">docker -v
+</code></pre>
+<h2 id="3-启动与停止">3、启动与停止</h2>
+<blockquote>
+<p>systemctl 命令是系统服务管理器指令，它是 service 和 chkconfig 两个命令组合</p>
+</blockquote>
+<pre><code class="language-powershell"># 启动 docker
+systemctl start docker
+# 停止 docker
+systemctl stop docker
+# 重启 docker
+systemctl restart docker
+# 查看 docker 状态
+systemctl status docker
+# 开机自启
+systemctl enable docker
+# 查看 docker 概要信息
+docker info
+# 查看 docker 帮助文档
+docker --info
+</code></pre>
+<h1 id="docker-镜像操作">Docker 镜像操作</h1>
+<h2 id="1-列出镜像">1、列出镜像</h2>
+<pre><code class="language-powershell">docker images
+# REPOSITORY   镜像所在的仓库名称 
+# TAG          镜像标签（版本号）
+# IMAGE ID     镜像ID
+# CREATE       镜像创建的时间（仓库中创建的时间）
+# SIZE         镜像大小
+</code></pre>
+<h2 id="2-搜索镜像">2、搜索镜像</h2>
+<pre><code class="language-powershell">docker search 镜像名称
+# INDEX 
+# NAME         仓库名称
+# DESCRIPTION  镜像描述
+# STARS        用户评价，反应一个镜像的受欢迎程度
+# OFFICIAL     是否是官方
+# AUTOMATED    自动构建，表示该镜像由Docker Hub自动构建流程创建的
+</code></pre>
+<h2 id="3-拉取镜像">3、拉取镜像</h2>
+<h3 id="从docker-hub上拉取">从Docker Hub上拉取</h3>
+<pre><code class="language-powershell">docker pull centos:7
+</code></pre>
+<h3 id="ustc的镜像">ustc的镜像</h3>
+<pre><code class="language-powershell">https://lug.ustc.edu.cn/wiki/mirrors/help/docker
+</code></pre>
+<h3 id="阿里云镜像">阿里云镜像</h3>
+<p>1、进入阿里云</p>
+<p>https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors</p>
+<p>2、得到镜像URL并修改daemon.json</p>
+<p>3、重启daemon</p>
+<pre><code class="language-powershell">systemctl daemon-reload
+</code></pre>
+<p>4、重启docker服务</p>
+<pre><code class="language-powershell">systemctl restart docker
+</code></pre>
+<h3 id="修改daemonjson">修改daemon.json</h3>
+<p>1、编辑文件</p>
+<pre><code class="language-powershell">vi /etc/docker/daemon.json
+</code></pre>
+<p>2、修改文件内容</p>
+<pre><code class="language-json">{
+&quot;registry-mirrors&quot;: [&quot;https://docker.mirrors.ustc.edu.cn&quot;]
+}
+</code></pre>
+<p>3、重启</p>
+<h2 id="4-删除镜像">4、删除镜像</h2>
+<pre><code class="language-powershell"># 删除指定镜像
+docker rmi $IMAGE_ID
+# 删除所有镜像
+docker rmi `docker images -q`
+</code></pre>
+<h1 id="docker容器操作">Docker容器操作</h1>
+<h2 id="1-查看容器">1、查看容器</h2>
+<pre><code class="language-powershell"># 查看正在运行的容器
+docker ps
+# 查看运行过的容器
+docker ps -a
+# 查看最后一次运行的容器
+docker ps -i
+# 查看停止的容器
+docker ps -f status=exited
+</code></pre>
+<h2 id="2-创建与启动容器">2、创建与启动容器</h2>
+<p>创建容器常用的参数说明</p>
+<pre><code class="language-powershell">docker run  创建容器命令
+-i          运行该容器
+-t          表示容器启动后会进入其命令行。加入这两个参数后，容器创建就能登录进去。即分配一个伪终端。
+--name      为创建的容器命名
+-v          表示目录映射关系（前者是宿主机目录，后者是映射到宿主机上的目录），可以使用多个－v做多个目录或文件映射。注意：最好做目录映射，在宿主机上做修改，然后共享到容器上。
+-d          在run后面加上-d参数则会创建一个守护式容器在后台运行（这样创建容器后不会自动登陆容器，如果只加-i-t两个参数，创建后就会自动进入容器）
+-p          端口映射，前者是宿主机端口，后者是容器内的映射端口，可以使用多个-p做多个端口映射
+</code></pre>
+<h3 id="交互式容器">交互式容器</h3>
+<p>创建一个交互式容器并命名为：mycentos</p>
+<pre><code class="language-powershell">docker run -it --name=mycentos centos:7 /bin/bash
+</code></pre>
+<p>使用exit命令 退出当前容器</p>
+<h3 id="创建守护式容器">创建守护式容器</h3>
+<p>创建一个守护式容器：如果对于一个需要长期运行的容器来说，我们可以创建一个守护式容器。命令如下（容器名称不能重复）</p>
+<pre><code class="language-powershell">docker run -id --name=mycentos2  centos:7
+</code></pre>
+<p>登陆守护式容器</p>
+<pre><code class="language-powershell">docker exec -it container_name(或者container_id) /bin/bash (exit退出时容器不会停止)
+</code></pre>
+<h2 id="3-停止与启动容器">3、停止与启动容器</h2>
+<pre><code class="language-powershell"># 停止正在运行的容器
+docker stop $CONTAINER_NAME/ID
+# 运行已停止的容器
+docker start $CONTAINER_NAME/ID
+</code></pre>
+<h2 id="4-文件拷贝">4、文件拷贝</h2>
+<pre><code class="language-powershell"># 将文件拷贝到容器内
+docker cp 宿主机内要拷贝的文件或目录 容器名称:拷贝到容器目录
+# 将容器内的文件拷贝出来
+docker cp 容器名称:容器要拷贝出开的文件或目录 拷贝到宿主机那个目录
+</code></pre>
+<h2 id="5-目录挂载">5、目录挂载</h2>
+<blockquote>
+<p>我们可以在创建容器的时候，将宿主机的目录与容器内的目录进行映射，这样我们就可以通过修改宿主机某个目录的文件从而去影响容器。</p>
+<p>创建容器 添加-v参数 后边为 宿主机目录:容器目录</p>
+<p>如果共享多级目录可能会出现权限不足的情况</p>
+<p>这是因为CentOS7中的安全模块selinux把权限禁掉了，我们需要添加参数 --privileged=true 来解决挂载的目录没有权限的问题</p>
+</blockquote>
+<pre><code class="language-powershell">docker run -di -v /usr/test:/usr/test --name=mycentos centos:7
+</code></pre>
+<h2 id="6-查看容器ip地址">6、查看容器IP地址</h2>
+<pre><code class="language-powershell"># 可以通过以下命令查看容器运行的各种数据
+docker inspect container_name
+# 也可以直接执行下面的命令直接输出IP地址
+docker inspect --format='{{.NetworkSettings.IPAddress}}' container_name
+</code></pre>
+<h2 id="7-删除容器">7、删除容器</h2>
+<pre><code class="language-powershell"># 删除指定容器
+docker rm container_id/name
+# 删除所有容器（以停止运行的）
+docker rm `docker ps -a -q`
+</code></pre>
+<h1 id="部署应用">部署应用</h1>
+<h2 id="mysql部署">MySQL部署</h2>
+<p>1、拉取MySQL镜像</p>
+<pre><code class="language-powershell">docker pull mysql
+</code></pre>
+<p>2、创建MySQL容器</p>
+<pre><code class="language-powershell"># -p 宿主机映射端口:容器运行端口
+# -e 表示添加环境变量，MYSQL_ROOT_PASSWORD 为root用户的登陆密码
+docker run -di --name=jd_mysql -p 33306:3306 -e MYSQL_ROOT_PASSWORD=root mysql
+</code></pre>
+<p>3、进入MySQL容器</p>
+<pre><code class="language-powershell">docker exec -it jd_mysql /bin/bash
+</code></pre>
+<p>4、登陆MySQL</p>
+<pre><code class="language-powershell"># -u 用户名，-u后面需要打空格
+# -p密码，-p后面没有空格,加了空格会再输入一遍密码
+mysql -u root -proot
+</code></pre>
+<p>5、退出MySQL</p>
+<pre><code class="language-powershell"># 退出mysql
+quit
+# 退出容器
+exit
+</code></pre>
+<h2 id="tomcat部署">Tomcat部署</h2>
+<p>1、拉取Tomcat镜像</p>
+<pre><code class="language-powershell">docker pull tomcat:7-jre7
+</code></pre>
+<p>2、创建tomcat容器</p>
+<blockquote>
+<p>创建容器用于部署单点登录系统（CAS） -p表示地址映射</p>
+</blockquote>
+<pre><code class="language-powershell">docker run -di --name=jd_tomcat -p 9100:8080 -v /usr/local/webapps:/usr/local/tomcat/webapps --privileged=true tomcat:7-jre7
+</code></pre>
+<p>3、访问ip:9100/cas</p>
+<blockquote>
+<p>登陆测试，如果出现Invalid credentials重启.</p>
+<p>docker restart jd_tomcat</p>
+</blockquote>
+<h2 id="nginx部署">nginx部署</h2>
+<p>1、拉取镜像</p>
+<pre><code class="language-powershell">docker pull nginx
+</code></pre>
+<p>2、创建容器</p>
+<pre><code class="language-powershell">docker run -di --name=mynginx -p 80:80 nginx /bin/bash
+</code></pre>
+<p>3、测试</p>
+<p>无法访问需要手动启动nginx</p>
+<pre><code class="language-powershell">docker exec -it jd_nginx /bin/bash
+/etc/init.d/nginx start
+</code></pre>
+<p>4、编辑配置文件</p>
+<pre><code class="language-powershell"># 将nginx配置文件复制出来
+docker cp jd_nginx:/etc/nginx/nginx.conf  nginx.conf
+# 修改nginx.conf
+.......
+# 将文件拷贝到容器
+docker cp nginx.conf jd_nginx:/etc/nginx/nginx.conf
+#重启容器
+docker restart jd_nginx
+</code></pre>
+<h2 id="redis部署">Redis部署</h2>
+<p>1、拉取镜像</p>
+<pre><code class="language-powershell">docker pull redis
+</code></pre>
+<p>2、创建容器</p>
+<pre><code class="language-powershell">docker run -di --name=jd_redis -p 6379:6379 redis
+</code></pre>
+<p>3、测试连接</p>
+<pre><code class="language-powershell">redis Desktop
+</code></pre>
+<h1 id="备份与迁移">备份与迁移</h1>
+<h2 id="1-将容器保存为镜像">1、将容器保存为镜像</h2>
+<pre><code class="language-powershell">docker commit jd_nginx mynginx
+</code></pre>
+<blockquote>
+<p>jd_nginx：容器名称</p>
+<p>mynginx：新镜像名称</p>
+</blockquote>
+<h2 id="2-镜像备份">2、镜像备份</h2>
+<pre><code class="language-powershell">docker save -o mynginx.tar mynginx
+</code></pre>
+<blockquote>
+<p>-o ：输出到的文件</p>
+</blockquote>
+<h2 id="3-镜像恢复与迁移">3、镜像恢复与迁移</h2>
+<pre><code class="language-powershell">docker load -i mynginx.tar
+</code></pre>
+<blockquote>
+<p>-i ：输入的文件</p>
+</blockquote>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li><a href="#%E5%AE%89%E8%A3%85docker">安装Docker</a>
+<ul>
+<li><a href="#1-%E4%BD%BF%E7%94%A8yum%E5%91%BD%E4%BB%A4%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85">1、使用yum命令在线安装</a></li>
+<li><a href="#2-%E6%9F%A5%E7%9C%8Bdocker%E7%89%88%E6%9C%AC">2、查看docker版本</a></li>
+<li><a href="#3-%E5%90%AF%E5%8A%A8%E4%B8%8E%E5%81%9C%E6%AD%A2">3、启动与停止</a></li>
+</ul>
+</li>
+<li><a href="#docker-%E9%95%9C%E5%83%8F%E6%93%8D%E4%BD%9C">Docker 镜像操作</a>
+<ul>
+<li><a href="#1-%E5%88%97%E5%87%BA%E9%95%9C%E5%83%8F">1、列出镜像</a></li>
+<li><a href="#2-%E6%90%9C%E7%B4%A2%E9%95%9C%E5%83%8F">2、搜索镜像</a></li>
+<li><a href="#3-%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F">3、拉取镜像</a>
+<ul>
+<li><a href="#%E4%BB%8Edocker-hub%E4%B8%8A%E6%8B%89%E5%8F%96">从Docker Hub上拉取</a></li>
+<li><a href="#ustc%E7%9A%84%E9%95%9C%E5%83%8F">ustc的镜像</a></li>
+<li><a href="#%E9%98%BF%E9%87%8C%E4%BA%91%E9%95%9C%E5%83%8F">阿里云镜像</a></li>
+<li><a href="#%E4%BF%AE%E6%94%B9daemonjson">修改daemon.json</a></li>
+</ul>
+</li>
+<li><a href="#4-%E5%88%A0%E9%99%A4%E9%95%9C%E5%83%8F">4、删除镜像</a></li>
+</ul>
+</li>
+<li><a href="#docker%E5%AE%B9%E5%99%A8%E6%93%8D%E4%BD%9C">Docker容器操作</a>
+<ul>
+<li><a href="#1-%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8">1、查看容器</a></li>
+<li><a href="#2-%E5%88%9B%E5%BB%BA%E4%B8%8E%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8">2、创建与启动容器</a>
+<ul>
+<li><a href="#%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%AE%B9%E5%99%A8">交互式容器</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E5%AE%88%E6%8A%A4%E5%BC%8F%E5%AE%B9%E5%99%A8">创建守护式容器</a></li>
+</ul>
+</li>
+<li><a href="#3-%E5%81%9C%E6%AD%A2%E4%B8%8E%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8">3、停止与启动容器</a></li>
+<li><a href="#4-%E6%96%87%E4%BB%B6%E6%8B%B7%E8%B4%9D">4、文件拷贝</a></li>
+<li><a href="#5-%E7%9B%AE%E5%BD%95%E6%8C%82%E8%BD%BD">5、目录挂载</a></li>
+<li><a href="#6-%E6%9F%A5%E7%9C%8B%E5%AE%B9%E5%99%A8ip%E5%9C%B0%E5%9D%80">6、查看容器IP地址</a></li>
+<li><a href="#7-%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8">7、删除容器</a></li>
+</ul>
+</li>
+<li><a href="#%E9%83%A8%E7%BD%B2%E5%BA%94%E7%94%A8">部署应用</a>
+<ul>
+<li><a href="#mysql%E9%83%A8%E7%BD%B2">MySQL部署</a></li>
+<li><a href="#tomcat%E9%83%A8%E7%BD%B2">Tomcat部署</a></li>
+<li><a href="#nginx%E9%83%A8%E7%BD%B2">nginx部署</a></li>
+<li><a href="#redis%E9%83%A8%E7%BD%B2">Redis部署</a></li>
+</ul>
+</li>
+<li><a href="#%E5%A4%87%E4%BB%BD%E4%B8%8E%E8%BF%81%E7%A7%BB">备份与迁移</a>
+<ul>
+<li><a href="#1-%E5%B0%86%E5%AE%B9%E5%99%A8%E4%BF%9D%E5%AD%98%E4%B8%BA%E9%95%9C%E5%83%8F">1、将容器保存为镜像</a></li>
+<li><a href="#2-%E9%95%9C%E5%83%8F%E5%A4%87%E4%BB%BD">2、镜像备份</a></li>
+<li><a href="#3-%E9%95%9C%E5%83%8F%E6%81%A2%E5%A4%8D%E4%B8%8E%E8%BF%81%E7%A7%BB">3、镜像恢复与迁移</a></li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="http://mvvm.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>

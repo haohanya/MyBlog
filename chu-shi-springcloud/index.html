@@ -1,0 +1,551 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>初识SpringCloud - 浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="初识SpringCloud - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+
+    
+
+  <meta name="description" content="系统架构的演变
+随着互联网的发展，网站的应用规模不断扩大，需求的激增，带来的是技术上的压力。系统架构也因此在不断的演变、升级、迭代。
+
+集中式架构
+当网站流量很小的时候，只需要一个应用，将所有的功能都部署到一起，以减少部署节点和成本。
+
+优..." />
+  <meta property="og:title" content="初识SpringCloud - 浩瀚">
+  <meta property="og:description" content="系统架构的演变
+随着互联网的发展，网站的应用规模不断扩大，需求的激增，带来的是技术上的压力。系统架构也因此在不断的演变、升级、迭代。
+
+集中式架构
+当网站流量很小的时候，只需要一个应用，将所有的功能都部署到一起，以减少部署节点和成本。
+
+优..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="http://mvvm.io/chu-shi-springcloud/" />
+  <meta property="og:image" content="http://mvvm.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="初识SpringCloud - 浩瀚">
+  <meta name="twitter:description" content="系统架构的演变
+随着互联网的发展，网站的应用规模不断扩大，需求的激增，带来的是技术上的压力。系统架构也因此在不断的演变、升级、迭代。
+
+集中式架构
+当网站流量很小的时候，只需要一个应用，将所有的功能都部署到一起，以减少部署节点和成本。
+
+优...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="http://mvvm.io/chu-shi-springcloud/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="http://mvvm.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="http://mvvm.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      浩瀚
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          初识SpringCloud
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-08-05 · 10 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h1 id="系统架构的演变">系统架构的演变</h1>
+<p>随着互联网的发展，网站的应用规模不断扩大，需求的激增，带来的是技术上的压力。系统架构也因此在不断的演变、升级、迭代。</p>
+<figure data-type="image" tabindex="1"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1591797493895.png" alt="img" loading="lazy"></figure>
+<h2 id="集中式架构">集中式架构</h2>
+<p>当网站流量很小的时候，只需要一个应用，将所有的功能都部署到一起，以减少部署节点和成本。</p>
+<figure data-type="image" tabindex="2"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1591797514846.png" alt="img" loading="lazy"></figure>
+<p>优点：系统开发速度快，维护成本低，适合开发并发要求较低的系统</p>
+<p>缺点：单点容错率低，并发能力差</p>
+<h2 id="垂直应用架构">垂直应用架构</h2>
+<p>当访问量逐渐增大，单一应用无法满足需求，此时为了应对更高的并发和业务需求，我们根据业务功能对系统进行拆分：</p>
+<figure data-type="image" tabindex="3"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1591797530176.png" alt="img" loading="lazy"></figure>
+<p><strong>优点</strong></p>
+<p>系统拆分实现了流量分担，解决了并发问题</p>
+<p>可以针对不同的模块进行优化</p>
+<p>方便水平扩展，负载均衡，容错率高</p>
+<p><strong>缺点</strong></p>
+<p>系统之间相互独立，开发中会有很多重复代码，影响开发效率</p>
+<h2 id="分布式服务">分布式服务</h2>
+<p>当垂直应用越来越多的时候，应用之间交互不可避免，作为独立的服务，逐渐形成稳定的服务中心，是前段应用能更快速的影响多变的市场需求</p>
+<figure data-type="image" tabindex="4"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1591797545349.png" alt="img" loading="lazy"></figure>
+<p>**优点：**将基础服务进行了抽取，系统之间互相通用，提高了代码的重用性和开发效率</p>
+<p>**缺点：**系统之间耦合较高，调用关系复杂，难以维护</p>
+<h2 id="面向服务架构">面向服务架构</h2>
+<p>SOA(Service Oriented Architecure)面向服务的架构：它是一种设计方法，其中包含了多个服务，服务与服务之间通过互相依赖最终提供一系列的功能。一个服务通常以独立的形式存在与操作系统进行中，各个服务之间通过网络调用。</p>
+<figure data-type="image" tabindex="5"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1591797558773.png" alt="img" loading="lazy"></figure>
+<p>ESB(企业服务总线)：简单的说ESB就是一根管道，用来连接各个服务节点，为了继承不同系统，不同协议的服务，ESB做了消息的转换解释和路由工作，让不同的服务互联互通</p>
+<p><strong>SOA缺点</strong></p>
+<p>每个供应商的ESB产品有偏差，自身实现较为复杂；应用服务粒度较大，ESB继承整合所有的服务和协议，数据转换使得运维、测试和部署比较困难，所有的服务都通过一个通路通讯，直接降低了通信速度</p>
+<p>(dubbo要比这个优化，系统之间通讯采用RPC这种方式，这种方式是直接使用二进制，效率比较高)</p>
+<h2 id="微服务架构">微服务架构</h2>
+<p>微服务架构是使用<code>一套小服务开发单个应用的方式或途径</code>，每个服务基于单一业务能力构建（职能单一），运行在自己的进程中，并使用轻量级机制通信，通常是Http API，并能够通过自动化部署机制来独立部署，这些服务可以使用不同的编程语言，以及不同的数据存储技术，并保持最低的集中式管理</p>
+<p>(dubbo：使用RPC协议通讯，采用的就是二进制通讯，如果要使用dubbo实现系统之间的通讯，必须保证项目是java语言开发的。dubbo是不能实现跨语言平台通讯</p>
+<p>dubbox：后来是当当网对它进行升级，让dubbo在支持RPC的同时，也支持Http API（RestAPI）通讯 )</p>
+<figure data-type="image" tabindex="6"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1591797585782.png" alt="img" loading="lazy"></figure>
+<p>API Gateway: 网关是一个服务器，是系统的唯一入口，为每个客户端提供了一个定制的API。API网关核心是，所有的客户端和消费端都通过统一的网关介入微服务，在网管层处理所有的非业务功能。如它还可以具有其他职责：身份验证、监控、负载均衡、缓存、请求分片与管理。通常网关提供RESTFUL/http的方式访问服务，而服务端通过服务注册中心进行服务注册和管理</p>
+<h3 id="微服务特点">微服务特点</h3>
+<ul>
+<li>单一职责：微服务中每个服务都对应唯一的业务能力,做到单一职责</li>
+<li>微：微服务的服务拆分粒度很小，例如一个用户管理就可以作为一个服务，每个服务虽然小，但是“五脏俱全”</li>
+<li>面向服务：每个服务都要对外暴漏Rest风格服务接口API。并不关心服务的技术实现，做到与平台和语言无关，也不限定用什么技术实现，只要提供Rest的接口即可</li>
+<li>自治：服务之间相互独立，互不干扰
+<ul>
+<li>团队独立：每个服务都可以一个独立的团队开发，人数不能过多</li>
+<li>技术独立：面向的是服务，提供Rest接口，使用什么技术没有人干涉</li>
+<li>前后端分离：采用前后端分离开发，提供统一Rest接口，后端不用再为PC、移动端开发不同的接口</li>
+<li>部署独立：服务之间虽然有调用，但是要做到服务器重启不影响其他的服务器。有利于持续集成和持续交付。每个服务都是独立的组件，可以复用、可以替换、降低了耦合度，易于维护</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>互联网精神：先上线，后迭代</p>
+</blockquote>
+<p>微服务架构与SOA都是对系统进行了拆分；微服务架构师基于SOA思想，可以把微服务当作去除了ESB总线的SOA。ESB是SOA架构中的中心总线</p>
+<h1 id="服务调用方式">服务调用方式</h1>
+<h2 id="常见的远程调用方式">常见的远程调用方式</h2>
+<h4 id="1-rpc">1、RPC</h4>
+<blockquote>
+<p>Remote Produce Call。基于Socket的通讯（是用最底层的方式来实现通讯，采用二进制的形式，通讯的效率最高的）。工作在会话层。自定义数据格式，速度快，效率高。早期的webservice，现在热门的dubbox，都是RPC的典型代表（只能是java语言编写的服务之间通讯）</p>
+</blockquote>
+<h4 id="2-http">2、Http</h4>
+<blockquote>
+<p>http其实是一种网络传输协议，基于TCP，工作在应用层，规定了数据传输的格式。现在客户端浏览器与服务器通讯基本上都是采用的http协议，也可以用来进行远程服务调用。缺点是消息封装臃肿，优势是对服务的提供和调用方没有任何技术限定（可以跨语言），自由灵活，更符合微服务的理念</p>
+</blockquote>
+<blockquote>
+<p>如果你们的公司全部采用的java技术栈，那么使用dubbo作为微服务架构师一个不错的选择。</p>
+<p>相反如果公司的技术栈多样化，而且你更加青睐于Spring家族，那么SpringCloud搭建微服务就是不二选择，在我们的项目中，会所选择SpringCloud套件，因此会使用http方式来实现微服务之间的调用</p>
+</blockquote>
+<h2 id="http客户端工具">Http客户端工具</h2>
+<p>既然微服务选择了http，那么我们就需要考虑自己来实现对请求和响应的处理，不过开源世界已经有很多的http客户端工具，能够帮助我们做这些事情，例如：</p>
+<ul>
+<li>HttpClient</li>
+<li>OkHttp</li>
+<li>URLConnection</li>
+</ul>
+<p>他们之间的API各不相同，而spring也有对http的客户端工具进行了封装（这三种都有），提供了工具类：RestTemplate</p>
+<h2 id="spring的resttemplate">Spring的RestTemplate</h2>
+<blockquote>
+<p>使用spring提供的一个RestTemplate来实现http的交互</p>
+</blockquote>
+<p>创建springboot项目</p>
+<h4 id="1-创建业务逻辑层user-service">1、创建业务逻辑层(user-service)</h4>
+<p>依赖</p>
+<pre><code class="language-xml">&lt;!-- mapper启动器(准备使用mybatis作为持久层) --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;tk.mybatis&lt;/groupId&gt;
+    &lt;artifactId&gt;mapper-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;2.0.3&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;!-- mysql驱动 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;!-- 为了开发方便，我这里引入lombok --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+    &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>pojo</p>
+<pre><code class="language-java">@Data
+@Table(name = &quot;tb_user&quot;)
+public class User {
+    @Id
+    @KeySql(useGeneratedKeys = true)
+    private Long id;
+    private String userName;        /*用户名*/
+    private String password;        /*密码*/
+    private String name;            /*姓名*/
+    private Integer age;            /*年龄*/
+    private Integer sex;            /*性别，1男性，2女性*/
+    private Date birthday;          /*生日*/
+    private String note;            /*备注*/
+    private Date created;           /*创建时间*/
+    private Date updated;           /*修改时间*/
+}
+</code></pre>
+<p>mapper接口</p>
+<pre><code class="language-java">import tk.mybatis.mapper.common.Mapper;
+public interface UserMapper extends Mapper&lt;User&gt; {
+}
+</code></pre>
+<p>在启动类中扫描mapper</p>
+<pre><code class="language-java">@SpringBootApplication
+@MapperScan(basePackages = &quot;com.cn.mapper&quot;)
+public class UserServiceApplication {
+   
+    public static void main(String[] args) {
+        SpringApplication.run(UserServiceApplication.class, args);
+    }
+
+}
+</code></pre>
+<p>service</p>
+<pre><code class="language-java">public interface UserService {
+    /**
+     * 根据主键查询对象
+     * @param id     主键
+     * @return       对象
+     */
+    User getUserById(Long id);
+}
+-------------
+@Service
+public class UserServiceImpl implements UserService {
+    @Autowired(required = false)
+    private UserMapper userMapper;
+
+    @Override
+    public User getUserById(Long id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
+}
+</code></pre>
+<p>编写控制层提供Rstful接口</p>
+<pre><code class="language-java">@RestController
+@RequestMapping(&quot;/user&quot;)
+public class UserContorller {
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping(&quot;/{id}&quot;)
+    public User getById(@PathVariable(&quot;id&quot;) Long id){
+        return userService.getUserById(id);
+    }
+}
+</code></pre>
+<p>2、创建表现层（user-web）</p>
+<p>pojo：同上</p>
+<p>启动类配置RestTemplate</p>
+<pre><code class="language-java">@SpringBootApplication
+public class UserWebApplication {
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
+    }
+    public static void main(String[] args) {
+        SpringApplication.run(UserWebApplication.class, args);
+    }
+}
+import com.cn.pojo.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+@RestController
+@RequestMapping(&quot;/consumer&quot;)
+public class ConsumerController {
+    @Autowired
+    private RestTemplate restTemplate;
+    @RequestMapping(&quot;/{id}&quot;)
+    public User getByid(@PathVariable(&quot;id&quot;) Long id){
+        //通过http的方式实现系统之间的通讯
+        String url = &quot;http://localhost:9091/user/&quot; + id;//这个是user-service提供的rest api风格的接口
+        User user = restTemplate.getForObject(url, User.class);
+        return user;
+    }
+}
+</code></pre>
+<blockquote>
+<p>上面的操作我们是使用user-service对外提供了根据主键查询用户的接口，然后在user-web通过RestTemplate调用service的接口</p>
+<p>这样写会存在硬编码的问题，不方便后期维护，并且我们需要记住url的地址，如果发生改变，收不到通知，地址将会失效</p>
+<p>web层并不知道service层的状态，例如服务器宕机</p>
+<p>service层也只有一台，不具备高可用</p>
+<p>即便是service搭建成了集群，web还需要去实现负载均衡</p>
+</blockquote>
+<p>其实上面说的问题，概括一下就是分布式服务必然要面临的问题：</p>
+<ul>
+<li>服务管理
+<ul>
+<li>如何自动注册和发现</li>
+<li>如何实现状态监控</li>
+<li>如何实现动态路由</li>
+</ul>
+</li>
+<li>服务如何实现负载均衡</li>
+<li>服务如何解决容灾问题</li>
+<li>服务如何实现统一配置</li>
+</ul>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li><a href="#%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E7%9A%84%E6%BC%94%E5%8F%98">系统架构的演变</a>
+<ul>
+<li><a href="#%E9%9B%86%E4%B8%AD%E5%BC%8F%E6%9E%B6%E6%9E%84">集中式架构</a></li>
+<li><a href="#%E5%9E%82%E7%9B%B4%E5%BA%94%E7%94%A8%E6%9E%B6%E6%9E%84">垂直应用架构</a></li>
+<li><a href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%9C%8D%E5%8A%A1">分布式服务</a></li>
+<li><a href="#%E9%9D%A2%E5%90%91%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84">面向服务架构</a></li>
+<li><a href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84">微服务架构</a>
+<ul>
+<li><a href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%89%B9%E7%82%B9">微服务特点</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F">服务调用方式</a>
+<ul>
+<li><a href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E8%BF%9C%E7%A8%8B%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F">常见的远程调用方式</a><br>
+*
+<ul>
+<li><a href="#1-rpc">1、RPC</a></li>
+<li><a href="#2-http">2、Http</a></li>
+</ul>
+</li>
+<li><a href="#http%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%B7%A5%E5%85%B7">Http客户端工具</a></li>
+<li><a href="#spring%E7%9A%84resttemplate">Spring的RestTemplate</a><br>
+*
+<ul>
+<li><a href="#1-%E5%88%9B%E5%BB%BA%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E5%B1%82user-service">1、创建业务逻辑层(user-service)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="http://mvvm.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>

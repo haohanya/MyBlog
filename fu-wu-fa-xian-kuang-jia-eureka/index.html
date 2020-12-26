@@ -1,0 +1,519 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>服务发现框架-Eureka - 浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="服务发现框架-Eureka - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+
+    
+
+  <meta name="description" content="什么是Eureka
+
+百度百科：什么是Eureka
+
+问题分析
+刚才的案例，user-service对外提供服务，需要对外暴漏自己的地址。user-web需要记录服务提供者的地址。将来地址出现变更，还需要及时的去更新。这在服务较少的时候不会..." />
+  <meta property="og:title" content="服务发现框架-Eureka - 浩瀚">
+  <meta property="og:description" content="什么是Eureka
+
+百度百科：什么是Eureka
+
+问题分析
+刚才的案例，user-service对外提供服务，需要对外暴漏自己的地址。user-web需要记录服务提供者的地址。将来地址出现变更，还需要及时的去更新。这在服务较少的时候不会..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="http://mvvm.io/fu-wu-fa-xian-kuang-jia-eureka/" />
+  <meta property="og:image" content="http://mvvm.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="服务发现框架-Eureka - 浩瀚">
+  <meta name="twitter:description" content="什么是Eureka
+
+百度百科：什么是Eureka
+
+问题分析
+刚才的案例，user-service对外提供服务，需要对外暴漏自己的地址。user-web需要记录服务提供者的地址。将来地址出现变更，还需要及时的去更新。这在服务较少的时候不会...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="http://mvvm.io/fu-wu-fa-xian-kuang-jia-eureka/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="http://mvvm.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="http://mvvm.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      浩瀚
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          服务发现框架-Eureka
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-08-05 · 7 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h2 id="什么是eureka">什么是Eureka</h2>
+<blockquote>
+<p>百度百科：<a href="https://baike.baidu.com/item/Eureka/22402835?fr=aladdin">什么是Eureka</a></p>
+</blockquote>
+<h3 id="问题分析">问题分析</h3>
+<p>刚才的案例，user-service对外提供服务，需要对外暴漏自己的地址。user-web需要记录服务提供者的地址。将来地址出现变更，还需要及时的去更新。这在服务较少的时候不会觉得有什么，但是在大型的互联网项目中，一个项目可能差分处几十个微服务，此时如果还是人为的管理，不仅开发困难，奖励啊测试、发布上线都会有大麻烦</p>
+<pre><code>与DevOps思想违背：就是系统可以通过一组过程、方法或者是系统，提高应用发布和运维的效率，降低管理成本
+</code></pre>
+<h3 id="eureka做什么">Eureka做什么</h3>
+<p>好比是房产中介，负责管理、记录服务提供者的信息。服务调用者就无需自己去找服务，而是把自己的需求告诉Eureka，然后Eureka把符合你要求的服务告诉你</p>
+<p>同时，服务的提供方与Eureka之间通过“心跳”机制进行监控，当某个服务提供方出现问题，Eureka自然会把它从服务列表中剔除</p>
+<p>这就实现了服务的自动注册、发现和状态监控</p>
+<h2 id="eureka注册中心说明">Eureka注册中心说明</h2>
+<p>Eureka的主要功能是进行服务管理，定期检查服务状态，返回服务地址列表。</p>
+<figure data-type="image" tabindex="1"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1591806137091.png" alt="img" loading="lazy"></figure>
+<h2 id="入门案例">入门案例</h2>
+<p>1、创建springboot项目并添加依赖</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-cloud-starter-netflix-eureka-server&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>2、在启动类中添加注解</p>
+<pre><code class="language-java">@SpringBootApplication
+@EnableEurekaServer     //声明当前应用是eureka服务
+public class EurekaServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(EurekaServiceApplication.class, args);
+    }
+}
+</code></pre>
+<p>3、配置eureka</p>
+<pre><code class="language-yaml">#端口号
+server:
+  port: 10086
+spring:
+  application:
+    name: eureka-server   #应用名称，会在eureka中作为服务的id标识
+
+#配置eurkea
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+    register-with-eureka: false       #不注册自己，默认值是true（如果搭建eureka集群，需要相互之间注册）
+    fetch-registry: false   #不拉取自己的服务列表
+</code></pre>
+<p>4、启动服务</p>
+<p>访问：http://localhost:10086/</p>
+<h2 id="服务注册">服务注册</h2>
+<blockquote>
+<p>注册服务，就是在服务上添加Eureka的客户端依赖，客户端代码会自动把服务注册到EurekaService中</p>
+</blockquote>
+<p>添加依赖</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+	&lt;groupId&gt;tk.mybatis&lt;/groupId&gt;
+	&lt;artifactId&gt;mapper-spring-boot-starter&lt;/artifactId&gt;		 
+	&lt;version&gt;2.0.3&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+	&lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+	&lt;artifactId&gt;lombok&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+	&lt;groupId&gt;mysql&lt;/groupId&gt;
+	&lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+	&lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>1、修改启动类</p>
+<pre><code class="language-java">@SpringBootApplication
+@MapperScan(basePackages = &quot;com.cn.mapper&quot;)  //扫描mapper包，如果使用的是tb.mybatis
+@EnableEurekaClient     //开启Eureka客户端发现功能
+public class UserServiceApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(UserServiceApplication.class, args);
+    }
+
+}
+</code></pre>
+<p>2、修改配置文件</p>
+<pre><code class="language-yml">#端口号
+server:
+  port: 9091
+#数据源
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springcloud?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+  application:
+    name: user-service   #应用名
+#添加Eureka注册的配置
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+</code></pre>
+<p>3、测试</p>
+<p>启动user-service工程</p>
+<h2 id="服务发现">服务发现</h2>
+<pre><code class="language-xml">&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+	&lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+	&lt;artifactId&gt;spring-cloud-starter-netflix-eureka-client&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>1、修改启动类</p>
+<pre><code class="language-java">@SpringBootApplication
+@EnableDiscoveryClient     //开启Eureak客户端
+public class UserWebApplication {
+    @Bean
+    public RestTemplate restTemplate(){
+        return new RestTemplate();
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(UserWebApplication.class, args);
+    }
+
+}
+</code></pre>
+<p>2、修改配置文件</p>
+<pre><code class="language-yml">server:
+  port: 8080
+spring:
+  application:
+    name: user-web     #应用名称
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka    #eurekaSerer地址
+</code></pre>
+<p>3、修改处理器</p>
+<pre><code class="language-java">package com.cn.controller;
+
+import com.cn.pojo.User;
+import com.netflix.appinfo.InstanceInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
+
+@RestController
+@RequestMapping(&quot;/consumer&quot;)
+public class ConsumerController {
+    @Autowired
+    private RestTemplate restTemplate;
+    //DiscoveryClient的用springCloud包中的
+    @Autowired(required = false)
+    private DiscoveryClient discoveryClient;
+
+    @RequestMapping(&quot;/{id}&quot;)
+    public User getByid(@PathVariable(&quot;id&quot;) Long id){
+        /*
+        //通过http的方式实现系统之间的通讯
+        String url = &quot;http://localhost:9091/user/&quot; + id;//这个是user-service提供的rest api风格的接口
+        User user = restTemplate.getForObject(url, User.class);
+        return user;
+         */
+        //从eurekaServer注册中心去获取user-service的实例列表
+        List&lt;ServiceInstance&gt; instancesList = discoveryClient.getInstances(&quot;user-service&quot;);
+        //因为我就一个服务，所以我就拿集合中的第一个就成
+        ServiceInstance serviceInstance = instancesList.get(0);
+        //服务的resutApi接口
+        String url = &quot;http://&quot; + serviceInstance.getHost() + &quot;:&quot; + serviceInstance.getPort() + &quot;/user/&quot; + id;
+        return restTemplate.getForObject(url,User.class);
+    }
+}
+</code></pre>
+<p>4、测试</p>
+<h2 id="eureak总结">Eureak总结</h2>
+<p>三个角色</p>
+<ul>
+<li>服务注册中心
+<ul>
+<li>Eureka的服务端应用，提供服务注册和发现功能，就是我们建立的eureka-server</li>
+</ul>
+</li>
+<li>服务提供者
+<ul>
+<li>提供服务的应用，可以是springBoot应用，也可以是其他任意技术实现，只要对外提供的是Rest风格服务就可。就是我们建立的user-service</li>
+</ul>
+</li>
+<li>服务消费者
+<ul>
+<li>消费者应用就是从注册中心获取服务列表，从而得知每个服务放的信息，知道去哪里调用服务，就是我们建立的user-web</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFeureka">什么是Eureka</a>
+<ul>
+<li><a href="#%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90">问题分析</a></li>
+<li><a href="#eureka%E5%81%9A%E4%BB%80%E4%B9%88">Eureka做什么</a></li>
+</ul>
+</li>
+<li><a href="#eureka%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83%E8%AF%B4%E6%98%8E">Eureka注册中心说明</a></li>
+<li><a href="#%E5%85%A5%E9%97%A8%E6%A1%88%E4%BE%8B">入门案例</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C">服务注册</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0">服务发现</a></li>
+<li><a href="#eureak%E6%80%BB%E7%BB%93">Eureak总结</a></li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="http://mvvm.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>

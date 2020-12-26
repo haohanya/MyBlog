@@ -1,0 +1,493 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>FastDFS分布式文件系统 - 浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="FastDFS分布式文件系统 - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+
+    
+
+  <meta name="description" content="什么是FastDFS
+FastDFS 是用 c 语言编写的一款开源的分布式文件系统。FastDFS 为互联网量身定制，充分考虑了冗余备份、负载均衡、线性扩容等机制，并注重高可用、高性能等指标，使用 FastDFS很容易搭建一套高性能的文件服..." />
+  <meta property="og:title" content="FastDFS分布式文件系统 - 浩瀚">
+  <meta property="og:description" content="什么是FastDFS
+FastDFS 是用 c 语言编写的一款开源的分布式文件系统。FastDFS 为互联网量身定制，充分考虑了冗余备份、负载均衡、线性扩容等机制，并注重高可用、高性能等指标，使用 FastDFS很容易搭建一套高性能的文件服..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="http://mvvm.io/fastdfs-fen-bu-shi-wen-jian-xi-tong/" />
+  <meta property="og:image" content="http://mvvm.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="FastDFS分布式文件系统 - 浩瀚">
+  <meta name="twitter:description" content="什么是FastDFS
+FastDFS 是用 c 语言编写的一款开源的分布式文件系统。FastDFS 为互联网量身定制，充分考虑了冗余备份、负载均衡、线性扩容等机制，并注重高可用、高性能等指标，使用 FastDFS很容易搭建一套高性能的文件服...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="http://mvvm.io/fastdfs-fen-bu-shi-wen-jian-xi-tong/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="http://mvvm.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="http://mvvm.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      浩瀚
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          FastDFS分布式文件系统
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-05-04 · 7 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h2 id="什么是fastdfs">什么是FastDFS</h2>
+<p>FastDFS 是用 c 语言编写的一款开源的分布式文件系统。FastDFS 为互联网量身定制，充分考虑了冗余备份、负载均衡、线性扩容等机制，并注重高可用、高性能等指标，使用 FastDFS很容易搭建一套高性能的文件服务器集群提供文件上传、下载等服务。</p>
+<p>FastDFS 架构包括 Tracker server 和 Storage server。客户端请求 Tracker server 进行文件上传、下载，通过 Tracker server 调度最终由 Storage server 完成文件上传和下载。</p>
+<p>Tracker server 作用是负载均衡和调度，通过 Tracker server 在文件上传时可以根据一些策略找到 Storage server 提供文件上传服务。可以将 tracker 称为追踪服务器或调度服务器。</p>
+<p>Storage server 作用是文件存储，客户端上传的文件最终存储在 Storage 服务器上，Storageserver 没有实现自己的文件系统而是利用操作系统 的文件系统来管理文件。可以将storage称为存储服务器。</p>
+<figure data-type="image" tabindex="1"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1589686914052.jpg" alt="img" loading="lazy"></figure>
+<p>服务端两个角色：</p>
+<p>Tracker：管理集群，tracker 也可以实现集群。每个 tracker 节点地位平等。收集 Storage 集群的状态。</p>
+<p>Storage：实际保存文件 Storage 分为多个组，每个组之间保存的文件是不同的。每个组内部可以有多个成员，组成员内部保存的内容是一样的，组成员的地位是一致的，没有主从的概念。</p>
+<h2 id="文件上传流程">文件上传流程</h2>
+<figure data-type="image" tabindex="2"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1589687036366.jpg" alt="img" loading="lazy"></figure>
+<p>客户端上传文件后存储服务器将文件 ID 返回给客户端，此文件 ID 用于以后访问该文件的索引信息。文件索引信息包括：组名，虚拟磁盘路径，数据两级目录，文件名。</p>
+<figure data-type="image" tabindex="3"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1589687044591.jpg" alt="img" loading="lazy"></figure>
+<p><strong>组名</strong>：文件上传后所在的 storage 组名称，在文件上传成功后有 storage 服务器返回，需要客户端自行保存。</p>
+<p><strong>虚拟磁盘路径</strong>：storage 配置的虚拟路径，与磁盘选项 store_path*对应。如果配置了</p>
+<p>store_path0 则是 M00，如果配置了 store_path1 则是 M01，以此类推。</p>
+<p><strong>数据两级目录</strong>：storage 服务器在每个虚拟磁盘路径下创建的两级目录，用于存储数据</p>
+<p>文件。</p>
+<p><strong>文件名</strong>：与文件上传时不同。是由存储服务器根据特定信息生成，文件名包含：源存储</p>
+<p>服务器 IP 地址、文件创建时间戳、文件大小、随机数和文件拓展名等信息。</p>
+<h2 id="文件下载流程">文件下载流程</h2>
+<figure data-type="image" tabindex="4"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/1589687076743.jpg" alt="img" loading="lazy"></figure>
+<h2 id="0-准备安装包上传到usrlocal">0. 准备安装包上传到/usr/local/</h2>
+<p>FastDFS_v5.05.tar.gz （FastDFS安装包）</p>
+<p>libfastcommonV1.0.7.tar.gz （FastDFS依赖程序）</p>
+<p>nginx-1.8.0.tar.gz （nginx安装包，用于做文件请求http代理服务器）</p>
+<p>fastdfs-nginx-module_v1.16.tar.gz （nginx和fastdfs的桥梁插件模块）</p>
+<h2 id="1-安装cc编译环境">1. 安装c/c++编译环境</h2>
+<pre><code class="language-powershell">yum install gcc-c++
+</code></pre>
+<h2 id="2-安装libevent">2. 安装libevent</h2>
+<pre><code class="language-powershell">yum -y install libevent
+</code></pre>
+<h2 id="3-安装libfastcommon">3. 安装libfastcommon</h2>
+<p>将<code>libfastcommonV1.0.7.tar.gz</code>拷贝至<code>/usr/local/</code>下</p>
+<pre><code class="language-powershell">cd /usr/local
+tar -zxvf libfastcommonV1.0.7.tar.gz
+cd libfastcommon-1.0.7
+./make.sh
+./make.sh install
+cp /usr/lib64/libfastcommon.so /usr/lib
+</code></pre>
+<h2 id="4创建数据存储目录">4.创建数据存储目录</h2>
+<pre><code class="language-powershell">mkdir -p /home/FastDFS/tracker /home/FastDFS/storage /home/FastDFS/client
+</code></pre>
+<h2 id="5-tracker编译安装">5. tracker编译安装</h2>
+<p>将FastDFS_v5.05.tar.gz拷贝至/usr/local/下</p>
+<pre><code class="language-powershell">tar -zxvf FastDFS_v5.05.tar.gz
+cd FastDFS
+./make.sh
+./make.sh install
+cd conf
+cp * /etc/fdfs
+</code></pre>
+<h2 id="6-编辑etcfdfstrackerconf">6. 编辑/etc/fdfs/tracker.conf</h2>
+<pre><code class="language-powershell">vi /etc/fdfs/tracker.conf
+
+base_path=/home/FastDFS/tracker
+</code></pre>
+<h2 id="7-启动tracker">7. 启动tracker</h2>
+<pre><code class="language-powershell">/usr/bin/fdfs_trackerd /etc/fdfs/tracker.conf [restart](重启)
+</code></pre>
+<h2 id="8-配置storage节点">8. 配置storage节点</h2>
+<pre><code class="language-powershell">vi /etc/fdfs/storage.conf
+    base_path=/home/FastDFS/storage
+    store_path0=/home/FastDFS/storage
+    tracker_server = 192.168.100.151:22122
+</code></pre>
+<h2 id="9-启动storage节点">9. 启动storage节点</h2>
+<pre><code class="language-powershell">/usr/bin/fdfs_storage{fdfs_storaged} /etc/fdfs/storage.conf
+</code></pre>
+<blockquote>
+<p>fdfs_storage不存在就使用fdfs_storaged</p>
+</blockquote>
+<h2 id="10-安装nginx">10. 安装nginx</h2>
+<pre><code class="language-powershell">yum install -y gcc-c++
+yum install -y pcre pcre-devel
+yum install -y zlib zlib-devel
+yum install -y openssl openssl-devel
+</code></pre>
+<h2 id="11解压fastdfs-nginx-module_v116targz">11.解压fastdfs-nginx-module_v1.16.tar.gz</h2>
+<pre><code class="language-powershell">cd /usr/local/
+tar -zxf fastdfs-nginx-module_v1.16.tar.gz
+</code></pre>
+<h2 id="12修改fastdfs-nginx-modulesrcconfig配置文件">12.修改fastdfs-nginx-module/src/config配置文件</h2>
+<pre><code class="language-powershell">vi fastdfs-nginx-module/src/config
+</code></pre>
+<blockquote>
+<p>把CORE_INCS=&quot;$CORE_INCS /usr/local/include/fastdfs /usr/include/fastcommon/&quot;</p>
+<p>修改为：CORE_INCS=&quot;$CORE_INCS /usr/include/fastdfs /usr/include/fastcommon/&quot;</p>
+<p>把CORE_LIBS=&quot;$CORE_LIBS -L/usr/local/lib -lfastcommon -lfdfsclient&quot;</p>
+<p>修改为：CORE_LIBS=&quot;$CORE_LIBS -L/usr/lib -lfastcommon -lfdfsclient&quot;</p>
+<p>实际就是把路径中的local这一层删除掉</p>
+</blockquote>
+<h2 id="13编辑mod_fastdfsconf">13.编辑mod_fastdfs.conf</h2>
+<p>复制fastdfs-nginx-module/src/mod_fastdfs.conf 到/etc/fdfs目录下并编辑</p>
+<pre><code class="language-powershell">cp fastdfs-nginx-module/src/mod_fastdfs.conf /etc/fdfs/
+vi /etc/fdfs/mod_fastdfs.conf
+</code></pre>
+<blockquote>
+<p>tracker_server=192.168.100.151:22122<br>
+url_have_group_name = true<br>
+storage_server_port=23000<br>
+group_name=group1<br>
+store_path0=/home/FastDFS/storage</p>
+</blockquote>
+<h2 id="14安装nginx">14.安装nginx</h2>
+<pre><code class="language-powershell">cd /usr/local/
+tar -zxf  nginx-1.8.1.tar.gz
+cd nginx-1.8.1
+./configure --add-module=/usr/local/fastdfs-nginx-module/src/
+make
+make install
+</code></pre>
+<h2 id="15-配置nginx">15. 配置nginx</h2>
+<pre><code class="language-powershell">cd /usr/local/nginx/conf
+vi nginx.conf
+</code></pre>
+<blockquote>
+<p>server{<br>
+listen     80;<br>
+server_name     localhost;<br>
+location /group1/M00/{<br>
+ngx_fastdfs_module;<br>
+}<br>
+}</p>
+</blockquote>
+<p>重启nginx</p>
+<pre><code class="language-powershell">/usr/local/nginx/sbin/nginx
+</code></pre>
+<h2 id="测试">测试</h2>
+<h3 id="1-引入依赖">1、引入依赖</h3>
+<pre><code class="language-xml">&lt;!-- 文件上传组件 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;commons-fileupload&lt;/groupId&gt;
+    &lt;artifactId&gt;commons-fileupload&lt;/artifactId&gt;
+    &lt;version&gt;1.3.1&lt;/version&gt;
+&lt;/dependency&gt;
+&lt;!--fastdfs--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.csource.fastdfs&lt;/groupId&gt;
+    &lt;artifactId&gt;fastdfs&lt;/artifactId&gt;
+    &lt;version&gt;1.2&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h3 id="2-编写配置文件">2、编写配置文件</h3>
+<pre><code class="language-xml"> &lt;!-- 配置多媒体解析器 --&gt;
+ &lt;bean id=&quot;multipartResolver&quot; class=&quot;org.springframework.web.multipart.commons.CommonsMultipartResolver&quot;&gt;
+ 	&lt;property name=&quot;defaultEncoding&quot; value=&quot;UTF-8&quot;/&gt;
+ 	&lt;!-- 设定文件上传的最大值5MB，5*1024*1024 --&gt;
+ 	&lt;property name=&quot;maxUploadSize&quot; value=&quot;5242880&quot;/&gt;
+ &lt;/bean&gt;
+</code></pre>
+<h3 id="3-uploadcontroller">3、UploadController</h3>
+<pre><code class="language-java"> /**
+  * 文件服务器地址
+  */
+ @Value(&quot;${FILE_SERVER_URL}&quot;)
+ private String FILE_SERVER_URL;
+
+ @RequestMapping(&quot;/upload&quot;)
+ public JdResult upload(MultipartFile file) {
+     //1、取文件的扩展名
+     String originalFilename = file.getOriginalFilename();
+     String extName = originalFilename.substring(originalFilename.lastIndexOf(&quot;.&quot;) + 1);
+     try {
+         //2、创建一个 FastDFS 的客户端
+         FastDFSClient dfsClient = new FastDFSClient(&quot;classpath:conf/fdfs_client.conf&quot;);
+         //3、执行上传处理
+         String path = dfsClient.uploadFile(file.getBytes(), extName);
+         //4、拼接返回的 url 和 ip 地址，拼装成完整的 url
+         String url = FILE_SERVER_URL + path;
+         return JdResult.ok(url);
+     } catch (Exception e) {
+         e.printStackTrace();
+         return JdResult.error(&quot;文件上传失败&quot;);
+     }
+ }
+</code></pre>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFfastdfs">什么是FastDFS</a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%B5%81%E7%A8%8B">文件上传流程</a></li>
+<li><a href="#%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%B5%81%E7%A8%8B">文件下载流程</a></li>
+<li><a href="#0-%E5%87%86%E5%A4%87%E5%AE%89%E8%A3%85%E5%8C%85%E4%B8%8A%E4%BC%A0%E5%88%B0usrlocal">0. 准备安装包上传到/usr/local/</a></li>
+<li><a href="#1-%E5%AE%89%E8%A3%85cc%E7%BC%96%E8%AF%91%E7%8E%AF%E5%A2%83">1. 安装c/c++编译环境</a></li>
+<li><a href="#2-%E5%AE%89%E8%A3%85libevent">2. 安装libevent</a></li>
+<li><a href="#3-%E5%AE%89%E8%A3%85libfastcommon">3. 安装libfastcommon</a></li>
+<li><a href="#4%E5%88%9B%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E7%9B%AE%E5%BD%95">4.创建数据存储目录</a></li>
+<li><a href="#5-tracker%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85">5. tracker编译安装</a></li>
+<li><a href="#6-%E7%BC%96%E8%BE%91etcfdfstrackerconf">6. 编辑/etc/fdfs/tracker.conf</a></li>
+<li><a href="#7-%E5%90%AF%E5%8A%A8tracker">7. 启动tracker</a></li>
+<li><a href="#8-%E9%85%8D%E7%BD%AEstorage%E8%8A%82%E7%82%B9">8. 配置storage节点</a></li>
+<li><a href="#9-%E5%90%AF%E5%8A%A8storage%E8%8A%82%E7%82%B9">9. 启动storage节点</a></li>
+<li><a href="#10-%E5%AE%89%E8%A3%85nginx">10. 安装nginx</a></li>
+<li><a href="#11%E8%A7%A3%E5%8E%8Bfastdfs-nginx-module_v116targz">11.解压fastdfs-nginx-module_v1.16.tar.gz</a></li>
+<li><a href="#12%E4%BF%AE%E6%94%B9fastdfs-nginx-modulesrcconfig%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">12.修改fastdfs-nginx-module/src/config配置文件</a></li>
+<li><a href="#13%E7%BC%96%E8%BE%91mod_fastdfsconf">13.编辑mod_fastdfs.conf</a></li>
+<li><a href="#14%E5%AE%89%E8%A3%85nginx">14.安装nginx</a></li>
+<li><a href="#15-%E9%85%8D%E7%BD%AEnginx">15. 配置nginx</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95">测试</a>
+<ul>
+<li><a href="#1-%E5%BC%95%E5%85%A5%E4%BE%9D%E8%B5%96">1、引入依赖</a></li>
+<li><a href="#2-%E7%BC%96%E5%86%99%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6">2、编写配置文件</a></li>
+<li><a href="#3-uploadcontroller">3、UploadController</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="http://mvvm.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>

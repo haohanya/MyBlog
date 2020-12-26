@@ -1,0 +1,676 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Apollo分布式配置中心 - 浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Apollo分布式配置中心 - 浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
+
+    
+
+  <meta name="description" content="什么是Apollo
+Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。
+Apollo包括服务端..." />
+  <meta property="og:title" content="Apollo分布式配置中心 - 浩瀚">
+  <meta property="og:description" content="什么是Apollo
+Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。
+Apollo包括服务端..." />
+  <meta property="og:type" content="articles">
+  <meta property="og:url" content="http://mvvm.io/apollo-fen-bu-shi-pei-zhi-zhong-xin/" />
+  <meta property="og:image" content="http://mvvm.io/images/avatar.png">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:width" content="1200">
+  <meta name="twitter:title" content="Apollo分布式配置中心 - 浩瀚">
+  <meta name="twitter:description" content="什么是Apollo
+Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。
+Apollo包括服务端...">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="http://mvvm.io/apollo-fen-bu-shi-pei-zhi-zhong-xin/">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css">
+ 
+  
+    <link rel="stylesheet" href="http://mvvm.io/media/css/prism-atom-dark.css">
+  
+
+  
+</head>
+
+<body>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
+    <a href="http://mvvm.io" class="fixed top-0 left-0 mt-4 bg-black text-white dark:text-gray-700 dark:bg-yellow-50 dark:hover:bg-black dark:hover:text-white inline-flex p-2 pl-8 hover:text-gray-700 hover:bg-yellow-50 font-bold z-10 transition-fast animated fadeInLeft">
+      浩瀚
+    </a>
+    <div class="max-w-4xl w-full mx-auto">
+      <div class="shadow-box bg-white dark:bg-gray-600 rounded-lg pt-32 md:pt-64 px-4 md:px-8 pb-8 animated fadeIn mb-8">
+        <h1 class="text-5xl font-semibold leading-normal pb-8 mb-8 border-b-8 border-gray-700">
+          Apollo分布式配置中心
+        </h1>
+        
+        <div class="mb-8 flex flex-wrap">
+          <div class="text-gray-400 text-sm mr-4">2020-10-10 · 13 min read</div>
+          
+        </div>
+        <div class="markdown mb-8" v-pre>
+          <h2 id="什么是apollo">什么是Apollo</h2>
+<p>Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。</p>
+<p><strong>Apollo包括服务端和客户端两部分</strong></p>
+<p>服务端基于Spring Boot和Spring Cloud开发，打包后可以直接运行，不需要额外安装Tomcat等应用容器。</p>
+<p>Java客户端不依赖任何框架，能够运行于所有Java运行时环境，同时对Spring/Spring Boot环境也有较好的支持。</p>
+<h2 id="特性">特性</h2>
+<ul>
+<li>统一管理不同环境、不同集群的配置
+<ul>
+<li>Apollo提供了一个统一界面集中式管理不同环境（environment）、不同集群（cluster）、不同命名空间（namespace）的配置。</li>
+<li>同一份代码部署在不同的集群，可以有不同的配置，比如zk的地址等</li>
+<li>通过命名空间（namespace）可以很方便的支持多个不同应用共享同一份配置，同时还允许应用对共享的配置进行覆盖</li>
+<li>配置界面支持多语言（中文，English）</li>
+</ul>
+</li>
+<li>配置修改实时生效（热发布）
+<ul>
+<li>用户在Apollo修改完配置并发布后，客户端能实时（1秒）接收到最新的配置，并通知到应用程序。</li>
+</ul>
+</li>
+<li>版本发布管理
+<ul>
+<li>所有的配置发布都有版本概念，从而可以方便的支持配置的回滚。</li>
+</ul>
+</li>
+<li>灰度发布
+<ul>
+<li>支持配置的灰度发布，比如点了发布后，只对部分应用实例生效，等观察一段时间没问题后再推给所有应用实例。</li>
+</ul>
+</li>
+<li>权限管理、发布审核、操作审计
+<ul>
+<li>应用和配置的管理都有完善的权限管理机制，对配置的管理还分为了编辑和发布两个环节，从而减少人为的错误。</li>
+<li>所有的操作都有审计日志，可以方便的追踪问题。</li>
+</ul>
+</li>
+<li>客户端配置信息监控
+<ul>
+<li>可以方便的看到配置在被哪些实例使用</li>
+</ul>
+</li>
+<li>提供Java和.Net原生客户端
+<ul>
+<li>提供了Java和.Net的原生客户端，方便应用集成</li>
+<li>支持Spring Placeholder，Annotation和Spring Boot的ConfigurationProperties，方便应用使用（需要Spring 3.1.1+）</li>
+<li>同时提供了Http接口，非Java和.Net应用也可以方便的使用</li>
+</ul>
+</li>
+<li>提供开放平台API
+<ul>
+<li>Apollo自身提供了比较完善的统一配置管理界面，支持多环境、多数据中心配置管理、权限、流程治理等特性。</li>
+<li>不过Apollo出于通用性考虑，对配置的修改不会做过多限制，只要符合基本的格式就能够保存。</li>
+<li>在我们的调研中发现，对于有些使用方，它们的配置可能会有比较复杂的格式，如xml, json，需要对格式做校验。</li>
+<li>还有一些使用方如DAL，不仅有特定的格式，而且对输入的值也需要进行校验后方可保存，如检查数据库、用户名和密码是否匹配。</li>
+<li>对于这类应用，Apollo支持应用方通过开放接口在Apollo进行配置的修改和发布，并且具备完善的授权和权限控制</li>
+</ul>
+</li>
+<li>部署简单
+<ul>
+<li>配置中心作为基础服务，可用性要求非常高，这就要求Apollo对外部依赖尽可能地少</li>
+<li>目前唯一的外部依赖是MySQL，所以部署非常简单，只要安装好Java和MySQL就可以让Apollo跑起来</li>
+<li>Apollo还提供了打包脚本，一键就可以生成所有需要的安装包，并且支持自定义运行时参数</li>
+</ul>
+</li>
+</ul>
+<h2 id="模块架构">模块架构</h2>
+<p>架构图待补充</p>
+<ul>
+<li>Config Service提供配置的读取、推送等功能，服务对象是Apollo客户端</li>
+<li>Admin Service提供配置的修改、发布等功能，服务对象是Apollo Portal（管理界面）</li>
+<li>Config Service和Admin Service都是多实例、无状态部署，所以需要将自己注册到Eureka中并保持心跳</li>
+<li>在Eureka之上我们架了一层Meta Server用于封装Eureka的服务发现接口</li>
+<li>Client通过域名访问Meta Server获取Config Service服务列表（IP+Port），而后直接通过IP+Port访问服务，同时在Client侧会做load balance、错误重试</li>
+<li>Portal通过域名访问Meta Server获取Admin Service服务列表（IP+Port），而后直接通过IP+Port访问服务，同时在Portal侧会做load balance、错误重试</li>
+<li>为了简化部署，我们实际上会把Config Service、Eureka和Meta Server三个逻辑角色部署在同一个JVM进程中</li>
+</ul>
+<h2 id="各模块概要介绍">各模块概要介绍</h2>
+<h3 id="config-service">Config Service</h3>
+<ul>
+<li>提供配置获取接口</li>
+<li>提供配置更新推送接口（基于Http long polling）
+<ul>
+<li>服务端使用<a href="http://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/context/request/async/DeferredResult.html">Spring DeferredResult</a>实现异步化，从而大大增加长连接数量</li>
+<li>目前使用的tomcat embed默认配置是最多10000个连接（可以调整），使用了4C8G的虚拟机实测可以支撑10000个连接，所以满足需求（一个应用实例只会发起一个长连接）。</li>
+</ul>
+</li>
+<li>接口服务对象为Apollo客户端</li>
+</ul>
+<h3 id="admin-service">Admin Service</h3>
+<ul>
+<li>提供配置管理接口</li>
+<li>提供配置修改、发布等接口</li>
+<li>接口服务对象为Portal</li>
+</ul>
+<h3 id="meta-server">Meta Server</h3>
+<ul>
+<li>Portal通过域名访问Meta Server获取Admin Service服务列表（IP+Port）</li>
+<li>Client通过域名访问Meta Server获取Config Service服务列表（IP+Port）</li>
+<li>Meta Server从Eureka获取Config Service和Admin Service的服务信息，相当于是一个Eureka Client</li>
+<li>增设一个Meta Server的角色主要是为了封装服务发现的细节，对Portal和Client而言，永远通过一个Http接口获取Admin Service和Config Service的服务信息，而不需要关心背后实际的服务注册和发现组件</li>
+<li>Meta Server只是一个逻辑角色，在部署时和Config Service是在一个JVM进程中的，所以IP、端口和Config Service一致</li>
+</ul>
+<h3 id="eureka">Eureka</h3>
+<ul>
+<li>基于<a href="https://github.com/Netflix/eureka">Eureka</a>和<a href="https://cloud.spring.io/spring-cloud-netflix/">Spring Cloud Netflix</a>提供服务注册和发现</li>
+<li>Config Service和Admin Service会向Eureka注册服务，并保持心跳</li>
+<li>为了简单起见，目前Eureka在部署时和Config Service是在一个JVM进程中的（通过Spring Cloud Netflix）</li>
+</ul>
+<h3 id="portal">Portal</h3>
+<ul>
+<li>提供Web界面供用户管理配置</li>
+<li>通过Meta Server获取Admin Service服务列表（IP+Port），通过IP+Port访问服务</li>
+<li>在Portal侧做load balance、错误重试</li>
+</ul>
+<h3 id="client">Client</h3>
+<ul>
+<li>Apollo提供的客户端程序，为应用提供配置获取、实时更新等功能</li>
+<li>通过Meta Server获取Config Service服务列表（IP+Port），通过IP+Port访问服务</li>
+<li>在Client侧做load balance、错误重试</li>
+</ul>
+<h2 id="安装">安装</h2>
+<blockquote>
+<p>本次安装采用Windows和Apollo1.7.1版本</p>
+</blockquote>
+<h3 id="1-下载apollo">1、下载Apollo</h3>
+<p>下载SQL文件，Apollo需要使用到两个数据库</p>
+<p>https://github.com/ctripcorp/apollo/tree/master/scripts/sql</p>
+<p>下载后解压到：<code>apollo-sql</code>目录</p>
+<p>下载Apollo的三个端</p>
+<p>https://github.com/ctripcorp/apollo/releases/tag/v1.7.1</p>
+<pre><code>apollo-adminservice-1.7.1-github.zip
+</code></pre>
+<p>下载后解压到：<code>apollo-adminservice</code>目录</p>
+<pre><code>apollo-configservice-1.7.1-github.zip
+</code></pre>
+<p>下载后解压到：<code>apollo-configservice</code>目录</p>
+<pre><code>apollo-portal-1.7.1-github.zip
+</code></pre>
+<p>下载后解压到：<code>apollo-portal</code>目录</p>
+<h3 id="2-执行sql">2、执行SQL</h3>
+<p>执行<code>apollo-sql</code>路径下面的两个sql文件到MySQL数据库中</p>
+<h3 id="3-启动apollo">3、启动Apollo</h3>
+<h4 id="启动configservice服务">启动ConfigService服务</h4>
+<p><strong>修改配置</strong></p>
+<p>编辑<code>apollo-configservice/config/application-github.properties</code></p>
+<p>将数据库信息修改为上一步导入的数据库</p>
+<p>这个数据库应该对应的是<code>apolloconfigdb.sql</code></p>
+<p><strong>启动服务</strong></p>
+<ol>
+<li>进入<code>apollo-configservice/scripts</code>目录</li>
+<li>在这个目录打开<code>GitBash</code></li>
+<li>执行<code>./startup.sh</code></li>
+</ol>
+<p><strong>测试</strong></p>
+<p>大概这样子就是启动成功</p>
+<figure data-type="image" tabindex="1"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201010001755911.png" alt="image-20201010001755911" loading="lazy"></figure>
+<p>访问<code>localhost:8080</code>，如果是Eureka页面则启动成功</p>
+<p>因为ConfigService服务底层帮我们封装了Eureka，所以才会有Eureka面板。</p>
+<h4 id="启动adminservice服务">启动AdminService服务</h4>
+<p><strong>修改配置</strong></p>
+<p>和ConfigService服务一样</p>
+<p><strong>启动服务</strong></p>
+<p>和ConfigService服务一样</p>
+<p><strong>测试</strong></p>
+<p>访问<code>http://localhost:8080/</code></p>
+<p>查看AdminService服务是否注册到Eureka</p>
+<p>也可也访问<code>http://localhost:8090/</code>查看是否打印出：apollo-adminservice</p>
+<figure data-type="image" tabindex="2"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201009235042277.png" alt="image-20201009235042277" loading="lazy"></figure>
+<h4 id="启动portal服务">启动Portal服务</h4>
+<p><strong>修改配置</strong></p>
+<p><code>application-github.properties</code>配置文件和上面一样</p>
+<p>Protal服务还有一个<code>apollo-env.properties</code>配置文件</p>
+<p>它主要是配置不同环境的Eureka，用来连接AdminService</p>
+<p>将其他的注释起来，只保留一个dev.meat，这个的value是eureka的地址，ConfigService中集成了Eureka;</p>
+<p>这个环境配置是根据<code>ApolloPortalDB.ServerConfig</code>表中的<code>apollo.portal.envs</code>决定的。</p>
+<blockquote>
+<p>SELECT * FROM ApolloPortalDB.ServerConfig WHERE Key = 'apollo.portal.envs';</p>
+</blockquote>
+<pre><code class="language-properties">#local.meta=http://localhost:8080
+dev.meta=http://localhost:8080
+#fat.meta=http://fill-in-fat-meta-server:8080
+#uat.meta=http://fill-in-uat-meta-server:8080
+#lpt.meta=${lpt_meta}
+#pro.meta=http://fill-in-pro-meta-server:8080
+</code></pre>
+<p><strong>测试</strong></p>
+<p>访问<code>localhost:8070</code></p>
+<p>得到这个界面后表示启动成功（注意，Portal服务不会注册到Eureka中）</p>
+<p>默认的账号密码是：<code>apollo / admin</code></p>
+<figure data-type="image" tabindex="3"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201010102935031.png" alt="image-20201010102935031" loading="lazy"></figure>
+<h2 id="和java集成">和Java集成</h2>
+<p>本次集成采用到了服务发现<code>Consul 1.7.1</code>和<code>Apollo 1.7.1</code></p>
+<h3 id="创建工程">创建工程</h3>
+<p>创建<code>spring-cloud-apollo</code>工程</p>
+<p><strong>加入依赖</strong></p>
+<pre><code class="language-xml"> &lt;dependencies&gt;
+     &lt;dependency&gt;
+         &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+         &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+     &lt;/dependency&gt;
+ 
+     &lt;!-- consul注册中心 --&gt;
+     &lt;dependency&gt;
+         &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;
+         &lt;artifactId&gt;spring-cloud-starter-consul-discovery&lt;/artifactId&gt;
+     &lt;/dependency&gt;
+ 
+     &lt;!-- 健康检查 --&gt;
+     &lt;dependency&gt;
+         &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+         &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;
+     &lt;/dependency&gt;
+ 
+     &lt;!-- Apollo --&gt;
+     &lt;dependency&gt;
+         &lt;groupId&gt;com.ctrip.framework.apollo&lt;/groupId&gt;
+         &lt;artifactId&gt;apollo-client&lt;/artifactId&gt;
+         &lt;version&gt;1.7.0&lt;/version&gt;
+     &lt;/dependency&gt;
+ 
+ &lt;/dependencies&gt;
+</code></pre>
+<p><strong>创建启动类</strong></p>
+<p>这里创建了一个SpringBoot的启动类，并将这个工程注册到Consul中</p>
+<p>并且还有一个Controller，用来测试，这个@Value里的Key，待会我们会在Apollo中配置</p>
+<pre><code class="language-java"> package io.mvvm;
+ 
+ import org.springframework.beans.factory.annotation.Value;
+ import org.springframework.boot.SpringApplication;
+ import org.springframework.boot.autoconfigure.SpringBootApplication;
+ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+ import org.springframework.web.bind.annotation.GetMapping;
+ import org.springframework.web.bind.annotation.RestController;
+ 
+ import javax.annotation.Resource;
+ 
+ @SpringBootApplication
+ @EnableDiscoveryClient
+ public class ApolloApplication {
+ 
+     public static void main(String[] args) {
+         SpringApplication.run(ApolloApplication.class, args);
+     }
+ 
+     @RestController
+     class DemoController{
+ 
+         @Value(&quot;${apollo.version}&quot;)
+         private String apolloVersion;
+ 
+         @GetMapping(&quot;/getV&quot;)
+         public String getVersion(){
+             return apolloVersion;
+         }
+     }
+ }
+</code></pre>
+<p><strong>创建配置文件</strong></p>
+<p>创建<code>application.properties</code></p>
+<p>这里发现很奇特的一个问题。application.yml和application.properties在Apollo中居然不一样。</p>
+<p>用yml报错。properties就正常。</p>
+<pre><code class="language-properties"> spring.cloud.consul.host=127.0.0.1
+ spring.cloud.consul.port=8500
+ server.port=2333
+ spring.application.name=spring-cloud-apollo
+ apollo.bootstrap.enabled=true
+ apollo.meta=http://localhost:8080
+ apollo.cacheDir=C:\\Users\\dell\\Desktop\\springcloudalibaba
+ apollo.accesskey.secret=9562c487f36d47eb948b6a07e9f8ed6b
+ app.id=202010100102
+ env=DEV
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>KEY</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>spring.cloud.consul.host</td>
+<td>Consul服务器的地址</td>
+</tr>
+<tr>
+<td>spring.cloud.consul.port</td>
+<td>Consul的端口</td>
+</tr>
+<tr>
+<td>app.id</td>
+<td>AppId唯一标识，在Apollo的Portal服务创建项目时自定义</td>
+</tr>
+<tr>
+<td>apollo.meta</td>
+<td>这个其实就是Eureka的地址，但是Apollo在ConfigService中已经帮我们实现了集成，所以一般就是填入ConfigService服务的IP+8080</td>
+</tr>
+<tr>
+<td>apollo.cacheDir</td>
+<td>自定义配置文件缓存到本地的路径，也就是说，Apollo会将配置文件从ConfigService中拿到配置文件后缓存到本地，如果遇到网络波动的时候也可也保证配置文件的正常读取</td>
+</tr>
+<tr>
+<td>apollo.accesskey.secret</td>
+<td>访问密钥，如果在Apollo中设置了密钥，那么需要在这里填入你设置的密钥才能访问</td>
+</tr>
+<tr>
+<td>apollo.bootstrap.enabled</td>
+<td>当有些配置如果需要在服务启动阶段就注入的话，那么就需要添加这个为true</td>
+</tr>
+<tr>
+<td>env</td>
+<td>自定义环境(DEV、FAT、UAT、PRO)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="添加配置">添加配置</h3>
+<p>接下来我们需要在Apollo中添加一个<code>apollo.version</code>的数据</p>
+<p><strong>1、创建项目</strong></p>
+<figure data-type="image" tabindex="4"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201010103233631.png" alt="image-20201010103233631" loading="lazy"></figure>
+<figure data-type="image" tabindex="5"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201010103342706.png" alt="image-20201010103342706" loading="lazy"></figure>
+<blockquote>
+<p>AppId可以自定义但是一定要和${app.id}一致</p>
+<p>应用名称一般直接写模块名称也可以</p>
+</blockquote>
+<p>创建成功之后会进入到项目中</p>
+<p>然后我们来添加一个配置信息</p>
+<figure data-type="image" tabindex="6"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201010103738053.png" alt="image-20201010103738053" loading="lazy"></figure>
+<blockquote>
+<p>首先点击添加配置，然后编写K/V不多说，然后环境DEV，如果是其他环境，可以勾选。</p>
+<p>然后提交</p>
+</blockquote>
+<p>提交之后，还不能被服务发现，因为在Apollo中需要手动发布才行</p>
+<figure data-type="image" tabindex="7"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201010103912309.png" alt="image-20201010103912309" loading="lazy"></figure>
+<p>上面我们说到了密钥的配置，这里是在左下角有一个<strong>管理密钥</strong>按钮</p>
+<figure data-type="image" tabindex="8"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201010104113930.png" alt="image-20201010104113930" loading="lazy"></figure>
+<p>添加之后我们需要启用这个密钥</p>
+<figure data-type="image" tabindex="9"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201010104134495.png" alt="image-20201010104134495" loading="lazy"></figure>
+<p>然后将密钥复制到配置文件中</p>
+<h3 id="测试">测试</h3>
+<p>启动<code>spring-cloud-apollo</code>服务</p>
+<p>访问：http://localhost:2333/getV</p>
+<figure data-type="image" tabindex="10"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201010110230027.png" alt="image-20201010110230027" loading="lazy"></figure>
+<p>得到1.0则配置成功，接下来测试动态修改数据</p>
+<p>回到Portal服务</p>
+<p>在操作中编辑Key为<code>apollo.version</code></p>
+<p>将1.0修改为2.0后保存</p>
+<p>注意：当配置文件修改后，需要手动发布才能被服务监听到刷新配置</p>
+<figure data-type="image" tabindex="11"><img src="https://img-ages-test0001.oss-cn-hangzhou.aliyuncs.com/images/image-20201010110443961.png" alt="image-20201010110443961" loading="lazy"></figure>
+<p>点击发布之后，查看控制台</p>
+<pre><code class="language-verilog">2020-10-10 11:05:26.146  INFO 9144 --- [Apollo-Config-2] c.f.a.s.p.AutoUpdateConfigChangeListener : Auto update apollo changed value successfully, new value: 2.0, key: apollo.version, beanName: io.mvvm.ApolloApplication$DemoController, field: io.mvvm.ApolloApplication$DemoController.apolloVersion
+</code></pre>
+<p>再次访问http://localhost:2333/getV</p>
+<p>查看是否打印出2.0</p>
+
+        </div>
+        <!-- Share to Twitter, Weibo, Telegram -->
+        <div class="flex items-center">
+          <div class="mr-4 flex items-center">
+            <i class="ri-share-forward-line text-gray-500"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-blue-500 hover:bg-blue-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTwitter">
+            <i class="ri-twitter-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-red-500 hover:bg-red-100 dark:hover:bg-gray-600 inline-flex" @click="shareToWeibo">
+            <i class="ri-weibo-line"></i>
+          </div>
+          <div class="px-4 cursor-pointer text-indigo-500 hover:bg-indigo-100 dark:hover:bg-gray-600 inline-flex" @click="shareToTelegram">
+            <i class="ri-telegram-line"></i>
+          </div>
+        </div>
+      </div>
+
+      
+
+      
+        <div id="vlaine-comment"></div>
+      
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+    </div>
+
+    <!-- TOC Container -->
+    <div class="fixed right-0 bottom-0 mb-16 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white dark:bg-gray-500 dark:text-gray-200 hover:shadow-lg transition-all animated fadeInRight" @click="showToc = true">
+      <i class="ri-file-list-line"></i>
+    </div>
+
+    <div class="fixed right-0 top-0 bottom-0 overflow-y-auto w-64 bg-white dark:bg-gray-800 p-4 border-l border-gray-100 dark:border-gray-600 z-10 transition-fast" :class="{ '-mr-64': !showToc }">
+      <div class="flex mb-4 justify-end">
+        <div class="w-8 h-8 inline-flex justify-center items-center rounded-full cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast" @click="showToc = false">
+          <i class="ri-close-line text-lg"></i>
+        </div>
+      </div>
+      <div class="post-toc-container">
+        <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFapollo">什么是Apollo</a></li>
+<li><a href="#%E7%89%B9%E6%80%A7">特性</a></li>
+<li><a href="#%E6%A8%A1%E5%9D%97%E6%9E%B6%E6%9E%84">模块架构</a></li>
+<li><a href="#%E5%90%84%E6%A8%A1%E5%9D%97%E6%A6%82%E8%A6%81%E4%BB%8B%E7%BB%8D">各模块概要介绍</a>
+<ul>
+<li><a href="#config-service">Config Service</a></li>
+<li><a href="#admin-service">Admin Service</a></li>
+<li><a href="#meta-server">Meta Server</a></li>
+<li><a href="#eureka">Eureka</a></li>
+<li><a href="#portal">Portal</a></li>
+<li><a href="#client">Client</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%89%E8%A3%85">安装</a>
+<ul>
+<li><a href="#1-%E4%B8%8B%E8%BD%BDapollo">1、下载Apollo</a></li>
+<li><a href="#2-%E6%89%A7%E8%A1%8Csql">2、执行SQL</a></li>
+<li><a href="#3-%E5%90%AF%E5%8A%A8apollo">3、启动Apollo</a>
+<ul>
+<li><a href="#%E5%90%AF%E5%8A%A8configservice%E6%9C%8D%E5%8A%A1">启动ConfigService服务</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8adminservice%E6%9C%8D%E5%8A%A1">启动AdminService服务</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8portal%E6%9C%8D%E5%8A%A1">启动Portal服务</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%92%8Cjava%E9%9B%86%E6%88%90">和Java集成</a>
+<ul>
+<li><a href="#%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B">创建工程</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E9%85%8D%E7%BD%AE">添加配置</a></li>
+<li><a href="#%E6%B5%8B%E8%AF%95">测试</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+    </div>
+
+    <!-- Back to top -->
+    <div class="fixed right-0 bottom-0 mb-4 mr-4 shadow w-8 h-8 rounded-full flex justify-center items-center z-10 cursor-pointer bg-white hover:shadow-lg transition-all dark:bg-gray-500 dark:text-gray-200" @click="backToUp" v-show="scrolled">
+      <i class="ri-arrow-up-line"></i>
+    </div>
+  </div>
+
+  <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Background of PhotoSwipe. 
+        It's a separate element as animating opacity is faster than rgba(). -->
+  <div class="pswp__bg">
+  </div>
+  <!-- Slides wrapper with overflow:hidden. -->
+  <div class="pswp__scroll-wrap">
+    <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+    <div class="pswp__container">
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+      <div class="pswp__item">
+      </div>
+    </div>
+    <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+    <div class="pswp__ui pswp__ui--hidden">
+      <div class="pswp__top-bar">
+        <!--  Controls are self-explanatory. Order can be changed. -->
+        <div class="pswp__counter">
+        </div>
+        <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+        <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+        <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+        <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+        <!-- element will get class pswp__preloader--active when preloader is running -->
+        <div class="pswp__preloader">
+          <div class="pswp__preloader__icn">
+            <div class="pswp__preloader__cut">
+              <div class="pswp__preloader__donut">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+        <div class="pswp__share-tooltip">
+        </div>
+      </div>
+      <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+      </button>
+      <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+      </button>
+      <div class="pswp__caption">
+        <div class="pswp__caption__center">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
+  
+  <!-- Code Highlight -->
+  
+    <script src="http://mvvm.io/media/prism.js"></script>
+    <script>
+      Prism.highlightAll()
+    </script>
+  
+
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+  <script>
+    //拿到预览框架，也就是上面的html代码
+    var pswpElement = document.querySelectorAll('.pswp')[0];
+    //定义图片数组变量
+    var imgitems;
+    /**
+    * 用于显示预览界面
+    * @param index 图片数组下标
+    */
+    function viewImg(index) {
+      //其它选项这里不做过多阐述，详情见官网
+      var pswpoptions = {
+        index: parseInt(index, 10), // 开始幻灯片索引。0是第一张幻灯片。必须是整数，而不是字符串。
+        bgOpacity: 0.7, // 背景透明度，0-1
+        maxSpreadZoom: 3, // 缩放级别，不要太大
+      };
+      //初始化并打开PhotoSwipe，pswpElement对应上面预览框架，PhotoSwipeUI_Default为皮肤，imgitems为图片数组，pswpoptions为选项
+      var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imgitems, pswpoptions);
+      gallery.init()
+    }
+    /**
+    * 用于添加图片点击事件
+    * @param img 图片元素
+    * @param index 所属下标（在imgitems中的位置）
+    */
+    function addImgClick(img, index) {
+      img.onclick = function() {
+        viewImg(index)
+      }
+    }
+    /**
+    * 轮询所有图片，获取src、width、height等数据，加入imgitems，并给图片元素添加事件
+    * 最好在onload中执行该方法，本站因放在最底部，所以直接初始化
+    * 异步加载图片可在图片元素创建完成后调用此方法
+    */
+    function initImg() {
+      //重置图片数组
+      imgitems = [];
+      //查找class:markdown 下的所有img元素并遍历
+      var imgs = document.querySelectorAll('.markdown img');
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        //本站相册初始为loading图片，真实图片放在data-src
+        var ds = img.getAttribute("data-src");
+        //创建image对象，用于获取图片宽高
+        var imgtemp = new Image();
+        //判断是否存在data-src
+        if (ds != null && ds.length > 0) {
+          imgtemp.src = ds
+        } else {
+          imgtemp.src = img.src
+        }
+        //判断是否存在缓存
+        if (imgtemp.complete) {
+          var imgobj = {
+            "src": imgtemp.src,
+            "w": imgtemp.width,
+            "h": imgtemp.height,
+          };
+          imgitems[i] = imgobj;
+          addImgClick(img, i);
+        } else {
+          console.log('进来了2')
+          imgtemp.index = i;
+          imgtemp.img = img;
+          imgtemp.onload = function() {
+            var imgobj = {
+              "src": this.src,
+              "w": this.width,
+              "h": this.height,
+            };
+            //不要使用push，因为onload前后顺序会不同
+            imgitems[this.index] = imgobj
+            //添加点击事件
+            addImgClick(this.img, this.index);
+          }
+        }
+      }
+    }
+    //初始化
+    initImg();
+  </script>
+  
+    <script type="application/javascript" src="https://unpkg.com/valine"></script>
+<script type="application/javascript">
+  new Valine({
+    el: '#vlaine-comment',
+    appId: 'nHuv5iS2pvwaeJVALGy1k8eh-gzGzoHsz',
+    appKey: 't0Pxwyy9Pqb8trH0AnoDdNRn',
+    pageSize: 10,
+    notify: true,
+    avatar: 'mp',
+    verify: true,
+    placeholder: '来都来了，不妨评论一下',
+    visitor: true,
+    highlight: true,
+    recordIP: true,
+  })
+</script>
+  
+  
+</body>
+
+</html>

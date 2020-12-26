@@ -1,148 +1,370 @@
-<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<link rel="shortcut icon" href="https://haohanya.github.io/favicon.ico" type="image/x-icon" /><meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/><meta name="apple-mobile-web-app-capable"content="yes"/><meta name="apple-mobile-web-app-status-bar-style"content="black"/><meta name="format-detection"content="telephone=no"/><meta name="renderer"content="webkit"><meta name="description"content="浩瀚-每天向往着外面的世界"><meta charset="UTF-8"><title>浩瀚</title>
-<link href="https://haohanya.github.io/styles/main.css" type="text/css" rel="stylesheet" /><link href="https://at.alicdn.com/t/font_1621793_zatzzgvf30g.css" type="text/css" rel="stylesheet" /><link rel="stylesheet" href="https://haohanya.github.io/media/css/katex.css"><script async src="https://cdn.jsdelivr.net/npm/busuanzi@2.3.0/bsz.pure.mini.min.js"></script><script src="https://haohanya.github.io/media/js/magnify.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
-<script type="text/javascript">function btn_toggle(){document.getElementById("hn").classList.contains("no-js")?document.getElementById("hn").classList.remove("no-js"):document.getElementById("hn").classList.add("no-js")}</script>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>浩瀚</title>
+<link rel="shortcut icon" href="http://mvvm.io/favicon.ico">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.2.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.7.2/animate.min.css">
+<link rel="stylesheet" href="http://mvvm.io/media/css/tailwind.css">
+<link rel="stylesheet" href="http://mvvm.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="浩瀚 - Atom Feed" href="http://mvvm.io/atom.xml">
 
-<link rel="canonical" href="https://haohanya.github.io" /> 
+    
+
+  <meta name="description" content="浩瀚-每天向往着外面的世界" />
 </head>
 <body>
-<div class="progress"></div><style>.progress{background:linear-gradient(to right,#87ceeb var(--scroll),transparent 0);background-repeat:no-repeat;position:fixed;width:100%;height:4px;z-index:1}</style><div class="darkmode-background"></div><div class="darkmode-layer"></div>
-<noscript><p class="warn" >本页面需要浏览器支持（启用）JavaScript</p></noscript><div class="header"><div class="logo_title"><div class="title animated fadeInDown"><a href="https://haohanya.github.io"><img alt="logo" style="display:inline-block;" src="https://haohanya.github.io/images/avatar.png"/></a><h1 title="浩瀚" class="weaklink"><a  href="/">浩瀚</a></h1>
+  <div class="antialiased flex flex-col min-h-screen" id="app">
 
-<style>.santa-body{float:left;margin:10.5px 7.5px 0px 0px;font-size:20px;color:#f91047;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:center;-webkit-justify-content:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-webkit-align-items:center;-ms-flex-align:center;align-items:center;width:1em;height:1em;background-color:currentColor;-webkit-box-shadow:inset 0 -0.25em rgba(0,0,0,0.1);box-shadow:inset 0 -0.25em rgba(0,0,0,0.1);border-radius:50%;-webkit-transform-origin:center bottom;-ms-transform-origin:center bottom;transform-origin:center bottom;-webkit-animation:balance alternate infinite 2s ease-in-out;animation:balance alternate infinite 2s ease-in-out;}.santa-head{font-size:.4em;width:1em;height:1.9em;background-color:white;border-radius:.5em;-webkit-transform:translateY(-1em);-ms-transform:translateY(-1em);transform:translateY(-1em);position:relative;}.santa-head::before{content:'';width:1em;height:.375em;display:block;background-color:#ff9876;position:absolute;left:0;top:.65em;}.santa-ear{background-color:#fc8363;width:.1em;height:.3em;position:absolute;top:.75em;}.santa-ear:nth-of-type(1){border-radius:.05em 0 0 .05em;left:-0.1em;}.santa-ear:nth-of-type(2){border-radius:0 .05em .05em 0;right:-0.1em;}.santa-hat{content:'';width:1em;height:.15em;position:absolute;-webkit-transform:scale(1.1);-ms-transform:scale(1.1);transform:scale(1.1);top:.5em;left:0;background-color:white;}.santa-hat::before{content:'';display:block;width:1em;height:.5em;background:#f91047;border-radius:.5em .5em 0 0;z-index:2;position:absolute;top:-0.5em;}.santa-hat::after{content:'';width:.25em;height:.25em;display:block;background-color:white;border-radius:50%;position:absolute;z-index:0;top:-0.72em;right:0;-webkit-box-shadow:-0.2em .2em 0 .12em rgba(0,0,0,0.2),-0.2em .2em 0 .12em #f91047;box-shadow:-0.2em .2em 0 .12em rgba(0,0,0,0.2),-0.2em .2em 0 .12em #f91047;}.santa-eye{width:.12em;height:.12em;background-color:black;border-radius:50%;position:absolute;top:.76em;left:.2em;}.santa-eye + .santa-eye{left:auto;right:.2em;}.santa-nose{width:.12em;height:.22em;background-color:#f24c4c;border-radius:0 0 .12em .12em;position:absolute;top:.84em;left:50%;-webkit-transform:translateX(-50%);-ms-transform:translateX(-50%);transform:translateX(-50%);}.santa-mouth{width:.18em;height:.1em;border-bottom-right-radius:5vw;border-bottom-left-radius:5vw;margin-top:.3em;background-color:black;position:absolute;left:50%;top:50%;-webkit-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);transform:translate(-50%,-50%);-webkit-animation:hohoho 4s linear forwards infinite;animation:hohoho 4s linear forwards infinite;}@-webkit-keyframes hohoho{0%,10%,20%,40%,100%{width:.18em;height:.1em;border-bottom-right-radius:1vw;border-bottom-left-radius:1vw;}5%,15%,25%,35%{width:.15em;height:.2em;border-radius:50%;}}@keyframes hohoho{0%,10%,20%,40%,100%{width:.18em;height:.1em;border-bottom-right-radius:1vw;border-bottom-left-radius:1vw;}5%,15%,25%,35%{width:.15em;height:.2em;border-radius:50%;}}@-webkit-keyframes balance{from{-webkit-transform:rotate(-4deg);transform:rotate(-4deg);}to{-webkit-transform:rotate(4deg);transform:rotate(4deg);}}@keyframes balance{from{-webkit-transform:rotate(-4deg);transform:rotate(-4deg);}to{-webkit-transform:rotate(4deg);transform:rotate(4deg);}}</style>
-<div class="santa"><div class="santa-body"><div class="santa-head"><div class="santa-ear"></div><div class="santa-ear"></div><div class="santa-hat"></div><div class="santa-eye"></div><div class="santa-eye"></div><div class="santa-nose"></div><div class="santa-mouth"></div></div></div></div>
-
-<div class="navbar weaklink">
-<div class="normal_nav">
-<div class="bitcron_nav_container"><div class="bitcron_nav"><div class="bitcron_nav"><div style="display:flex;justify-content:center;"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://ucuser.cn/links/" class="selected active current nav__item" >友情链接</a></li></ul></nav>
-<div style="float:right;margin-top:1em"><form id="gridea-search-form" data-update="1578893743252" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="Search..."></form></div><div style="margin-left:0.5em;margin-top:1.2em"><input id="switch_default" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
-<div class="clear clear_nav_inline_end"></div></div></div><div class="clear clear_nav_end"></div></div></div><div class="hamberger" href="javascript:void(0)" onclick="btn_toggle();"><i class="iconfont icon-category"></i></div></div></div></div>
-<div id="hn" class="no-js hidden_nav animated fadeInDown"><div class="bitcron_nav_container"><div class="bitcron_nav"><nav class="mixed_site_nav_wrap site_nav_wrap"><ul class="mixed_site_nav site_nav sm sm-base">	<li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/" class="selected active current nav__item" >首页</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/archives" class="selected active current nav__item" >归档</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/tags" class="selected active current nav__item" >标签</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="/post/about" class="selected active current nav__item" >关于</a></li><li><a id="d2ef19af68cc211e98f8a0242ac110003" href="https://ucuser.cn/links/" class="selected active current nav__item" >友情链接</a></li></ul><div class="clear clear_nav_inline_end"></div></nav></div><div class="clear clear_nav_end"></div></div>
-<div style="display:flex;justify-content:center;inline-block;text-align:center;margin-top:7%"><div><form id="gridea-search-form" data-update="1594831539720" action="/search/index.html"><input class="search-input" autocomplete="off" spellcheck="false" name="q"  placeholder="Search..." /></form></div><div style="margin-left:0.5em"><input id="switch_default_h" onclick="mobileBtn()" type="checkbox" class="switch_default"><label for="switch_default" class="toggleBtn"></label></div></div>
-</div></div>
-<script>function enableDarkmode(){document.body.classList.add("darkmode"),document.getElementById("switch_default").checked=1,document.getElementById("switch_default_h").checked=1}function removeDarkmode(){document.body.classList.remove("darkmode"),document.getElementById("switch_default").checked=0,document.getElementById("switch_default_h").checked=0}function getCookie(a){var b,c=new RegExp("(^| )"+a+"=([^;]*)(;|$)");return(b=document.cookie.match(c))?unescape(b[2]):null}cookie=getCookie("darkmode"),"enable"==cookie&&enableDarkmode(),window.matchMedia("(prefers-color-scheme: dark)").matches&&"disable"!==cookie&&(enableDarkmode(),document.cookie="darkmode=enable; path=/");var mobileBtn=function(){1==document.getElementById("switch_default").checked?(enableDarkmode(),document.cookie="darkmode=enable; path=/"):(removeDarkmode(),document.cookie="darkmode=disable; path=/")};</script>
-
-<div class="main">
-<div class="main-inner">
-<div class="content">
-<div class="post_list" ><div class="round-shape-one"></div>
-
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/activiti7-gong-zuo-liu-yin-qing/" >Activiti7 工作流引擎</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-07-16</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/y3jGOr4Yz/"class="tag">Activiti7</a>| <a href="https://haohanya.github.io/tag/pdaqEvWllq/"class="tag">工作流引擎</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">9397字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">43 min read</span></section></div></div>
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/elasticsearch/" >ElasticSearch（二）</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-07-11</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/cubgb1j5P/"class="tag">ElasticSearch</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">4551字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">24 min read</span></section></div></div>
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/elasticsearch1/" > ElasticSearch（一）</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-07-11</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/cubgb1j5P/"class="tag">ElasticSearch</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">8562字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">35 min read</span></section></div></div>
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/rabbitmqer/" >RabbitMQ（二）</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-06-17</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/J76me16vj/"class="tag">Rabbit</a>| <a href="https://haohanya.github.io/tag/Nutx1bfO8U/"class="tag">消息中间件</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">5640字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">27 min read</span></section></div></div>
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/rabbitmqyi/" >RabbitMQ（一）</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-06-15</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/J76me16vj/"class="tag">Rabbit</a>| <a href="https://haohanya.github.io/tag/Nutx1bfO8U/"class="tag">消息中间件</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">2228字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">9 min read</span></section></div></div>
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/rong-duan-qi-hystrix/" > 熔断器Hystrix</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-06-14</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/nH8Xd-9Pr/"class="tag">hystrix</a>| <a href="https://haohanya.github.io/tag/omgSh_ZiA/"class="tag">Spring-Cloud</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">1806字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">7 min read</span></section></div></div>
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/ribbon-fu-zai-jun-heng-qi/" > Ribbon负载均衡器</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-06-14</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/7HXRiZgDt/"class="tag">Ribbon</a>| <a href="https://haohanya.github.io/tag/omgSh_ZiA/"class="tag">Spring-Cloud</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">526字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">3 min read</span></section></div></div>
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/eureka/" >Eureka</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-06-11</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/-ROTKfBE-/"class="tag">Eureka</a>| <a href="https://haohanya.github.io/tag/omgSh_ZiA/"class="tag">Spring-Cloud</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">2485字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">11 min read</span></section></div></div>
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/chu-shi-springcloud/" >初识SpringCloud</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-06-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/omgSh_ZiA/"class="tag">Spring-Cloud</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">2571字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">10 min read</span></section></div></div>
-<div class="post">
-
-<div class="post_title weaklink">
-<h2><a href="https://haohanya.github.io/post/spring-data-jpa/" >Spring-Data-Jpa</a>
-</h2>
-</div>
-<div class="post_content markdown"><div class="p_part"><p></p></div></div>
-<div class="post_footer">
-<section class="info weaklink"><i class="iconfont icon-calendar"></i><span style="margin-right:15px">2020-06-10</span><i class="iconfont icon-category"></i><span class="weaklink" style="margin-right:13px"><a href="https://haohanya.github.io/tag/y_7xhV2bq/"class="tag">jpa</a></span><i class="iconfont icon-caret-down"></i><span class="weaklink"style="margin-right:20px;">1832字</span><i class="iconfont icon-naozhong"></i><span class="weaklink"style="margin-right:15px;">8 min read</span></section></div></div>
-<div class="round-shape-one"></div><div class="paginator pager pagination"><div class="paginator_container pagination_container"><a href="https://haohanya.github.io/page/2"class="btn next older-posts older_posts">Older Posts</a><div style="clear:both;height:0;"></div></div></div>
-</div>
-</div>
-</div>
-</div>
-<a id="scrollUp" href="#top" style="position: fixed; z-index: 2147483647; display: block;"></a>
-<div class="footer animated fadeInDown">
-    <div class="site_footer">
-        <div class="mysocials">
-            <div class="my_socials">
-                <a
-                    href="admin@soweat.cn" title="envelope"><i
-                        class="iconfont icon-envelope"></i></a></div>
-        </div>
-        <div class="copyright" id="copyright">Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>Copyright © 2018-2020 <a
-                href="https://haohanya.github.io" style="margin:0;">浩瀚</a>.</div>
-        <span style="display: inline;margin-right:15px;">👁<strong><span
-                    id="busuanzi_value_site_uv"></span></strong></span><span id="busuanzi_container_page_pv"
-            style="display: inline;"><span>📚<strong>24</strong> posts</span>
+    <div class="nav py-3 md:py-8 fixed w-full z-10 bg-gray-50 dark:bg-gray-700 transition-all duration-300" :class="{ 'scroll': scrolled }">
+  <div class="flex justify-end px-4">
+    <div class="w-8 h-8 flex justify-center items-center rounded-full md:hidden" @click="showMenu = !showMenu">
+      <i class="ri-close-line" v-show="showMenu"></i>
+      <i class="ri-menu-3-line" v-show="!showMenu"></i>
     </div>
+  </div>
+  <nav class="max-w-4xl w-full mx-auto text-center flex flex-col md:flex-row justify-center md:block" :class="`${ showMenu ? 'block' : 'hidden' }`">
+    
+      <a href="/" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        首页
+      </a>
+    
+      <a href="/archives" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        归档
+      </a>
+    
+      <a href="/tags" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        标签
+      </a>
+    
+      <a href="/post/about" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        关于
+      </a>
+    
+      <a href="https://ucuser.cn/links/" target="" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+        友情链接
+      </a>
+    
+    <a href="http://mvvm.io/atom.xml" target="_blank" class="py-2 md:py-1 px-4 mx-4 inline-flex transition font-semibold rounded dark:hover:bg-gray-600 hover:bg-gray-200">
+      RSS
+    </a>
+  </nav>
 </div>
-<script>
-    console.log("\n %c \u26a1Theme: Bitcron-pro Author's Blog:https://blog.blinkstar.cn  Writen By Serence  \n\n", "color: #ffffff; background: rgba(49, 49, 49, 0.85); padding:5px 0;border-radius:5px;",);
-</script>
-<script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+
+    <div class="max-w-4xl w-full mx-auto ">
+      
+        <header class="flex py-16 md:py-32 mt-12 flex-col md:flex-row px-4 md:px-0 animated fadeIn">
+  <div class="flex-1 order-2 md:order-1 md:pr-16">
+    <div class="text-4xl font-bold text-center md:text-left">
+      浩瀚
+    </div>
+    <div class="text-xl text-gray-500 mt-4 text-center md:text-left">
+      浩瀚-每天向往着外面的世界
+    </div>
+    
+      <div class="mt-8 text-center md:text-left">
+        <a
+          href="/post/about" 
+          arget="_blank"
+          class="text-sm bg-yellow-50 dark:bg-indigo-500 dark:text-gray-700 font-semibold px-4 py-2 inline-block yellow-btn transition-fast rounded"
+        >LET&#39;S TALK!</a>
+      </div>
+    
+    
+      <div class="mt-8 flex items-center">
+        
+          <div class="text-gray-500 mr-2">
+            Follow me 👉
+          </div>
+        
+        
+          
+        
+          
+            
+              <a href="pannanx@gmail.com" target="_blank" class="mr-2 w-8 h-8 inline-flex items-center justify-center text-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast">
+                <i class="ri-mail-line"></i>
+              </a>
+            
+          
+        
+          
+            
+              <a href="https://github.com/haohanya" target="_blank" class="mr-2 w-8 h-8 inline-flex items-center justify-center text-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-fast">
+                <i class="ri-github-line"></i>
+              </a>
+            
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </div>
+    
+  </div>
+  <div class="md:mx-8 flex-shrink-0 self-start rounded-full border-4 border-dotted border-transparent hover:border-yellow-50 p-2 w-32 h-32 order-1 md:order-2 mx-auto s3-dotted">
+    <img class="rounded-full object-cover" src="http://mvvm.io/images/avatar.png?v=1608991971580" alt="浩瀚" width="100%" height="100%">
+  </div>
+</header>
+      
+
+      <div class="shadow-box bg-white dark:bg-gray-600 border-gray-300 rounded-none md:rounded-lg -mx-1 md:mx-0 md:px-0">
+        
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/shi-yong-java-shi-xian-cde-trippledes-jia-mi-jie-mi/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          使用Java实现C#的TrippleDES加密解密
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-12-16</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        最近项目中有个需求，需要兼容老项目的数据，但是老项目登陆使用的是C#的TrippleDES加密，这里就需要用java还原出这个加密
+加密流程
+1、密钥通过MD5进行Hash摘要运算
+2、使用Hash值进行DES加密
+3、将最终加密的结果进行...
+      </div>
+      <a href="http://mvvm.io/shi-yong-java-shi-xian-cde-trippledes-jia-mi-jie-mi/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/wordpress-shu-ju-zhuan-yi-zhi-typecho-gong-ju/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          WordPress数据转移至Typecho工具
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-11-07</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        又是周末不上班的一天。😀
+闲来无事。写了份从WordPress转移至Typecho的小工具。
+用WordPress也挺久了，每次撰写文章都要加载老久了。导致我有点想念Typecho的轻量。啊哈哈🙃
+方式很简单。利用WordPress的备...
+      </div>
+      <a href="http://mvvm.io/wordpress-shu-ju-zhuan-yi-zhi-typecho-gong-ju/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/apollo-fen-bu-shi-pei-zhi-zhong-xin/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Apollo分布式配置中心
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-10-10</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        什么是Apollo
+Apollo（阿波罗）是携程框架部门研发的分布式配置中心，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性，适用于微服务配置管理场景。
+Apollo包括服务端...
+      </div>
+      <a href="http://mvvm.io/apollo-fen-bu-shi-pei-zhi-zhong-xin/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/spring-cloud-consul/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Spring Cloud Consul
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-10-08</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        什么是Consul
+consul 是一个支持多数据中心分布式高可用，用于服务发现和配置共享的工具。
+Consul包含多个组件,但是作为一个整体,为你的基础设施提供服务发现和服务配置的工具.他提供以下关键特性:
+服务发现 Consul的客户端...
+      </div>
+      <a href="http://mvvm.io/spring-cloud-consul/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/spring-cloud-alibaba-sentinel/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Spring Cloud Alibaba Sentinel
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-10-06</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        什么是Sentinel
+随着微服务的流行，服务和服务之间的稳定性变得越来越重要。Sentinel 是面向分布式服务架构的流量控制组件，主要以流量为切入点，从限流、流量整形、熔断降级、系统负载保护、热点防护等多个维度来帮助开发者保障微服务的稳...
+      </div>
+      <a href="http://mvvm.io/spring-cloud-alibaba-sentinel/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/spring-cloud-alibaba-nacos/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Spring Cloud Alibaba Nacos
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-10-05</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        什么是Nacos
+Nacos 致力于帮助您发现、配置和管理微服务。Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。
+Nacos 帮助您更敏捷和容易地构建、交付和管理微服务平台。 Nacos...
+      </div>
+      <a href="http://mvvm.io/spring-cloud-alibaba-nacos/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/jian-dan-pei-zhi-ji-ke-zi-dong-sheng-cheng-jian-li/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          简单配置即可自动生成简历
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-09-09</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        写在前面
+不知道大家有没有和我一样的，使用word写的简历模板，简直丑的不可描述，当然，也有一大部分的原因是我word使用的不是很好...
+后来我使用了小陈的一套简历模板（他的项目地址Github）
+当我把简历写的差不多的时候，我尝试使用C...
+      </div>
+      <a href="http://mvvm.io/jian-dan-pei-zhi-ji-ke-zi-dong-sheng-cheng-jian-li/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/jie-jue-windows10-an-zhuang-ruan-jian-shi-ti-shi-geng-xin-she-bei/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          解决Windows10安装软件时提示更新设备
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-09-06</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        一般情况下，Windows会自动给用户的系统更新，但是往往有些朋友不喜欢这个东西，会采用一些办法禁止更新系统比如说我就是这种人...
+但是微软也不是吃素的，长时间不更新，他就不让你安装软件了.
+呐，如图
+
+当我们遇到这种情况的时候不要慌，也...
+      </div>
+      <a href="http://mvvm.io/jie-jue-windows10-an-zhuang-ruan-jian-shi-ti-shi-geng-xin-she-bei/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/tomcat7-xing-neng-you-hua/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          Tomcat7性能优化
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-08-31</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        1. 优化配置
+1.1. 配置tomcat管理员账户
+在conf/ tomcat-users.xml下添加用户
+ &lt;role rolename=&quot;manager&quot;/&gt;
+ &lt;role rolename=&...
+      </div>
+      <a href="http://mvvm.io/tomcat7-xing-neng-you-hua/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="p-8 border-b border-gray-200 dark:border-gray-700 flex relative overflow-hidden flex-col md:flex-row animated fadeIn">
+    
+    <div class="flex-1 order-2 md:order-1">
+      <h2 class="text-2xl font-semibold mb-4">
+        <a href="http://mvvm.io/openfeign-chuan-shu-header/" class="text-gray-700 dark:text-gray-200 border-b-2 border-dotted border-gray-200 dark:border-gray-400 dark:hover:border-gray-200 hover:border-gray-600 transition-all duration-100">
+          OpenFeign传输Header
+        </a>
+      </h2>
+      <div class="mb-4 text-xs text-gray-500">2020-08-23</div>
+      <div class="mb-4 text-gray-500 dark:text-gray-300">
+        在最近项目中我们使用token方式认证用户信息，其中授权方案如下
+用户向gateway发起请求并附带密文token，gateway解析token后返回明文token到微服务，每个微服务通过Filter去获取到明文token并创建Securi...
+      </div>
+      <a href="http://mvvm.io/openfeign-chuan-shu-header/" class="btn">
+        Read more
+      </a>
+    </div>
+    
+  </div>
+  
+      </div>
+
+      
+  <div class="my-4 flex justify-between px-4 md:px-0">
+    
+    
+      <a href="http://mvvm.io/page/2" class="btn btn-white">
+        下一页
+        <i class="ri-arrow-right-line ml-4"></i>
+      </a>
+    
+  </div>
+
+      <footer class="py-12 text-center px-4 md:px-0" v-pre>
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+</footer>
+
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="http://mvvm.io/media/scripts/main.js"></script>
 </body>
+
 </html>
